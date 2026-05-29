@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>OECD GIR Viewer</title>
+</head>
+<body>
+<div id="drop">Drop XML here</div>
+<div id="output"></div>
+
+<script>
+const xslUrl = "oecd-globe-style.xsl";
+
+document.getElementById("drop").addEventListener("dragover", e => {
+  e.preventDefault();
+});
+
+document.getElementById("drop").addEventListener("drop", async e => {
+  e.preventDefault();
+
+  const file = e.dataTransfer.files[0];
+  const xmlText = await file.text();
+
+  const xml = new DOMParser().parseFromString(xmlText, "application/xml");
+
+  const xslText = await fetch(xslUrl).then(r => r.text());
+  const xsl = new DOMParser().parseFromString(xslText, "application/xml");
+
+  const processor = new XSLTProcessor();
+  processor.importStylesheet(xsl);
+
+  const result = processor.transformToFragment(xml, document);
+
+  const output = document.getElementById("output");
+  output.innerHTML = "";
+  output.appendChild(result);
+});
+</script>
+
+</body>
+</html>
