@@ -2,53 +2,28 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>OECD GIR Viewer</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 20px;
         }
-        .drop-zone {
-            border: 2px dashed #ccc;
-            border-radius: 15px;
-            padding: 40px;
-            text-align: center;
-            color: #999;
-        }
-        .drop-zone:hover {
-            border-color: #aaa;
-            color: #666;
-        }
-        .drop-zone .warning {
-            font-size: 0.8em;
-            margin-top: 10px;
-            color: #bbb;
-        }
     </style>
 </head>
 <body>
-<div id="drop" class="drop-zone">
-    Drop OECD GIR XML file here
-    <div class="warning">
-        Warning: Never upload sensitive or confidential data to
-        a site of a random dude on the internet. This viewer does not store
-        or transmit your data, but no guarantees can be made about security.
-        Use at your own risk.
-    </div>
-</div>
+<file-drop id="drop">
+    Drop a OECD GIR XML file here
+</file-drop>
 <div id="output"></div>
 
-<script>
+<script type="module">
+import "./components/FileDrop.js";
+
 const xslUrl = "oecd-globe-style.xsl";
 
-document.getElementById("drop").addEventListener("dragover", e => {
-  e.preventDefault();
-});
-
-document.getElementById("drop").addEventListener("drop", async e => {
-  e.preventDefault();
-
-  const file = e.dataTransfer.files[0];
+document.getElementById("drop").addEventListener("filedropped", async e => {
+    const file = e.detail.file;
   const xmlText = await file.text();
 
   const xml = new DOMParser().parseFromString(xmlText, "application/xml");
