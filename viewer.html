@@ -3,9 +3,39 @@
 <head>
 	<meta charset="utf-8">
 	<title>OECD GIR Viewer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .drop-zone {
+            border: 2px dashed #ccc;
+            border-radius: 15px;
+            padding: 40px;
+            text-align: center;
+            color: #999;
+        }
+        .drop-zone:hover {
+            border-color: #aaa;
+            color: #666;
+        }
+        .drop-zone .warning {
+            font-size: 0.8em;
+            margin-top: 10px;
+            color: #bbb;
+        }
+    </style>
 </head>
 <body>
-<div id="drop">Drop XML here</div>
+<div id="drop" class="drop-zone">
+    Drop OECD GIR XML file here
+    <div class="warning">
+        Warning: Never upload sensitive or confidential data to
+        a site of a random dude on the internet. This viewer does not store
+        or transmit your data, but no guarantees can be made about security.
+        Use at your own risk.
+    </div>
+</div>
 <div id="output"></div>
 
 <script>
