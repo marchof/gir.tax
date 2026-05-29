@@ -1,0 +1,49 @@
+---
+swagger: "2.0"
+info:
+  version: "2026-06-01"
+  title: "gir.tax"
+host: "gir.tax"
+schemes:
+- "https"
+paths:
+  /:
+    get:
+      responses:
+        "200":
+          description: "200 response"
+      x-amazon-apigateway-integration:
+        type: "aws"
+        credentials: "arn:aws:iam::830482727482:role/gir-tax-s3-read-access"
+        uri: "arn:aws:apigateway:eu-central-1:s3:path/gir.tax/index.html"
+        httpMethod: "GET"
+        responses:
+          default:
+            statusCode: "200"
+            contentHandling: "CONVERT_TO_BINARY"
+        passthroughBehavior: "when_no_match"
+  /{proxy+}:
+    get:
+      responses:
+        "200":
+          description: "200 response"
+      parameters:
+      - name: "proxy"
+        in: "path"
+        required: true
+        type: "string"
+      x-amazon-apigateway-integration:
+        type: "aws"
+        credentials: "arn:aws:iam::830482727482:role/gir-tax-s3-read-access"
+        uri: "arn:aws:apigateway:eu-central-1:s3:path/gir.tax/{proxy}"
+        httpMethod: "GET"
+        responses:
+          default:
+            statusCode: "200"
+            contentHandling: "CONVERT_TO_BINARY"
+        requestParameters:
+          integration.request.path.proxy: "method.request.path.proxy"
+        passthroughBehavior: "when_no_templates"
+x-amazon-apigateway-security-policy: "TLS_1_0"
+x-amazon-apigateway-binary-media-types:
+- "*/*"

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<globe:GLOBE_OECD xmlns:globe="urn:oecd:ties:globe:v2">
+  <globe:GLOBEBody>
+    <globe:JurisdictionSection>
+      <globe:GLoBETax>
+        <globe:ETR>
+          <globe:ETRStatus>
+            <globe:ETRComputation>
+              <globe:OverallComputation>
+                <globe:AdjustedCoveredTax>
+                  <globe:DeferTaxAdjustAmt>
+                    <globe:BefRecastAdjust>10</globe:BefRecastAdjust>
+                    <globe:TotalAdjust>3</globe:TotalAdjust>
+                    <globe:PreRecast>12</globe:PreRecast>
+                  </globe:DeferTaxAdjustAmt>
+                </globe:AdjustedCoveredTax>
+              </globe:OverallComputation>
+            </globe:ETRComputation>
+          </globe:ETRStatus>
+        </globe:ETR>
+      </globe:GLoBETax>
+    </globe:JurisdictionSection>
+  </globe:GLOBEBody>
+</globe:GLOBE_OECD>

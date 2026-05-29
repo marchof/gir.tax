@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<globe:GLOBE_OECD xmlns:globe="urn:oecd:ties:globe:v2">
+  <globe:GLOBEBody>
+    <globe:GeneralSection>
+      <globe:CorporateStructure>
+        <globe:CE>
+          <globe:ID>
+            <globe:GlobeStatus>GIR318</globe:GlobeStatus>
+          </globe:ID>
+          <globe:Ownership>
+            <globe:OwnershipPercentage>0</globe:OwnershipPercentage>
+            <globe:TIN>ABC123</globe:TIN>
+            <globe:OwnershipType>GIR806</globe:OwnershipType>
+          </globe:Ownership>
+        </globe:CE>
+      </globe:CorporateStructure>
+    </globe:GeneralSection>
+  </globe:GLOBEBody>
+</globe:GLOBE_OECD>
