@@ -5,10 +5,15 @@
   "type": "module",
   "scripts": {
     "build": "node build.js",
-    "build:watch": "node build.js --watch"
+    "build:watch": "node build.js --watch",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
     "esbuild": "^0.23.1",
-    "esbuild-plugin-copy": "^2.1.1"
+    "esbuild-plugin-copy": "^2.1.1",
+    "eslint": "^10.4.1",
+    "globals": "^17.6.0"
   }
 }
