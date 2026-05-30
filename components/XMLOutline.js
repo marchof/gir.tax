@@ -1,7 +1,11 @@
+
+// TODO: Read enums from schema documentation instead of hardcoding them here
 const GIR_ENUMS = new Map([
   ["GIR101", "The message only contains new information"],
   ["GIR102", "The message contains corrections/deletions for previously sent information"],
   ["GIR103", "The message advises there is no data to report"],
+  ["GIR401", "Ultimate Parent Entity"],
+  ["GIR601", "Governmental Entity"],
   ["GIR3001", "Tax Identification Number"],
 ]);
 
@@ -50,6 +54,13 @@ class XMLOutline extends HTMLElement {
         .xml-comment {
           color: #888;
           font-style: italic;
+        }
+
+        .schema-documentation {
+          color: #888;
+          font-family: sans-serif;
+          font-style: italic;
+          font-size: 80%;
         }
       </style>
       <div class="xml-code" part="container"></div>
@@ -137,14 +148,7 @@ class XMLOutline extends HTMLElement {
       const attrVal = document.createElement("span");
       attrVal.className = "xml-attr-val";
       attrVal.textContent = attr.value;
-
-      const description = GIR_ENUMS.get(attr.value.trim());
-      if (description) {
-        const comment = document.createElement("span");
-        comment.className = "xml-comment";
-        comment.textContent = ` (${description})`;
-        attrVal.appendChild(comment);
-      }
+      this._decribeEnumValue(attr.value, attrVal);
       parent.appendChild(attrVal);
 
       parent.appendChild(document.createTextNode('"'));
@@ -160,14 +164,7 @@ class XMLOutline extends HTMLElement {
       value.className = "xml-text";
       value.textContent = text;
       fragment.appendChild(value);
-    }
-
-    const description = GIR_ENUMS.get(text.trim());
-    if (description) {
-      const comment = document.createElement("span");
-      comment.className = "xml-comment";
-      comment.textContent = ` (${description})`;
-      fragment.appendChild(comment);
+      this._decribeEnumValue(text, fragment);
     }
 
     return fragment;
@@ -190,6 +187,16 @@ class XMLOutline extends HTMLElement {
     tagName.className = "xml-tag-name";
     tagName.textContent = name;
     return tagName;
+  }
+
+  _decribeEnumValue(value, tag) {
+    const description = GIR_ENUMS.get(value.trim());
+    if (description) {
+      const comment = document.createElement("span");
+      comment.className = "schema-documentation";
+      comment.textContent = ` (${description})`;
+      tag.appendChild(comment);
+    }
   }
 }
 
