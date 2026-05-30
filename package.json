@@ -4,10 +4,11 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "mkdir -p dist && cp index.html dist/index.html && esbuild app.js --bundle --format=esm --outfile=dist/app.js",
-    "build:watch": "esbuild app.js --bundle --format=esm --outfile=dist/app.js --watch"
+    "build": "node build.js",
+    "build:watch": "node build.js --watch"
   },
   "devDependencies": {
-    "esbuild": "^0.23.1"
+    "esbuild": "^0.23.1",
+    "esbuild-plugin-copy": "^2.1.1"
   }
 }
