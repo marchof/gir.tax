@@ -58,7 +58,7 @@ class FileDrop extends HTMLElement {
                         Never upload sensitive or confidential data to a random internet site.
                     </div>
                     <div class="warning-details">
-                        This Tool is designed to process your data locally and does not
+                        This tool is designed to process your data locally and does not
                         intentionally upload file contents. No guarantees are provided about
                         security. Use at your own risk.
                     </div>
