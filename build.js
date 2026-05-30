@@ -7,6 +7,7 @@ const watch = process.argv.includes("--watch");
 const options = {
   entryPoints: ["app.js"],
   bundle: true,
+  minify: true,
   format: "esm",
   outfile: "dist/app.js",
   plugins: [
