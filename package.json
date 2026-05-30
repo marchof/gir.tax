@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "esbuild app.js --bundle --format=esm --outfile=dist/app.js",
+    "build": "mkdir -p dist && cp index.html dist/index.html && cp oecd-globe-style.xsl dist/oecd-globe-style.xsl && esbuild app.js --bundle --format=esm --outfile=dist/app.js",
     "build:watch": "esbuild app.js --bundle --format=esm --outfile=dist/app.js --watch"
   },
   "devDependencies": {
