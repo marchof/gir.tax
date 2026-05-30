@@ -2,6 +2,7 @@ const GIR_ENUMS = new Map([
   ["GIR101", "The message only contains new information"],
   ["GIR102", "The message contains corrections/deletions for previously sent information"],
   ["GIR103", "The message advises there is no data to report"],
+  ["GIR3001", "Tax Identification Number"],
 ]);
 
 class XMLOutline extends HTMLElement {
@@ -136,6 +137,14 @@ class XMLOutline extends HTMLElement {
       const attrVal = document.createElement("span");
       attrVal.className = "xml-attr-val";
       attrVal.textContent = attr.value;
+
+      const description = GIR_ENUMS.get(attr.value.trim());
+      if (description) {
+        const comment = document.createElement("span");
+        comment.className = "xml-comment";
+        comment.textContent = ` (${description})`;
+        attrVal.appendChild(comment);
+      }
       parent.appendChild(attrVal);
 
       parent.appendChild(document.createTextNode('"'));
@@ -155,15 +164,10 @@ class XMLOutline extends HTMLElement {
 
     const description = GIR_ENUMS.get(text.trim());
     if (description) {
-      const commentWrapper = document.createElement("div");
-      commentWrapper.className = "xml-code";
-
       const comment = document.createElement("span");
       comment.className = "xml-comment";
-      comment.textContent = `<!-- ${description} -->`;
-      commentWrapper.appendChild(comment);
-
-      fragment.appendChild(commentWrapper);
+      comment.textContent = ` (${description})`;
+      fragment.appendChild(comment);
     }
 
     return fragment;
