@@ -7,6 +7,21 @@ host: "gir.tax"
 schemes:
 - "https"
 paths:
+  /:
+    get:
+      responses:
+        "200":
+          description: "200 response"
+      x-amazon-apigateway-integration:
+        type: "aws"
+        credentials: "arn:aws:iam::830482727482:role/gir-tax-s3-read-access"
+        httpMethod: "GET"
+        uri: "arn:aws:apigateway:eu-central-1:s3:path/gir.tax/index.html"
+        responses:
+          default:
+            statusCode: "200"
+            contentHandling: "CONVERT_TO_BINARY"
+        passthroughBehavior: "when_no_match"
   /{item}:
     get:
       parameters:
