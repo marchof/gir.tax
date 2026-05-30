@@ -1,0 +1,13 @@
+{
+  "name": "oecd-gir-viewer",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "esbuild app.js --bundle --format=esm --outfile=dist/app.js",
+    "build:watch": "esbuild app.js --bundle --format=esm --outfile=dist/app.js --watch"
+  },
+  "devDependencies": {
+    "esbuild": "^0.23.1"
+  }
+}
