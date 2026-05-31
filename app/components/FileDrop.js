@@ -12,7 +12,7 @@ class FileDrop extends HTMLElement {
 
 				.drop-zone {
 					border: 2px dashed #ccc;
-					border-radius: 15px;
+					border-radius: 9px;
 					padding: 40px;
 					text-align: center;
 					color: #999;

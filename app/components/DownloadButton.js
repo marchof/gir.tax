@@ -1,3 +1,5 @@
+import { BUTTON_BASE_CSS } from "./buttonBaseStyle.js";
+
 class DownloadButton extends HTMLElement {
   constructor() {
     super();
@@ -10,42 +12,17 @@ class DownloadButton extends HTMLElement {
           display: block;
         }
 
-        a {
-          appearance: none;
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          border: 1px solid #cdd6df;
-          border-radius: 9px;
-          background: #ffffff;
-          color: #1f2d3d;
-          cursor: pointer;
-          font: 600 14px/1.2 sans-serif;
-          padding: 8px 12px;
+        ${BUTTON_BASE_CSS}
+
+        a.button-base {
           text-decoration: none;
-          transition: background-color 120ms ease, border-color 120ms ease, box-shadow 120ms ease;
-          width: fit-content;
-        }
-
-        a:hover {
-          background: #f7f9fb;
-          border-color: #bfcad6;
-        }
-
-        a:active {
-          background: #eef2f6;
-        }
-
-        a:focus-visible {
-          outline: none;
-          box-shadow: 0 0 0 3px rgba(125, 176, 226, 0.35);
         }
 
         a[hidden] {
           display: none;
         }
       </style>
-      <a hidden></a>
+      <a class="button-base" hidden></a>
     `;
 
     this._anchor = this.shadowRoot.querySelector("a");

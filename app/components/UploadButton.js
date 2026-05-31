@@ -1,3 +1,5 @@
+import { BUTTON_BASE_CSS } from "./buttonBaseStyle.js";
+
 class UploadButton extends HTMLElement {
   constructor() {
     super();
@@ -9,41 +11,13 @@ class UploadButton extends HTMLElement {
           display: block;
         }
 
-        button {
-          appearance: none;
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          border: 1px solid #cdd6df;
-          border-radius: 9px;
-          background: #ffffff;
-          color: #1f2d3d;
-          cursor: pointer;
-          font: 600 14px/1.2 sans-serif;
-          padding: 8px 12px;
-          transition: background-color 120ms ease, border-color 120ms ease, box-shadow 120ms ease;
-          width: fit-content;
-        }
-
-        button:hover {
-          background: #f7f9fb;
-          border-color: #bfcad6;
-        }
-
-        button:active {
-          background: #eef2f6;
-        }
-
-        button:focus-visible {
-          outline: none;
-          box-shadow: 0 0 0 3px rgba(125, 176, 226, 0.35);
-        }
+        ${BUTTON_BASE_CSS}
 
         input {
           display: none;
         }
       </style>
-      <button type="button"></button>
+      <button class="button-base" type="button"></button>
       <input type="file" />
     `;
 
