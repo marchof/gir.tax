@@ -48,54 +48,13 @@ tabs.setTabVisible("viewer", false);
 tabs.setTabVisible("validation", false);
 tabs.setActiveTab("file");
 
-async function handleFile(file) {
-  if (!file) {
-    return;
-  }
+function showValidation(rawOutput) {
+  validationContainer.textContent = rawOutput;
+  tabs.setTabVisible("viewer", false);
+  tabs.setActiveTab("validation");
+}
 
-  tabs.setTabVisible("validation", true);
-
-  let xmlText;
-  let xmlFileName = file.name || "input.xml";
-
-  try {
-    const fileText = await file.text();
-    if (looksLikeCsvFile(file)) {
-      xmlText = csvToXml(fileText);
-      xmlFileName = toXmlFileName(file.name);
-    } else {
-      xmlText = fileText;
-    }
-  } catch (error) {
-    exportXmlButton.clear();
-    validationContainer.textContent = error instanceof Error ? error.message : String(error);
-    tabs.setTabVisible("viewer", false);
-    tabs.setActiveTab("validation");
-    return;
-  }
-
-  exportXmlButton.setDownload(new Blob([xmlText], { type: "application/xml" }), xmlFileName);
-
-  const result = await validate(xmlText, xmlFileName);
-  if (!result.valid) {
-    console.warn("XML validation failed", result.errors);
-    validationContainer.textContent = result.rawOutput;
-    tabs.setTabVisible("viewer", false);
-    tabs.setActiveTab("validation");
-    return;
-  }
-
-  validationContainer.textContent = "No validation errors.";
-
-  const xml = new DOMParser().parseFromString(xmlText, "application/xml");
-  const parserError = xml.querySelector("parsererror");
-  if (parserError) {
-    validationContainer.textContent = parserError.textContent || "XML parsing failed.";
-    tabs.setTabVisible("viewer", false);
-    tabs.setActiveTab("validation");
-    return;
-  }
-
+function renderXmlOutline(xml) {
   let outline = viewerContainer.querySelector("xml-outline");
 
   if (!outline) {
@@ -110,10 +69,85 @@ async function handleFile(file) {
   tabs.setActiveTab("viewer");
 }
 
+async function parseInputToXml(file) {
+  const fileText = await file.text();
+
+  if (looksLikeCsvFile(file)) {
+    return {
+      xmlText: csvToXml(fileText),
+      xmlFileName: toXmlFileName(file.name),
+    };
+  }
+
+  return {
+    xmlText: fileText,
+    xmlFileName: file.name || "input.xml",
+  };
+}
+
+async function runValidation(xmlText, xmlFileName) {
+  return validate(xmlText, xmlFileName);
+}
+
+function parseXmlDocument(xmlText) {
+  const xml = new DOMParser().parseFromString(xmlText, "application/xml");
+  const parserError = xml.querySelector("parsererror");
+
+  if (parserError) {
+    return {
+      xml,
+      parserErrorText: parserError.textContent || "XML parsing failed.",
+    };
+  }
+
+  return {
+    xml,
+    parserErrorText: "",
+  };
+}
+
+async function handleFileImport(file) {
+  if (!file) {
+    return;
+  }
+
+  tabs.setTabVisible("validation", true);
+
+  let xmlText;
+  let xmlFileName;
+
+  try {
+    ({ xmlText, xmlFileName } = await parseInputToXml(file));
+  } catch (error) {
+    exportXmlButton.clear();
+    showValidation(error instanceof Error ? error.message : String(error));
+    return;
+  }
+
+  exportXmlButton.setDownload(new Blob([xmlText], { type: "application/xml" }), xmlFileName);
+
+  const result = await runValidation(xmlText, xmlFileName);
+  if (!result.valid) {
+    console.warn("XML validation failed", result.errors);
+    showValidation(result.rawOutput);
+    return;
+  }
+
+  validationContainer.textContent = "No validation errors.";
+
+  const { xml, parserErrorText } = parseXmlDocument(xmlText);
+  if (parserErrorText) {
+    showValidation(parserErrorText);
+    return;
+  }
+
+  renderXmlOutline(xml);
+}
+
 drop.addEventListener("filedropped", async e => {
-  await handleFile(e.detail.file);
+  await handleFileImport(e.detail.file);
 });
 
 importButton.addEventListener("fileselected", async e => {
-  await handleFile(e.detail.file);
+  await handleFileImport(e.detail.file);
 });
