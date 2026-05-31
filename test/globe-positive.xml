@@ -6,7 +6,7 @@
     <globe:TransmittingCountry>AF</globe:TransmittingCountry>
     <globe:ReceivingCountry>AF</globe:ReceivingCountry>
     <globe:MessageType>GIR</globe:MessageType>
-    <globe:Warning>globe:Warning</globe:Warning>
+    <globe:Warning>This is a very long warning that may wrap. This is a very long warning that may wrap. This is a very long warning that may wrap. This is a very long warning that may wrap. This is a very long warning that may wrap. This is a very long warning that may wrap.</globe:Warning>
     <globe:Contact>globe:Contact</globe:Contact>
     <globe:MessageRefId>globe:MessageRefId</globe:MessageRefId>
     <globe:MessageTypeIndic>GIR101</globe:MessageTypeIndic>
