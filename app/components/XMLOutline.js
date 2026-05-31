@@ -21,11 +21,17 @@ class XMLOutline extends HTMLElement {
           padding-right: 4px;
           line-height: 1.5;
           text-indent: 20px hanging;
+          transition: background-color 120ms ease, border-color 120ms ease;
         }
 
         div.xml-code:has(div.xml-code) {
           border-left: 1px solid #e0e0e0;
           border-bottom: 1px solid #e0e0e0;
+        }
+
+        div.xml-code:not(:has(div.xml-code:hover)):hover {
+          background: #f8f8f8;
+          border-color: #d8d8d8;
         }
 
         .xml-tag {
@@ -34,6 +40,11 @@ class XMLOutline extends HTMLElement {
           padding: 2px 4px;
           border-radius: 4px;
           margin-right: 4px;
+          transition: background-color 120ms ease;
+        }
+
+        div.xml-code:not(:has(div.xml-code:hover)):hover > .xml-tag {
+          background: #d8d8d8;
         }
 
         .xml-tag-name {
