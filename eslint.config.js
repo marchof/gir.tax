@@ -17,7 +17,7 @@ export default [
     },
   },
   {
-    files: ["**/*.js"],
+    files: ["app/**/*.js"],
     ignores: ["build.js"],
     languageOptions: {
       ecmaVersion: "latest",

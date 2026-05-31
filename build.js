@@ -5,15 +5,16 @@ import { mkdir, rm } from "node:fs/promises";
 const watch = process.argv.includes("--watch");
 
 const options = {
-  entryPoints: ["app.js"],
+  entryPoints: ["app/app.js"],
   bundle: true,
   minify: true,
   format: "esm",
-  outfile: "dist/app.js",
+  outfile: "dist/app/app.js",
   plugins: [
     copy({
+      resolveFrom: "cwd",
       assets: [
-        { from: ["./index.html"], to: ["./index.html"] },
+        { from: ["./index.html"], to: ["./dist/index.html"] },
       ],
       watch,
       verbose: true,

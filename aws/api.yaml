@@ -15,35 +15,35 @@ paths:
       x-amazon-apigateway-integration:
         type: "aws"
         credentials: "arn:aws:iam::830482727482:role/gir-tax-s3-read-access"
-        httpMethod: "GET"
         uri: "arn:aws:apigateway:eu-central-1:s3:path/gir.tax/index.html"
+        httpMethod: "GET"
         responses:
           default:
             statusCode: "200"
             contentHandling: "CONVERT_TO_BINARY"
         passthroughBehavior: "when_no_match"
-  /{item}:
+  /{proxy+}:
     get:
-      parameters:
-      - name: "item"
-        in: "path"
-        required: true
-        type: "string"
       responses:
         "200":
           description: "200 response"
+      parameters:
+      - name: "proxy"
+        in: "path"
+        required: true
+        type: "string"
       x-amazon-apigateway-integration:
         type: "aws"
         credentials: "arn:aws:iam::830482727482:role/gir-tax-s3-read-access"
+        uri: "arn:aws:apigateway:eu-central-1:s3:path/gir.tax/{proxy}"
         httpMethod: "GET"
-        uri: "arn:aws:apigateway:eu-central-1:s3:path/gir.tax/{item}"
         responses:
           default:
             statusCode: "200"
-            contentHandling: "CONVERT_TO_BINARY"
         requestParameters:
-          integration.request.path.item: "method.request.path.item"
-        passthroughBehavior: "when_no_match"
+          integration.request.path.proxy: "method.request.path.proxy"
+        passthroughBehavior: "when_no_templates"
+x-amazon-apigateway-security-policy: "TLS_1_0"
 x-amazon-apigateway-binary-media-types:
 - "text/html"
 - "text/css"
