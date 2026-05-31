@@ -4,7 +4,9 @@ import "./components/AppTabs.js";
 import { getSchemaMetadata, validate } from "./xmlschema.js";
 
 const tabs = document.getElementById("top-tabs");
-const drop = document.getElementById("drop");
+const drop = document.createElement("file-drop");
+drop.id = "drop";
+drop.append("Drop a OECD GIR XML file here");
 
 const uploaderContainer = document.createElement("div");
 uploaderContainer.appendChild(drop);
