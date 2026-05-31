@@ -40,13 +40,10 @@ paths:
         responses:
           default:
             statusCode: "200"
+            contentHandling: "CONVERT_TO_BINARY"
         requestParameters:
           integration.request.path.proxy: "method.request.path.proxy"
         passthroughBehavior: "when_no_templates"
 x-amazon-apigateway-security-policy: "TLS_1_0"
 x-amazon-apigateway-binary-media-types:
-- "text/html"
-- "text/css"
-- "text/javascript"
-- "font/ttf"
-- "image/png"
+- "*/*"
