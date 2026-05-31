@@ -2,6 +2,7 @@ import "./components/FileDrop.js";
 import "./components/XMLOutline.js";
 import "./components/AppTabs.js";
 import "./components/DownloadButton.js";
+import "./components/UploadButton.js";
 import { csvToXml, looksLikeCsvFile, toXmlFileName } from "./csvimport.js";
 import { getSchemaMetadata, validate } from "./xmlschema.js";
 
@@ -9,14 +10,25 @@ const tabs = document.getElementById("top-tabs");
 const drop = document.createElement("file-drop");
 drop.id = "drop";
 drop.append("Drop an OECD GIR XML or CSV file here");
+const importButton = document.createElement("upload-button");
+importButton.label = "Import XML or CSV";
+importButton.accept = ".xml,.csv,text/xml,text/csv";
 
 const fileContainer = document.createElement("div");
+const buttonRow = document.createElement("div");
+buttonRow.style.display = "flex";
+buttonRow.style.alignItems = "center";
+buttonRow.style.gap = "0.75rem";
+buttonRow.style.marginTop = "0.75rem";
+
 const exportXmlButton = document.createElement("download-button");
 exportXmlButton.label = "Export XML";
-exportXmlButton.style.marginTop = "0.75rem";
+exportXmlButton.style.display = "inline-block";
 
 fileContainer.appendChild(drop);
-fileContainer.appendChild(exportXmlButton);
+buttonRow.appendChild(importButton);
+buttonRow.appendChild(exportXmlButton);
+fileContainer.appendChild(buttonRow);
 
 const viewerContainer = document.createElement("div");
 const validationContainer = document.createElement("pre");
@@ -36,8 +48,10 @@ tabs.setTabVisible("viewer", false);
 tabs.setTabVisible("validation", false);
 tabs.setActiveTab("file");
 
-drop.addEventListener("filedropped", async e => {
-  const file = e.detail.file;
+async function handleFile(file) {
+  if (!file) {
+    return;
+  }
 
   tabs.setTabVisible("validation", true);
 
@@ -94,4 +108,12 @@ drop.addEventListener("filedropped", async e => {
   outline.xmlDocument = xml;
   tabs.setTabVisible("viewer", true);
   tabs.setActiveTab("viewer");
+}
+
+drop.addEventListener("filedropped", async e => {
+  await handleFile(e.detail.file);
+});
+
+importButton.addEventListener("fileselected", async e => {
+  await handleFile(e.detail.file);
 });
