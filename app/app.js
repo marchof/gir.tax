@@ -1,6 +1,7 @@
 import "./components/FileDrop.js";
 import "./components/XMLOutline.js";
 import "./components/AppTabs.js";
+import "./components/DownloadButton.js";
 import { csvToXml, looksLikeCsvFile, toXmlFileName } from "./csvimport.js";
 import { getSchemaMetadata, validate } from "./xmlschema.js";
 
@@ -9,8 +10,13 @@ const drop = document.createElement("file-drop");
 drop.id = "drop";
 drop.append("Drop an OECD GIR XML or CSV file here");
 
-const uploaderContainer = document.createElement("div");
-uploaderContainer.appendChild(drop);
+const fileContainer = document.createElement("div");
+const exportXmlButton = document.createElement("download-button");
+exportXmlButton.label = "Export XML";
+exportXmlButton.style.marginTop = "0.75rem";
+
+fileContainer.appendChild(drop);
+fileContainer.appendChild(exportXmlButton);
 
 const viewerContainer = document.createElement("div");
 const validationContainer = document.createElement("pre");
@@ -22,13 +28,13 @@ const schemaMetadata = await getSchemaMetadata();
 
 console.log("Extracted schema metadata", schemaMetadata);
 
-tabs.addTab("Upload", uploaderContainer, { id: "uploader", activate: true });
+tabs.addTab("File", fileContainer, { id: "file", activate: true });
 tabs.addTab("XML", viewerContainer, { id: "viewer" });
 tabs.addTab("Validation", validationContainer, { id: "validation" });
 
 tabs.setTabVisible("viewer", false);
 tabs.setTabVisible("validation", false);
-tabs.setActiveTab("uploader");
+tabs.setActiveTab("file");
 
 drop.addEventListener("filedropped", async e => {
   const file = e.detail.file;
@@ -47,11 +53,14 @@ drop.addEventListener("filedropped", async e => {
       xmlText = fileText;
     }
   } catch (error) {
+    exportXmlButton.clear();
     validationContainer.textContent = error instanceof Error ? error.message : String(error);
     tabs.setTabVisible("viewer", false);
     tabs.setActiveTab("validation");
     return;
   }
+
+  exportXmlButton.setDownload(new Blob([xmlText], { type: "application/xml" }), xmlFileName);
 
   const result = await validate(xmlText, xmlFileName);
   if (!result.valid) {
