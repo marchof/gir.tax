@@ -38,8 +38,6 @@ validationContainer.style.fontFamily = "ui-monospace, SFMono-Regular, Menlo, mon
 
 const schemaMetadata = await getSchemaMetadata();
 
-console.log("Extracted schema metadata", schemaMetadata);
-
 tabs.addTab("File", fileContainer, { id: "file", activate: true });
 tabs.addTab("XML", viewerContainer, { id: "viewer" });
 tabs.addTab("Validation", validationContainer, { id: "validation" });
