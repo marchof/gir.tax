@@ -12,10 +12,20 @@ class XMLOutline extends HTMLElement {
         }
 
         div.xml-code {
+          display: table;
           font-family: monospace;
           border-radius: 5px;
-          padding-left: 20px;
-          line-height: 1.7;
+          margin-left: 20px;
+          margin-top: 4px;
+          margin-bottom: 4px;
+          padding-right: 4px;
+          line-height: 1.5;
+          text-indent: 20px hanging;
+        }
+
+        div.xml-code:has(div.xml-code) {
+          border-left: 1px solid #e0e0e0;
+          border-bottom: 1px solid #e0e0e0;
         }
 
         .xml-tag {
@@ -23,11 +33,13 @@ class XMLOutline extends HTMLElement {
           background: #e0e0e0;
           padding: 2px 4px;
           border-radius: 4px;
-          margin: 2px;
+          margin-right: 4px;
         }
 
         .xml-tag-name {
           color: #9966ff;
+          margin-left: 2px;
+          margin-right: 2px;
         }
 
         .xml-tag-name.has-doc {
@@ -53,11 +65,6 @@ class XMLOutline extends HTMLElement {
 
         .xml-text {
           color: #000;
-        }
-
-        .xml-comment {
-          color: #888;
-          font-style: italic;
         }
 
         .schema-documentation {
@@ -101,10 +108,6 @@ class XMLOutline extends HTMLElement {
       return this._renderText(node);
     }
 
-    if (node.nodeType === Node.COMMENT_NODE) {
-      return this._renderComment(node);
-    }
-
     return document.createDocumentFragment();
   }
 
@@ -117,7 +120,7 @@ class XMLOutline extends HTMLElement {
 
     const isEmpty = element.childNodes.length === 0;
     tag.appendChild(document.createTextNode("<"));
-    tag.appendChild(this._tagNameSpan(element.tagName, { showIndicator: true }));
+    tag.appendChild(this._tagNameSpan(element.localName, { showIndicator: true }));
     this._appendAttributes(tag, element.attributes);
 
     if (isEmpty) {
@@ -132,13 +135,6 @@ class XMLOutline extends HTMLElement {
     for (const child of element.childNodes) {
       wrapper.appendChild(this._renderNode(child));
     }
-
-    const closeTag = document.createElement("span");
-    closeTag.className = "xml-tag";
-    closeTag.appendChild(document.createTextNode("</"));
-    closeTag.appendChild(this._tagNameSpan(element.tagName, { showIndicator: false }));
-    closeTag.appendChild(document.createTextNode(">"));
-    wrapper.appendChild(closeTag);
 
     return wrapper;
   }
@@ -177,18 +173,6 @@ class XMLOutline extends HTMLElement {
     }
 
     return fragment;
-  }
-
-  _renderComment(node) {
-    const wrapper = document.createElement("div");
-    wrapper.className = "xml-code";
-
-    const comment = document.createElement("span");
-    comment.className = "xml-comment";
-    comment.textContent = `<!--${node.textContent ?? ""}-->`;
-    wrapper.appendChild(comment);
-
-    return wrapper;
   }
 
   _tagNameSpan(name, options = {}) {
