@@ -1,12 +1,13 @@
 import "./components/FileDrop.js";
 import "./components/XMLOutline.js";
 import "./components/AppTabs.js";
+import { csvToXml, looksLikeCsvFile, toXmlFileName } from "./csvimport.js";
 import { getSchemaMetadata, validate } from "./xmlschema.js";
 
 const tabs = document.getElementById("top-tabs");
 const drop = document.createElement("file-drop");
 drop.id = "drop";
-drop.append("Drop a OECD GIR XML file here");
+drop.append("Drop an OECD GIR XML or CSV file here");
 
 const uploaderContainer = document.createElement("div");
 uploaderContainer.appendChild(drop);
@@ -31,11 +32,28 @@ tabs.setActiveTab("uploader");
 
 drop.addEventListener("filedropped", async e => {
   const file = e.detail.file;
-  const xmlText = await file.text();
 
   tabs.setTabVisible("validation", true);
 
-  const result = await validate(xmlText, file.name || "input.xml");
+  let xmlText;
+  let xmlFileName = file.name || "input.xml";
+
+  try {
+    const fileText = await file.text();
+    if (looksLikeCsvFile(file)) {
+      xmlText = csvToXml(fileText);
+      xmlFileName = toXmlFileName(file.name);
+    } else {
+      xmlText = fileText;
+    }
+  } catch (error) {
+    validationContainer.textContent = error instanceof Error ? error.message : String(error);
+    tabs.setTabVisible("viewer", false);
+    tabs.setActiveTab("validation");
+    return;
+  }
+
+  const result = await validate(xmlText, xmlFileName);
   if (!result.valid) {
     console.warn("XML validation failed", result.errors);
     validationContainer.textContent = result.rawOutput;
