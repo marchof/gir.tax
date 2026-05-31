@@ -32,7 +32,7 @@ class AppTabs extends HTMLElement {
 
         .tab-title {
           margin-left: auto;
-          color: #7db0e2;
+          color: #aaa;
           font: 700 18px/1.2 sans-serif;
           letter-spacing: 0.02em;
           white-space: nowrap;
