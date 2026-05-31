@@ -157,7 +157,7 @@ class XMLOutline extends HTMLElement {
       const attrVal = document.createElement("span");
       attrVal.className = "xml-attr-val";
       attrVal.textContent = attr.value;
-      this._decribeEnumValue(attr.value, attrVal);
+      this._describeEnumValue(attr.value, attrVal);
       parent.appendChild(attrVal);
 
       parent.appendChild(document.createTextNode('"'));
@@ -173,7 +173,7 @@ class XMLOutline extends HTMLElement {
       value.className = "xml-text";
       value.textContent = text;
       fragment.appendChild(value);
-      this._decribeEnumValue(text, fragment);
+      this._describeEnumValue(text, fragment);
     }
 
     return fragment;
@@ -221,7 +221,7 @@ class XMLOutline extends HTMLElement {
     return indicator;
   }
 
-  _decribeEnumValue(value, tag) {
+  _describeEnumValue(value, tag) {
     const description = this._enumDescriptions.get(value.trim());
     if (description) {
       const comment = document.createElement("span");
