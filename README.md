@@ -4,6 +4,9 @@ Simple online viewer and validator for [GloBE Information Return (GIR)](https://
 
 The latest version is deployed at https://gir.tax/
 
+* https://www.oecd.org/en/publications/globe-information-return-pillar-two-xml-schema_c594935a-en.html
+https://www.oecd.org/en/publications/globe-information-return-pillar-two-status-message-xml-schema_449e3cc3-en.html
+
 ## Features
 
 * [X] Validate if XML input is well formed
@@ -15,6 +18,7 @@ The latest version is deployed at https://gir.tax/
 * [X] Also accept CSV as input
 * [x] Download XML (especially when created from CSV)
 * [ ] Validate against additional GIR rules
+* [ ] Download validation result as GIR Status Message XML
 * [ ] Annotate GIR rule violations in XML tree
 * [ ] Show List of all issues
 * [ ] Show company structure as graph
@@ -46,3 +50,7 @@ npm run dev
 ```
 
 Now you can use the application under http://localhost:8080/
+
+## License
+
+This tool is provided under the [MIT license](LICENSE.md).
