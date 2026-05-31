@@ -4,6 +4,21 @@ Simple online viewer and validator for [GloBE Information Return (GIR)](https://
 
 The latest version is deployed at https://gir.tax/
 
+## Features
+
+* [X] Validate if XML input is well formed
+* [X] Validate if XML input complies with schema
+* [X] Show XML errors
+* [X] Show XML tree
+* [X] Show description of elements in XML tree (tooltip), load from schema
+* [X] Show definition of enums in XML tree, load from schema
+* [ ] Validate against additional GIR rules
+* [ ] Annotate GIR rule violations in XML tree
+* [ ] Show List of all issues
+* [ ] Show company structure as graph
+* [ ] Also accept CSV as input
+* [ ] Download XML (especially when created from CSV)
+
 ## Usage
 
 TODO

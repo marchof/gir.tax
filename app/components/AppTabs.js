@@ -23,10 +23,19 @@ class AppTabs extends HTMLElement {
 
         .tab-list {
           display: flex;
+          align-items: center;
           gap: 6px;
           padding: 8px;
           background: linear-gradient(180deg, #f7f9fb 0%, #eef2f6 100%);
           border-bottom: 1px solid #d9dee3;
+        }
+
+        .tab-title {
+          margin-left: auto;
+          color: #7db0e2;
+          font: 700 18px/1.2 sans-serif;
+          letter-spacing: 0.02em;
+          white-space: nowrap;
         }
 
         .tab-button {
@@ -70,6 +79,11 @@ class AppTabs extends HTMLElement {
 
     this._tabList = this.shadowRoot.querySelector(".tab-list");
     this._panels = this.shadowRoot.querySelector(".panels");
+
+    this._title = document.createElement("div");
+    this._title.className = "tab-title";
+    this._title.textContent = "OECD GIR File Viewer";
+    this._tabList.appendChild(this._title);
   }
 
   addTab(label, element, options = {}) {
@@ -102,7 +116,7 @@ class AppTabs extends HTMLElement {
     panel.hidden = true;
     panel.appendChild(element);
 
-    this._tabList.appendChild(button);
+    this._tabList.insertBefore(button, this._title);
     this._panels.appendChild(panel);
 
     this._tabs.set(id, { button, panel, element, visible: true });
