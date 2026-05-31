@@ -7,7 +7,7 @@
     "build": "node build.js",
     "build:watch": "node build.js --watch",
     "dev": "node build.js --watch --serve",
-    "lint": "eslint .",
+    "lint": "eslint --max-warnings=0 .",
     "lint:fix": "eslint . --fix"
   },
   "devDependencies": {
