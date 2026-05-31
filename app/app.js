@@ -1,7 +1,7 @@
 import "./components/FileDrop.js";
 import "./components/XMLOutline.js";
 import "./components/AppTabs.js";
-import { validate } from "./validation.js";
+import { getSchemaMetadata, validate } from "./xmlschema.js";
 
 const tabs = document.getElementById("top-tabs");
 const drop = document.getElementById("drop");
@@ -14,6 +14,10 @@ const validationContainer = document.createElement("pre");
 validationContainer.style.margin = "0";
 validationContainer.style.whiteSpace = "pre-wrap";
 validationContainer.style.fontFamily = "ui-monospace, SFMono-Regular, Menlo, monospace";
+
+const schemaMetadata = await getSchemaMetadata();
+
+console.log("Extracted schema metadata", schemaMetadata);
 
 tabs.addTab("Upload", uploaderContainer, { id: "uploader", activate: true });
 tabs.addTab("XML", viewerContainer, { id: "viewer" });
@@ -57,6 +61,7 @@ drop.addEventListener("filedropped", async e => {
     viewerContainer.appendChild(outline);
   }
 
+  outline.schemaMetadata = schemaMetadata;
   outline.xmlDocument = xml;
   tabs.setTabVisible("viewer", true);
   tabs.setActiveTab("viewer");

@@ -1,18 +1,10 @@
 
-// TODO: Read enums from schema documentation instead of hardcoding them here
-const GIR_ENUMS = new Map([
-  ["GIR101", "The message only contains new information"],
-  ["GIR102", "The message contains corrections/deletions for previously sent information"],
-  ["GIR103", "The message advises there is no data to report"],
-  ["GIR401", "Ultimate Parent Entity"],
-  ["GIR601", "Governmental Entity"],
-  ["GIR3001", "Tax Identification Number"],
-]);
-
 class XMLOutline extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: "open" });
+    this._enumDescriptions = new Map();
+    this._tagDescriptions = new Map();
     this.shadowRoot.innerHTML = `
       <style>
         :host {
@@ -37,6 +29,19 @@ class XMLOutline extends HTMLElement {
 
         .xml-tag-name {
           color: #9966ff;
+        }
+
+        .xml-tag-name.has-doc {
+          text-decoration: underline dotted #9966ff;
+          text-underline-offset: 2px;
+          cursor: help;
+        }
+
+        .xml-tag-doc-indicator {
+          color: #5e7aa2;
+          font-size: 0.7em;
+          margin-left: 2px;
+          vertical-align: super;
         }
 
         .xml-attr-name {
@@ -71,6 +76,11 @@ class XMLOutline extends HTMLElement {
 
   set xmlDocument(value) {
     this.render(value);
+  }
+
+  set schemaMetadata(value) {
+    this._enumDescriptions = value?.enumDescriptions instanceof Map ? value.enumDescriptions : new Map();
+    this._tagDescriptions = value?.tagDescriptions instanceof Map ? value.tagDescriptions : new Map();
   }
 
   render(xmlDocument) {
@@ -108,7 +118,7 @@ class XMLOutline extends HTMLElement {
 
     const isEmpty = element.childNodes.length === 0;
     tag.appendChild(document.createTextNode("<"));
-    tag.appendChild(this._tagNameSpan(element.tagName));
+    tag.appendChild(this._tagNameSpan(element.tagName, { showIndicator: true }));
     this._appendAttributes(tag, element.attributes);
 
     if (isEmpty) {
@@ -127,7 +137,7 @@ class XMLOutline extends HTMLElement {
     const closeTag = document.createElement("span");
     closeTag.className = "xml-tag";
     closeTag.appendChild(document.createTextNode("</"));
-    closeTag.appendChild(this._tagNameSpan(element.tagName));
+    closeTag.appendChild(this._tagNameSpan(element.tagName, { showIndicator: false }));
     closeTag.appendChild(document.createTextNode(">"));
     wrapper.appendChild(closeTag);
 
@@ -182,21 +192,48 @@ class XMLOutline extends HTMLElement {
     return wrapper;
   }
 
-  _tagNameSpan(name) {
+  _tagNameSpan(name, options = {}) {
+    const showIndicator = options.showIndicator !== false;
     const tagName = document.createElement("span");
     tagName.className = "xml-tag-name";
     tagName.textContent = name;
+
+    const description = this._describeTag(name);
+    if (description) {
+      tagName.title = description;
+      tagName.classList.add("has-doc");
+
+      if (showIndicator) {
+        const withIndicator = document.createElement("span");
+        withIndicator.append(tagName, this._docIndicatorSpan());
+        withIndicator.title = description;
+        return withIndicator;
+      }
+    }
+
     return tagName;
   }
 
+  _docIndicatorSpan() {
+    const indicator = document.createElement("span");
+    indicator.className = "xml-tag-doc-indicator";
+    indicator.setAttribute("aria-hidden", "true");
+    indicator.textContent = "i";
+    return indicator;
+  }
+
   _decribeEnumValue(value, tag) {
-    const description = GIR_ENUMS.get(value.trim());
+    const description = this._enumDescriptions.get(value.trim());
     if (description) {
       const comment = document.createElement("span");
       comment.className = "schema-documentation";
       comment.textContent = ` (${description})`;
       tag.appendChild(comment);
     }
+  }
+
+  _describeTag(name) {
+    return this._tagDescriptions.get(name) || this._tagDescriptions.get(name.split(":").pop()) || "";
   }
 }
 
