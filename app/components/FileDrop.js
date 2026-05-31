@@ -1,10 +1,10 @@
 class FileDrop extends HTMLElement {
-	constructor() {
-		super();
-		this.attachShadow({ mode: "open" });
-		this._dragDepth = 0;
+  constructor() {
+    super();
+    this.attachShadow({ mode: "open" });
+    this._dragDepth = 0;
 
-		this.shadowRoot.innerHTML = `
+    this.shadowRoot.innerHTML = `
 			<style>
 				:host {
 					display: block;
@@ -66,66 +66,66 @@ class FileDrop extends HTMLElement {
 			</div>
 		`;
 
-		this._dropZone = this.shadowRoot.querySelector(".drop-zone");
-		this._onDragOver = this._onDragOver.bind(this);
-		this._onDragEnter = this._onDragEnter.bind(this);
-		this._onDragLeave = this._onDragLeave.bind(this);
-		this._onDrop = this._onDrop.bind(this);
-	}
+    this._dropZone = this.shadowRoot.querySelector(".drop-zone");
+    this._onDragOver = this._onDragOver.bind(this);
+    this._onDragEnter = this._onDragEnter.bind(this);
+    this._onDragLeave = this._onDragLeave.bind(this);
+    this._onDrop = this._onDrop.bind(this);
+  }
 
-	connectedCallback() {
-		this.addEventListener("dragover", this._onDragOver);
-		this.addEventListener("dragenter", this._onDragEnter);
-		this.addEventListener("dragleave", this._onDragLeave);
-		this.addEventListener("drop", this._onDrop);
-	}
+  connectedCallback() {
+    this.addEventListener("dragover", this._onDragOver);
+    this.addEventListener("dragenter", this._onDragEnter);
+    this.addEventListener("dragleave", this._onDragLeave);
+    this.addEventListener("drop", this._onDrop);
+  }
 
-	disconnectedCallback() {
-		this.removeEventListener("dragover", this._onDragOver);
-		this.removeEventListener("dragenter", this._onDragEnter);
-		this.removeEventListener("dragleave", this._onDragLeave);
-		this.removeEventListener("drop", this._onDrop);
-	}
+  disconnectedCallback() {
+    this.removeEventListener("dragover", this._onDragOver);
+    this.removeEventListener("dragenter", this._onDragEnter);
+    this.removeEventListener("dragleave", this._onDragLeave);
+    this.removeEventListener("drop", this._onDrop);
+  }
 
-	_onDragOver(event) {
-		event.preventDefault();
-	}
+  _onDragOver(event) {
+    event.preventDefault();
+  }
 
-	_onDragEnter(event) {
-		event.preventDefault();
-		this._dragDepth += 1;
-		this._dropZone.classList.add("is-over");
-	}
+  _onDragEnter(event) {
+    event.preventDefault();
+    this._dragDepth += 1;
+    this._dropZone.classList.add("is-over");
+  }
 
-	_onDragLeave(event) {
-		event.preventDefault();
-		this._dragDepth = Math.max(0, this._dragDepth - 1);
-		if (this._dragDepth === 0) {
-			this._dropZone.classList.remove("is-over");
-		}
-	}
+  _onDragLeave(event) {
+    event.preventDefault();
+    this._dragDepth = Math.max(0, this._dragDepth - 1);
+    if (this._dragDepth === 0) {
+      this._dropZone.classList.remove("is-over");
+    }
+  }
 
-	_onDrop(event) {
-		event.preventDefault();
-		this._dragDepth = 0;
-		this._dropZone.classList.remove("is-over");
+  _onDrop(event) {
+    event.preventDefault();
+    this._dragDepth = 0;
+    this._dropZone.classList.remove("is-over");
 
-		const files = event.dataTransfer?.files;
-		if (!files || files.length === 0) {
-			return;
-		}
+    const files = event.dataTransfer?.files;
+    if (!files || files.length === 0) {
+      return;
+    }
 
-		this.dispatchEvent(
-			new CustomEvent("filedropped", {
-				detail: {
-					file: files[0],
-					files,
-				},
-				bubbles: false,
-				composed: true,
-			})
-		);
-	}
+    this.dispatchEvent(
+      new CustomEvent("filedropped", {
+        detail: {
+          file: files[0],
+          files,
+        },
+        bubbles: false,
+        composed: true,
+      })
+    );
+  }
 }
 
 customElements.define("file-drop", FileDrop);

@@ -7,6 +7,13 @@ export default [
   },
   js.configs.recommended,
   {
+    files: ["**/*.js"],
+    rules: {
+      indent: ["error", 2, { SwitchCase: 1 }],
+      "no-mixed-spaces-and-tabs": "error",
+    },
+  },
+  {
     files: ["build.js"],
     languageOptions: {
       ecmaVersion: "latest",

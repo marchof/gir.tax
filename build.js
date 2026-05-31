@@ -33,7 +33,7 @@ if (watch) {
   const ctx = await context(options);
   await ctx.watch();
 
-   if (serve) {
+  if (serve) {
     const host = "127.0.0.1";
     const port = 8080;
     await ctx.serve({ servedir: "dist", host, port });
