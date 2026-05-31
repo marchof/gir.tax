@@ -13,7 +13,6 @@ class XMLOutline extends HTMLElement {
 
         div.xml-code {
           font-family: monospace;
-          background: #f8f9fa;
           border-radius: 5px;
           padding-left: 20px;
           line-height: 1.7;
@@ -68,10 +67,10 @@ class XMLOutline extends HTMLElement {
           font-size: 80%;
         }
       </style>
-      <div class="xml-code" part="container"></div>
+      <div id="container" part="container"></div>
     `;
 
-    this._container = this.shadowRoot.querySelector(".xml-code");
+    this._container = this.shadowRoot.querySelector("#container");
   }
 
   set xmlDocument(value) {
