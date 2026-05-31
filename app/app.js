@@ -1,33 +1,63 @@
 import "./components/FileDrop.js";
 import "./components/XMLOutline.js";
+import "./components/AppTabs.js";
 import { validate } from "./validation.js";
 
+const tabs = document.getElementById("top-tabs");
+const drop = document.getElementById("drop");
 
-document.getElementById("drop").addEventListener("filedropped", async e => {
+const uploaderContainer = document.createElement("div");
+uploaderContainer.appendChild(drop);
+
+const viewerContainer = document.createElement("div");
+const validationContainer = document.createElement("pre");
+validationContainer.style.margin = "0";
+validationContainer.style.whiteSpace = "pre-wrap";
+validationContainer.style.fontFamily = "ui-monospace, SFMono-Regular, Menlo, monospace";
+
+tabs.addTab("Upload", uploaderContainer, { id: "uploader", activate: true });
+tabs.addTab("XML", viewerContainer, { id: "viewer" });
+tabs.addTab("Validation", validationContainer, { id: "validation" });
+
+tabs.setTabVisible("viewer", false);
+tabs.setTabVisible("validation", false);
+tabs.setActiveTab("uploader");
+
+drop.addEventListener("filedropped", async e => {
   const file = e.detail.file;
   const xmlText = await file.text();
 
-  const output = document.getElementById("output");
+  tabs.setTabVisible("validation", true);
 
   const result = await validate(xmlText, file.name || "input.xml");
   if (!result.valid) {
     console.warn("XML validation failed", result.errors);
-    output.innerHTML = "";
-    const errordisplay = document.createElement("pre");
-    errordisplay.textContent = result.rawOutput;
-    output.appendChild(errordisplay);
+    validationContainer.textContent = result.rawOutput;
+    tabs.setTabVisible("viewer", false);
+    tabs.setActiveTab("validation");
     return;
   }
 
-  const xml = new DOMParser().parseFromString(xmlText, "application/xml");
+  validationContainer.textContent = "No validation errors.";
 
-  let outline = output.querySelector("xml-outline");
+  const xml = new DOMParser().parseFromString(xmlText, "application/xml");
+  const parserError = xml.querySelector("parsererror");
+  if (parserError) {
+    validationContainer.textContent = parserError.textContent || "XML parsing failed.";
+    tabs.setTabVisible("viewer", false);
+    tabs.setActiveTab("validation");
+    return;
+  }
+
+  let outline = viewerContainer.querySelector("xml-outline");
 
   if (!outline) {
-    output.innerHTML = "";
+    viewerContainer.innerHTML = "";
     outline = document.createElement("xml-outline");
-    output.appendChild(outline);
+    viewerContainer.appendChild(outline);
   }
 
   outline.xmlDocument = xml;
+  tabs.setTabVisible("viewer", true);
+  tabs.setActiveTab("viewer");
 });
