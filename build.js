@@ -1,15 +1,47 @@
 import { build, context } from "esbuild";
 import { copy } from "esbuild-plugin-copy";
-import { mkdir, rm } from "node:fs/promises";
+import { mkdir, readFile, rm, writeFile } from "node:fs/promises";
+import { execFile } from "node:child_process";
+import { promisify } from "node:util";
 
 const watch = process.argv.includes("--watch");
 const serve = process.argv.includes("--serve");
+const execFileAsync = promisify(execFile);
+
+const getVersionInfo = async () => {
+  const [{ version }, [commitId, commitIdShort, commitTimestamp, commitTimestampIso]] = await Promise.all([
+    readFile("package.json", "utf8").then(JSON.parse),
+    execFileAsync(
+      "git",
+      ["show", "-s", "--date=format-local:%Y-%m-%dT%H:%M:%SZ", "--format=%H%n%h%n%ct%n%cd", "HEAD"],
+      { env: { ...process.env, TZ: "UTC" } },
+    ).then(({ stdout }) => stdout.trim().split("\n")),
+  ]);
+
+  return {
+    version,
+    commitId,
+    commitIdShort,
+    commitTimestamp: Number(commitTimestamp),
+    commitTimestampIso,
+  };
+};
+
+const versionInfo = await getVersionInfo();
+
+const writeVersionMetadata = async () => {
+  await mkdir("dist/meta", { recursive: true });
+  await writeFile("dist/meta/version.json", `${JSON.stringify(versionInfo, null, 2)}\n`);
+};
 
 const options = {
   entryPoints: ["app/app.js"],
   bundle: true,
   minify: true,
   format: "esm",
+  define: {
+    VERSION_INFO: JSON.stringify(versionInfo),
+  },
   outfile: "dist/app/app.js",
   plugins: [
     copy({
@@ -19,6 +51,7 @@ const options = {
         { from: ["./schemas/**/*"], to: ["./dist/schemas/"] },
         { from: ["./node_modules/xmllint-wasm/xmllint-browser.mjs"], to: ["./dist/app/xmllint-browser.mjs"] },
         { from: ["./node_modules/xmllint-wasm/xmllint.wasm"], to: ["./dist/app/xmllint.wasm"] },
+        { from: ["./LICENSE.md"], to: ["./dist/meta/LICENSE.md"] },
       ],
       watch,
       verbose: true,
@@ -28,6 +61,7 @@ const options = {
 
 await rm("dist", { recursive: true, force: true });
 await mkdir("dist", { recursive: true });
+await writeVersionMetadata();
 
 if (watch) {
   const ctx = await context(options);

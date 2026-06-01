@@ -4,6 +4,7 @@ import "./components/AppTabs.js";
 import "./components/DownloadButton.js";
 import "./components/UploadButton.js";
 import "./components/CorporateStructureGraph.js";
+import "./components/VersionInfo.js";
 import { csvToXml, looksLikeCsvFile, toXmlFileName } from "./csvimport.js";
 import { getSchemaMetadata, validate } from "./xmlschema.js";
 

@@ -31,6 +31,7 @@ export default [
       sourceType: "module",
       globals: {
         ...globals.browser,
+        VERSION_INFO: "readonly",
       },
     },
     rules: {
