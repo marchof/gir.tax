@@ -20,6 +20,8 @@
     "license-checker-evergreen": "^6.3.1"
   },
   "dependencies": {
+    "cytoscape": "^3.33.4",
+    "cytoscape-svg": "^0.4.0",
     "xmllint-wasm": "^5.2.0"
   }
 }

@@ -13,12 +13,12 @@ The latest version is deployed at https://gir.tax/.
 * [X] Show description of elements in XML tree (tooltip), load from schema
 * [X] Show definition of enums in XML tree, load from schema
 * [X] Also accept CSV as input
-* [x] Download XML (especially when created from CSV)
+* [X] Download XML (especially when created from CSV)
+* [X] Show company structure as graph (element CorporateStructure)
 * [ ] Validate against additional GIR rules
 * [ ] Download validation result as GIR Status Message XML
 * [ ] Annotate GIR rule violations in XML tree
-* [ ] Show List of all issues
-* [ ] Show company structure as graph
+* [ ] Show list of all issues
 
 ## Usage
 
