@@ -1,6 +1,6 @@
 import { validateXML } from "xmllint-wasm";
 
-const SCHEMA_BASE_PATH = "schemas";
+const SCHEMA_BASE_PATH = "schemas/gir";
 const SCHEMA_ENTRY_FILE = "globexml_v1.0.xsd";
 
 let schemaBundlePromise;

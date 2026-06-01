@@ -16,7 +16,7 @@ const options = {
       resolveFrom: "cwd",
       assets: [
         { from: ["./index.html"], to: ["./dist/index.html"] },
-        { from: ["./schemas/*"], to: ["./dist/schemas/"] },
+        { from: ["./schemas/**/*"], to: ["./dist/schemas/"] },
         { from: ["./node_modules/xmllint-wasm/xmllint-browser.mjs"], to: ["./dist/app/xmllint-browser.mjs"] },
         { from: ["./node_modules/xmllint-wasm/xmllint.wasm"], to: ["./dist/app/xmllint.wasm"] },
       ],
