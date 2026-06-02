@@ -6,7 +6,9 @@ import "./components/UploadButton.js";
 import "./components/CorporateStructureGraph.js";
 import "./components/VersionInfo.js";
 import { csvToXml, looksLikeCsvFile, toXmlFileName } from "./csvimport.js";
-import { getSchemaMetadata, validate } from "./xmlschema.js";
+import { XMLSchema } from "./xmlschema.js";
+
+const xmlSchema = new XMLSchema("schemas/gir", "globexml_v1.0.xsd");
 
 const tabs = document.getElementById("top-tabs");
 const drop = document.createElement("file-drop");
@@ -39,7 +41,7 @@ validationContainer.style.margin = "0";
 validationContainer.style.whiteSpace = "pre-wrap";
 validationContainer.style.fontFamily = "ui-monospace, SFMono-Regular, Menlo, monospace";
 
-const schemaMetadata = await getSchemaMetadata();
+const schemaMetadata = await xmlSchema.getSchemaMetadata();
 
 tabs.addTab("File", fileContainer, { id: "file", activate: true });
 tabs.addTab("XML", viewerContainer, { id: "viewer" });
@@ -89,10 +91,6 @@ async function parseInputToXml(file) {
   };
 }
 
-async function runValidation(xmlText, xmlFileName) {
-  return validate(xmlText, xmlFileName);
-}
-
 function parseXmlDocument(xmlText) {
   const xml = new DOMParser().parseFromString(xmlText, "application/xml");
   const parserError = xml.querySelector("parsererror");
@@ -131,9 +129,8 @@ async function handleFileImport(file) {
 
   exportXmlButton.setDownload(new Blob([xmlText], { type: "application/xml" }), xmlFileName);
 
-  const result = await runValidation(xmlText, xmlFileName);
+  const result = await xmlSchema.validate(xmlText, xmlFileName);
   if (!result.valid) {
-    console.warn("XML validation failed", result.errors);
     corporateStructureGraph.xmlDocument = null;
     showValidation(result.rawOutput);
     return;

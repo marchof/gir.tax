@@ -1,11 +1,5 @@
 import { validateXML } from "xmllint-wasm";
 
-const SCHEMA_BASE_PATH = "schemas/gir";
-const SCHEMA_ENTRY_FILE = "globexml_v1.0.xsd";
-
-let schemaBundlePromise;
-let schemaMetadataPromise;
-
 function parseXml(text, fileName) {
   const doc = new DOMParser().parseFromString(text, "application/xml");
   const parserError = doc.querySelector("parsererror");
@@ -15,8 +9,12 @@ function parseXml(text, fileName) {
   return doc;
 }
 
-async function fetchSchemaText(fileName) {
-  const response = await fetch(`${SCHEMA_BASE_PATH}/${fileName}`);
+function resolveSchemaLocation(fileName, schemaLocation) {
+  return new URL(schemaLocation, `https://schema.local/${fileName}`).pathname.slice(1);
+}
+
+async function fetchSchemaText(basePath, fileName) {
+  const response = await fetch(`${basePath}/${fileName}`);
   if (!response.ok) {
     throw new Error(`Failed to load schema ${fileName} (${response.status})`);
   }
@@ -28,39 +26,15 @@ function collectSchemaLocations(schemaDoc) {
   const nodes = schemaDoc.getElementsByTagName("*");
 
   for (const node of nodes) {
-    if (!node.localName || !["import", "include", "redefine"].includes(node.localName)) {
-      continue;
-    }
-
-    const schemaLocation = node.getAttribute("schemaLocation");
-    if (schemaLocation) {
-      locations.push(schemaLocation);
+    if (["import", "include", "redefine"].includes(node.localName)) {
+      const schemaLocation = node.getAttribute("schemaLocation");
+      if (schemaLocation) {
+        locations.push(schemaLocation);
+      }
     }
   }
 
   return locations;
-}
-
-async function loadSchemaGraph(entryFile) {
-  const loaded = new Map();
-
-  async function load(fileName) {
-    if (loaded.has(fileName)) {
-      return;
-    }
-
-    const contents = await fetchSchemaText(fileName);
-    const schemaDoc = parseXml(contents, fileName);
-    loaded.set(fileName, { fileName, contents, schemaDoc });
-
-    const schemaLocations = collectSchemaLocations(schemaDoc);
-    for (const schemaLocation of schemaLocations) {
-      await load(schemaLocation);
-    }
-  }
-
-  await load(entryFile);
-  return [...loaded.values()];
 }
 
 function extractDocumentationNodeText(node) {
@@ -114,32 +88,69 @@ function extractSchemaMetadata(schemaItems) {
   return { enumDescriptions, tagDescriptions };
 }
 
-async function getSchemaBundle() {
-  if (!schemaBundlePromise) {
-    schemaBundlePromise = loadSchemaGraph(SCHEMA_ENTRY_FILE);
+export class XMLSchema {
+  constructor(basePath, mainSchema) {
+    this.basePath = basePath;
+    this.mainSchema = mainSchema;
+    this.schemaBundlePromise = null;
+    this.schemaMetadataPromise = null;
   }
 
-  return schemaBundlePromise;
-}
+  async #loadSchemaGraph(entryFile = this.mainSchema) {
+    const loaded = new Map();
 
-export async function getSchemaMetadata() {
-  if (!schemaMetadataPromise) {
-    schemaMetadataPromise = getSchemaBundle().then(extractSchemaMetadata);
+    const load = async fileName => {
+      if (loaded.has(fileName)) {
+        return loaded.get(fileName);
+      }
+
+      const schemaPromise = (async () => {
+        const contents = await fetchSchemaText(this.basePath, fileName);
+        const schemaDoc = parseXml(contents, fileName);
+
+        for (const schemaLocation of collectSchemaLocations(schemaDoc)) {
+          const resolvedLocation = resolveSchemaLocation(fileName, schemaLocation);
+          await load(resolvedLocation);
+        }
+
+        return { fileName, contents, schemaDoc };
+      })();
+
+      loaded.set(fileName, schemaPromise);
+      return schemaPromise;
+    };
+
+    await load(entryFile);
+    return Promise.all(loaded.values());
   }
 
-  return schemaMetadataPromise;
-}
+  async #getSchemaBundle() {
+    if (!this.schemaBundlePromise) {
+      this.schemaBundlePromise = this.#loadSchemaGraph();
+    }
 
-export async function validate(xmlText, fileName = "input.xml") {
-  const schemas = await getSchemaBundle();
-  const [mainSchema, ...preloadSchemas] = schemas;
+    return this.schemaBundlePromise;
+  }
 
-  return validateXML({
-    xml: [{ fileName, contents: xmlText }],
-    schema: [{ fileName: mainSchema.fileName, contents: mainSchema.contents }],
-    preload: preloadSchemas.map(schema => ({
-      fileName: schema.fileName,
-      contents: schema.contents,
-    })),
-  });
+  async getSchemaMetadata() {
+    if (!this.schemaMetadataPromise) {
+      this.schemaMetadataPromise = this.#getSchemaBundle().then(extractSchemaMetadata);
+    }
+
+    return this.schemaMetadataPromise;
+  }
+
+  async validate(xmlText, fileName = "input.xml") {
+    const schemas = await this.#getSchemaBundle();
+    const [mainSchema, ...preloadSchemas] = schemas;
+
+    return validateXML({
+      xml: [{ fileName, contents: xmlText }],
+      schema: [{ fileName: mainSchema.fileName, contents: mainSchema.contents }],
+      preload: preloadSchemas.map(schema => ({
+        fileName: schema.fileName,
+        contents: schema.contents,
+      })),
+    });
+  }
 }

@@ -356,7 +356,6 @@ class CorporateStructureGraph extends HTMLElement {
     }
 
     const { nodes, edges, roots } = extractCorporateStructureGraph(corporateStructureElement);
-    console.log("Extracted graph data:", { nodes, edges, roots });
     if (nodes.length === 0) {
       this._showEmpty("CorporateStructure is present, but no UPE or CE entries were found.");
       return false;
