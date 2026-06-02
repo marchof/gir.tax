@@ -4,8 +4,10 @@ import "./components/AppTabs.js";
 import "./components/DownloadButton.js";
 import "./components/UploadButton.js";
 import "./components/CorporateStructureGraph.js";
+import "./components/ValidationStatus.js";
 import "./components/VersionInfo.js";
 import { csvToXml, looksLikeCsvFile, toXmlFileName } from "./csvimport.js";
+import { GirStatusMessage } from "./girstatusmessage.js";
 import { XMLSchema } from "./xmlschema.js";
 
 const xmlSchema = new XMLSchema("schemas/gir", "globexml_v1.0.xsd");
@@ -36,28 +38,53 @@ fileContainer.appendChild(buttonRow);
 
 const viewerContainer = document.createElement("div");
 const corporateStructureGraph = document.createElement("corporate-structure-graph");
-const validationContainer = document.createElement("pre");
-validationContainer.style.margin = "0";
-validationContainer.style.whiteSpace = "pre-wrap";
-validationContainer.style.fontFamily = "ui-monospace, SFMono-Regular, Menlo, monospace";
+const validationStatus = document.createElement("validation-status");
 
 const schemaMetadata = await xmlSchema.getSchemaMetadata();
 
 tabs.addTab("File", fileContainer, { id: "file", activate: true });
 tabs.addTab("XML", viewerContainer, { id: "viewer" });
 tabs.addTab("Corporate Structure", corporateStructureGraph, { id: "corporate-structure" });
-tabs.addTab("Validation", validationContainer, { id: "validation" });
+tabs.addTab("Validation", validationStatus, { id: "validation" });
 
 tabs.setTabVisible("viewer", false);
 tabs.setTabVisible("corporate-structure", false);
 tabs.setTabVisible("validation", false);
 tabs.setActiveTab("file");
 
-function showValidation(rawOutput) {
-  validationContainer.textContent = rawOutput;
+function showValidation(statusMessage, xmlFileName) {
+  validationStatus.statusMessage = statusMessage;
+  validationStatus.xmlFileName = xmlFileName;
   tabs.setTabVisible("viewer", false);
   tabs.setTabVisible("corporate-structure", false);
   tabs.setActiveTab("validation");
+}
+
+function buildValidatorName() {
+  if (typeof VERSION_INFO !== "undefined" && VERSION_INFO.commitIdShort) {
+    return `oecd-gir-viewer@${VERSION_INFO.commitIdShort}`;
+  }
+
+  return "oecd-gir-viewer";
+}
+
+function extractMessageRefId(xml) {
+  for (const node of xml.getElementsByTagName("*")) {
+    if (node.localName === "MessageRefId") {
+      const value = node.textContent?.trim();
+      if (value) {
+        return value;
+      }
+    }
+  }
+
+  return "";
+}
+
+function createStatusMessage() {
+  return new GirStatusMessage({
+    validatedBy: buildValidatorName(),
+  });
 }
 
 function renderXmlOutline(xml) {
@@ -114,6 +141,9 @@ async function handleFileImport(file) {
   }
 
   tabs.setTabVisible("validation", true);
+  exportXmlButton.clear();
+
+  const statusMessage = createStatusMessage();
 
   let xmlText;
   let xmlFileName;
@@ -123,7 +153,8 @@ async function handleFileImport(file) {
   } catch (error) {
     exportXmlButton.clear();
     corporateStructureGraph.xmlDocument = null;
-    showValidation(error instanceof Error ? error.message : String(error));
+    statusMessage.addParsingError(error instanceof Error ? error.message : String(error));
+    showValidation(statusMessage, "input.xml");
     return;
   }
 
@@ -132,18 +163,21 @@ async function handleFileImport(file) {
   const result = await xmlSchema.validate(xmlText, xmlFileName);
   if (!result.valid) {
     corporateStructureGraph.xmlDocument = null;
-    showValidation(result.rawOutput);
+    statusMessage.addSchemaValidationResult(result);
+    showValidation(statusMessage, xmlFileName);
     return;
   }
-
-  validationContainer.textContent = "No validation errors.";
 
   const { xml, parserErrorText } = parseXmlDocument(xmlText);
   if (parserErrorText) {
     corporateStructureGraph.xmlDocument = null;
-    showValidation(parserErrorText);
+    statusMessage.addParsingError(parserErrorText);
+    showValidation(statusMessage, xmlFileName);
     return;
   }
+
+  statusMessage.setOriginalMessageRefId(extractMessageRefId(xml));
+  showValidation(statusMessage, xmlFileName);
 
   renderXmlOutline(xml);
   tabs.setTabVisible("corporate-structure", true);
