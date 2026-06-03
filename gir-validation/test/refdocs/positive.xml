@@ -129,6 +129,24 @@
                   <globe:Remaining>0</globe:Remaining>
                 </globe:ExcessNegTaxExpense>
               </globe:OverallComputation>
+              <globe:Non-MaterialCE>
+                <globe:RFY>
+                  <globe:TotalRevenue>0</globe:TotalRevenue>
+                </globe:RFY>
+                <globe:RFY-2>
+                  <globe:TotalRevenue>0</globe:TotalRevenue>
+                </globe:RFY-2>
+                <globe:Average>
+                  <globe:TotalRevenue>0</globe:TotalRevenue>
+                </globe:Average>	
+                <globe:ID>
+                  <globe:Name>globe:Name</globe:Name>
+                  <globe:ResCountryCode>AF</globe:ResCountryCode>
+                  <globe:TIN>globe:TIN</globe:TIN>
+                  <globe:Rules>GIR201</globe:Rules>
+                  <globe:GlobeStatus>GIR301</globe:GlobeStatus>
+                </globe:ID>
+              </globe:Non-MaterialCE>       
             </globe:ETRComputation>
           </globe:ETRStatus>
         </globe:ETR>
