@@ -89,6 +89,27 @@
         <globe:ETR>
           <globe:ETRStatus>
             <globe:ETRComputation>
+              <globe:CEComputation>
+                <globe:AdjustedFANIL>
+                  <globe:Total>0</globe:Total>
+                  <globe:FANIL>0</globe:FANIL>
+                </globe:AdjustedFANIL>
+                <globe:NetGlobeIncome>
+                  <globe:Total>0</globe:Total>
+                </globe:NetGlobeIncome>
+                <globe:AdjustedIncomeTax>
+                  <globe:Total>0</globe:Total>
+                  <globe:IncomeTax>0</globe:IncomeTax>
+                </globe:AdjustedIncomeTax>
+                <globe:AdjustedCoveredTax>
+                  <globe:Total>0</globe:Total>
+                  <globe:DeferTaxAdjustAmt>
+                    <globe:Total>0</globe:Total>
+                    <globe:DeferTaxExpense>0</globe:DeferTaxExpense>
+                  </globe:DeferTaxAdjustAmt>
+                </globe:AdjustedCoveredTax>
+                <globe:TIN>globe:TIN</globe:TIN>
+              </globe:CEComputation>
               <globe:OverallComputation>
                 <globe:FANIL>0</globe:FANIL>
                 <globe:AdjustedFANIL>0</globe:AdjustedFANIL>
