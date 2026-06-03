@@ -1607,7 +1607,7 @@ rules:
 
   - number: 70086
     targets:
-      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/ExcessProfits
+      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:OverallComputation/globe:ExcessProfits
     references:
       - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/NetGlobeIncome/Total
       - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/SubstanceExclusion/Total
@@ -1627,7 +1627,7 @@ rules:
 
   - number: 70087
     targets:
-      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/SubstanceExclusion/Total
+      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:OverallComputation/globe:SubstanceExclusion/globe:Total
     references:
       - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/SubstanceExclusion/PayrollCost
       - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/SubstanceExclusion/PayrollMarkUp
@@ -1780,7 +1780,7 @@ rules:
 
   - number: 70098
     targets:
-      - GLOBEBody/JurisdictionSection/LowTaxJurisdiction/LTCE/IIR/ParentEntity/TopUpTaxShare
+      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:LowTaxJurisdiction/globe:LTCE/globe:IIR/globe:ParentEntity/globe:TopUpTaxShare
     references:
       - GLOBEBody/JurisdictionSection/LowTaxJurisdiction/LTCE/IIR/TopUpTax
       - GLOBEBody/JurisdictionSection/LowTaxJurisdiction/LTCE/IIR/ParentEntity/InclusionRatio
@@ -1794,7 +1794,7 @@ rules:
 
   - number: 70099
     targets:
-      - GLOBEBody/UTPRAttribution/Attribution/UTPRTopUpTaxAttributed
+      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:UTPRAttribution/globe:Attribution/globe:UTPRTopUpTaxAttributed
     references:
       - GLOBEBody/JurisdictionSection/LowTaxJurisdiction/UTPR/UTPRCalculation/TotalUTPRTopUpTax
       - GLOBEBody/UTPRAttribution/Attribution/UTPRPercentage
