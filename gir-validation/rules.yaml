@@ -464,7 +464,7 @@ rules:
 
   - number: 70008
     targets:
-      - GLOBEBody/UTPRAttribution/RecJurCode
+      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:UTPRAttribution/globe:RecJurCode
     references:
       - GLOBEBody/JurisdictionSection/JurWithTaxingRights/JurisdictionName
       - GLOBEBody/GeneralSection/CorporateStructure/UPE/ID/ResCountryCode
@@ -493,8 +493,8 @@ rules:
       GlobeStatus of the UPE align with note 1.3.1.6 of the GIR.
 
   - number: 70010
-    targets:
-      - GLOBEBody/GeneralSection/CorporateStructure/UPE/OtherUPE/ID/ResCountryCode
+    targets: []
+      # TODO: Choice - /globe:GLOBE_OECD/globe:GLOBEBody/globe:GeneralSection/globe:CorporateStructure/globe:UPE/globe:OtherUPE/globe:ID/globe:ResCountryCode
     element: ResCountryCode
     rule: >-
       Only one value is allowed for the ResCountryCode of the UPE/OtherUPE
@@ -505,7 +505,7 @@ rules:
 
   - number: 70011
     targets:
-      - GLOBEBody/GeneralSection/CorporateStructure/CE/ID/ResCountryCode
+      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:GeneralSection/globe:CorporateStructure/globe:CE/globe:ID/globe:ResCountryCode
     element: ResCountryCode
     rule: >-
       Only one value is allowed for the ResCountryCode of the CE
@@ -534,7 +534,7 @@ rules:
 
   - number: 70013
     targets:
-      - GLOBEBody/GeneralSection/CorporateStructure/CE/ID/GlobeStatus
+      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:GeneralSection/globe:CorporateStructure/globe:CE/globe:ID/globe:GlobeStatus
     element: GlobeStatus
     rule: >-
       When the GlobeStatus contains the value of GIR313, the value of GIR314 must not
@@ -546,7 +546,7 @@ rules:
 
   - number: 70014
     targets:
-      - GLOBEBody/GeneralSection/CorporateStructure/CE/ID/GlobeStatus
+      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:GeneralSection/globe:CorporateStructure/globe:CE/globe:ID/globe:GlobeStatus
     element: GlobeStatus
     rule: >-
       When the GlobeStatus contains the value of GIR307, the value of GIR308 must not
@@ -558,7 +558,7 @@ rules:
 
   - number: 70015
     targets:
-      - GLOBEBody/GeneralSection/CorporateStructure/CE/ID/GlobeStatus
+      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:GeneralSection/globe:CorporateStructure/globe:CE/globe:ID/globe:GlobeStatus
     element: GlobeStatus
     rule: >-
       When the GlobeStatus contains the value of GIR308, then there must be another CE
@@ -583,7 +583,7 @@ rules:
 
   - number: 70017
     targets:
-      - GLOBEBody/GeneralSection/CorporateStructure/CE/ID/GlobeStatus
+      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:GeneralSection/globe:CorporateStructure/globe:CE/globe:ID/globe:GlobeStatus
     element: GlobeStatus
     rule: >-
       When the GlobeStatus contains the value of GIR308, the value of GIR309 should
@@ -595,7 +595,7 @@ rules:
 
   - number: 70018
     targets:
-      - GLOBEBody/GeneralSection/CorporateStructure/CE/ID/GlobeStatus
+      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:GeneralSection/globe:CorporateStructure/globe:CE/globe:ID/globe:GlobeStatus
     element: GlobeStatus
     rule: >-
       When the GlobeStatus contains the value of GIR305, the value of GIR306 must not
@@ -607,7 +607,7 @@ rules:
 
   - number: 70019
     targets:
-      - GLOBEBody/GeneralSection/CorporateStructure/CE/ID/GlobeStatus
+      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:GeneralSection/globe:CorporateStructure/globe:CE/globe:ID/globe:GlobeStatus
     element: GlobeStatus
     rule: >-
       When the GlobeStatus contains the value of GIR305, then there must be another CE
@@ -620,7 +620,7 @@ rules:
 
   - number: 70020
     targets:
-      - GLOBEBody/GeneralSection/CorporateStructure/CE/ID/GlobeStatus
+      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:GeneralSection/globe:CorporateStructure/globe:CE/globe:ID/globe:GlobeStatus
     element: GlobeStatus
     rule: >-
       If the GlobeStatus contains the value of GIR316 or GIR318, then there should be
@@ -636,7 +636,7 @@ rules:
     other_record_errors:
   - number: 70021
     targets:
-      - GLOBEBody/GeneralSection/CorporateStructure/CE/ID/GlobeStatus
+      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:GeneralSection/globe:CorporateStructure/globe:CE/globe:ID/globe:GlobeStatus
     references:
       - GLOBEBody/GeneralSection/CorporateStructure/CE/OwnershipChange
       - GLOBEBody/GeneralSection/CorporateStructure/CE/OwnershipChange/PreGlobeStatus
