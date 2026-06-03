@@ -1,7 +1,7 @@
 rules:
   - number: 60001
     targets:
-      - MessageSpec/MessageRefld
+      - MessageSpec/MessageRefId
     element: MessageRefld
     rule: >-
       The MessageRefld must be in the correct format: [CountryCode of the sending
@@ -14,7 +14,7 @@ rules:
 
   - number: 60002
     targets:
-      - MessageSpec/MessageRefld
+      - MessageSpec/MessageRefId
     element: MessageRefld
     rule: >-
       The GIR Message Header has a duplicate MessageRefld value that was received on
@@ -57,7 +57,7 @@ rules:
 
   - number: 60006
     targets:
-      - //CorrDocReflD
+      - //CorrDocRefId
     element: CorrDocRefld
     rule: >-
       The same DocReflD cannot be corrected or deleted twice in the same message.
@@ -89,7 +89,7 @@ rules:
 
   - number: 60009
     targets:
-      - //CorrDocRefld
+      - //CorrDocRefId
     element: CorrDocRefld
     rule: >-
       The CorrDocRefID must relate to the latest instance of the DocRefID. The
@@ -115,7 +115,7 @@ rules:
 
   - number: 60011
     targets:
-      - .//DocRefld
+      - .//DocRefId
     element: DocRefld
     rule: >-
       The DocRefld must be in the correct format: [CountryCode of the sending
@@ -125,7 +125,7 @@ rules:
 
   - number: 60012
     targets:
-      - //CorrDocRefld
+      - //CorrDocRefId
     element: CorrDocRefld
     rule: >-
       When DocTypeIndic is OECD1 or OECDO, the CorrDocRefld field must be omitted.
@@ -151,7 +151,7 @@ rules:
 
   - number: 60014
     targets:
-      - GLOBEBody/FilingInfo/DocSpec/DocRefld
+      - GLOBEBody/FilingInfo/DocSpec/DocRefId
     element: DocRefld
     rule: >-
       When the DocTypeIndic is OECDO for the FilingInfo, The DocRefID must be the same
@@ -161,7 +161,7 @@ rules:
 
   - number: 60015
     targets:
-      - .//CorrDocRefld
+      - .//CorrDocRefId
     element: CorrDocRefld
     rule: >-
       The corrected element does not specify any CorrDocRefld (OECD2/3 without
@@ -171,8 +171,8 @@ rules:
 
   - number: 60016
     targets:
-      - GloBEBody/Filinginfo/DocSpec/DocTypeIndic
-      - GloBEBody/GeneralSection/DocSpec/DocTypeIndic
+      - GLOBEBody/FilingInfo/DocSpec/DocTypeIndic
+      - GLOBEBody/GeneralSection/DocSpec/DocTypeIndic
     rule: >-
       If the value of FilingInfo DoctypeIndic element is OECDO, if General Section is
       provided, the value of General Section DocTypeIndic element must not be OECD1.
@@ -182,7 +182,7 @@ rules:
 
   - number: 60017
     targets:
-      - GloBEBody/Filinginfo/DocSpec/DocTypeIndic
+      - GLOBEBody/FilingInfo/DocSpec/DocTypeIndic
     rule: >-
       If the value of FilingInfo DoctypeIndic element is OECD1, the General Section
       must be provided.
@@ -284,10 +284,10 @@ rules:
 
   - number: 60025
     targets:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/ETRRate
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/ETRRate
     references:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/NetGlobelncome/Total
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/Total
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/NetGloBEIncome/Total
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/Total
     element: ETRRate
     rule: >-
       The ETRRate must be equal to the integer value reported at the AdjustedCovered
@@ -301,13 +301,13 @@ rules:
 
   - number: 60026
     targets:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/TopUpTax
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/TopUpTax
     references:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/TopUpTaxPercentage
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/ExcessProfits
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdditionalTopUpTax/NONArt4.1.5/AdditionalTopUpTax
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdditionalTopUpTax/Art4.1.5/AdditionalTopUpTax
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/QDMTT/Amount
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/TopUpTaxPercentage
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/ExcessProfits
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdditionalTopUpTax/NONArt4.1.5/AdditionalTopUpTax
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdditionalTopUpTax/Art4.1.5/AdditionalTopUpTax
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/QDMTT/Amount
     element: TopUpTax
     rule: >-
       TopUpTax must equal the following calculation: (TopUp TaxPercentage * Excess
@@ -324,7 +324,7 @@ rules:
       - GLOBEBody/JurisdictionSection/LowTaxJurisdiction/LTCE/IIR/ParentEntity/TopUpTax
     references:
       - GLOBEBody/JurisdictionSection/LowTaxJurisdiction/LTCE/IIR/ParentEntity/TopUpTaxShare
-      - GLOBEBody/JurisdictionSection/LowTaxJurisdiction/LTCE/IIR/ParentEntity/IIROffset
+      - GLOBEBody/JurisdictionSection/LowTaxJurisdiction/LTCE/IIR/ParentEntity/IIROffSet
     element: TopUpTax
     rule: >-
       The IIR/ParentEntity/TopUp Tax integer must equal the following calculation:
@@ -335,11 +335,11 @@ rules:
 
   - number: 60028
     targets:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Total
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Total
     references:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/FANIL
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/MainEntityPEandFTE/Additions
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/MainEntityPEandFTE/Reductions
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/FANIL
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/MainEntityPEandFTE/Additions
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/MainEntityPEandFTE/Reductions
     element: AdjustedFANIL/Total
     rule: >-
       The Total must equal the following calculation: AdjustedFANIL/FANIL + (sum of
@@ -411,13 +411,13 @@ rules:
       - GLOBEBody/GeneralSection/CorporateStructure/UPE/OtherUPE/ID/TIN
       - GLOBEBody/GeneralSection/CorporateStructure/CE/ID/TIN
       - GLOBEBody/GeneralSection/CorporateStructure/CE/QIIR/Exception/TIN
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/AggregatedReporting/TaxConsolGroupTIN
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/AggregatedReporting/TaxConsolGroupTIN
     references:
       - GeneralSection/CorporateStructure/UPE/ExcludedUPE/ID/TIN
       - GeneralSection/CorporateStructure/UPE/OtherUPE/ID/TIN
       - GeneralSection/CorporateStructure/CE/ID/TIN (except when GloBEStatus contains the value of GIR316 or GIR318)
       - GeneralSection/CorporateStructure/CE/QIIR/Exception/TIN
-      - JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/Aggregated Reporting/TaxConsolGroupTIN
+      - JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/AggregatedReporting/TaxConsolGroupTIN
     element: TypeofTIN
     rule: >-
       The following TIN elements must not be completed using TypeofTIN GIR3004 and
@@ -459,10 +459,10 @@ rules:
 
   - number: 70008
     targets:
-      - GloBEBody/UTPRAttribution/RecJurCode
+      - GLOBEBody/UTPRAttribution/RecJurCode
     references:
-      - GloBEBody/JurisdictionSection/JurWithTaxingRights/JurisdictionName
-      - GloBEBody/GeneralSection/CorporateStructure/UPE/ID/ResCountryCode
+      - GLOBEBody/JurisdictionSection/JurWithTaxingRights/JurisdictionName
+      - GLOBEBody/GeneralSection/CorporateStructure/UPE/ID/ResCountryCode
     element: RecJurCode
     rule: >-
       The Jurisdiction reported in the RecJurCode must be the UPE jurisdiction or one
@@ -867,7 +867,7 @@ rules:
 
   - number: 70037
     targets:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/Subgroup/TIN
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/Subgroup/TIN
     references:
       - GLOBEBody/Summary/Jurisdiction/Subgroup/TIN
       - GLOBEBody/JurisdictionSection/Jurisdiction
@@ -949,7 +949,7 @@ rules:
       - GLOBEBody/Summary/ETRRange
       - GLOBEBody/Summary/SBIE
       - GLOBEBody/Summary/QDMTTut
-      - GLOBEBody/Summary/GlOBETut
+      - GLOBEBody/Summary/GLoBETut
     references:
       - GLOBEBody/Summary/JurWithTaxingRights
       - GLOBEBody/Summary/SafeHarbour
@@ -982,7 +982,7 @@ rules:
 
   - number: 70044
     targets:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus
     element: ETRStatus
     rule: >-
       When the ETRStatus is completed, it must contain at least one of ETRException or
@@ -992,12 +992,12 @@ rules:
 
   - number: 70045
     targets:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRException/TransitionalCbCRSafeHarbour
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRException/TransitionalCbCRSafeHarbour
     references:
       - GLOBEBody/Summary/SafeHarbour
       - GLOBEBody/Summary/Jurisdiction
       - GLOBEBody/Summary/Jurisdiction/Subgroup
-      - GloBEBody/JurisdictionSection/GLOBETax/ETR/SubGroup
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/SubGroup
     element: TransitionalCbCRSafeHarbour
     rule: >-
       When the SafeHarbour element has the input of GIR1203, GIR1204 or GIR1205 for a
@@ -1014,10 +1014,10 @@ rules:
 
   - number: 70046
     targets:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/SubGroup
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/SubGroup/TypeofSubGroup
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/SubGroup
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/SubGroup/TypeofSubGroup
     references:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRException/TransitionalCbCRSafeHarbour
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRException/TransitionalCbCRSafeHarbour
     element: SubGroup
     rule: >-
       When the TransitionalCbCRSafeHarbour is completed for a jurisdiction, then
@@ -1031,7 +1031,7 @@ rules:
     targets:
       - GLOBEBody/Summary/SafeHarbour
     references:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRException/TransitionalCbCRSafeHarbour/Revenue
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRException/TransitionalCbCRSafeHarbour/Revenue
     element: Revenue
     rule: >-
       When the SafeHarbour element has the input of GIR1203 for a jurisdiction (or for
@@ -1048,7 +1048,7 @@ rules:
     targets:
       - GLOBEBody/Summary/SafeHarbour
     references:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRException/TransitionalCbCRSafeHarbour/IncomeTax
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRException/TransitionalCbCRSafeHarbour/IncomeTax
     element: IncomeTax
     rule: >-
       When the SafeHarbour element has the input of GIR1204 for a jurisdiction (or for
@@ -1065,7 +1065,7 @@ rules:
     targets:
       - GLOBEBody/Summary/SafeHarbour
     references:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRException/UTPRSafeHarbour/CITRate
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRException/UTPRSafeHarbour/CITRate
     element: UTPRSafeHarbour
     rule: >-
       When the SafeHarbour element has the input of GIR1206 for a jurisdiction (or for
@@ -1083,7 +1083,7 @@ rules:
     targets:
       - GLOBEBody/Summary/SafeHarbour
     references:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/Non-MaterialCE
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/Non-MaterialCE
     element: Non-MaterialCE
     rule: >-
       When the SafeHarbour element has the input of GIR1207, GIR1208 or GIR1209 for a
@@ -1103,7 +1103,7 @@ rules:
     targets:
       - GLOBEBody/Summary/SafeHarbour
     references:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/Non-MaterialCE/RFY/AggregateSimplified
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/Non-MaterialCE/RFY/AggregateSimplified
     element: AggregateSimplified
     rule: >-
       When the SafeHarbour element has the input of GIR1208 for a jurisdiction (or for
@@ -1120,10 +1120,10 @@ rules:
 
   - number: 70052
     targets:
-      - GLOBEBody/JurisdictionSection/GLOBETAX/ETR/ETRStatus/ETRComputation/OverallComputation/SubstanceExclusion
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/SubstanceExclusion
     references:
       - Summary/SafeHarbour
-      - JurisdictionSection/GLOBETAX/ETR/ETRStatus/ETRComputation/OverallComputation/SubstanceExclusion
+      - JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/SubstanceExclusion
     element: SubstanceExclusion
     rule: >-
       When the SafeHarbour element has the input of GIR1209 for a jurisdiction (or for
@@ -1139,11 +1139,11 @@ rules:
 
   - number: 70053
     targets:
-      - GLOBEBody/JurisdictionSection/GLOBETAX/ETR/ETRStatus/ETRComputation/OverallComputation/SubstanceExclusion
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/SubstanceExclusion
     references:
       - Summary/SafeHarbour
-      - JurisdictionSection/GLOBETAX/ETR/ETRStatus/ETRComputation/OverallComputation/SubstanceExclusion
-      - Jurisdiction Section/GLOBETax/ETR/ETRStatus/ETRException/TransitionalCbCRSafeHarbour/Profit
+      - JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/SubstanceExclusion
+      - JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRException/TransitionalCbCRSafeHarbour/Profit
     element: SubstanceExclusion
     rule: >-
       When the SafeHarbour element has the input of GIR1205 for a jurisdiction (or for
@@ -1159,9 +1159,9 @@ rules:
 
   - number: 70054
     targets:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/Election/*/RevocationYear
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/Election/*/RevocationYear
     references:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/Election/*/Status
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/Election/*/Status
     element: RevocationYear
     rule: >-
       RevocationYear is only to be provided when the status is FALSE
@@ -1173,11 +1173,11 @@ rules:
 
   - number: 70055
     targets:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/Election/Art3.2.1.c/OutstandingBalance
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/Election/Art3.2.1.c/OutstandingBalance
     references:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/Election/Art3.2.1.c/QualOwnerIntentBalance
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/Election/Art3.2.1.c/Additions
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/Election/Art3.2.1.c/Reductions
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/Election/Art3.2.1.c/QualOwnerIntentBalance
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/Election/Art3.2.1.c/Additions
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/Election/Art3.2.1.c/Reductions
     element: OutstandingBalance
     rule: >-
       The OutstandingBalance should be equal to the following calculation:
@@ -1187,9 +1187,9 @@ rules:
 
   - number: 70056
     targets:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/*/RevocationYear
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/*/RevocationYear
     references:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/*/Status
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/*/Status
     element: RevocationYear
     rule: >-
       RevocationYear is only to be provided when the status is FALSE
@@ -1201,10 +1201,10 @@ rules:
 
   - number: 70057
     targets:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/CEComputation/TIN
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/TIN
     references:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/Aggregated Reporting
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/AggregatedReporting/TaxConsolGroupTIN
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/AggregatedReporting
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/AggregatedReporting/TaxConsolGroupTIN
     element: TIN
     rule: >-
       If the Aggregated Reporting element is completed, then the CEComputations TIN
@@ -1216,9 +1216,9 @@ rules:
 
   - number: 70058
     targets:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/Art7.6/InvestmentEntityTIN
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/Art7.6/InvestmentEntityTIN
     references:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/CEComputation/TIN
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/TIN
     element: InvestmentEntityTIN
     rule: >-
       The InvestmentEntityTIN must not match the CEComputations TIN
@@ -1229,7 +1229,7 @@ rules:
 
   - number: 70059
     targets:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/NetGlobelncome/Adjustments/AdjustmentItem
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/NetGloBEIncome/Adjustments/AdjustmentItem
     element: AdjustmentItem
     rule: >-
       Each code for this AdjustmentItem element cannot be used more than once per ETR
@@ -1240,9 +1240,9 @@ rules:
 
   - number: 70060
     targets:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/NetGlobelncome/IntShippingIncome
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/NetGloBEIncome/IntShippingIncome
     references:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/NetGlobelncome/Adjustments/AdjustmentItem
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/NetGloBEIncome/Adjustments/AdjustmentItem
     element: AdjustmentItem
     rule: >-
       When the 'Adjustmentitem' element contains the value GIR2025 then the
@@ -1253,10 +1253,10 @@ rules:
 
   - number: 70061
     targets:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/Adjustments/AdjustmentItem
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/Adjustments/AdjustmentItem
       - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/AdjustmentsAmount/
     references:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/Election/Art4.6.1
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/Election/Art4.6.1
     element: AdjustmentItem
     rule: >-
       When the 'Art4.6.1' election has the value of TRUE, the AdjustmentItem for the
@@ -1267,9 +1267,9 @@ rules:
 
   - number: 70062
     targets:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/Total
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/Total
     references:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/Adjustments/AdjustmentItem
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/Adjustments/AdjustmentItem
     element: Total
     rule: >-
       If the Adjustmentitem element has the value of GIR2720, then the total of the
@@ -1280,7 +1280,7 @@ rules:
 
   - number: 70063
     targets:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/Adjustments/AdjustmentItem
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/Adjustments/AdjustmentItem
     element: AdjustmentItem
     rule: >-
       Each code for this AdjustmentItem element cannot be used more than once per ETR
@@ -1291,9 +1291,9 @@ rules:
 
   - number: 70064
     targets:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/PostFilingAdjust/DeferTaxAsset/Total
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/PostFilingAdjust/DeferTaxAsset/Total
     references:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/PostFilingAdjust/DeferTaxAsset/AmountAttributed/Amount
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/PostFilingAdjust/DeferTaxAsset/AmountAttributed/Amount
     element: Total
     rule: >-
       The PostFilingAdjust/Defer TaxAsset / Total should equal to the following
@@ -1306,9 +1306,9 @@ rules:
 
   - number: 70065
     targets:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/PostFilingAdjust/CoveredTaxRefund/Total
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/PostFilingAdjust/CoveredTaxRefund/Total
     references:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/PostFilingAdjust/CoveredTaxRefund/AmountAttributed/Amount
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/PostFilingAdjust/CoveredTaxRefund/AmountAttributed/Amount
     element: Total
     rule: >-
       The PostFilingAdjust / Covered TaxRefund / Total should equal to the following
@@ -1322,7 +1322,7 @@ rules:
   - number: 70066
     targets:
       - GLOBEBody/FilingInfo/Period/Start
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/PostFilingAdjust/DeferTaxAsset/AmountAttributed/Year
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/PostFilingAdjust/DeferTaxAsset/AmountAttributed/Year
     element: Year
     rule: >-
       The Year should correspond to or be before the YYYY value reported in the Period
@@ -1333,7 +1333,7 @@ rules:
 
   - number: 70067
     targets:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/PostFilingAdjust/DeferTaxAsset/AmountAttributed/Year
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/PostFilingAdjust/DeferTaxAsset/AmountAttributed/Year
     element: Year
     rule: >-
       If more than one AmountAttributed is provided, the years cannot be the same
@@ -1342,7 +1342,7 @@ rules:
 
   - number: 70068
     targets:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/PostFilingAdjust/CoveredTaxRefund/AmountAttributed/Year
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/PostFilingAdjust/CoveredTaxRefund/AmountAttributed/Year
     references:
       - GLOBEBody/FilingInfo/Period/Start
     element: Year
@@ -1355,7 +1355,7 @@ rules:
 
   - number: 70069
     targets:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/PostFilingAdjust/CoveredTaxRefund/AmountAttributed/Year
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/PostFilingAdjust/CoveredTaxRefund/AmountAttributed/Year
     element: Year
     rule: >-
       If more than one AmountAttributed is provided, the years cannot be the same
@@ -1364,7 +1364,7 @@ rules:
 
   - number: 70070
     targets:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeemedDistTax/Election/Recapture/Year
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeemedDistTax/Election/Recapture/Year
     references:
       - GLOBEBody/FilingInfo/Period/End
     element: Year
@@ -1378,7 +1378,7 @@ rules:
 other_record_errors_continued_2:
   - number: 70071
     targets:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeemedDistTax/Election/Recapture/Year
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeemedDistTax/Election/Recapture/Year
     references:
       - GLOBEBody/FilingInfo/Period/End
     element: Year
@@ -1391,10 +1391,10 @@ other_record_errors_continued_2:
 
   - number: 70072
     targets:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeemedDistTax/Election/Recapture/EndAmount
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeemedDistTax/Election/Recapture/EndAmount
     references:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeemedDistTax/Election/Recapture/StartAmount
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeemedDistTax/Election/Recapture/TotalDDT
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeemedDistTax/Election/Recapture/StartAmount
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeemedDistTax/Election/Recapture/TotalDDT
     element: EndAmount
     rule: >-
       The EndAmount is equal to the following calculation: StartAmount - TotalDDT
@@ -1403,7 +1403,7 @@ other_record_errors_continued_2:
 
   - number: 70073
     targets:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeemedDistTax/Election/Recapture/EndAmount
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeemedDistTax/Election/Recapture/EndAmount
     element: EndAmount
     rule: >-
       The EndAmount must not be a negative.
@@ -1412,12 +1412,12 @@ other_record_errors_continued_2:
 
   - number: 70074
     targets:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeemedDistTax/Election/Recapture/TotalDDT
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeemedDistTax/Election/Recapture/TotalDDT
     references:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeemedDistTax/Election/Recapture/DDTYear-0
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeemedDistTax/Election/Recapture/DDTYear-1
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeemedDistTax/Election/Recapture/DDTYear-2
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeemedDistTax/Election/Recapture/DDTYear-3
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeemedDistTax/Election/Recapture/DDTYear-0
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeemedDistTax/Election/Recapture/DDTYear-1
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeemedDistTax/Election/Recapture/DDTYear-2
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeemedDistTax/Election/Recapture/DDTYear-3
     element: TotalDDT
     rule: >-
       The TotalDDT is equal to the following calculation: DDTYear-0 + DDTYear-1 +
@@ -1428,12 +1428,12 @@ other_record_errors_continued_2:
 
   - number: 70075
     targets:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeemedDistTax/Election/Recapture/DDTYear-0
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeemedDistTax/Election/Recapture/DDTYear-1
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeemedDistTax/Election/Recapture/DDTYear-2
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeemedDistTax/Election/Recapture/DDTYear-3
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeemedDistTax/Election/Recapture/DDTYear-0
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeemedDistTax/Election/Recapture/DDTYear-1
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeemedDistTax/Election/Recapture/DDTYear-2
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeemedDistTax/Election/Recapture/DDTYear-3
     references:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeemedDistTax/Election/Recapture/Year
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeemedDistTax/Election/Recapture/Year
       - GLOBEBody/FilingInfo/Period/End
     element: Year
     rule: >-
@@ -1447,9 +1447,9 @@ other_record_errors_continued_2:
 
   - number: 70076
     targets:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/TransBlendCFC/Total
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/TransBlendCFC/Total
     references:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/TransBlendCFC/CFCJur/Allocation/AggAllocTax
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/TransBlendCFC/CFCJur/Allocation/AggAllocTax
     element: Total
     rule: >-
       The TransBlendCFC total should equal the following calculation: Sum of all
@@ -1460,7 +1460,7 @@ other_record_errors_continued_2:
 
   - number: 70077
     targets:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Total
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Total
     element: Total
     rule: >-
       The total element should be equal to the following calculation: PreRecast +
@@ -1473,11 +1473,11 @@ other_record_errors_continued_2:
 
   - number: 70078
     targets:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/BefRecastAdjust
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/BefRecastAdjust
     references:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/DefTaxAmt
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/DiffCarryValue
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/GLOBEValue
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/DefTaxAmt
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/DiffCarryValue
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/GloBEValue
     element: BefRecastAdjust
     rule: >-
       The BefRecastAdjust element should be equal to the following calculation:
@@ -1488,10 +1488,10 @@ other_record_errors_continued_2:
 
   - number: 70079
     targets:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/PreRecast
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/PreRecast
     references:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/BefRecastAdjust
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/TotalAdjust
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/BefRecastAdjust
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/TotalAdjust
     element: PreRecast
     rule: >-
       The PreRecast element should be equal to the following calculation:
@@ -1502,7 +1502,7 @@ other_record_errors_continued_2:
 
   - number: 70080
     targets:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Adjustments/AdjustmentItem
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Adjustments/AdjustmentItem
     element: AdjustmentItem
     rule: >-
       Each code for this AdjustmentItem element cannot be used more than once per ETR
@@ -1513,11 +1513,11 @@ other_record_errors_continued_2:
 
   - number: 70081
     targets:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Transition/DeferredTaxAssets/Total
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Transition/DeferredTaxAssets/Total
     references:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Transition/DeferredTaxAssets/DeferredTaxAssetStart
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Transition/DeferredTaxAssets/DeferredTaxAssetRecast
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Transition/DeferredTaxAssets/DeferredTaxAssetExcluded
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Transition/DeferredTaxAssets/DeferredTaxAssetStart
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Transition/DeferredTaxAssets/DeferredTaxAssetRecast
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Transition/DeferredTaxAssets/DeferredTaxAssetExcluded
     element: Total
     rule: >-
       The total element should be equal to the following calculation: Deferred
@@ -1530,10 +1530,10 @@ other_record_errors_continued_2:
 
   - number: 70082
     targets:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Transition/DeferredTaxAssets/DeferredTaxAssetStart
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Transition/DeferredTaxAssets/DeferredTaxAssetRecast
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Transition/DeferredTaxAssets/DeferredTaxAssetStart
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Transition/DeferredTaxAssets/DeferredTaxAssetRecast
     references:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Transition/DeferredTaxAssets
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Transition/DeferredTaxAssets
     element: DeferredTaxAsset
     rule: >-
       When the DeferredTaxAssets element is provided, then one of
@@ -1548,11 +1548,11 @@ other_record_errors_continued_2:
 
   - number: 70083
     targets:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/ExcessNegTaxExpense/Remaining
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/ExcessNegTaxExpense/Remaining
     references:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/ExcessNegTaxExpense/PriorYearBalance
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/ExcessNegTaxExpense/GeneratedInRFY
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/ExcessNegTaxExpense/UtilizedInRFY
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/ExcessNegTaxExpense/PriorYearBalance
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/ExcessNegTaxExpense/GeneratedInRFY
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/ExcessNegTaxExpense/UtilizedInRFY
     element: Remaining
     rule: >-
       The Remaining value should equal the following calculation: Prior YearBalance +
@@ -1565,7 +1565,7 @@ other_record_errors_continued_2:
     targets:
       - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/AdjustmentsAmount/Adjustments/AdjustmentItem
     references:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/ExcessNegTaxExpense/GeneratedInRFY
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/ExcessNegTaxExpense/GeneratedInRFY
     element: GeneratedInRFY
     rule: >-
       If the Adjustmentitem element has the value of GIR2719, then the value reported
@@ -1581,9 +1581,9 @@ other_record_errors_continued_2:
 
   - number: 70085
     targets:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/AdjustmentsAmount/Adjustments/AdjustmentItem
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/AdjustmentsAmount/Adjustments/AdjustmentItem
     references:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/ExcessNegTaxExpense/UtilizedInRFY
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/ExcessNegTaxExpense/UtilizedInRFY
     element: UtilizedInRFY
     rule: >-
       If the Adjustmentitem element has the value of GIR2720, then the value reported
@@ -1596,10 +1596,10 @@ other_record_errors_continued_2:
 
   - number: 70086
     targets:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/ExcessProfits
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/ExcessProfits
     references:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/NetGlobeIncome/Total
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/SubstanceExclusion/Total
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/NetGlobeIncome/Total
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/SubstanceExclusion/Total
     element: ExcessProfits
     rule: >-
       The ExcessProfits integer is equal to the following calculation:
@@ -1616,12 +1616,12 @@ other_record_errors_continued_2:
 
   - number: 70087
     targets:
-      - GLOBEBody/JurisdictionSection/GLOBETAX/ETR/ETRStatus/ETRComputation/OverallComputation/SubstanceExclusion/Total
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/SubstanceExclusion/Total
     references:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/SubstanceExclusion/PayrollCost
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/SubstanceExclusion/PayrollMarkUp
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/SubstanceExclusion/TangibleAssetValue
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/SubstanceExclusion/TangibleAssetMarkup
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/SubstanceExclusion/PayrollCost
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/SubstanceExclusion/PayrollMarkUp
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/SubstanceExclusion/TangibleAssetValue
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/SubstanceExclusion/TangibleAssetMarkup
     element: Total
     rule: >-
       The Total integer for the Substance Exclusion is equal to the following
@@ -1633,9 +1633,9 @@ other_record_errors_continued_2:
 
   - number: 70088
     targets:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdditionalTopUpTax/Art4.1.5
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdditionalTopUpTax/Art4.1.5
     references:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/NetGlobeincome/Total
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/NetGloBEIncome/Total
     element: Art4.1.5
     rule: >-
       The Art4.1.5 element must be completed if the
@@ -1646,7 +1646,7 @@ other_record_errors_continued_2:
 
   - number: 70089
     targets:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdditionalTopUpTax/Art4.1.5/AdjustedCoveredTax
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdditionalTopUpTax/Art4.1.5/AdjustedCoveredTax
     element: AdjustedCoveredTax
     rule: >-
       The AdjustedCoveredTax value should be a negative value
@@ -1655,9 +1655,9 @@ other_record_errors_continued_2:
 
   - number: 70090
     targets:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdditionalTopUpTax/Art4.1.5/GlobeLoss
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdditionalTopUpTax/Art4.1.5/GlobeLoss
     references:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/NetGlobeIncome/Total
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/NetGlobeIncome/Total
     element: GlobeLoss
     rule: >-
       The GlobeLoss element must be the same as
@@ -1669,9 +1669,9 @@ other_record_errors_continued_2:
 other_record_errors_continued_3:
   - number: 70091
     targets:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdditionalTopUpTax/Art4.1.5/ExpectedAdjustedCoveredTax
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdditionalTopUpTax/Art4.1.5/ExpectedAdjustedCoveredTax
     references:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdditionalTopUpTax/Art4.1.5/GlobeLoss
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdditionalTopUpTax/Art4.1.5/GlobeLoss
     element: ExpectedAdjustedCoveredTax
     rule: >-
       The ExpectedAdjustedCoveredTax must be equal to the following calculation:
@@ -1682,10 +1682,10 @@ other_record_errors_continued_3:
 
   - number: 70092
     targets:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdditionalTopUpTax/Art4.1.5/AdditionalTopUpTax
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdditionalTopUpTax/Art4.1.5/AdditionalTopUpTax
     references:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdditionalTopUpTax/Art4.1.5/ExpectedAdjustedCoveredTax
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdditionalTopUpTax/Art4.1.5/AdjustedCoveredTax
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdditionalTopUpTax/Art4.1.5/ExpectedAdjustedCoveredTax
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdditionalTopUpTax/Art4.1.5/AdjustedCoveredTax
     element: AdditionalTopUpTax
     rule: >-
       The AdditionalTopUpTax integer is equal to the following calculation:
@@ -1700,7 +1700,7 @@ other_record_errors_continued_3:
 
   - number: 70093
     targets:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdditionalTopUpTax/NONArt4.1.5/Year
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdditionalTopUpTax/NONArt4.1.5/Year
     references:
       - GLOBEBody/FilingInfo/Period/End
     element: Year
@@ -1711,9 +1711,9 @@ other_record_errors_continued_3:
 
   - number: 70094
     targets:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdditionalTopUpTax/NONArt4.1.5/Year
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdditionalTopUpTax/NONArt4.1.5/Year
     references:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdditionalTopUpTax/NONArt4.1.5/Articles
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdditionalTopUpTax/NONArt4.1.5/Articles
       - GLOBEBody/FilingInfo/Period/End
     element: Year
     rule: >-
@@ -1725,9 +1725,9 @@ other_record_errors_continued_3:
 
   - number: 70095
     targets:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdditionalTopUpTax/NONArt4.1.5/Year
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdditionalTopUpTax/NONArt4.1.5/Year
     references:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdditionalTopUpTax/NONArt4.1.5/Articles
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdditionalTopUpTax/NONArt4.1.5/Articles
       - GLOBEBody/FilingInfo/Period/End
     element: Year
     rule: >-
@@ -1739,10 +1739,10 @@ other_record_errors_continued_3:
 
   - number: 70096
     targets:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdditionalTopUpTax/NONArt4.1.5/AdditionalTopUpTax
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdditionalTopUpTax/NONArt4.1.5/AdditionalTopUpTax
     references:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdditionalTopUpTax/NONArt4.1.5/Recalculated/TopUpTax
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdditionalTopUpTax/NONArt4.1.5/Previous/TopUpTax
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdditionalTopUpTax/NONArt4.1.5/Recalculated/TopUpTax
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdditionalTopUpTax/NONArt4.1.5/Previous/TopUpTax
     element: AdditionalTopUpTax
     rule: >-
       Additional TopUpTax is calculated as follows: Recalculated/TopUpTax -
@@ -1881,9 +1881,9 @@ other_record_errors_continued_3:
 
   - number: 70106
     targets:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/CrossBorderAdjustments/OtherTIN
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/CrossBorderAdjustments/OtherTIN
     references:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/CEComputation/TIN
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/TIN
     element: OtherTIN
     rule: >-
       The Other TIN must not be the same as the CEComputations/TIN.
@@ -1892,9 +1892,9 @@ other_record_errors_continued_3:
 
   - number: 70107
     targets:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Total/Adjustment/CrossBorderAdjustments
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Total/Adjustment/CrossBorderAdjustments
     references:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/UPEAdjustments/Reductions/Exception
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/UPEAdjustments/Reductions/Exception
     element: CrossBorderAdjustments
     rule: >-
       Where the Exception element is TRUE, then the CrossBorderAdjustements must not
@@ -1911,10 +1911,10 @@ other_record_errors_continued_3:
 
   - number: 70108
     targets:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/UPEAdjustments/IdentificationOfOwners/IndOwners/TaxRate
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/UPEAdjustments/IdentificationOfOwners/EntityOwner/TaxRate
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/UPEAdjustments/IdentificationOfOwners/IndOwners/TaxRate
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/UPEAdjustments/IdentificationOfOwners/EntityOwner/TaxRate
     references:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/UPEAdjustments/Basis
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/UPEAdjustments/Basis
     element: TaxRate
     rule: >-
       When the 'Basis' is GIR1901, GIR1902, GIR1905, GIR1906 then the
@@ -1925,9 +1925,9 @@ other_record_errors_continued_3:
 
   - number: 70109
     targets:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/UPEAdjustments/IdentificationOfOwners/IndOwners/ResCountryCode
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/UPEAdjustments/IdentificationOfOwners/IndOwners/ResCountryCode
     references:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/UPEAdjustments/Basis
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/UPEAdjustments/Basis
     element: ResCountryCode
     rule: >-
       When the 'Basis' is GIR1907 then the 'ResCountryCode' element must be completed
@@ -1938,9 +1938,9 @@ other_record_errors_continued_3:
 
   - number: 70110
     targets:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/UPEAdjustments/IdentificationOfOwners/IndOwners
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/UPEAdjustments/IdentificationOfOwners/IndOwners
     references:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/UPEAdjustments/Basis
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/UPEAdjustments/Basis
     element: IndOwners
     rule: >-
       When the 'Basis' is GIR1903 or GIR1908, then the IndOwners element must be
@@ -1951,9 +1951,9 @@ other_record_errors_continued_3:
 
   - number: 70111
     targets:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/UPEAdjustments/IdentificationOfOwners/EntityOwner/ExTypeOfEntity
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/UPEAdjustments/IdentificationOfOwners/EntityOwner/ExTypeOfEntity
     references:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/UPEAdjustments/Basis
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/UPEAdjustments/Basis
     element: ExTypeOfEntity
     rule: >-
       When the 'Basis' is GIR1904 or GIR1909, then the 'ExTypeOfEntity' must be
@@ -1964,9 +1964,9 @@ other_record_errors_continued_3:
 
   - number: 70112
     targets:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/UPEAdjustments/IdentificationOfOwners/EntityOwner/ExTypeOfEntity
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/UPEAdjustments/IdentificationOfOwners/EntityOwner/ExTypeOfEntity
     references:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/UPEAdjustments/Basis
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/UPEAdjustments/Basis
     element: ExTypeOfEntity
     rule: >-
       When the 'Basis' is GIR1904, then the 'ExTypeOfEntity' must not contain the
@@ -1977,9 +1977,9 @@ other_record_errors_continued_3:
 
   - number: 70113
     targets:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/UPEAdjustments/IdentificationOfOwners/EntityOwner/ExTypeOfEntity
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/UPEAdjustments/IdentificationOfOwners/EntityOwner/ExTypeOfEntity
     references:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/UPEAdjustments/Basis
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/UPEAdjustments/Basis
     element: ExTypeOfEntity
     rule: >-
       When the 'Basis' is GIR1909, then the 'ExTypeOfEntity' must not contain the
@@ -1990,7 +1990,7 @@ other_record_errors_continued_3:
 
   - number: 70114
     targets:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/CEComputation/NetGlobelncome/Adjustments/Amount
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/NetGloBEIncome/Adjustments/Amount
     element: Amount
     rule: >-
       If two values are provided for the'Amount', then one value must be negative and
@@ -2003,9 +2003,9 @@ other_record_errors_continued_3:
 
   - number: 70115
     targets:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/UPEAdjustments
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/UPEAdjustments
     references:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/CEComputation/NetGlobeIncome/Adjustments/AdjustmentItem
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/NetGlobeIncome/Adjustments/AdjustmentItem
     element: AdjustmentItem
     rule: >-
       When the 'Adjustmentitem' element contains the value GIR2022 and/or GIR2023 then
@@ -2016,9 +2016,9 @@ other_record_errors_continued_3:
 
   - number: 70116
     targets:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/CEComputation/NetGlobelncome/IntShippingIncome
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/NetGloBEIncome/IntShippingIncome
     references:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/CEComputation/NetGlobeIncome/Adjustments/AdjustmentItem
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/NetGlobeIncome/Adjustments/AdjustmentItem
     element: AdjustmentItem
     rule: >-
       When the 'AdjustmentItem' element contains the value GIR2025 then the
@@ -2029,9 +2029,9 @@ other_record_errors_continued_3:
 
   - number: 70117
     targets:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/Art7.6
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/Art7.6
     references:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/CEComputation/NetGlobeIncome/Adjustments/AdjustmentItem
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/NetGlobeIncome/Adjustments/AdjustmentItem
     element: AdjustmentItem
     rule: >-
       When the 'Adjustmentitem' element contains the value GIR2024 then the 'Art7.6'
@@ -2042,7 +2042,7 @@ other_record_errors_continued_3:
 
   - number: 70118
     targets:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedCoveredTax/Adjustments/Amount
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedCoveredTax/Adjustments/Amount
     element: Amount
     rule: >-
       If two values are provided for the'Amount', then one value must be negative and
@@ -2055,7 +2055,7 @@ other_record_errors_continued_3:
 
   - number: 70119
     targets:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedCoveredTax/Adjustments/AdjustmentItem
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedCoveredTax/Adjustments/AdjustmentItem
     element: AdjustmentItem
     rule: >-
       Each code for this AdjustmentItem element cannot be used more than once per ETR
@@ -2066,12 +2066,12 @@ other_record_errors_continued_3:
 
   - number: 70120
     targets:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Total
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Total
     references:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/DeferTaxExpense
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/AdjustmentAmount/
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Recast/Higher
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Recast/Lower
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/DeferTaxExpense
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/AdjustmentsAmount/
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Recast/Higher
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Recast/Lower
     element: Total
     rule: >-
       The Total element shall equal the following calculation: Defer TaxExpense + Sum
@@ -2084,7 +2084,7 @@ other_record_errors_continued_3:
 
   - number: 70121
     targets:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Adjustment/AdjustmentItem
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Adjustment/AdjustmentItem
     element: AdjustmentItem
     rule: >-
       Each code for this Adjustmentltem element cannot be used more than once per ETR
@@ -2095,7 +2095,7 @@ other_record_errors_continued_3:
 
   - number: 70122
     targets:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Adjustment/Amount
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Adjustment/Amount
     element: Amount
     rule: >-
       If two values are provided for the Amount element, then one value must be
@@ -2108,7 +2108,7 @@ other_record_errors_continued_3:
 
   - number: 70123
     targets:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedIncomeTax/CrossAllocation/Additions
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedIncomeTax/CrossAllocation/Additions
     element: Additions
     rule: >-
       The Additions element must not have a negative value.
@@ -2117,7 +2117,7 @@ other_record_errors_continued_3:
 
   - number: 70124
     targets:
-      - GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedIncomeTax/CrossAllocation/Reductions
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedIncomeTax/CrossAllocation/Reductions
     element: Reductions
     rule: >-
       The Reductions element must not be a positive value.
