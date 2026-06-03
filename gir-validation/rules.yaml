@@ -412,11 +412,11 @@ rules:
 
   - number: 70006
     targets:
-      - GLOBEBody/GeneralSection/CorporateStructure/UPE/ExcludedUPE/ID/TIN
-      - GLOBEBody/GeneralSection/CorporateStructure/UPE/OtherUPE/ID/TIN
-      - GLOBEBody/GeneralSection/CorporateStructure/CE/ID/TIN
-      - GLOBEBody/GeneralSection/CorporateStructure/CE/QIIR/Exception/TIN
-      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/AggregatedReporting/TaxConsolGroupTIN
+      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:GeneralSection/globe:CorporateStructure/globe:UPE/globe:ExcludedUPE/globe:ID/globe:TIN
+      # TODO Choice: - /globe:GLOBE_OECD/globe:GLOBEBody/globe:GeneralSection/globe:CorporateStructure/globe:UPE/globe:OtherUPE/globe:ID/globe:TIN
+      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:GeneralSection/globe:CorporateStructure/globe:CE/globe:ID/globe:TIN
+      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:GeneralSection/globe:CorporateStructure/globe:CE/globe:QIIR/globe:Exception/globe:TIN
+      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:CEComputation/globe:Elections/globe:AggregatedReporting/globe:TaxConsolGroupTIN
     references:
       - GeneralSection/CorporateStructure/UPE/ExcludedUPE/ID/TIN
       - GeneralSection/CorporateStructure/UPE/OtherUPE/ID/TIN
