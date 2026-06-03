@@ -1,7 +1,13 @@
+xmlnamespaces:
+  globe: "urn:oecd:ties:globe:v2"
+  iso: "urn:oecd:ties:isoglobetypes:v1"
+  stf: "urn:oecd:ties:globestf:v5"
+
 rules:
+
   - number: 60001
     targets:
-      - MessageSpec/MessageRefId
+      - /globe:GLOBE_OECD/globe:MessageSpec/globe:MessageRefId
     element: MessageRefld
     rule: >-
       The MessageRefld must be in the correct format: [CountryCode of the sending
@@ -14,7 +20,7 @@ rules:
 
   - number: 60002
     targets:
-      - MessageSpec/MessageRefId
+      - GLOBE_OECD/MessageSpec/MessageRefId
     element: MessageRefld
     rule: >-
       The GIR Message Header has a duplicate MessageRefld value that was received on
