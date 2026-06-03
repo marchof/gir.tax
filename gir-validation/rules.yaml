@@ -655,7 +655,7 @@ rules:
 
   - number: 70022
     targets:
-      - GLOBEBody/GeneralSection/CorporateStructure/CE/OwnershipChange/ChangeDate
+      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:GeneralSection/globe:CorporateStructure/globe:CE/globe:OwnershipChange/globe:ChangeDate
     references:
       - GLOBEBody/FilingInfo/Period/Start
     element: ChangeDate
@@ -668,7 +668,7 @@ rules:
 
   - number: 70023
     targets:
-      - GLOBEBody/GeneralSection/CorporateStructure/CE/OwnershipChange/ChangeDate
+      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:GeneralSection/globe:CorporateStructure/globe:CE/globe:OwnershipChange/globe:ChangeDate
     references:
       - GLOBEBody/FilingInfo/Period/End
     element: ChangeDate
@@ -681,7 +681,7 @@ rules:
 
   - number: 70024
     targets:
-      - GLOBEBody/GeneralSection/CorporateStructure/CE/OwnershipChange/PreOwnership
+      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:GeneralSection/globe:CorporateStructure/globe:CE/globe:OwnershipChange/globe:PreOwnership
     references:
       - GLOBEBody/GeneralSection/CorporateStructure/CE/OwnershipChange/PreGlobeStatus
     element: PreOwnership
@@ -694,7 +694,7 @@ rules:
 
   - number: 70025
     targets:
-      - GLOBEBody/GeneralSection/CorporateStructure/CE/OwnershipChange/PreOwnership/TIN
+      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:GeneralSection/globe:CorporateStructure/globe:CE/globe:OwnershipChange/globe:PreOwnership/globe:TIN
     references:
       - GLOBEBody/GeneralSection/CorporateStructure/CE/OwnershipChange/PreOwnership/OwnershipType
     element: OwnershipType
@@ -709,7 +709,7 @@ rules:
 
   - number: 70026
     targets:
-      - GLOBEBody/GeneralSection/CorporateStructure/CE/Ownership/OwnershipPercentage
+      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:GeneralSection/globe:CorporateStructure/globe:CE/globe:Ownership/globe:OwnershipPercentage
     references:
       - GLOBEBody/GeneralSection/CorporateStructure/CE/ID/GlobeStatus
     element: OwnershipPercentage
@@ -721,9 +721,9 @@ rules:
 
   - number: 70027
     targets:
-      - GLOBEBody/GeneralSection/CorporateStructure/CE/Ownership/OwnershipPercentage
-      - GLOBEBody/GeneralSection/CorporateStructure/CE/Ownership/TIN
-      - GLOBEBody/GeneralSection/CorporateStructure/CE/Ownership/OwnershipType
+      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:GeneralSection/globe:CorporateStructure/globe:CE/globe:Ownership/globe:OwnershipPercentage
+      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:GeneralSection/globe:CorporateStructure/globe:CE/globe:Ownership/globe:TIN
+      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:GeneralSection/globe:CorporateStructure/globe:CE/globe:Ownership/globe:OwnershipType
     references:
       - GLOBEBody/GeneralSection/CorporateStructure/CE/ID/GlobeStatus
     element: OwnershipPercentage
@@ -738,7 +738,7 @@ rules:
 
   - number: 70028
     targets:
-      - GLOBEBody/GeneralSection/CorporateStructure/CE/Ownership/OwnershipPercentage
+      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:GeneralSection/globe:CorporateStructure/globe:CE/globe:Ownership/globe:OwnershipPercentage
     references:
       - GLOBEBody/GeneralSection/CorporateStructure/CE/ID/GlobeStatus
     element: OwnershipPercentage
@@ -751,7 +751,7 @@ rules:
 
   - number: 70029
     targets:
-      - GLOBEBody/GeneralSection/CorporateStructure/CE/Ownership/TIN
+      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:GeneralSection/globe:CorporateStructure/globe:CE/globe:Ownership/globe:TIN
     references:
       - GLOBEBody/GeneralSection/CorporateStructure/CE/Ownership/OwnershipType
       - GLOBEBody/GeneralSection/CorporateStructure/UPE/ExcludedUPE/ID/TIN
@@ -768,7 +768,7 @@ rules:
 
   - number: 70030
     targets:
-      - GLOBEBody/GeneralSection/CorporateStructure/CE/Ownership/TIN
+      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:GeneralSection/globe:CorporateStructure/globe:CE/globe:Ownership/globe:TIN
     references:
       - GLOBEBody/GeneralSection/CorporateStructure/CE/Ownership/OwnershipType
       - GLOBEBody/GeneralSection/CorporateStructure/CE/ID/TIN
@@ -785,7 +785,7 @@ rules:
 
   - number: 70031
     targets:
-      - GLOBEBody/GeneralSection/CorporateStructure/CE/Ownership/TIN
+      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:GeneralSection/globe:CorporateStructure/globe:CE/globe:Ownership/globe:TIN
     references:
       - GLOBEBody/GeneralSection/CorporateStructure/CE/ID/GlobeStatus
       - GLOBEBody/GeneralSection/CorporateStructure/CE/ID/TIN

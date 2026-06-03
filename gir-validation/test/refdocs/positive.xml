@@ -70,6 +70,15 @@
         		<globe:Rules>GIR201</globe:Rules>
         		<globe:GlobeStatus>GIR301</globe:GlobeStatus>
         	</globe:ID>
+          <globe:OwnershipChange>
+            <globe:ChangeDate>2001-01-01</globe:ChangeDate>
+            <globe:PreGlobeStatus>GIR701</globe:PreGlobeStatus>
+            <globe:PreOwnership>
+              <globe:OwnershipType>GIR801</globe:OwnershipType>
+              <globe:TIN>globe:TIN</globe:TIN>
+              <globe:PreOwnershipPercentage>0</globe:PreOwnershipPercentage>
+            </globe:PreOwnership>
+          </globe:OwnershipChange>
         	<globe:Ownership>
         		<globe:OwnershipType>GIR801</globe:OwnershipType>
         		<globe:TIN>globe:TIN</globe:TIN>
