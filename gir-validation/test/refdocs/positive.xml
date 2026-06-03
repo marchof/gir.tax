@@ -157,6 +157,10 @@
                 <globe:AdjustedCoveredTax>
                   <globe:Total>0</globe:Total>
                   <globe:AggregrateCurrentTax>0</globe:AggregrateCurrentTax>
+                  <globe:Adjustments>
+                    <globe:Amount>0</globe:Amount>
+                    <globe:AdjustmentItem>GIR2701</globe:AdjustmentItem>
+                  </globe:Adjustments>
                 </globe:AdjustedCoveredTax>
                 <globe:SubstanceExclusion>
                   <globe:Total>0</globe:Total>

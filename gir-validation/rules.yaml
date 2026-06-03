@@ -355,11 +355,9 @@ rules:
       EntityPEandFTE/Additions elements) - (sum of all MainEntityPEandFTE/Reductions
       elements) Adjusted
 
-    other_record_errors:
   - number: 70001
     targets:
       - //globe:TIN
-    element: TypeOfTIN
     test: >-
       not(@TypeOfTIN='GIR3004') or
       (.='NOTIN' and (@unknown='true' or @unknown='1') and not(@issuedBy))
@@ -373,7 +371,6 @@ rules:
   - number: 70002
     targets:
       - //globe:TIN
-    element: TypeOfTIN
     test: >-
       not(.='NOTIN') or
       (@TypeOfTIN='GIR3004' and (@unknown='true' or @unknown='1') and not(@issuedBy))
@@ -387,7 +384,6 @@ rules:
   - number: 70003
     targets:
       - //globe:TIN
-    element: unknown
     test: >-
       not(@unknown='true' or @unknown='1') or
       (.='NOTIN' and @TypeOfTIN='GIR3004' and not(@issuedBy))
@@ -1574,7 +1570,7 @@ rules:
 
   - number: 70084
     targets:
-      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/AdjustmentsAmount/Adjustments/AdjustmentItem  # TODO: verify path against schema (unknown segments: AdjustmentsAmount)
+      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:OverallComputation/globe:AdjustedCoveredTax/globe:Adjustments/globe:Amount
     references:
       - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/ExcessNegTaxExpense/GeneratedInRFY
     element: GeneratedInRFY
@@ -1592,7 +1588,7 @@ rules:
 
   - number: 70085
     targets:
-      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/AdjustmentsAmount/Adjustments/AdjustmentItem  # TODO: verify path against schema (unknown segments: AdjustmentsAmount)
+      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:OverallComputation/globe:AdjustedCoveredTax/globe:Adjustments/globe:AdjustmentItem
     references:
       - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/ExcessNegTaxExpense/UtilizedInRFY
     element: UtilizedInRFY
