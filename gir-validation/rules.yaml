@@ -20,7 +20,7 @@ rules:
 
   - number: 60002
     targets:
-      - GLOBE_OECD/MessageSpec/MessageRefId
+      - /globe:GLOBE_OECD/globe:MessageSpec/globe:MessageRefId
     element: MessageRefld
     rule: >-
       The GIR Message Header has a duplicate MessageRefld value that was received on
@@ -31,7 +31,7 @@ rules:
 
   - number: 60003
     targets:
-      - MessageSpec/ReportingPeriod
+      - /globe:GLOBE_OECD/globe:MessageSpec/globe:ReportingPeriod
     element: ReportingPeriod
     rule: >-
       The ReportingPeriod YYYY value must be less than or equal to current year
@@ -40,8 +40,7 @@ rules:
 
   - number: 60004
     targets:
-      - //DocTypeIndic
-      - DocTypeIndic
+      - //stf:DocTypeIndic
     rule: >-
       A message can contain either new records (OECD1) or corrections (OECD2 or
       OECD3), but should not contain a mixture of both.
@@ -52,7 +51,7 @@ rules:
 
   - number: 60005
     targets:
-      - .//DocTypeIndic
+      - //stf:DocTypeIndic
     element: DocTypeIndic
     rule: >-
       When DocTypeIndic is OECD2 or OECD3, the record must concern the same sub
@@ -109,7 +108,7 @@ rules:
 
   - number: 60010
     targets:
-      - GLOBEBody/FilingInfo/DocSpec/DocTypeIndic
+      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:FilingInfo/globe:DocSpec/stf:DocTypeIndic
     element: DocTypeIndic
     rule: >-
       The FilingInfo cannot be deleted without deleting all related General Section,
@@ -121,7 +120,7 @@ rules:
 
   - number: 60011
     targets:
-      - .//DocRefId
+      - //stf:DocRefId
     element: DocRefld
     rule: >-
       The DocRefld must be in the correct format: [CountryCode of the sending
@@ -157,7 +156,7 @@ rules:
 
   - number: 60014
     targets:
-      - GLOBEBody/FilingInfo/DocSpec/DocRefId
+      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:FilingInfo/globe:DocSpec/stf:DocRefId
     element: DocRefld
     rule: >-
       When the DocTypeIndic is OECDO for the FilingInfo, The DocRefID must be the same
@@ -177,8 +176,8 @@ rules:
 
   - number: 60016
     targets:
-      - GLOBEBody/FilingInfo/DocSpec/DocTypeIndic
-      - GLOBEBody/GeneralSection/DocSpec/DocTypeIndic
+      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:FilingInfo/globe:DocSpec/stf:DocTypeIndic
+      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:GeneralSection/globe:DocSpec/stf:DocTypeIndic
     rule: >-
       If the value of FilingInfo DoctypeIndic element is OECDO, if General Section is
       provided, the value of General Section DocTypeIndic element must not be OECD1.
@@ -188,7 +187,7 @@ rules:
 
   - number: 60017
     targets:
-      - GLOBEBody/FilingInfo/DocSpec/DocTypeIndic
+      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:FilingInfo/globe:DocSpec/stf:DocTypeIndic
     rule: >-
       If the value of FilingInfo DoctypeIndic element is OECD1, the General Section
       must be provided.
@@ -197,7 +196,7 @@ rules:
 
   - number: 60018
     targets:
-      - .//RecJurCode
+      - //globe:RecJurCode
     element: RecJurCode
     rule: >-
       At least one Country ISO Code in RecJurCode must be the same as the
@@ -208,7 +207,7 @@ rules:
 
   - number: 60019
     targets:
-      - .//RecJurCode
+      - //globe:RecJurCode
     element: RecJurCode
     rule: >-
       Where the Role of the Filing CE is GIR403, GIR404, GIR405, then the GIR is only
@@ -231,7 +230,7 @@ rules:
 
   - number: 60021
     targets:
-      - GLOBEBody/FilingInfo/Period/End
+      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:FilingInfo/globe:Period/globe:End
     references:
       - MessageSpec/ReportingPeriod
     element: End
@@ -244,7 +243,7 @@ rules:
 
   - number: 60022
     targets:
-      - GLOBEBody/FilingInfo/FilingCE/TIN
+      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:FilingInfo/globe:FilingCE/globe:TIN
     references:
       - GLOBEBody/FilingInfo/FilingCE/Role
       - GLOBEBody/GeneralSection/CorporateStructure/UPE/ExcludedUPE/ID/TIN
@@ -260,7 +259,7 @@ rules:
 
   - number: 60023
     targets:
-      - GLOBEBody/FilingInfo/FilingCE/ResCountryCode
+      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:FilingInfo/globe:FilingCE/globe:ResCountryCode
     references:
       - MessageSpec/TransmittingCountry
     element: ResCountryCode
@@ -290,7 +289,7 @@ rules:
 
   - number: 60025
     targets:
-      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/ETRRate
+      - /GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/ETRRate
     references:
       - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/NetGlobeIncome/Total
       - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/Total
