@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<globe:GLOBE_OECD version="1" xmlns:globe="urn:oecd:ties:globe:v2" xmlns:iso="urn:oecd:ties:isoglobetypes:v1" xmlns:stf="urn:oecd:ties:globestf:v5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oecd:ties:globe:v2 globe-xsd/GLOBEXML_v1.0.xsd">
+<globe:GLOBE_OECD xmlns:globe="urn:oecd:ties:globe:v2">
   <globe:TIN TypeOfTIN="GIR3004" unknown="true" issuedBy="issuer">NOTIN</globe:TIN>    
 </globe:GLOBE_OECD>
