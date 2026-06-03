@@ -1,173 +1,173 @@
 rules:
-  - number: "60001"
+  - number: 60001
     target: "MessageSpec/MessageRefld"
     element: "MessageRefld"
     rule: "The MessageRefld must be in the correct format: [CountryCode of the sending jurisdiction] [Reporting Period] [CountryCode of the receiving jurisdiction] [UniqueID]"
     description: "The structure of the Message Refld is not in the correct format. Please ensure the MessageRefID follows structure defined in the GIR User Guide, and resubmit the file."
 
-  - number: "60002"
+  - number: 60002
     target: "MessageSpec/MessageRefld"
     element: "MessageRefld"
     rule: "The GIR Message Header has a duplicate Message RefID value that was received on a previous file."
     description: "Please replace the Message RefID field value with a new unique value (not containing all blanks), and resubmit the file."
 
-  - number: "60003"
+  - number: 60003
     target: "MessageSpec/ReportingPeriod"
     element: "Reporting Period"
     rule: "The Reporting Period YYYY value must be less than or equal to current year"
     description: "Reporting period year must be less than or equal to current year."
 
-  - number: "60004"
+  - number: 60004
     target: "//DocTypeIndic"
     element: "DocTypeIndic"
     rule: "A message can contain either new records (OECD1) or corrections (OECD2 or OECD3), but should not contain a mixture of both."
     description: "This message contains a mix of new records (OECD1) and corrections (OECD2/OECD3). Please ensure the DocTypeIndic elements contain either new records (OECD1) or corrections (OECD2 or OECD3), but not a mixture of both."
 
-  - number: "60005"
+  - number: 60005
     target: ".//DocTypeIndic"
     element: "DocTypeIndic"
     rule: "When DocTypeIndic is OECD2 or OECD3, the record must concern the same sub section (FilingInfo, General section, Summary, JuridictionSection or UTPRAttribution) as the CorrDocRefld."
     description: "The correction or deletion refers to a record of an other sub section."
 
-  - number: "60006"
+  - number: 60006
     target: "//CorrDocReflD"
     element: "CorrDocRefld"
     rule: "The same DocReflD cannot be corrected or deleted twice in the same message."
     description: "The same DocRefID cannot be corrected or deleted twice in the same message, therefore each CorrDocRefID must be unique within the same message."
 
-  - number: "60007"
+  - number: 60007
     target: "//DocRefld"
     element: "DocRefld"
     rule: "The DocRefID is already used for another record."
     description: "The provided DocRefID has already been used for a pre-existing record, please relodge and ensure that the provided DocRefID is in accordance with the OECD GIR XML Schema User Guide and is 'unique in time and space'."
 
-  - number: "60008"
+  - number: 60008
     target: ".//CorrDocRefID"
     element: "CorrDocRefld"
     rule: "The CorrDocRefid refers to an unknown record."
     description: "The CorrDocRefld provided does not match to an existing record of a DocRefld, please relodge the file and ensure that the CorrDocRefld is an exact match to the DocRefld of the element which is subject to a correction"
 
-  - number: "60009"
+  - number: 60009
     target: "//CorrDocRefld"
     element: "CorrDocRefld"
     rule: "The CorrDocRefID must relate to the latest instance of the DocRefID. The CorrDocRefID cannot reference an invalidated or outdated version of the DocRefID (i.e. CorrDocRefID refers to the DocRefID of the original record, while a subsequent correction has been received which has a new DocRefID/CorrDocRefID)"
     description: "The corrected record is no longer valid (invalidated or outdated by a previous correction message). As a consequence, no further information should have been received on this version of the record."
 
-  - number: "60010"
+  - number: 60010
     target: "GLOBEBody/FilingInfo/DocSpec/DocTypeIndic"
     element: "DocTypeIndic"
     rule: "The FilingInfo cannot be deleted without deleting all related General Section, Summary, JurisdictionSection and UTPRAttribution records"
     description: "To delete the FilingInfo please ensure that a deletion request has been sent for all associated General Section, Summary, JurisdictionSection and UTPRAttribution records."
 
-  - number: "60011"
+  - number: 60011
     target: ".//DocRefld"
     element: "DocRefld"
     rule: "The DocRefld must be in the correct format: [CountryCode of the sending jurisdiction] [ReportingYear][UniqueID]"
     description: "The structure of the DocRefld is not in the correct format."
 
-  - number: "60012"
+  - number: 60012
     target: "//CorrDocRefld"
     element: "CorrDocRefld"
     rule: "When DocTypeIndic is OECD1 or OECDO, the CorrDocRefld field must be omitted."
     description: "When an element has DocTypeIndic of OECD1 or OECD0, which indicates that a new lodgment or a resend is being made, the CorrDocRefld field must not be completed."
 
-  - number: "60013"
+  - number: 60013
     target: "GLOBEBody/GeneralSection/DocSpec/DocTypeIndic\nGLOBEBody/Summary/DocSpec/DocTypeIndic\nGLOBEBody/JurisdictionSection/DocSpec/DocTypeIndic\nGLOBEBody/UTPRAttribution/DocSpec/DocTypeIndic"
     element: "DocTypeIndic"
     rule: "The Resend option may only be used with respect to the FilingInfo element. The value of OECDO is not an acceptable input in the DocTypeIndic for the GeneralSection, Summary, JurisdictionSection, UTPRAttribution"
     description: "OECDO is only a valid input for the DocTypeIndic of the FilingInfo and should not be used for any other element."
 
-  - number: "60014"
+  - number: 60014
     target: "GLOBEBody/FilingInfo/DocSpec/DocRefld"
     element: "DocRefld"
     rule: "When the DocTypeIndic is OECDO for the FilingInfo, The DocRefID must be the same as the DocReflD that was used for the latest version of the FilingInfo"
     description: "An unknown or invalid DocRefID was specified for the Resend option (OECDO)."
 
-  - number: "60015"
+  - number: 60015
     target: ".//CorrDocRefld"
     element: "CorrDocRefld"
     rule: "The corrected element does not specify any CorrDocRefld (OECD2/3 without CorrDocRefld data)."
     description: "When DocTypeIndic is \"OECD2\" or \"OECD3\", CorrDocRefld must be provided."
 
-  - number: "60016"
+  - number: 60016
     target: "GloBEBody/Filinginfo/DocSpec/DocTypeIndic\nGloBEBody/GeneralSection/DocSpec/DocTypeIndic"
     rule: "If the value of FilingInfo DoctypeIndic element is OECDO, if General Section is provided, the value of General Section DocTypeIndic element must not be OECD1."
     description: "A new General Section can't be filed if one already exists. Please process with a correction or deletion if the General Section has to be modified."
 
-  - number: "60017"
+  - number: 60017
     target: "GloBEBody/Filinginfo/DocSpec/DocTypeIndic"
     rule: "If the value of FilingInfo DoctypeIndic element is OECD1, the General Section must be provided."
     description: "Each new GIR filing must contain a General Section."
 
-  - number: "60018"
+  - number: 60018
     target: ".//RecJurCode"
     element: "RecJurCode"
     rule: "At least one Country ISO Code in RecJurCode must be the same as the ReceivingCountry."
     description: "At least one Country ISO Code in RecJurCode must be the same as the ReceivingCountry."
 
-  - number: "60019"
+  - number: 60019
     target: ".//RecJurCode"
     element: "RecJurCode"
     rule: "Where the Role of the Filing CE is GIR403, GIR404, GIR405, then the GIR is only a local lodgement and must not be exchanged."
     description: "The RecJurCode should be (name of the local jurisdiction) as the FilingCE role provide suggests that the GIR is only a local lodgment and must not be exchanged."
 
-  - number: "60020"
+  - number: 60020
     target: "GLOBEBody/FilingInfo/Period/Start"
     reference: "GLOBEBody/FilingInfo/Period/End"
     element: "Start"
     rule: "Period start date must not be later than the Period end date"
     description: "Period start date must be earlier than or same as Period end date."
 
-  - number: "60021"
+  - number: 60021
     target: "GLOBEBody/FilingInfo/Period/End"
     reference: "MessageSpec/ReportingPeriod"
     element: "End"
     rule: "Reporting Period End Date must not be later than the Reporting Period in the Message Header."
     description: "The Reporting Period End Date must not be a date which is beyond the Reporting Period date in the MessageHeader"
 
-  - number: "60022"
+  - number: 60022
     target: "GLOBEBody/FilingInfo/FilingCE/TIN"
     reference: "GLOBEBody/FilingInfo/FilingCE/Role\nGLOBEBody/GeneralSection/CorporateStructure/UPE/ExcludedUPE/ID/TIN\nGLOBEBody/GeneralSection/CorporateStructure/UPE/OtherUPE/ID/TIN"
     element: "Role"
     rule: "When the role is GIR401, the FilingCE TIN should match at least one of the TINs provided in the ID of the UPE element, whether it is OtherUPE or ExcludedUPE"
     description: "When the UPE is lodging the GIR, then the contents of the FilingCE must match at least one of the TINs provided in the UPE element (either the OtherUPE or ExcludedUPE)"
 
-  - number: "60023"
+  - number: 60023
     target: "GLOBEBody/FilingInfo/FilingCE/ResCountryCode"
     reference: "MessageSpec/TransmittingCountry"
     element: "ResCountryCode"
     rule: "The ResCountryCode of the FilingCE must match to the Transmitting Country"
     description: "The ResCountryCode of the FilingCE must match to the Transmitting Country"
 
-  - number: "60024"
+  - number: 60024
     target: "GLOBEBody/Summary/JurWithTaxingRights"
     reference: "GLOBEBody/Summary/SafeHarbour\nGLOBEBody/Summary/ETRRange\nGLOBEBody/Summary/SBIE\nGLOBEBody/Summary/QDMTTut\nGLOBEBody/Summary/GLOBETut"
     element: "JurWithTaxingRights"
     rule: "If the Summary contains any of the following elements: SafeHarbour, ETRRange, SBIE, QDMTTut, GLOBETut, then the JurWithTaxingRights/JurisdictionName must be provided."
     description: "If the Summary contains any of the following elements: SafeHarbour, ETRRange, SBIE, QDMTTut, GLOBETut, then the JurWithTaxingRights/JurisdictionName must be provided."
 
-  - number: "60025"
+  - number: 60025
     target: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/ETRRate"
     reference: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/NetGlobelncome/Total\nGLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/Total"
     element: "ETRRate"
     rule: "The ETRRate must be equal to the integer value reported at the AdjustedCovered Tax/Total element DIVIDED by the integer reported at the NetGlobeIncome/Total element. This rule does not apply if the NetGloBEIncome in the jurisdiction is zero (or negative). If AdjustedCovered Tax/Total element is not provided, then value assumed to be 0."
     description: "The ETRRate must equal AdjustedCovered Tax/Total (Divided by) NetGlobeIncome/Total"
 
-  - number: "60026"
+  - number: 60026
     target: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/TopUpTax"
     reference: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/TopUpTaxPercentage\nGLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/ExcessProfits\nGLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdditionalTopUpTax/NONArt4.1.5/AdditionalTopUpTax\nGLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdditionalTopUpTax/Art4.1.5/AdditionalTopUpTax\nGLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/QDMTT/Amount"
     element: "TopUp Tax"
     rule: "TopUpTax must equal the following calculation: (TopUp TaxPercentage * Excess Profits) + (NONArt.4.1.5/Additional TopUpTax + Art4.1.5AdditionalTopUpTax/) - QDMTT/Amount. If any elements are not provided, these should be treated as a 0 value."
     description: "Note that Additional TopUpTax is an optional field and as such, if no Additional TopUpTax element is provided, the calculation should then be read as: (TopUpTaxPercentage * Excess Profits) + 0 - QDMTT/Amount"
 
-  - number: "60027"
+  - number: 60027
     target: "GLOBEBody/JurisdictionSection/LowTaxJurisdiction/LTCE/IIR/ParentEntity/TopUpTax"
     reference: "GLOBEBody/JurisdictionSection/LowTaxJurisdiction/LTCE/IIR/ParentEntity/TopUpTaxShare\nGLOBEBody/JurisdictionSection/LowTaxJurisdiction/LTCE/IIR/ParentEntity/IIROffset"
     element: "TopUpTax"
     rule: "The IIR/ParentEntity/TopUp Tax integer must equal the following calculation: IIR/ParentEntity/TopUpTaxShare - IIROffSet"
     description: "The IIR/ParentEntity/TopUpTax integer must equal the following calculation: TopUpTaxShare - IIROffSet"
 
-  - number: "60028"
+  - number: 60028
     target: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Total"
     reference: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/FANIL\nGLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/MainEntityPEandFTE/Additions\nGLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/MainEntityPEandFTE/Reductions"
     element: "AdjustedFANIL/Total"
@@ -175,329 +175,329 @@ rules:
     description: "The Total must equal the following calculation: FANIL/FANIL + (sum of all Main EntityPEandFTE/Additions elements) - (sum of all MainEntityPEandFTE/Reductions elements) Adjusted"
 
     other_record_errors:
-  - number: "70001"
+  - number: 70001
     target: "//TIN"
     element: "TypeOfTIN"
     rule: "If TypeOfTIN is GIR3004 then TIN must contain the text 'NOTIN', flag Unknown must be TRUE and IssuedBy must not be provided"
     description: "If TypeOfTIN is GIR3004 then TIN must contain the text 'NOTIN', flag Unknown must be TRUE and IssuedBy must not be provided"
 
-  - number: "70002"
+  - number: 70002
     target: "//TIN"
     element: "TypeOfTIN"
     rule: "If TIN value is 'NOTIN' then TypeOfTIN must be GIR3004, flag Unknown must be TRUE and IssuedBy must not be provided."
     description: "If TIN value is 'NOTIN' then TypeOfTIN must be GIR3004, flag Unknown must be TRUE and IssuedBy must not be provided."
 
-  - number: "70003"
+  - number: 70003
     target: "//TIN"
     element: "unknown"
     rule: "If flag Unknown is TRUE then TIN must be NOTIN, TypeOfTIN must be GIR3004 and IssuedBy must not be provided."
     description: "If flag Unknown is TRUE then TIN must be NOTIN, TypeOfTIN must be GIR3004 and IssuedBy must not be provided."
 
-  - number: "70004"
+  - number: 70004
     target: "//TIN"
     element: "issuedBy"
     rule: "Where the TIN has the issuedby value of (local jurisdiction), then the TIN should be a valid TIN per the local jurisdiction"
     description: "This validation is only to be applied by the jurisdiction issuing the TIN unless a TIN validation tool is available."
 
-  - number: "70005"
+  - number: 70005
     target: "//TIN"
     rule: "Attributes issuedBy and TypeofTIN must always be present, except that issued By is not required when TypeOfTIN is GIR3003 or GIR3004."
     description: "Attributes issuedBy and TypeofTIN must always be present, except that issuedBy is not required when TypeOfTIN is GIR3003 or GIR3004."
 
-  - number: "70006"
+  - number: 70006
     target: "GLOBEBody/GeneralSection/CorporateStructure/UPE/ExcludedUPE/ID/TIN\nGLOBEBody/GeneralSection/CorporateStructure/UPE/OtherUPE/ID/TIN\nGLOBEBody/GeneralSection/CorporateStructure/CE/ID/TIN\nGLOBEBody/GeneralSection/CorporateStructure/CE/QIIR/Exception/TIN\nGLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/Aggregated Reporting/TaxConsol Group TIN"
     reference: "GeneralSection/CorporateStructure/UPE/ExcludedUPE/ID/TIN\nGeneralSection/CorporateStructure/UPE/OtherUPE/ID/TIN\nGeneralSection/CorporateStructure/CE/ID/TIN (except when GloBEStatus contains the value of GIR316 or GIR318)\nGeneralSection/CorporateStructure/CE/QIIR/Exception/TIN\nJurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/Aggregated Reporting/TaxConsolGroup TIN"
     element: "Type of TIN\nTIN"
     rule: "The following TIN elements must not be completed using TypeofTIN GIR3004 and must not be flagged Unknown:"
     description: "The following TIN elements must not be completed using TypeofTIN GIR3004 and must not be flagged Unknown:\nGeneral Section/Corporate Structure/UPE/ExcludedUPE/ID/TIN\nGeneral Section/Corporate Structure/UPE/OtherUPE/ID/TIN\nGeneral Section/CorporateStructure/CE/ID/TIN (except when GloBEStatus contains the value of GIR316 or GIR318)\nGeneral Section/CorporateStructure/CE/QIIR/Exception/TIN\nJurisdiction Section/GLOBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/Aggregated Reporting/TaxConsolGroup TIN"
 
-  - number: "70007"
+  - number: 70007
     target: "//TIN"
     element: "TIN"
     rule: "Where the TypeofTIN entered is GIR3003 a reference must be created in the format [P2JJYYYYMMDDCCCXXX where P2 is constant, JJ is the ISO Code of the jurisdiction of location of the Constituent Entity, YYYYMMDD refers to the date of creation of the reference, CCC is a three letter reference to the company or group, and XXX is a unique number for the entity within the GIR e.g. 001, 002, 003 to differentiate between multiple entites with designated references in the same report]. This reference is superseded only in the case that a government or administration issues a tax reference or functional equivalent for the entity."
     description: "Where the TypeofTIN entered is GIR3003 a reference must be created in the format [P2JJYYYYMMDDCCCXXX where P2 is constant, JJ is the ISO Code of the jurisdiction of location of the Constituent Entity, YYYYMMDD refers to the date of creation of the reference, CCC is a three letter reference to the company or group, and XXX is a unique number for the entity within the GIR e.g. 001, 002, 003 to differentiate between multiple entites with designated references in the same report]. This reference is superseded only in the case that a government or administration issues a tax reference or functional equivalent for the entity."
 
-  - number: "70008"
+  - number: 70008
     target: "GloBEBody/UTPRAttribution/RecJurCode"
     reference: "GloBEBody/JurisdictionSection/JurWithTaxingRights/JurisdictionName\nGloBEBody/GeneralSection/CorporateStructure/UPE/ID/ResCountryCode"
     element: "RecJurCode"
     rule: "The Jurisdiction reported in the RecJurCode must be the UPE jurisdiction or one of the Jurisdictions reported in the JurisdictionName element of the repeatable JurWith TaxingRights element indicating the names of the jurisdictions that have taxing rights in respect of the jurisdiction for which the Jurisdictional Section is being prepared."
     description: "The Jurisdiction reported in the RecJurCode must be the UPE jurisdiction or one of the jurisdictions reported in the JurisdictionName element of the repeatable JurWith TaxingRights element."
 
-  - number: "70009"
+  - number: 70009
     target: "GLOBEBody/GeneralSection/CorporateStructure/UPE/ExcludedUPE/ID/GloBEStatus\nGLOBEBody/GeneralSection/CorporateStructure/UPE/OtherUPE/ID/GloBEStatus"
     element: "GloBEStatus"
     rule: "The UPE GloBEStatus should not accept the following values: GIR305, GIR307,GIR308, GIR309,GIR312,GIR313,GIR314, GIR315,GIR317, GIR318"
     description: "An Invalid GloBE Status of the UPE was provided. Please ensure that the GloBEStatus of the UPE align with note 1.3.1.6 of the GIR."
 
-  - number: "70010"
+  - number: 70010
     target: "GLOBEBody/GeneralSection/CorporateStructure/UPE/OtherUPE/ID/ResCountryCode"
     element: "ResCountryCode"
     rule: "Only one value is allowed for the ResCountryCode of the UPE/OtherUPE"
     description: "The Filing Constituent Entity shall report the 2-character alphabetic country code based on the ISO 3166-1 Alpha 2 standard for the jurisdiction where the UPE/OtherUPE is located for GloBE purposes."
 
-  - number: "70011"
+  - number: 70011
     target: "GLOBEBody/GeneralSection/CorporateStructure/CE/ID/ResCountryCode"
     element: "ResCountryCode"
     rule: "Only one value is allowed for the ResCountryCode of the CE"
     description: "The Filing Constituent Entity shall report the 2-character alphabetic country code based on the ISO 3166-1 Alpha 2 standard for the jurisdiction where the CE is located for GloBE purposes."
 
-  - number: "70012"
+  - number: 70012
     target: "GLOBEBody/GeneralSection/CorporateStructure/UPE/ExcludedUPE/ID/Rules\nGLOBEBody/GeneralSection/CorporateStructure/UPE/OtherUPE/ID/Rules\nGLOBEBody/GeneralSection/CorporateStructure/CE/ID/Rules"
     element: "Rules"
     rule: "All Entities (i.e. ExcludedUPE, OtherUPE or CEs) with residence in same Jurisdiction (same ResCountryCode) must have same Rules, unless the Rules element contains the Value GIR204 (QDMTT)."
     description: "The 'rules' should be completed in accordance with GIR Note 1.3.2.1.3. Where the rules apply to all entities with residence in the same jurisdiction, the Rules Value should be the same. The rules value might be different where the QDMTT in that jurisdiction treats certain entities differently (e.g. where the QDMTT does not apply to investment entities, meaning that where GloBEStatus = GIR310, the rules value of GIR204 might not be an exact match."
 
-  - number: "70013"
+  - number: 70013
     target: "GLOBEBody/GeneralSection/CorporateStructure/CE/ID/GloBEStatus"
     element: "GloBEStatus"
     rule: "When the GloBEStatus contains the value of GIR313, the value of GIR314 must not also be reported for the same CE"
     description: "A CE element has been completed with a GloBE Status which indicates that an entity is both a JV and a JV Subsidiary, please ensure that the GloBEStatus of the same CE does not contain GIR313 and GIR314"
 
-  - number: "70014"
+  - number: 70014
     target: "GLOBEBody/GeneralSection/CorporateStructure/CE/ID/GloBEStatus"
     element: "GloBEStatus"
     rule: "When the GloBEStatus contains the value of GIR307, the value of GIR308 must not also be reported for the same CE"
     description: "A CE has been identified as having the GloBE Status of both a Minority-Owned Parent Entity and a Minority-Owned Subsidiary, please ensure that the GloBEStatus of the same CE does not contain GIR307 and GIR308"
 
-  - number: "70015"
+  - number: 70015
     target: "GLOBEBody/GeneralSection/CorporateStructure/CE/ID/GloBEStatus"
     element: "GloBEStatus"
     rule: "When the GloBEStatus contains the value of GIR308, then there must be another CE in the corporate structure which contains the value of GIR307 (i.e. when CE/ID/GloBEStatus = GIR308, must also be a separate CE element which contains CE/ID/GloBEStatus=GIR307)"
     description: "A Minority-Owned Subsidiary has been identified in the Corporate Structue and there is no other CE reported in the corporate Structure which is a Minority-Owned Parent Entity."
 
-  - number: "70016"
+  - number: 70016
     target: "GLOBEBody/GeneralSection/CorporateStructure/CE/ID/GloBEStatus"
     element: "GloBEStatus"
     rule: "When the GloBEStatus contains the value of GIR307, the value of GIR309 should also be reported in the GloBEStatus"
     description: "A Minority-Owned Parent Entity must also be a Minority-Owned Constituent Entity, as a result when the value of GIR307 is selected for the GloBEStatus then the value of GIR309 must also be provided."
 
-  - number: "70017"
+  - number: 70017
     target: "GLOBEBody/GeneralSection/CorporateStructure/CE/ID/GloBEStatus"
     element: "GloBEStatus"
     rule: "When the GloBEStatus contains the value of GIR308, the value of GIR309 should also be reported in the GloBEStatus"
     description: "A Minority-Owned Subsidiary must also be a Minority-Owned Constituent Entity, as a result when GIR308 is selected for the GloBEStatus then the value of GIR309 must also be selected"
 
-  - number: "70018"
+  - number: 70018
     target: "GLOBEBody/GeneralSection/CorporateStructure/CE/ID/GloBEStatus"
     element: "GloBEStatus"
     rule: "When the GloBEStatus contains the value of GIR305, the value of GIR306 must not also be reported for the same CE"
     description: "A CE has been identified as having the GloBE Status of both a Permanent Establishment and a Main entity, whereas the same CE cannot have the GloBE Status of PE and ME."
 
-  - number: "70019"
+  - number: 70019
     target: "GLOBEBody/GeneralSection/CorporateStructure/CE/ID/GloBEStatus"
     element: "GloBEStatus"
     rule: "When the GloBEStatus contains the value of GIR305, then there must be another CE which contains the GloBEStatus of GIR306 (i.e. when CE/ID/GloBEStatus = GIR305, there must also be a separate CE element which contains CE/ID/GloBEStatus = GIR306)"
     description: "A permanent establishment has been reported in the Corporate Structure of the GIR, and no main entity has been reported."
 
-  - number: "70020"
+  - number: 70020
     target: "GLOBEBody/GeneralSection/CorporateStructure/CE/ID/GloBEStatus"
     element: "GloBEStatus"
     rule: "If the GloBEStatus contains the value of GIR316 or GIR318, then there should be no other value in the GloBEStatus (if GloBEStatus = GIR316 - GloBEStatus can only contain the value of GIR316 and if GloBEStatus = GIR318 - GloBEStatus can only contain the value of GIR318)"
     description: "A NonGroup -member or excluded entity was reported in the GloBEStatus and at least one additional GloBEStatus was reported. When the CE element has the GloBEStatus of GIR316 or GIR318, it can only contain the single value in the GloBEStatus (i.e. only GIR316 or only GIR318)"
 
     other_record_errors:
-  - number: "70021"
+  - number: 70021
     target: "GLOBEBody/GeneralSection/CorporateStructure/CE/ID/GloBEStatus"
     reference: "GLOBEBody/GeneralSection/CorporateStructure/CE/OwnershipChange\nGLOBEBody/GeneralSection/CorporateStructure/CE/OwnershipChange/PreGlobeStatus"
     element: "GloBEStatus"
     rule: "The GloBEStatus element cannot contain the value of GIR316 or GIR318, unless there is a completed OwnershipChange for the CE element (i.e., when Corporate Structure/CE/ID/TIN matches to Corporate Structure/CE/OwnershipChange/PreOwnership/TIN)."
     description: "The GloBE Status of a CE can only contain the value of 'Excluded Entity' or 'NonGroup-Member' when there has been a change in the GloBE Status of the reported CE. Therefore, there must be a completed OwnerhshipChange element which indicates the GloBEStatus before the entity became an Excluded Entity or a 'Non-Group Member'"
 
-  - number: "70022"
+  - number: 70022
     target: "GLOBEBody/GeneralSection/CorporateStructure/CE/OwnershipChange/ChangeDate"
     reference: "GLOBEBody/FilingInfo/Period/Start"
     element: "ChangeDate"
     rule: "The ChangeDate must not be a date which takes place before the Period Start date as reported in the Filing Info"
     description: "An ownership change has a change date which takes place before the reporting fiscal year"
 
-  - number: "70023"
+  - number: 70023
     target: "GLOBEBody/GeneralSection/CorporateStructure/CE/OwnershipChange/ChangeDate"
     reference: "GLOBEBody/FilingInfo/Period/End"
     element: "ChangeDate"
     rule: "The ChangeDate must not be a date which takes place after the Period End date as reported in the Filing Info"
     description: "An ownership change has a change date which takes place after the reporting fiscal year"
 
-  - number: "70024"
+  - number: 70024
     target: "GLOBEBody/GeneralSection/CorporateStructure/CE/OwnershipChange/PreOwnership"
     reference: "GLOBEBody/GeneralSection/CorporateStructure/CE/OwnershipChange/PreGlobeStatus"
     element: "PreOwnership"
     rule: "The PreOwnership must not be completed when the PreGlobeStatus has the value of GIR719"
     description: "Where an entity was an excluded entity before the change, then the PreOwnership element should not be completed."
 
-  - number: "70025"
+  - number: 70025
     target: "GLOBEBody/GeneralSection/CorporateStructure/CE/OwnershipChange/PreOwnership/TIN"
     reference: "GLOBEBody/GeneralSection/CorporateStructure/CE/OwnershipChange/PreOwnership/OwnershipType"
     element: "Ownership Type"
     rule: "When the Ownership Type contains the value of GIR805 or GIR806, then the TypeOfTIN must contain the value GIR3004 and the TIN must contain the text, 'NOTIN'"
     description: "When the Ownership Type indicates that the ownership interests are held in the aggregate by Non-Group Members or Excluded Entities, the TIN should not reported and as such the TypeOfTIN must be GIR3004."
 
-  - number: "70026"
+  - number: 70026
     target: "GLOBEBody/GeneralSection/CorporateStructure/CE/Ownership/OwnershipPercentage"
     reference: "GLOBEBody/GeneralSection/CorporateStructure/CE/ID/GlobeStatus"
     element: "Ownership Percentage"
     rule: "When the GloBEStatus contains the value of GIR305, then the Ownership Percentage must equal 100%"
     description: "The ownership percentage of a PE must equal 100%"
 
-  - number: "70027"
+  - number: 70027
     target: "GLOBEBody/GeneralSection/CorporateStructure/CE/Ownership/OwnershipPercentage\nGLOBEBody/GeneralSection/CorporateStructure/CE/Ownership/TIN\nGLOBEBody/GeneralSection/CorporateStructure/CE/Ownership/OwnershipType"
     reference: "GLOBEBody/GeneralSection/CorporateStructure/CE/ID/GlobeStatus"
     element: "Ownership Percentage"
     rule: "When the GloBEStatus contains the value of GIR318, then the Ownership Percentage should have the value of 0%, the TIN value should be NOTIN and Ownership Type should be GIR806."
     description: "When the GloBEStatus is a 'NonGroup-Member' as a result of completion of the OwnershipChange element, then Ownershipercentage as reported in the OwnershipElement should be 0%"
 
-  - number: "70028"
+  - number: 70028
     target: "GLOBEBody/GeneralSection/CorporateStructure/CE/Ownership/OwnershipPercentage"
     reference: "GLOBEBody/GeneralSection/CorporateStructure/CE/ID/GlobeStatus"
     element: "Ownership Percentage"
     rule: "Unless the GloBEStatus contains the value of GIR318, then the Ownership Percentage must not be 0%"
     description: "The Ownership Percentage should not be 0% unless the reported ownership percentage is in respect of a Non-Group Member."
 
-  - number: "70029"
+  - number: 70029
     target: "GLOBEBody/GeneralSection/CorporateStructure/CE/Ownership/TIN"
     reference: "GLOBEBody/GeneralSection/CorporateStructure/CE/Ownership/OwnershipType\nGLOBEBody/GeneralSection/CorporateStructure/UPE/ExcludedUPE/ID/TIN\nGLOBEBody/GeneralSection/CorporateStructure/UPE/OtherUPE/ID/TIN"
     element: "TIN"
     rule: "When the Ownership Type contains the value of GIR801, then the Ownership/TIN provided in the Ownership element must match at least one of the TINs that was reported in either the OtherUPE/ID/TIN or ExcludedUPE/ID/TIN"
     description: "The ownership type was identified as being the UPE, the TIN of the UPE provided at label 1.3.2.1.9 does match the TIN reported at 1.3.1.4. Please ensure that the ownership TIN matches to a TIN reported in the corporate structure."
 
-  - number: "70030"
+  - number: 70030
     target: "GLOBEBody/GeneralSection/CorporateStructure/CE/Ownership/TIN"
     reference: "GLOBEBody/GeneralSection/CorporateStructure/CE/Ownership/OwnershipType\nGLOBEBody/GeneralSection/CorporateStructure/CE/ID/TIN"
     element: "TIN"
     rule: "When the Ownership Type contains the value of GIR802, GIR803 or GIR804, then the Ownership/TIN provided in the Ownership element must match to a TIN that was reported in the CE element via the ID/TIN."
     description: "The ownership type was identified as being a CE, JV or JV Subsidiary, the TIN provided at label 1.3.2.1.9 does not match to a TIN reported in the corporate structure at 1.3.2.1.5. Please ensure that the ownership TIN matches to a TIN reported in the corporate structure."
 
-  - number: "70031"
+  - number: 70031
     target: "GLOBEBody/GeneralSection/CorporateStructure/CE/Ownership/TIN"
     reference: "GLOBEBody/GeneralSection/CorporateStructure/CE/ID/GloBEStatus\nGLOBEBody/GeneralSection/CorporateStructure/CE/ID/TIN"
     element: "TIN"
     rule: "When the Corporate Structure/CE/ID/GloBEStatus contains the value of GIR305, then the Ownership/TIN must be equal at least one TIN of the entity which reported the GloBEStatus of GIR306 either in Corporate Structure/CE/ID/GloBEStatus, or CorporateStructure/UPE/OtherUPE/ID/GlobeStatus."
     description: "The ownership TIN of a CE identified as being a PE is not held by a CE which is a main entity"
 
-  - number: "70032"
+  - number: 70032
     target: "GLOBEBody/GeneralSection/CorporateStructure/CE/QIIR"
     reference: "GLOBEBody/GeneralSection/CorporateStructure/CE/ID/Rules"
     element: "QIIR"
     rule: "When the QIIR element is provided, then the Rules element as provided in the CE element must contain either GIR201 or GIR202"
     description: "The QIIR element has been provided for a CE which is in a jurisdiction which does not have a QIIR selected in the Rules element."
 
-  - number: "70033"
+  - number: 70033
     target: "GLOBEBody/GeneralSection/CorporateStructure/CE/QIIR/Exception/TIN"
     reference: "GLOBEBody/GeneralSection/CorporateStructure/CE/ID/TIN"
     element: "TIN"
     rule: "The TIN provided must match with a TIN reported for any other CE in the CorporateStructure."
     description: "The TIN provided to identify either the POPE or IPE does not match with an existing TIN in the corporate structure"
 
-  - number: "70034"
+  - number: 70034
     target: "GLOBEBody/GeneralSection/CorporateStructure/CE/QIIR/Exception/Art2.1.3"
     reference: "GLOBEBody/GeneralSection/CorporateStructure/CE/QIIR/POPE-IPE\nGLOBEBody/GeneralSection/CorporateStructure/CE/QIIR/Exception"
     element: "Art2.1.3"
     rule: "If the POPE-IPE element has the value of 'GIR902-IPE' and the Exception element is completed because an exception applies, the Art.2.1.3 element must have the status of TRUE"
     description: "The exception under article 2.1.3 should be selected in relation to identifying another IPE which is required to apply the QIIR"
 
-  - number: "70035"
+  - number: 70035
     target: "GLOBEBody/GeneralSection/CorporateStructure/CE/QIIR/Exception/Art2.1.5"
     reference: "GLOBEBody/GeneralSection/CorporateStructure/CE/QIIR/POPE-IPE\nGLOBEBody/GeneralSection/CorporateStructure/CE/QIIR/Exception"
     element: "Art2.1.5"
     rule: "If the POPE-IPE element has the value of 'GIR901-POPE' and the Exception element is completed because an exception applies, the Art.2.1.5 element must have the status of TRUE"
     description: "The exception under article 2.1.5 should be selected in relation to identifying another POPE which is required to apply the QIIR"
 
-  - number: "70036"
+  - number: 70036
     target: "GLOBEBody/Summary/Jurisdiction/Subgroup"
     rule: "If there is more than one Subgroup per Jurisdiction the whole Summary must be repeated. The subgroup element can be different as the computation can be different for each subgroup."
     description: "If more than one Subgroup element is provided, then the number of Subgroup elements must match the number of Summary sections provided for that Jurisdiction. For example, if there are 3 Subgroup elements reported for a jurisdiction, then there must be 3 Summary sections for that jurisdiction, each one with 3 reported Subgroup elements."
 
-  - number: "70037"
+  - number: 70037
     target: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/Subgroup/TIN"
     reference: "GLOBEBody/Summary/Jurisdiction/Subgroup/TIN\nGLOBEBody/JurisdictionSection/Jurisdiction"
     element: "Subgroup"
     rule: "Where a subgroup element is completed in the 'Summary', then Subgroup element in the 'JurisdictionSection' should also be completed. The TIN must match to the corresponding TIN in the JurisdictionSection /GLOBETax/ETR/SubGroup. Rule only applicable where a JurisdictionSection which relates to the same 'Jurisdiction' of the Summary is provided (i.e., where Summary/Jurisdiction/JurisdictionName = JurisdictionSection/Jurisdiction)."
     description: "The summary section for a jurisdiction indicates that there is a subgroup with a separate ETR or Top-up Tax computation, while for the same jurisdiction in the Jurisdiction Section, no separate set of subgroup calculations has been provided."
 
-  - number: "70038"
+  - number: 70038
     target: "GLOBEBody/Summary/SafeHarbour"
     reference: "MessageSpec/ReportingPeriod\nGLOBEBody/FilingInfo/Period/End"
     element: "SafeHarbour"
     rule: "When the Reporting Period or Period End Date is later than 30/06/2028, then the SafeHarbour element cannot have the input of GIR1203, GIR1204 or GIR1205."
     description: "The Transitional CbCR Safe Harbour has been selected for a reporting fiscal year that is beyond the transitional period"
 
-  - number: "70039"
+  - number: 70039
     target: "GLOBEBody/Summary/SafeHarbour"
     reference: "MessageSpec/ReportingPeriod\nGLOBEBody/FilingInfo/Period/End"
     element: "SafeHarbour"
     rule: "When the Reporting Period or Period End Date is later than 31/12/2026, then the SafeHarbour element cannot have the input of GIR1206"
     description: "The Transitional UTPR Safe Harbour has been selected for a reporting fiscal year that is beyond the transitional period."
 
-  - number: "70040"
+  - number: 70040
     target: "GLOBEBody/Summary/SafeHarbour"
     reference: "GLOBEBody/Summary/Jurisdiction/JurisdictionName\nGLOBEBody/GeneralSection/CorporateStructure/UPE/OtherUPE/ID/ResCountryCode"
     element: "SafeHarbour"
     rule: "The SafeHarbour element can only have the input of GIR1206 in the UPE jurisdiction. (i.e., Summary/Jurisdiction/JurisdictionName must be equal to the ResCountryCode reported in the UPE ID, so equal to Corporate Structure/UPE/OtherUPE/ID/ResCountryCode)"
     description: "The Transitional UTPR Safe Harbour has been applied in a jurisdiction which is not the UPE Jurisdiction"
 
-  - number: "70041"
+  - number: 70041
     target: "GLOBEBody/Summary/SafeHarbour"
     reference: "GLOBEBody/FilingInfo/AccountingInfo/CFSofUPE"
     element: "SafeHarbour"
     rule: "When the FilingInfo CFSofUPE has the input of GIR502 or GIR504, then SafeHarbour element cannot have the input of GIR1207, GIR1208 , or GIR1209."
     description: "The Non-material Constituent Entity (NMCE) Simplified Calculations can only be completed where the UPE prepares Consolidated Financial Statements as defined by paragraphs (a) and (c) of the Consolidated Financial Statements definition in Article 10.1.1"
 
-  - number: "70042"
+  - number: 70042
     target: "GLOBEBody/Summary/ETRRange\nGLOBEBody/Summary/SBIE\nGLOBEBody/Summary/QDMTTut\nGLOBEBody/Summary/GlOBETut"
     reference: "GLOBEBody/Summary/JurWithTaxingRights\nGLOBEBody/Summary/SafeHarbour"
     element: "ETRRange\nSBIE\nSafe Harbour\nQDMTTut\nGloBETut"
     rule: "If the JurWithTaxingRights element is completed, and the Safe Harbour element is not completed or only has the value of GIR1206, then the elements ETRRange, SBIE, QDMTTut and GloBETut must be completed"
     description: "If one or several jurisdictions have taxing rights, and no Safe Harbour is applied or only the UTPR Safe Harbour is applied, then all other elements of the summary section must be completed"
 
-  - number: "70043"
+  - number: 70043
     target: "GLOBEBody/Summary/ETRRange\nGLOBEBody/Summary/SBIE\nGLOBEBody/Summary/QDMTTut"
     reference: "GLOBEBody/Summary/JurWithTaxingRights\nGLOBEBody/Summary/SafeHarbour"
     element: "ETRRange\nSBIE\nSafe Harbour\nQDMTTut"
     rule: "If the JurWithTaxingRights element is completed, and the Safe Harbour element has the value of GIR1202, then the elements ETRRange, SBIE and QDMTTut must be completed"
     description: "As a QDMTT SafeHarbour has been applied for the jurisdiction, then all other elements except GloBETut of the summary section must be completed"
 
-  - number: "70044"
+  - number: 70044
     target: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus"
     element: "ETRStatus"
     rule: "When the ETRStatus is completed, it must contain at least one of ETRException or ETRComputation."
     description: "Part 2 or Part 3 of the GIR must be completed"
 
-  - number: "70045"
+  - number: 70045
     target: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRException/TransitionalCbCRSafeHarbour"
     reference: "GLOBEBody/Summary/SafeHarbour\nGLOBEBody/Summary/Jurisdiction\nGLOBEBody/Summary/Jurisdiction/Subgroup\nGloBEBody/JurisdictionSection/GLOBETax/ETR/SubGroup"
     element: "TransitionalCbCRSafeHarbour"
     rule: "When the SafeHarbour element has the input of GIR1203, GIR1204 or GIR1205 for a jurisdiction (or for a subgroup), then the TransitionalCbCRSafeHarbour element for that jurisdiction (or for that subgroup) must be completed (i.e., where the Summary/Jurisdiction/JurisdictionName = Jurisdiction Section/Jurisdiction, or if Summary/Jurisdiction/Subgroup is completed, then also match where Summary/Jurisdiction/Subgroup/TIN = Jurisdiction Section/GLoBETax/ETR/SubGroup/TIN)"
     description: "A Transitional CbCR Safe Harbour has been selected in the summary section of the GIR, but no corresponding TransitionalCbCR element with the relevant CbCR calculations for the Tested Jurisdiction has been provided"
 
-  - number: "70046"
+  - number: 70046
     target: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/SubGroup\nGLOBEBody/JurisdictionSection/GLOBETax/ETR/SubGroup/TypeofSubGroup"
     reference: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRException/TransitionalCbCRSafeHarbour"
     element: "Sub Group"
     rule: "When the TransitionalCbCRSafeHarbour is completed for a jurisdiction, then Subgroup element of the ETR must be completed, the TypeofSubGroup must contain either GIR1607 or GIR1608."
     description: "The TypeofSubgroup element must be completed and it cannot contain a value other than GIR1607 or GIR1608."
 
-  - number: "70047"
+  - number: 70047
     target: "GLOBEBody/Summary/SafeHarbour"
     reference: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRException/TransitionalCbCRSafeHarbour/Revenue"
     element: "Revenue"
     rule: "When the SafeHarbour element has the input of GIR1203 for a jurisdiction (or for a subgroup), then the revenue element must be completed for that jurisdiction (or for that subgroup) (i.e., where the Summary/Jurisdiction/JurisdictionName = JurisdictionSection/Jurisdiction, or if Summary/Jurisdiction/Subgroup is completed, then also match where Summary/Jurisdiction/Subgroup/TIN = JurisdictionSection/GLOBETax/ETR/SubGroup/TIN)"
     description: "As the Deminimis CbCR safe harbour has been completed, the Revenue element for the tested jurisdiction must also be provided"
 
-  - number: "70048"
+  - number: 70048
     target: "GLOBEBody/Summary/SafeHarbour"
     reference: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRException/TransitionalCbCRSafeHarbour/IncomeTax"
     element: "Income Tax"
     rule: "When the SafeHarbour element has the input of GIR1204 for a jurisdiction (or for a subgroup), then the Income Tax element must be completed for that jurisdiction (or for that subgroup) (i.e., where the Summary/Jurisdiction/JurisdictionName = JurisdictionSection/Jurisdiction, or if Summary/Jurisdiction/Subgroup is completed, then also match where Summary/Jurisdiction/Subgroup/TIN = JurisdictionSection/GLOBETax/ETR/SubGroup/TIN)"
     description: "As the Simplified ETR Test has been selected for the Tested Jurisdiction, the Income Tax element must also be provided."
 
-  - number: "70049"
+  - number: 70049
     target: "GLOBEBody/Summary/SafeHarbour"
     reference: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRException/UTPRSafeHarbour/CITRate"
     element: "UTPRSafeHarbour"
     rule: "When the SafeHarbour element has the input of GIR1206 for a jurisdiction (or for a subgroup), then the UTPRSafeHarbour element must be completed for that jurisdiction (or for that subgroup). (i.e., where the Summary/Jurisdiction/JurisdictionName = JurisdictionSection/Jurisdiction, or if Summary/Jurisdiction/Subgroup is completed, then also match where Summary/Jurisdiction/Subgroup/TIN = JurisdictionSection/GLOBETax/ETR/SubGroup/TIN)"
     description: "The UTPR safe harbour has been selected for a jurisdiction, therefore the UTPRSafeHarbour element must be completed and the CIT rate provided."
 
-  - number: "70050"
+  - number: 70050
     target: "GLOBEBody/Summary/SafeHarbour"
     reference: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/Non-MaterialCE"
     element: "Non-MaterialCE"
@@ -505,135 +505,135 @@ rules:
     description: "When the SafeHarbour element has the input of GIR1207, GIR1208 or GIR1209 for a jurisdiction (or for a subgroup), then the Non-MaterialCE element must be completed for that jurisdiction (or for that subgroup)"
 
     other_record_errors_continued:
-  - number: "70051"
+  - number: 70051
     target: "GLOBEBody/Summary/SafeHarbour"
     reference: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/Non-MaterialCE/RFYAg/gregateSimplified"
     element: "Aggregate Simplified"
     rule: "When the SafeHarbour element has the input of GIR1208 for a jurisdiction (or for a subgroup), then the Aggregate Simplified element must be completed for that jurisdiction (or for that subgroup) (i.e., where the Summary/Jurisdiction/JurisdictionName = JurisdictionSection/Jurisdiction, or if Summary/Jurisdiction/Subgroup is completed, then also match where Summary/Jurisdiction/Subgroup/TIN = JurisdictionSection/GLOBETax/ETR/SubGroup/TIN)"
     description: "When the SafeHarbour element has the input of GIR1208 for a jurisdiction (or for a subgroup), then the AggregateSimplified element must be completed for that jurisdiction (or for that subgroup)"
 
-  - number: "70052"
+  - number: 70052
     target: "GLOBEBody/JurisdictionSection/GLOBETAX/ETR/ETRStatus/ETRComputation/OverallComputation/SubstanceExclusion"
     reference: "Summary/SafeHarbour\nJurisdiction Section/GLOBETAX/ETR/ETRStatus/ETRComputation/OverallComputation/SubstanceExclusion"
     element: "SubstanceExclusion"
     rule: "When the SafeHarbour element has the input of GIR1209 for a jurisdiction (or for a subgroup), then the Substance Exclusion element must be completed for that jurisdiction (or for that subgroup) (i.e., where the Summary/Jurisdiction/JurisdictionName = JurisdictionSection/Jurisdiction, or if Summary/Jurisdiction/Subgroup is completed, then also match where Summary/Jurisdiction/Subgroup/TIN = JurisdictionSection/GLOBETax/ETR/SubGroup/TIN)"
     description: "The Routine Profit Test for NMCEs requires the Substance Exclusion element to be completed"
 
-  - number: "70053"
+  - number: 70053
     target: "GLOBEBody/JurisdictionSection/GLOBETAX/ETR/ETRStatus/ETRComputation/OverallComputation/SubstanceExclusion"
     reference: "Summary/SafeHarbour\nJurisdiction Section/GLOBETAX/ETR/ETRStatus/ETRComputation/OverallComputation/SubstanceExclusion\nJurisdiction Section/GLOBETax/ETR/ETRStatus/ETRException/TransitionalCbCRSafeHarbour/Profit"
     element: "SubstanceExclusion"
     rule: "When the SafeHarbour element has the input of GIR1205 for a jurisdiction (or for a subgroup) then the Substance Exclusion element must be completed for that jurisdiction (or for a subgroup). Unless the Profit element is either 0 or a negative value (i.e., where the Summary/Jurisdiction/JurisdictionName = JurisdictionSection/Jurisdiction, or if Summary/Jurisdiction/Subgroup is completed, then also match where Summary/Jurisdiction/Subgroup/TIN = JurisdictionSection/GLOBETax/ETR/SubGroup/TIN)"
     description: "The Routine Profits Test for the Transitional CbCR safe harbour must be completed, unless the Profit for the jurisdiction is 0 or a negative value."
 
-  - number: "70054"
+  - number: 70054
     target: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/Election/*/Revocation Year"
     reference: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/Election/*/Status"
     element: "Revocation Year"
     rule: "Revocation Year is only to be provided when the status is FALSE"
     description: "Revocation Year is only to be provided when the status is FALSE. When the Status is TRUE, the election has been made and has not been revoked. When the Status is FALSE, this indicates that the election has been revoked, as such the Revocation Year is only to be provided when the status is FALSE."
 
-  - number: "70055"
+  - number: 70055
     target: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/Election/Art3.2.1.c/OutstandingBalance"
     reference: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/Election/Art3.2.1.c/QualOwnerIntentBalance\nGLOBEBody/JurisdictionSection/GLOBETax/ETR/Election/Art3.2.1.c/Additions\nGLOBEBody/JurisdictionSection/GLOBETax/ETR/Election/Art3.2.1.c/Reductions"
     element: "Outstanding Balance"
     rule: "The Outstanding Balance should be equal to the following calculation: QualOwnerIntentBalance + Additions - Reductions"
     description: "The OutStanding Balance amount does not equal the provided figures."
 
-  - number: "70056"
+  - number: 70056
     target: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/*/Revocation Year"
     reference: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/*/Status"
     element: "Revocation Year"
     rule: "Revocation Year is only to be provided when the status is FALSE"
     description: "Revocation Year is only to be provided when the status is FALSE. When the Status is TRUE, the election has been made and has not been revoked. When the Status is FALSE, this indicates that the election has been revoked, as such the Revocation Year is only to be provided when the status is FALSE."
 
-  - number: "70057"
+  - number: 70057
     target: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/CEComputation/TIN"
     reference: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/Aggregated Reporting\nGLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/Aggregated Reporting/TaxConsolGroup TIN"
     element: "TIN"
     rule: "If the Aggregated Reporting element is completed, then the CEComputations TIN should match the TaxConsol Group TIN."
     description: "The TIN provided for the CE Computations must match to a TIN of the tax consolidated group used for purposes of Covered Taxes in the jurisdiction, if available."
 
-  - number: "70058"
+  - number: 70058
     target: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/Art7.6/InvestmentEntity TIN"
     reference: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/CEComputation/TIN"
     element: "InvestmentEntity TIN"
     rule: "The InvestmentEntity TIN must not match the CEComputations TIN"
     description: "The CE who is making the election under article 7.6 must be different from the investment entity who the election is made in respect of (i.e. label 3.2.4.5.1 of the GIR must be different from 3.2.4.5.2)."
 
-  - number: "70059"
+  - number: 70059
     target: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/NetGlobelncome/Adjustments/AdjustmentItem"
     element: "AdjustmentItem"
     rule: "Each code for this AdjustmentItem element cannot be used more than once per ETR element in the Jurisdiction Section."
     description: "Each code for this AdjustmentItem element cannot be used more than once per ETR element in the Jurisdiction Section."
 
-  - number: "70060"
+  - number: 70060
     target: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/NetGlobelncome/IntShippingIncome"
     reference: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/NetGlobelncome/Adjustments/AdjustmentItem"
     element: "AdjustmentItem"
     rule: "When the 'Adjustmentitem' element contains the value GIR2025 then the 'IntShippingIncome' element must be completed"
     description: "An adjustment under article 3.3 has been made without completing the relevant table at 3.2.4.4.a."
 
-  - number: "70061"
+  - number: 70061
     target: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/Adjustments/AdjustmentItem\nGLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/AdjustmentsAmount/"
     reference: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/Election/Art4.6.1"
     element: "AdjustmentItem"
     rule: "When the 'Art4.6.1' election has the value of TRUE, the AdjustmentItem for the AdjustedCovered Tax must contain GIR2711 and the 'amount' must be a negative"
     description: "When the 'Art4.6.1' election has the value of TRUE, the AdjustmentItem for the AdjustedCovered Tax must contain GIR2711 and the 'amount' must be a negative"
 
-  - number: "70062"
+  - number: 70062
     target: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/Total"
     reference: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/Adjustments/AdjustmentItem"
     element: "Total"
     rule: "If the Adjustmentitem element has the value of GIR2720, then the total of the AdjustedCovered Tax for the jurisdiction cannot be a negative."
     description: "The Excess Negative Tax Expense cannot reduce the AdjustedCoveredTaxes for a jurisdiction below 0"
 
-  - number: "70063"
+  - number: 70063
     target: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/Adjustments/AdjustmentItem"
     element: "AdjustmentItem"
     rule: "Each code for this AdjustmentItem element cannot be used more than once per ETR element in the Jurisdiction Section."
     description: "Each code for this AdjustmentItem element cannot be used more than once per ETR element in the Jurisdiction Section."
 
-  - number: "70064"
+  - number: 70064
     target: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/PostFilingAdjust/DeferTaxAsset/Total"
     reference: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/PostFilingAdjust/DeferTaxAsset/AmountAttributed/Amount"
     element: "Total"
     rule: "The PostFilingAdjust/Defer TaxAsset / Total should equal to the following calculation: sum of all 'PostFilingAdjust/Defer TaxAsset / AmountAttributed / Amount"
     description: "The PostFilingAdjust / DeferTaxAsset / Total should equal to the following calculation: sum of all 'PostFilingAdjust/Defer TaxAsset / AmountAttributed / Amount"
 
-  - number: "70065"
+  - number: 70065
     target: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/PostFilingAdjust/CoveredTaxRefund/Total"
     reference: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/PostFilingAdjust/CoveredTaxRefund/AmountAttributed/Amount"
     element: "Total"
     rule: "The PostFilingAdjust / Covered TaxRefund / Total should equal to the following calculation: Sum of all 'PostFilingAdjust/ Covered TaxRefund / AmountAttributed / Amount"
     description: "The PostFilingAdjust / Covered TaxRefund / Total should equal to the following calculation: Sum of all 'PostFilingAdjust/ Covered TaxRefund / AmountAttributed / Amount"
 
-  - number: "70066"
+  - number: 70066
     target: "GLOBEBody/FilingInfo/Period/Start\nGLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/PostFilingAdjust/DeferTaxAsset/AmountAttributed/Year"
     element: "Year"
     rule: "The Year should correspond to or be before the YYYY value reported in the Period Start Date"
     description: "The provided year for the Loss Carry Back must be a prior Fiscal Year and must be the same as or prior to the Reporting Fiscal Year."
 
-  - number: "70067"
+  - number: 70067
     target: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/PostFilingAdjust/DeferTaxAsset/AmountAttributed/Year"
     element: "Year"
     rule: "If more than one AmountAttributed is provided, the years cannot be the same"
     description: "If more than one AmountAttributed is provided, the years cannot be the same"
 
-  - number: "70068"
+  - number: 70068
     target: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/PostFilingAdjust/CoveredTaxRefund/AmountAttributed/Year"
     reference: "GLOBEBody/FilingInfo/Period/Start"
     element: "Year"
     rule: "The Year should correspond to or be before the YYYY value reported in the Period Start Date"
     description: "The provided year for the Loss Carry Back must be a prior Fiscal Year and must be the same as or prior to the Reporting Fiscal Year."
 
-  - number: "70069"
+  - number: 70069
     target: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/PostFilingAdjust/CoveredTaxRefund/AmountAttributed/Year"
     element: "Year"
     rule: "If more than one AmountAttributed is provided, the years cannot be the same"
     description: "If more than one AmountAttributed is provided, the years cannot be the same"
 
-  - number: "70070"
+  - number: 70070
     target: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeemedDistTax/Election/Recapture/Year"
     reference: "GLOBEBody/FilingInfo/Period/End"
     element: "Year"
@@ -642,136 +642,136 @@ rules:
 
     ```yaml
 other_record_errors_continued_2:
-  - number: "70071"
+  - number: 70071
     target: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeemedDistTax/Election/Recapture/Year"
     reference: "GLOBEBody/FilingInfo/Period/End"
     element: "Year"
     rule: "The year cannot contain a date which is 4 years or more before the Period End Date (i.e. Reporting Fiscal Year and previous 3 Fiscal Years)"
     description: "The year cannot contain a date which is 4 years or more before the Period End Date (i.e. Reporting Fiscal Year and previous 3 Fiscal Years)"
 
-  - number: "70072"
+  - number: 70072
     target: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeemedDistTax/Election/Recapture/EndAmount"
     reference: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeemedDistTax/Election/Recapture/StartAmount\nGLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeemedDistTax/Election/Recapture/TotalDDT"
     element: "EndAmount"
     rule: "The EndAmount is equal to the following calculation: StartAmount - TotalDDT"
     description: "The EndAmount is equal to the following calculation: StartAmount - TotalDDT"
 
-  - number: "70073"
+  - number: 70073
     target: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeemedDistTax/Election/Recapture/EndAmount"
     element: "EndAmount"
     rule: "The EndAmount must not be a negative."
     description: "The EndAmount must not be a negative."
 
-  - number: "70074"
+  - number: 70074
     target: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeemedDistTax/Election/Recapture/TotalDDT"
     reference: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeemedDistTax/Election/Recapture/DDTYear-0\nGLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeemedDistTax/Election/Recapture/DDTYear-1\nGLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeemedDistTax/Election/Recapture/DDTYear-2\nGLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeemedDistTax/Election/Recapture/DDTYear-3"
     element: "TotalDDT"
     rule: "The TotalDDT is equal to the following calculation: DDTYear-0 + DDTYear-1 + DDTYear-2 + DDTYear-3"
     description: "The TotalDDT is equal to the following calculation: DDTYear-0 + DDTYear-1 + DDTYear-2 + DDTYear-3"
 
-  - number: "70075"
+  - number: 70075
     target: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeemedDistTax/Election/Recapture/DDTYear-0\nGLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeemedDistTax/Election/Recapture/DDTYear-1\nGLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeemedDistTax/Election/Recapture/DDTYear-2\nGLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeemedDistTax/Election/Recapture/DDTYear-3"
     reference: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeemedDistTax/Election/Recapture/Year\nGLOBEBody/FilingInfo/Period/End"
     element: "Year"
     rule: "When the Year equals YYYY value reported in the Period End Date, then the following elements should be completed by entering \"0\": DDTYear-0, DDTYear-1, DDTYear-2 and DDTYear-3"
     description: "When the Year equals YYYY value reported in the Period End Date, then the following elements should be completed by entering \"0\": DDTYear-0, DDTYear-1, DDTYear-2 and DDTYear-3"
 
-  - number: "70076"
+  - number: 70076
     target: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/TransBlendCFC/Total"
     reference: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/TransBlendCFC/CFCJur/Allocation/AggAllocTax"
     element: "Total"
     rule: "The TransBlendCFC total should equal the following calculation: Sum of all 'AggAllocTax'"
     description: "The TransBlend CFC total should equal the following calculation: Sum of all 'AggAllocTax'"
 
-  - number: "70077"
+  - number: 70077
     target: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Total"
     element: "Total"
     rule: "The total element should be equal to the following calculation: PreRecast + Recast/Lower - Recast/Higher If Recast/Lower and/or Recast/Higher is not provided, then assumed to be 0."
     description: "The total element should be equal to the following calculation: PreRecast + Recast/Lower - Recast/Higher If Recast/Lower and/or Recast/Higher is not provided, then assumed to be 0."
 
-  - number: "70078"
+  - number: 70078
     target: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/BefRecastAdjust"
     reference: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/DefTaxAmt\nGLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/DiffCarryValue\nGLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/GLOBEValue"
     element: "BefRecastAdjust"
     rule: "The BefRecastAdjust element should be equal to the following calculation: DefTaxAmt - DiffCarryValue + GLOBEValue."
     description: "The BefRecastAdjust element should be equal to the following calculation: DefTaxAmt - DiffCarryValue + GLOBEValue"
 
-  - number: "70079"
+  - number: 70079
     target: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/PreRecast"
     reference: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/BefRecastAdjust\nGLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/TotalAdjust"
     element: "PreRecast"
     rule: "The PreRecast element should be equal to the following calculation: BefRecastAdjust + TotalAdjust"
     description: "The PreRecast element should be equal to the following calculation: BefRecastAdjust + TotalAdjust"
 
-  - number: "70080"
+  - number: 70080
     target: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Adjustments/AdjustmentItem"
     element: "AdjustmentItem"
     rule: "Each code for this AdjustmentItem element cannot be used more than once per ETR element in the Jurisdiction Section."
     description: "Each code for this AdjustmentItem element cannot be used more than once per ETR element in the Jurisdiction Section."
 
-  - number: "70081"
+  - number: 70081
     target: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Transition/DeferredTaxAssets/Total"
     reference: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Transition/DeferredTaxAssets/DeferredTaxAssetStart\nGLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Transition/DeferredTaxAssets/DeferredTaxAssetRecast\nGLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Transition/DeferredTaxAssets/DeferredTaxAssetExcluded"
     element: "Total"
     rule: "The total element should be equal to the following calculation: Deferred TaxAssetStart - Deferred TaxAssetExcluded OR Deferred TaxAssetRecast - Deferred TaxAssetExcluded"
     description: "The total element should be equal to the following calculation: Deferred TaxAssetStart - Deferred TaxAssetExcluded OR Deferred TaxAssetRecast - Deferred TaxAssetExcluded"
 
-  - number: "70082"
+  - number: 70082
     target: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Transition/DeferredTaxAssets/DeferredTaxAssetStart\nGLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Transition/DeferredTaxAssets/DeferredTaxAssetRecast"
     reference: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Transition/DeferredTaxAssets"
     element: "Deferred TaxAsset"
     rule: "When the Deferred TaxAssets element is provided, then one of Deferred TaxAssetStart or Deferred TaxAssetRecast must contain the value of '0'"
     description: "To calculate the Deferred tax assets taken into account for GloBE purposes, ensure that either the Deferred TaxAsset at the start of the year or the Deffered TaxAsset recast at the minimum rate is used, both values cannot be used. Therefore, ensure that when calculating the Deferred TaxAsset/total element, that one of Deferred TaxAssetStart or Deferred TaxAssetRecast contains the value of 0"
 
-  - number: "70083"
+  - number: 70083
     target: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/ExcessNegTaxExpense/Remaining"
     reference: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/ExcessNegTaxExpense/PriorYearBalance\nGLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/ExcessNegTaxExpense/GeneratedInRFY\nGLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/ExcessNegTaxExpense/UtilizedInRFY"
     element: "Remaining"
     rule: "The Remaining value should equal the following calculation: Prior YearBalance + GeneratedInRFY - UtilizedInRFY"
     description: "The Remaining value should equal the following calculation: Prior YearBalance + GeneratedInRFY - UtilizedInRFY"
 
-  - number: "70084"
+  - number: 70084
     target: "GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/AdjustmentsAmount/Adjustments/AdjustmentItem"
     reference: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/ExcessNegTaxExpense/GeneratedInRFY"
     element: "GeneratedInRFY"
     rule: "If the Adjustmentitem element has the value of GIR2719, then the value reported in the 'amount' element should be the same as the integer reported in the GeneratedInRFY element"
     description: "In the 'Adjusted Covered Tax' element, a lodger can select from a list of possible adjustments, and must report the following 'Name of adjustment (enumeration) and the amount of said adjustment. If the selected 'adjustment' has the 'AdjustmentItem' value of 'GIR2719', then the value which is entered into the 'amount' element should be an exact match to the integer reported in the GeneratedInRFY element."
 
-  - number: "70085"
+  - number: 70085
     target: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/AdjustmentsAmount/Adjustments/AdjustmentItem"
     reference: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/ExcessNegTaxExpense/UtilizedInRFY"
     element: "UtilizedInRFY"
     rule: "If the Adjustmentitem element has the value of GIR2720, then the value reported in the 'amount' element should be the same as the integer reported in the UtilizedInRFY element"
     description: "If the AdjustedItem element has the value of GIR2720, then the value reported in the 'amount' element should be the same as the integer reported in the UtilizedInRFY element"
 
-  - number: "70086"
+  - number: 70086
     target: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/ExcessProfits"
     reference: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/NetGlobeIncome/Total\nGLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/SubstanceExclusion/Total"
     element: "Excess Profits"
     rule: "The Excess Profits integer is equal to the following calculation: NetGlobeIncome/Total - Substance Exclusion/Total. If Substance Exclusion/Total is not provided, then should be treated as a 0 value. If the NetGlobeIncome/Total - Substance Exclusion/Total results in a number less than 0, then Excess Profits must equal to 0."
     description: "The Excess Profits integer is equal to the following calculation: NetGlobeIncome/Total - Substance Exclusion/Total. If Substance Exclusion/Total is not provided, then should be treated as a 0 value. If the NetGlobeIncome/Total - Substance Exclusion/Total results in a number less than 0, then ExcessProfits must equal to 0."
 
-  - number: "70087"
+  - number: 70087
     target: "GLOBEBody/JurisdictionSection/GLOBETAX/ETR/ETRStatus/ETRComputation/OverallComputation/SubstanceExclusion/Total"
     reference: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/SubstanceExclusion/PayrollCost\nGLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/SubstanceExclusion/PayrollMarkUp\nGLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/SubstanceExclusion/TangibleAssetValue\nGLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/SubstanceExclusion/TangibleAssetMarkup"
     element: "Total"
     rule: "The Total integer for the Substance Exclusion is equal to the following calculation: PayrollCost * PayrollMarkUp + TangibleAssetValue * TangibleAsset Markup"
     description: "The Total integer for the SubstanceExclusion is equal to the following calculation: PayrollCost * PayrollMarkUp + Tangible AssetValue * TangibleAssetMarkup"
 
-  - number: "70088"
+  - number: 70088
     target: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdditionalTopUpTax/Art4.1.5"
     reference: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/NetGlobeincome/Total"
     element: "Art4.1.5"
     rule: "The Art4.1.5 element must be completed if the OverallComputation/NetGlobeIncome/Total is a negative value"
     description: "The Art4.1.5 element must be completed if the Overall Computation/NetGlobelncome/Total is a negative value"
 
-  - number: "70089"
+  - number: 70089
     target: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdditionalTopUpTax/Art4.1.5/AdjustedCoveredTax"
     element: "AdjustedCovered Tax"
     rule: "The AdjustedCovered Tax value should be a negative value"
     description: "The AdjustedCovered Tax value should be a negative value"
 
-  - number: "70090"
+  - number: 70090
     target: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdditionalTopUpTax/Art4.1.5/GlobeLoss"
     reference: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/NetGlobeIncome/Total"
     element: "GlobeLoss"
@@ -779,231 +779,231 @@ other_record_errors_continued_2:
     description: "The GlobeLoss element must be the same as Overall Computation/NetGlobelncome/Total value."
 
 other_record_errors_continued_3:
-  - number: "70091"
+  - number: 70091
     target: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdditionalTopUpTax/Art4.1.5/ExpectedAdjustedCoveredTax"
     reference: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdditionalTopUpTax/Art4.1.5/GlobeLoss"
     element: "ExpectedAdjusted CoveredTax"
     rule: "The ExpectedAdjusted Covered Tax must be equal to the following calculation: GlobeLoss * 15%"
     description: "The ExpectedAdjustedCoveredTax must be equal to the following calculation: GlobeLoss * 15%"
 
-  - number: "70092"
+  - number: 70092
     target: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdditionalTopUpTax/Art4.1.5/AdditionalTopUpTax"
     reference: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdditionalTopUpTax/Art4.1.5/ExpectedAdjustedCoveredTax\nGLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdditionalTopUpTax/Art4.1.5/AdjustedCoveredTax"
     element: "AdditionalTopUpTax"
     rule: "The Additional TopUpTax integer is equal to the following calculation: ExpectedAdjustedCovered Tax - AdjustedCovered Tax. If the ExpectedAdjustedCovered Tax - AdjustedCovered Tax results in a number less than 0, then Additional TopUpTax must equal to 0."
     description: "The Additional TopUp Tax integer is equal to the following calculation: ExpectedAdjustedCoveredTax - Adjusted Covered Tax. If the ExpectedAdjustedCoveredTax - Adjusted Covered Tax results in a number less than 0, then Additional TopUp Tax must equal to 0."
 
-  - number: "70093"
+  - number: 70093
     target: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdditionalTopUpTax/NONArt4.1.5/Year"
     reference: "GLOBEBody/FilingInfo/Period/End"
     element: "Year"
     rule: "The Year must not be greater than the YYYY value reported in the Period End Date"
     description: "The Year must not be greater than the YYYY value reported in the Period End Date"
 
-  - number: "70094"
+  - number: 70094
     target: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdditionalTopUpTax/NONArt4.1.5/Year"
     reference: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdditionalTopUpTax/NONArt4.1.5/Articles\nGLOBEBody/FilingInfo/Period/End"
     element: "Year"
     rule: "When the Articles contain the value of GIR2605, then the Year should be at least '4 years' before the YYYY value reported in the Period End Date."
     description: "When the Articles contain the value of GIR2605, then the Year should be at least '4 years' before the YYYY value reported in the Period End Date"
 
-  - number: "70095"
+  - number: 70095
     target: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdditionalTopUpTax/NONArt4.1.5/Year"
     reference: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdditionalTopUpTax/NONArt4.1.5/Articles\nGLOBEBody/FilingInfo/Period/End"
     element: "Year"
     rule: "When the Articles contain the value of GIR2602, then the Year should be the fifth Fiscal Year preceding the YYYY value reported in the Period End Date."
     description: "When the Articles contain the value of GIR2602, then the Year should be the fifth Fiscal Year preceding the YYYY value reported in the Period End Date"
 
-  - number: "70096"
+  - number: 70096
     target: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdditionalTopUpTax/NONArt4.1.5/AdditionalTopUpTax"
     reference: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdditionalTopUpTax/NONArt4.1.5/Recalculated/TopUpTax\nGLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdditionalTopUpTax/NONArt4.1.5/Previous/TopUpTax"
     element: "AdditionalTopUpTax"
     rule: "Additional TopUpTax is calculated as follows: Recalculated/TopUpTax - Previous/TopUpTax"
     description: "Additional TopUpTax is calculated as follows: Recalculated/TopUpTax - Previous/TopUpTax"
 
-  - number: "70097"
+  - number: 70097
     target: "GLOBEBody/JurisdictionSection/LowTaxJurisdiction/LTCE/IIR/ParentEntity/InclusionRatio"
     reference: "GLOBEBody/JurisdictionSection/LowTaxJurisdiction/LTCE/IIR/NetGlobeIncome\nGLOBEBody/JurisdictionSection/LowTaxJurisdiction/LTCE/IIR/ParentEntity/OtherOwnershipAllocation"
     element: "InclusionRatio"
     rule: "The InclusionRatio must equal the following calculation: (NetGlobeIncome - Other OwnershipAllocation) DIVIDED by NetGlobeIncome"
     description: "The InclusionRatio must equal the following calculation: (NetGlobelncome - Other OwnershipAllocation) DIVIDED by NetGlobelncome"
 
-  - number: "70098"
+  - number: 70098
     target: "GLOBEBody/JurisdictionSection/LowTaxJurisdiction/LTCE/IIR/ParentEntity/TopUpTaxShare"
     reference: "GLOBEBody/JurisdictionSection/LowTaxJurisdiction/LTCE/IIR/TopUpTax\nGLOBEBody/JurisdictionSection/LowTaxJurisdiction/LTCE/IIR/ParentEntity/InclusionRatio"
     element: "TopUp TaxShare"
     rule: "The IIR/ParentEntity/TopUpTaxShare must equal the following calculation: IIR/TopUpTax * InclusionRatio"
     description: "The IIR/ParentEntity/TopUpTaxShare must equal the following calculation: TopUpTax * Inclusion Ratio"
 
-  - number: "70099"
+  - number: 70099
     target: "GLOBEBody/UTPRAttribution/Attribution/UTPRTopUpTaxAttributed"
     reference: "GLOBEBody/JurisdictionSection/LowTaxJurisdiction/UTPR/UTPRCalculation/TotalUTPRTopUpTax\nGLOBEBody/UTPRAttribution/Attribution/UTPRPercentage"
     element: "TotalUTPRTopUpTax"
     rule: "The sum of 'UTPRTopUp TaxAttributed' should be equal to the sum of TotalUTPRTopUpTax amount in the JurisdictionSection element in respect to all jurisdictions."
     description: "The sum of 'UTPRTopUp TaxAttributed\" should be equal to the sum of TotalUTPRTopUpTax amount in the JurisdictionSection element in respect to all jurisdictions."
 
-  - number: "70100"
+  - number: 70100
     target: "GLOBEBody/JurisdictionSection/LowTaxJurisdiction/UTPR/UTPRCalculation\nGLOBEBody/JurisdictionSection/LowTaxJurisdiction/UTPR/UTPRCalculation/TotalUTPRTopUpTax"
     reference: "GLOBEBody/UTPRAttribution"
     element: "UTPRAttribution"
     rule: "When the UTPRCalculation is provided and the TotalUTPRTopUpTax element contains a value greater than 0 then the UTPRAttribution must be completed."
     description: "A UTPR Top up tax has been reported and the corresponding attribution of the UTRP has not been reported. Please complete the UTPRAttribution element."
 
-  - number: "70101"
+  - number: 70101
     target: "GLOBEBody/UTPRAttribution/Attribution/Employees"
     reference: "GLOBEBody/UTPRAttribution/Attribution/UTPRTopUpTaxCarryForward"
     element: "Employees"
     rule: "The Employees must be completed unless the UTPRTopUpTaxCarryForward contains the value of '0'"
     description: "The employees element must be completed as there is no carry forward amount that still needs to be allocated to this jurisdiction"
 
-  - number: "70102"
+  - number: 70102
     target: "GLOBEBody/UTPRAttribution/Attribution/TangibleAssetValue"
     reference: "GLOBEBody/UTPRAttribution/Attribution/UTPRTopUpTaxCarryForward"
     element: "TangibleAssetValue"
     rule: "The TangibleAssetValue must be completed unless the UTPRTopUpTaxCarryForward contains the value of '0'"
     description: "The TangibleAssetValue element must be completed as there is no carry forward amount that still needs to be allocated to this jurisdiction"
 
-  - number: "70103"
+  - number: 70103
     target: "GLOBEBody/UTPRAttribution/Attribution/UTPRPercentage"
     reference: "GLOBEBody/UTPRAttribution/Attribution/UTPRTopUpTaxCarryForward"
     element: "UTPRPercentage"
     rule: "The UTPRPercentage must be 0% when the UTPRTopUp TaxCarryForward is greater than 0. If the UTPRTopUpTaxCarryForward is 0, then the UTPRPercentage can only be 0% when all UTPR jurisdictions have a UTPR Percentage of 0 in the Reporting Fiscal Year."
     description: "The UTPRPercentage must be 0% when the UTPRTopUpTaxCarryForward is greater than 0. If the UTPRTopUpTaxCarryForward is 0, then the UTPRPercentage can only be 0% when all UTPR jurisdictions have a UTPR Percentage of 0 in the Reporting Fiscal Year."
 
-  - number: "70104"
+  - number: 70104
     target: "GLOBEBody/UTPRAttribution/Attribution/UTPRTopUpTaxCarriedForward"
     element: "UTPRTopUp TaxCarriedForward"
     rule: "The UTPRTopUpTaxCarried Forward cannot be a negative value."
     description: "The UTPRTopUpTaxCarried Forward must be a positive value"
 
-  - number: "70105"
+  - number: 70105
     target: "GLOBEBody/UTPRAttribution/Attribution/UTPRTopUpTaxCarriedForward"
     reference: "GLOBEBody/UTPRAttribution/Attribution/UTPRTopUpTaxCarryForward\nGLOBEBody/UTPRAttribution/Attribution/UTPRTopUpTaxAttributed\nGLOBEBody/UTPRAttribution/AttributionAddCashTaxExpe/nse"
     element: "UTPRTopUpTaxCarriedForward"
     rule: "The UTPRTopUpTaxCarried Forward is equal to the following calculation UTPRTopUp TaxCarryForward + UTPRTopUpTaxAttributed - AddCash TaxExpense"
     description: "The UTPRTopUpTaxCarried Forward is equal to the following calculation UTPRTopUpTaxCarryForward + UTPRTopUpTaxAttributed - AddCashTaxExpense"
 
-  - number: "70106"
+  - number: 70106
     target: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/CrossBorderAdjustments/Other TIN"
     reference: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/CEComputation/TIN"
     element: "Other TIN"
     rule: "The Other TIN must not be the same as the CEComputations/TIN."
     description: "The Other TIN must not be the same as the CEComputations/TIN."
 
-  - number: "70107"
+  - number: 70107
     target: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Total/Adjustment/CrossBorderAdjustments"
     reference: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/UPEAdjustments/Reductions/Exception"
     element: "CrossBorderAdjustments"
     rule: "Where the Exception element is TRUE, then the CrossBorderAdjustements must not be provided for that CEComputation section."
     description: "When the UPE is wholly owned by holders of Ownership Interests in respect of which Article 7.1 applies, and the Filing Constituent Entity reported \"exception, wholly-owned\" in column 3.2.4.1.d.5, the Filing Constituent Entity shall not complete Table 3.2.4.1.c with respect to the UPE (and with respect to Tax Transparent Entities wholly owned by the UPE through a Tax Transparent Structure and located in the UPE jurisdiction to which Article 3.5.1(b) applies).\n(see note 3.2.4.1.c of the GIR)"
 
-  - number: "70108"
+  - number: 70108
     target: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/UPEAdjustments/IdentificationOfOwners/IndOwners/TaxRate\nGLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/UPEAdjustments/IdentificationOfOwners/EntityOwner/TaxRate"
     reference: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/UPEAdjustments/Basis"
     element: "Tax Rate"
     rule: "When the 'Basis' is GIR1901, GIR1902, GIR1905, GIR1906 then the 'EntityOwner/TaxRate' element or 'IndOwners/TaxRate' element must be completed"
     description: "When the 'Basis' is GIR1901, GIR1902, GIR1905, GIR1906 then the 'EntityOwner/TaxRate' element or 'IndOwners/TaxRate' element must be completed"
 
-  - number: "70109"
+  - number: 70109
     target: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/UPEAdjustments/IdentificationOfOwners/IndOwners/ResCountryCode"
     reference: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/UPEAdjustments/Basis"
     element: "ResCountryCode"
     rule: "When the 'Basis' is GIR1907 then the 'ResCountryCode' element must be completed (i.e. the choice must be 'IndOwners')"
     description: "When the 'Basis' is GIR1907 then the 'ResCountryCode' element must be completed (i.e. the choice must be 'IndOwners')"
 
-  - number: "70110"
+  - number: 70110
     target: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/UPEAdjustments/IdentificationOfOwners/IndOwners"
     reference: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/UPEAdjustments/Basis"
     element: "IndOwners"
     rule: "When the 'Basis' is GIR1903 or GIR1908, then the IndOwners element must be completed"
     description: "When the 'Basis' is GIR1903 or GIR1908, then the IndOwners element must be completed"
 
-  - number: "70111"
+  - number: 70111
     target: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/UPEAdjustments/IdentificationOfOwners/EntityOwner/ExTypeOfEntity"
     reference: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/UPEAdjustments/Basis"
     element: "ExTypeOfEntity"
     rule: "When the 'Basis' is GIR1904 or GIR1909, then the 'ExTypeOfEntity' must be completed (i.e. the choice must be 'EntityOwner')"
     description: "When the 'Basis' is GIR1904 or GIR1909, then the 'ExTypeOfEntity' must be completed (i.e. the choice must be 'EntityOwner')"
 
-  - number: "70112"
+  - number: 70112
     target: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/UPEAdjustments/IdentificationOfOwners/EntityOwner/ExTypeOfEntity"
     reference: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/UPEAdjustments/Basis"
     element: "ExTypeOfEntity"
     rule: "When the 'Basis' is GIR1904, then the 'ExTypeOfEntity' must not contain the value of GIR2805."
     description: "When the 'Basis' is GIR1904, then the 'ExTypeOfEntity' must not contain the value of GIR2805."
 
-  - number: "70113"
+  - number: 70113
     target: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/UPEAdjustments/IdentificationOfOwners/EntityOwner/ExTypeOfEntity"
     reference: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/UPEAdjustments/Basis"
     element: "ExTypeOfEntity"
     rule: "When the 'Basis' is GIR1909, then the 'ExTypeOfEntity' must not contain the value of GIR2804."
     description: "When the 'Basis' is GIR1909, then the 'ExTypeOfEntity' must not contain the value of GIR2804."
 
-  - number: "70114"
+  - number: 70114
     target: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/CEComputation/NetGlobelncome/Adjustments/Amount"
     element: "Amount"
     rule: "If two values are provided for the'Amount', then one value must be negative and the other value positive (i.e. both values of the integer cannot be positive or negative)"
     description: "If two values are provided for the'Amount', then one value must be negative and the other value positive (i.e. both values of the integer cannot be positive or negative)"
 
-  - number: "70115"
+  - number: 70115
     target: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/UPEAdjustments"
     reference: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/CEComputation/NetGlobeIncome/Adjustments/AdjustmentItem"
     element: "AdjustmentItem"
     rule: "When the 'Adjustmentitem' element contains the value GIR2022 and/or GIR2023 then the 'UPEAdjustments' element must be completed"
     description: "An adjustment under article 7.1 or 7.2 can only be selected when the table at 3.2.4.1.d has been completed."
 
-  - number: "70116"
+  - number: 70116
     target: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/CEComputation/NetGlobelncome/IntShippingIncome"
     reference: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/CEComputation/NetGlobeIncome/Adjustments/AdjustmentItem"
     element: "AdjustmentItem"
     rule: "When the 'AdjustmentItem' element contains the value GIR2025 then the 'IntShippingIncome' element must be completed"
     description: "An adjustment under article 3.3 has been made without completing the relevant table at 3.2.4.4.a."
 
-  - number: "70117"
+  - number: 70117
     target: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/Art7.6"
     reference: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/CEComputation/NetGlobeIncome/Adjustments/AdjustmentItem"
     element: "AdjustmentItem"
     rule: "When the 'Adjustmentitem' element contains the value GIR2024 then the 'Art7.6' element must be completed"
     description: "An adjustment under article 7.6 has been made without completing the relevant table at 3.2.4.5."
 
-  - number: "70118"
+  - number: 70118
     target: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedCoveredTax/Adjustments/Amount"
     element: "Amount"
     rule: "If two values are provided for the'Amount', then one value must be negative and the other value positive (i.e. both values of the integer cannot be positive or negative)"
     description: "If two values are provided for the'Amount', then one value must be negative and the other value positive (i.e. both values of the integer cannot be positive or negative)"
 
-  - number: "70119"
+  - number: 70119
     target: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedCoveredTax/Adjustments/AdjustmentItem"
     element: "AdjustmentItem"
     rule: "Each code for this AdjustmentItem element cannot be used more than once per ETR element in the Jurisdiction Section."
     description: "Each code for this AdjustmentItem element cannot be used more than once per ETR element in the Jurisdiction Section."
 
-  - number: "70120"
+  - number: 70120
     target: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Total"
     reference: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/DeferTaxExpense\nGLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/AdjustmentAmount/\nGLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Recast/Higher\nGLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Recast/Lower"
     element: "Total"
     rule: "The Total element shall equal the following calculation: Defer TaxExpense + Sum of all values reported in Adjustments/Amount + Recast/Higher + Recast/Lower (if any element is not provided, it is treated as a 0 value)"
     description: "The Total element shall equal the following calculation: DeferTaxExpense + Sum of all values reported in Adjustments/Amount + Recast/Higher + Recast/Lower (if any element is not provided, it is treated as a 0 value)"
 
-  - number: "70121"
+  - number: 70121
     target: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Adjustment/AdjustmentItem"
     element: "AdjustmentItem"
     rule: "Each code for this Adjustmentltem element cannot be used more than once per ETR element in the Jurisdiction Section."
     description: "Each code for this Adjustmentltem element cannot be used more than once per ETR element in the Jurisdiction Section."
 
-  - number: "70122"
+  - number: 70122
     target: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Adjustment/Amount"
     element: "Amount"
     rule: "If two values are provided for the Amount element, then one value must be negative and the other value must be positive (i.e. the values of the integer cannot be both positive or negative)"
     description: "If two values are provided for the Amount element, then one value must be negative and the other value must be positive (i.e. the values of the integer cannot be both positive or negative)"
 
-  - number: "70123"
+  - number: 70123
     target: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedIncomeTax/CrossAllocation/Additions"
     element: "Additions"
     rule: "The Additions element must not have a negative value."
     description: "The Additions element must not have a negative value."
 
-  - number: "70124"
+  - number: 70124
     target: "GLOBEBody/JurisdictionSection/GLOBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedIncomeTax/CrossAllocation/Reductions"
     element: "Reductions"
     rule: "The Reductions element must not be a positive value."
