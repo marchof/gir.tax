@@ -62,7 +62,7 @@ rules:
 
   - number: 60006
     targets:
-      - //sts:CorrDocRefId
+      - //stf:CorrDocRefId
     element: CorrDocRefld
     rule: >-
       The same DocReflD cannot be corrected or deleted twice in the same message.
@@ -72,7 +72,7 @@ rules:
 
   - number: 60007
     targets:
-      - //sts:DocRefId
+      - //stf:DocRefId
     element: DocRefId
     rule: >-
       The DocRefID is already used for another record.
@@ -83,7 +83,7 @@ rules:
 
   - number: 60008
     targets:
-      - //sts:CorrDocRefId
+      - //stf:CorrDocRefId
     element: CorrDocRefld
     rule: >-
       The CorrDocRefid refers to an unknown record.
@@ -94,7 +94,7 @@ rules:
 
   - number: 60009
     targets:
-      - //sts:CorrDocRefId
+      - //stf:CorrDocRefId
     element: CorrDocRefld
     rule: >-
       The CorrDocRefID must relate to the latest instance of the DocRefID. The
@@ -130,7 +130,7 @@ rules:
 
   - number: 60012
     targets:
-      - //sts:CorrDocRefId
+      - //stf:CorrDocRefId
     element: CorrDocRefld
     rule: >-
       When DocTypeIndic is OECD1 or OECDO, the CorrDocRefld field must be omitted.
@@ -141,7 +141,7 @@ rules:
 
   - number: 60013
     targets:
-      - GLOBEBody/GeneralSection/DocSpec/DocTypeIndic
+      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:GeneralSection/globe:DocSpec/stf:DocTypeIndic
       - GLOBEBody/Summary/DocSpec/DocTypeIndic
       - GLOBEBody/JurisdictionSection/DocSpec/DocTypeIndic
       - GLOBEBody/UTPRAttribution/DocSpec/DocTypeIndic
