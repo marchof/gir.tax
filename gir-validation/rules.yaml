@@ -358,7 +358,7 @@ rules:
     other_record_errors:
   - number: 70001
     targets:
-      - //TIN
+      - //globe:TIN
     element: TypeOfTIN
     rule: >-
       If TypeOfTIN is GIR3004 then TIN must contain the text 'NOTIN', flag Unknown
@@ -369,7 +369,7 @@ rules:
 
   - number: 70002
     targets:
-      - //TIN
+      - //globe:TIN
     element: TypeOfTIN
     rule: >-
       If TIN value is 'NOTIN' then TypeOfTIN must be GIR3004, flag Unknown must be
@@ -380,7 +380,7 @@ rules:
 
   - number: 70003
     targets:
-      - //TIN
+      - //globe:TIN
     element: unknown
     rule: >-
       If flag Unknown is TRUE then TIN must be NOTIN, TypeOfTIN must be GIR3004 and
@@ -391,7 +391,7 @@ rules:
 
   - number: 70004
     targets:
-      - //TIN
+      - //globe:TIN
     element: issuedBy
     rule: >-
       Where the TIN has the issuedby value of (local jurisdiction), then the TIN
@@ -402,7 +402,7 @@ rules:
 
   - number: 70005
     targets:
-      - //TIN
+      - //globe:TIN
     rule: >-
       Attributes issuedBy and TypeofTIN must always be present, except that issued By
       is not required when TypeOfTIN is GIR3003 or GIR3004.
@@ -441,7 +441,7 @@ rules:
 
   - number: 70007
     targets:
-      - //TIN
+      - //globe:TIN
     element: TIN
     rule: >-
       Where the TypeofTIN entered is GIR3003 a reference must be created in the format
