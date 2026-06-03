@@ -219,7 +219,7 @@ rules:
 
   - number: 60020
     targets:
-      - GLOBEBody/FilingInfo/Period/Start
+      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:FilingInfo/globe:Period/globe:Start
     references:
       - GLOBEBody/FilingInfo/Period/End
     element: Start
