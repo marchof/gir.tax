@@ -326,7 +326,7 @@ rules:
 
   - number: 60027
     targets:
-      - GLOBEBody/JurisdictionSection/LowTaxJurisdiction/LTCE/IIR/ParentEntity/TopUpTax
+      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:LowTaxJurisdiction/globe:LTCE/globe:IIR/globe:ParentEntity/globe:TopUpTax
     references:
       - GLOBEBody/JurisdictionSection/LowTaxJurisdiction/LTCE/IIR/ParentEntity/TopUpTaxShare
       - GLOBEBody/JurisdictionSection/LowTaxJurisdiction/LTCE/IIR/ParentEntity/IIROffSet

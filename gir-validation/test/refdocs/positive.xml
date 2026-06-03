@@ -133,6 +133,25 @@
           </globe:ETRStatus>
         </globe:ETR>
       </globe:GLoBETax>
+      <globe:LowTaxJurisdiction>
+        <globe:TopUpTaxAmount>0</globe:TopUpTaxAmount>
+        <globe:LTCE>
+          <globe:TIN TypeOfTIN="GIR3001" issuedBy="AF" unknown="true">globe:TIN</globe:TIN>
+          <globe:IIR>
+            <globe:NetGlobeIncome>0</globe:NetGlobeIncome>
+            <globe:TopUpTax>0</globe:TopUpTax>
+            <globe:ParentEntity>
+              <globe:TIN TypeOfTIN="GIR3001" issuedBy="AF" unknown="true">globe:TIN</globe:TIN>
+              <globe:ResCountryCode>AF</globe:ResCountryCode>
+              <globe:OtherOwnershipAllocation>0</globe:OtherOwnershipAllocation>
+              <globe:InclusionRatio>0</globe:InclusionRatio>
+              <globe:TopUpTaxShare>0</globe:TopUpTaxShare>
+              <globe:IIROffSet>0</globe:IIROffSet>
+              <globe:TopUpTax>0</globe:TopUpTax>
+            </globe:ParentEntity>
+          </globe:IIR>
+        </globe:LTCE>			 
+      </globe:LowTaxJurisdiction>
       <globe:DocSpec>
         <stf:DocTypeIndic>OECD0</stf:DocTypeIndic>
         <stf:DocRefId>stf:DocRefId</stf:DocRefId>
