@@ -1373,8 +1373,6 @@ rules:
       The deemed distribution tax election under article 7.3.1 has been elected for a
       year which is not the Reporting Fiscal Year or a prior Fiscal Year
 
-    ```yaml
-other_record_errors_continued_2:
   - number: 70071
     targets:
       - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeemedDistTax/Election/Recapture/Year
