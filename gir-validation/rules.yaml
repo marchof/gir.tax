@@ -801,7 +801,7 @@ rules:
 
   - number: 70032
     targets:
-      - GLOBEBody/GeneralSection/CorporateStructure/CE/QIIR
+      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:GeneralSection/globe:CorporateStructure/globe:CE/globe:QIIR
     references:
       - GLOBEBody/GeneralSection/CorporateStructure/CE/ID/Rules
     element: QIIR
@@ -814,7 +814,7 @@ rules:
 
   - number: 70033
     targets:
-      - GLOBEBody/GeneralSection/CorporateStructure/CE/QIIR/Exception/TIN
+      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:GeneralSection/globe:CorporateStructure/globe:CE/globe:QIIR/globe:Exception/globe:TIN
     references:
       - GLOBEBody/GeneralSection/CorporateStructure/CE/ID/TIN
     element: TIN
@@ -827,7 +827,7 @@ rules:
 
   - number: 70034
     targets:
-      - GLOBEBody/GeneralSection/CorporateStructure/CE/QIIR/Exception/Art2.1.3
+      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:GeneralSection/globe:CorporateStructure/globe:CE/globe:QIIR/globe:Exception/globe:ExceptionRule/globe:Art2.1.3
     references:
       - GLOBEBody/GeneralSection/CorporateStructure/CE/QIIR/POPE-IPE
       - GLOBEBody/GeneralSection/CorporateStructure/CE/QIIR/Exception
@@ -1668,7 +1668,6 @@ rules:
       The GlobeLoss element must be the same as
       OverallComputation/NetGlobeIncome/Total value.
 
-other_record_errors_continued_3:
   - number: 70091
     targets:
       - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdditionalTopUpTax/Art4.1.5/ExpectedAdjustedCoveredTax
@@ -2068,7 +2067,7 @@ other_record_errors_continued_3:
 
   - number: 70120
     targets:
-      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Total
+      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:CEComputation/globe:AdjustedCoveredTax/globe:DeferTaxAdjustAmt/globe:Total
     references:
       - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/DeferTaxExpense
       - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/AdjustmentsAmount/  # TODO: verify path against schema (unknown segments: AdjustmentsAmount)
