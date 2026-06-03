@@ -83,7 +83,7 @@ rules:
 
   - number: 60008
     targets:
-      - .//CorrDocRefID
+      - //sts:CorrDocRefId
     element: CorrDocRefld
     rule: >-
       The CorrDocRefid refers to an unknown record.
@@ -94,7 +94,7 @@ rules:
 
   - number: 60009
     targets:
-      - //CorrDocRefId
+      - //sts:CorrDocRefId
     element: CorrDocRefld
     rule: >-
       The CorrDocRefID must relate to the latest instance of the DocRefID. The
@@ -130,7 +130,7 @@ rules:
 
   - number: 60012
     targets:
-      - //CorrDocRefId
+      - //sts:CorrDocRefId
     element: CorrDocRefld
     rule: >-
       When DocTypeIndic is OECD1 or OECDO, the CorrDocRefld field must be omitted.
