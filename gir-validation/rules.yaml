@@ -72,7 +72,7 @@ rules:
 
   - number: 60007
     targets:
-      - //DocRefId
+      - //sts:DocRefId
     element: DocRefId
     rule: >-
       The DocRefID is already used for another record.
