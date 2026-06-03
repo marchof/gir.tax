@@ -62,7 +62,7 @@ rules:
 
   - number: 60006
     targets:
-      - //CorrDocRefId
+      - //sts:CorrDocRefId
     element: CorrDocRefld
     rule: >-
       The same DocReflD cannot be corrected or deleted twice in the same message.
