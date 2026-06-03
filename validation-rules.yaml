@@ -271,28 +271,28 @@ rules:
       - GLOBEBody/Summary/ETRRange
       - GLOBEBody/Summary/SBIE
       - GLOBEBody/Summary/QDMTTut
-      - GLOBEBody/Summary/GLOBETut
+      - GLOBEBody/Summary/GLoBETut
     element: JurWithTaxingRights
     rule: >-
       If the Summary contains any of the following elements: SafeHarbour, ETRRange,
-      SBIE, QDMTTut, GLOBETut, then the JurWithTaxingRights/JurisdictionName must be
+      SBIE, QDMTTut, GLoBETut, then the JurWithTaxingRights/JurisdictionName must be
       provided.
     description: >-
       If the Summary contains any of the following elements: SafeHarbour, ETRRange,
-      SBIE, QDMTTut, GLOBETut, then the JurWithTaxingRights/JurisdictionName must be
+      SBIE, QDMTTut, GLoBETut, then the JurWithTaxingRights/JurisdictionName must be
       provided.
 
   - number: 60025
     targets:
       - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/ETRRate
     references:
-      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/NetGloBEIncome/Total
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/NetGlobeIncome/Total
       - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/Total
     element: ETRRate
     rule: >-
       The ETRRate must be equal to the integer value reported at the AdjustedCovered
       Tax/Total element DIVIDED by the integer reported at the NetGlobeIncome/Total
-      element. This rule does not apply if the NetGloBEIncome in the jurisdiction is
+      element. This rule does not apply if the NetGlobeIncome in the jurisdiction is
       zero (or negative). If AdjustedCovered Tax/Total element is not provided, then
       value assumed to be 0.
     description: >-
@@ -477,15 +477,15 @@ rules:
 
   - number: 70009
     targets:
-      - GLOBEBody/GeneralSection/CorporateStructure/UPE/ExcludedUPE/ID/GloBEStatus
-      - GLOBEBody/GeneralSection/CorporateStructure/UPE/OtherUPE/ID/GloBEStatus
-    element: GloBEStatus
+      - GLOBEBody/GeneralSection/CorporateStructure/UPE/ExcludedUPE/ID/GlobeStatus
+      - GLOBEBody/GeneralSection/CorporateStructure/UPE/OtherUPE/ID/GlobeStatus
+    element: GlobeStatus
     rule: >-
-      The UPE GloBEStatus should not accept the following values: GIR305,
+      The UPE GlobeStatus should not accept the following values: GIR305,
       GIR307,GIR308, GIR309,GIR312,GIR313,GIR314, GIR315,GIR317, GIR318
     description: >-
-      An Invalid GloBE Status of the UPE was provided. Please ensure that the
-      GloBEStatus of the UPE align with note 1.3.1.6 of the GIR.
+      An Invalid Globe Status of the UPE was provided. Please ensure that the
+      GlobeStatus of the UPE align with note 1.3.1.6 of the GIR.
 
   - number: 70010
     targets:
@@ -529,10 +529,10 @@ rules:
 
   - number: 70013
     targets:
-      - GLOBEBody/GeneralSection/CorporateStructure/CE/ID/GloBEStatus
-    element: GloBEStatus
+      - GLOBEBody/GeneralSection/CorporateStructure/CE/ID/GlobeStatus
+    element: GlobeStatus
     rule: >-
-      When the GloBEStatus contains the value of GIR313, the value of GIR314 must not
+      When the GlobeStatus contains the value of GIR313, the value of GIR314 must not
       also be reported for the same CE
     description: >-
       A CE element has been completed with a GloBE Status which indicates that an
@@ -541,25 +541,25 @@ rules:
 
   - number: 70014
     targets:
-      - GLOBEBody/GeneralSection/CorporateStructure/CE/ID/GloBEStatus
-    element: GloBEStatus
+      - GLOBEBody/GeneralSection/CorporateStructure/CE/ID/GlobeStatus
+    element: GlobeStatus
     rule: >-
-      When the GloBEStatus contains the value of GIR307, the value of GIR308 must not
+      When the GlobeStatus contains the value of GIR307, the value of GIR308 must not
       also be reported for the same CE
     description: >-
-      A CE has been identified as having the GloBE Status of both a Minority-Owned
+      A CE has been identified as having the Globe Status of both a Minority-Owned
       Parent Entity and a Minority-Owned Subsidiary, please ensure that the
-      GloBEStatus of the same CE does not contain GIR307 and GIR308
+      GlobeStatus of the same CE does not contain GIR307 and GIR308
 
   - number: 70015
     targets:
-      - GLOBEBody/GeneralSection/CorporateStructure/CE/ID/GloBEStatus
-    element: GloBEStatus
+      - GLOBEBody/GeneralSection/CorporateStructure/CE/ID/GlobeStatus
+    element: GlobeStatus
     rule: >-
-      When the GloBEStatus contains the value of GIR308, then there must be another CE
+      When the GlobeStatus contains the value of GIR308, then there must be another CE
       in the corporate structure which contains the value of GIR307 (i.e. when
-      CE/ID/GloBEStatus = GIR308, must also be a separate CE element which contains
-      CE/ID/GloBEStatus=GIR307)
+      CE/ID/GlobeStatus = GIR308, must also be a separate CE element which contains
+      CE/ID/GlobeStatus=GIR307)
     description: >-
       A Minority-Owned Subsidiary has been identified in the Corporate Structue and
       there is no other CE reported in the corporate Structure which is a
@@ -567,48 +567,47 @@ rules:
 
   - number: 70016
     targets:
-      - GLOBEBody/GeneralSection/CorporateStructure/CE/ID/GloBEStatus
-    element: GloBEStatus
+      - GLOBEBody/GeneralSection/CorporateStructure/CE/ID/GlobeStatus
     rule: >-
-      When the GloBEStatus contains the value of GIR307, the value of GIR309 should
-      also be reported in the GloBEStatus
+      When the GlobeStatus contains the value of GIR307, the value of GIR309 should
+      also be reported in the GlobeStatus
     description: >-
       A Minority-Owned Parent Entity must also be a Minority-Owned Constituent Entity,
-      as a result when the value of GIR307 is selected for the GloBEStatus then the
+      as a result when the value of GIR307 is selected for the GlobeStatus then the
       value of GIR309 must also be provided.
 
   - number: 70017
     targets:
-      - GLOBEBody/GeneralSection/CorporateStructure/CE/ID/GloBEStatus
-    element: GloBEStatus
+      - GLOBEBody/GeneralSection/CorporateStructure/CE/ID/GlobeStatus
+    element: GlobeStatus
     rule: >-
-      When the GloBEStatus contains the value of GIR308, the value of GIR309 should
-      also be reported in the GloBEStatus
+      When the GlobeStatus contains the value of GIR308, the value of GIR309 should
+      also be reported in the GlobeStatus
     description: >-
       A Minority-Owned Subsidiary must also be a Minority-Owned Constituent Entity, as
-      a result when GIR308 is selected for the GloBEStatus then the value of GIR309
+      a result when GIR308 is selected for the GlobeStatus then the value of GIR309
       must also be selected
 
   - number: 70018
     targets:
-      - GLOBEBody/GeneralSection/CorporateStructure/CE/ID/GloBEStatus
-    element: GloBEStatus
+      - GLOBEBody/GeneralSection/CorporateStructure/CE/ID/GlobeStatus
+    element: GlobeStatus
     rule: >-
-      When the GloBEStatus contains the value of GIR305, the value of GIR306 must not
+      When the GlobeStatus contains the value of GIR305, the value of GIR306 must not
       also be reported for the same CE
     description: >-
-      A CE has been identified as having the GloBE Status of both a Permanent
-      Establishment and a Main entity, whereas the same CE cannot have the GloBE
+      A CE has been identified as having the GlobeStatus of both a Permanent
+      Establishment and a Main entity, whereas the same CE cannot have the Globe
       Status of PE and ME.
 
   - number: 70019
     targets:
-      - GLOBEBody/GeneralSection/CorporateStructure/CE/ID/GloBEStatus
-    element: GloBEStatus
+      - GLOBEBody/GeneralSection/CorporateStructure/CE/ID/GlobeStatus
+    element: GlobeStatus
     rule: >-
-      When the GloBEStatus contains the value of GIR305, then there must be another CE
-      which contains the GloBEStatus of GIR306 (i.e. when CE/ID/GloBEStatus = GIR305,
-      there must also be a separate CE element which contains CE/ID/GloBEStatus =
+      When the GlobeStatus contains the value of GIR305, then there must be another CE
+      which contains the GlobeStatus of GIR306 (i.e. when CE/ID/GlobeStatus = GIR305,
+      there must also be a separate CE element which contains CE/ID/GlobeStatus =
       GIR306)
     description: >-
       A permanent establishment has been reported in the Corporate Structure of the
@@ -616,37 +615,37 @@ rules:
 
   - number: 70020
     targets:
-      - GLOBEBody/GeneralSection/CorporateStructure/CE/ID/GloBEStatus
-    element: GloBEStatus
+      - GLOBEBody/GeneralSection/CorporateStructure/CE/ID/GlobeStatus
+    element: GlobeStatus
     rule: >-
-      If the GloBEStatus contains the value of GIR316 or GIR318, then there should be
-      no other value in the GloBEStatus (if GloBEStatus = GIR316 - GloBEStatus can
-      only contain the value of GIR316 and if GloBEStatus = GIR318 - GloBEStatus can
+      If the GlobeStatus contains the value of GIR316 or GIR318, then there should be
+      no other value in the GlobeStatus (if GlobeStatus = GIR316 - GlobeStatus can
+      only contain the value of GIR316 and if GlobeStatus = GIR318 - GlobeStatus can
       only contain the value of GIR318)
     description: >-
-      A NonGroup -member or excluded entity was reported in the GloBEStatus and at
-      least one additional GloBEStatus was reported. When the CE element has the
-      GloBEStatus of GIR316 or GIR318, it can only contain the single value in the
-      GloBEStatus (i.e. only GIR316 or only GIR318)
+      A NonGroup -member or excluded entity was reported in the GlobeStatus and at
+      least one additional GlobeStatus was reported. When the CE element has the
+      GlobeStatus of GIR316 or GIR318, it can only contain the single value in the
+      GlobeStatus (i.e. only GIR316 or only GIR318)
 
     other_record_errors:
   - number: 70021
     targets:
-      - GLOBEBody/GeneralSection/CorporateStructure/CE/ID/GloBEStatus
+      - GLOBEBody/GeneralSection/CorporateStructure/CE/ID/GlobeStatus
     references:
       - GLOBEBody/GeneralSection/CorporateStructure/CE/OwnershipChange
       - GLOBEBody/GeneralSection/CorporateStructure/CE/OwnershipChange/PreGlobeStatus
-    element: GloBEStatus
+    element: GlobeStatus
     rule: >-
-      The GloBEStatus element cannot contain the value of GIR316 or GIR318, unless
+      The GlobeStatus element cannot contain the value of GIR316 or GIR318, unless
       there is a completed OwnershipChange for the CE element (i.e., when Corporate
       Structure/CE/ID/TIN matches to Corporate
       Structure/CE/OwnershipChange/PreOwnership/TIN).
     description: >-
-      The GloBE Status of a CE can only contain the value of 'Excluded Entity' or
-      'NonGroup-Member' when there has been a change in the GloBE Status of the
-      reported CE. Therefore, there must be a completed OwnerhshipChange element which
-      indicates the GloBEStatus before the entity became an Excluded Entity or a
+      The GlobeStatus of a CE can only contain the value of 'Excluded Entity' or
+      'NonGroup-Member' when there has been a change in the GlobeStatus of the
+      reported CE. Therefore, there must be a completed OwnershipChange element which
+      indicates the GlobeStatus before the entity became an Excluded Entity or a
       'Non-Group Member'
 
   - number: 70022
@@ -783,14 +782,14 @@ rules:
     targets:
       - GLOBEBody/GeneralSection/CorporateStructure/CE/Ownership/TIN
     references:
-      - GLOBEBody/GeneralSection/CorporateStructure/CE/ID/GloBEStatus
+      - GLOBEBody/GeneralSection/CorporateStructure/CE/ID/GlobeStatus
       - GLOBEBody/GeneralSection/CorporateStructure/CE/ID/TIN
     element: TIN
     rule: >-
-      When the Corporate Structure/CE/ID/GloBEStatus contains the value of GIR305,
+      When the Corporate Structure/CE/ID/GlobeStatus contains the value of GIR305,
       then the Ownership/TIN must be equal at least one TIN of the entity which
-      reported the GloBEStatus of GIR306 either in Corporate
-      Structure/CE/ID/GloBEStatus, or CorporateStructure/UPE/OtherUPE/ID/GlobeStatus.
+      reported the GlobeStatus of GIR306 either in Corporate
+      Structure/CE/ID/GlobeStatus, or CorporateStructure/UPE/OtherUPE/ID/GlobeStatus.
     description: >-
       The ownership TIN of a CE identified as being a PE is not held by a CE which is
       a main entity
@@ -1229,7 +1228,7 @@ rules:
 
   - number: 70059
     targets:
-      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/NetGloBEIncome/Adjustments/AdjustmentItem
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/NetGlobeIncome/Adjustments/AdjustmentItem
     element: AdjustmentItem
     rule: >-
       Each code for this AdjustmentItem element cannot be used more than once per ETR
@@ -1240,9 +1239,9 @@ rules:
 
   - number: 70060
     targets:
-      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/NetGloBEIncome/IntShippingIncome
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/NetGlobeIncome/IntShippingIncome
     references:
-      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/NetGloBEIncome/Adjustments/AdjustmentItem
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/NetGlobeIncome/Adjustments/AdjustmentItem
     element: AdjustmentItem
     rule: >-
       When the 'Adjustmentitem' element contains the value GIR2025 then the
@@ -1254,7 +1253,7 @@ rules:
   - number: 70061
     targets:
       - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/Adjustments/AdjustmentItem
-      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/AdjustmentsAmount/
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/Amount/
     references:
       - GLOBEBody/JurisdictionSection/GLoBETax/ETR/Election/Art4.6.1
     element: AdjustmentItem
@@ -1477,7 +1476,7 @@ other_record_errors_continued_2:
     references:
       - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/DefTaxAmt
       - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/DiffCarryValue
-      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/GloBEValue
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/GLoBEValue
     element: BefRecastAdjust
     rule: >-
       The BefRecastAdjust element should be equal to the following calculation:
@@ -1563,7 +1562,7 @@ other_record_errors_continued_2:
 
   - number: 70084
     targets:
-      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/AdjustmentsAmount/Adjustments/AdjustmentItem
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/AdjustmentsAmount/Adjustments/AdjustmentItem  # TODO: verify path against schema (unknown segments: AdjustmentsAmount)
     references:
       - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/ExcessNegTaxExpense/GeneratedInRFY
     element: GeneratedInRFY
@@ -1581,7 +1580,7 @@ other_record_errors_continued_2:
 
   - number: 70085
     targets:
-      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/AdjustmentsAmount/Adjustments/AdjustmentItem
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/AdjustmentsAmount/Adjustments/AdjustmentItem  # TODO: verify path against schema (unknown segments: AdjustmentsAmount)
     references:
       - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/ExcessNegTaxExpense/UtilizedInRFY
     element: UtilizedInRFY
@@ -1635,7 +1634,7 @@ other_record_errors_continued_2:
     targets:
       - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdditionalTopUpTax/Art4.1.5
     references:
-      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/NetGloBEIncome/Total
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/NetGloBEIncome/Total  # TODO: verify path against schema (unknown segments: NetGloBEIncome)
     element: Art4.1.5
     rule: >-
       The Art4.1.5 element must be completed if the
@@ -1870,7 +1869,7 @@ other_record_errors_continued_3:
     references:
       - GLOBEBody/UTPRAttribution/Attribution/UTPRTopUpTaxCarryForward
       - GLOBEBody/UTPRAttribution/Attribution/UTPRTopUpTaxAttributed
-      - GLOBEBody/UTPRAttribution/AttributionAddCashTaxExpe/nse
+      - GLOBEBody/UTPRAttribution/AttributionAddCashTaxExpe/nse  # TODO: verify path against schema (unknown segments: AttributionAddCashTaxExpe, nse)
     element: UTPRTopUpTaxCarriedForward
     rule: >-
       The UTPRTopUpTaxCarriedForward is equal to the following calculation UTPRTopUp
@@ -1990,7 +1989,7 @@ other_record_errors_continued_3:
 
   - number: 70114
     targets:
-      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/NetGloBEIncome/Adjustments/Amount
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/NetGloBEIncome/Adjustments/Amount  # TODO: verify path against schema (unknown segments: NetGloBEIncome)
     element: Amount
     rule: >-
       If two values are provided for the'Amount', then one value must be negative and
@@ -2016,7 +2015,7 @@ other_record_errors_continued_3:
 
   - number: 70116
     targets:
-      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/NetGloBEIncome/IntShippingIncome
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/NetGloBEIncome/IntShippingIncome  # TODO: verify path against schema (unknown segments: NetGloBEIncome)
     references:
       - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/NetGlobeIncome/Adjustments/AdjustmentItem
     element: AdjustmentItem
@@ -2069,7 +2068,7 @@ other_record_errors_continued_3:
       - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Total
     references:
       - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/DeferTaxExpense
-      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/AdjustmentsAmount/
+      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/AdjustmentsAmount/  # TODO: verify path against schema (unknown segments: AdjustmentsAmount)
       - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Recast/Higher
       - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Recast/Lower
     element: Total
