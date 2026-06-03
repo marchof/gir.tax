@@ -18,7 +18,7 @@
       <globe:FilingCE>
         <globe:ResCountryCode>AF</globe:ResCountryCode>
         <globe:Name>globe:Name</globe:Name>
-        <globe:TIN TypeOfTIN="GIR3001" issuedBy="AF" unknown="true">globe:TIN</globe:TIN>
+        <globe:TIN TypeOfTIN="GIR3004" unknown="true">NOTIN</globe:TIN>
         <globe:Role>GIR401</globe:Role>
       </globe:FilingCE>
       <!-- And here we have a comment -->
@@ -46,7 +46,7 @@
             <globe:ExcludedUPEStatus>GIR601</globe:ExcludedUPEStatus>
             <globe:ID>
               <globe:Name>globe:Name</globe:Name>
-              <globe:TIN TypeOfTIN="GIR3001" issuedBy="AF" unknown="true">globe:TIN</globe:TIN>
+              <globe:TIN TypeOfTIN="GIR3004" unknown="true">NOTIN</globe:TIN>
               <globe:GlobeStatus>GIR301</globe:GlobeStatus>
             </globe:ID>
           </globe:ExcludedUPE>
@@ -210,12 +210,12 @@
       <globe:LowTaxJurisdiction>
         <globe:TopUpTaxAmount>0</globe:TopUpTaxAmount>
         <globe:LTCE>
-          <globe:TIN TypeOfTIN="GIR3001" issuedBy="AF" unknown="true">globe:TIN</globe:TIN>
+          <globe:TIN TypeOfTIN="GIR3004" unknown="true">NOTIN</globe:TIN>
           <globe:IIR>
             <globe:NetGlobeIncome>0</globe:NetGlobeIncome>
             <globe:TopUpTax>0</globe:TopUpTax>
             <globe:ParentEntity>
-              <globe:TIN TypeOfTIN="GIR3001" issuedBy="AF" unknown="true">globe:TIN</globe:TIN>
+              <globe:TIN TypeOfTIN="GIR3004" unknown="true">NOTIN</globe:TIN>
               <globe:ResCountryCode>AF</globe:ResCountryCode>
               <globe:OtherOwnershipAllocation>0</globe:OtherOwnershipAllocation>
               <globe:InclusionRatio>0</globe:InclusionRatio>

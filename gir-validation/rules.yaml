@@ -360,6 +360,9 @@ rules:
     targets:
       - //globe:TIN
     element: TypeOfTIN
+    test: >-
+      not(@TypeOfTIN='GIR3004') or
+      (.='NOTIN' and (@unknown='true' or @unknown='1') and not(@issuedBy))
     rule: >-
       If TypeOfTIN is GIR3004 then TIN must contain the text 'NOTIN', flag Unknown
       must be TRUE and IssuedBy must not be provided
@@ -371,6 +374,9 @@ rules:
     targets:
       - //globe:TIN
     element: TypeOfTIN
+    test: >-
+      not(.='NOTIN') or
+      (@TypeOfTIN='GIR3004' and (@unknown='true' or @unknown='1') and not(@issuedBy))
     rule: >-
       If TIN value is 'NOTIN' then TypeOfTIN must be GIR3004, flag Unknown must be
       TRUE and IssuedBy must not be provided.
@@ -382,6 +388,9 @@ rules:
     targets:
       - //globe:TIN
     element: unknown
+    test: >-
+      not(@unknown='true' or @unknown='1') or
+      (.='NOTIN' and @TypeOfTIN='GIR3004' and not(@issuedBy))
     rule: >-
       If flag Unknown is TRUE then TIN must be NOTIN, TypeOfTIN must be GIR3004 and
       IssuedBy must not be provided.
