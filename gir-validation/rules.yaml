@@ -142,9 +142,9 @@ rules:
   - number: 60013
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:GeneralSection/globe:DocSpec/stf:DocTypeIndic
-      - GLOBEBody/Summary/DocSpec/DocTypeIndic
-      - GLOBEBody/JurisdictionSection/DocSpec/DocTypeIndic
-      - GLOBEBody/UTPRAttribution/DocSpec/DocTypeIndic
+      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:Summary/globe:DocSpec/stf:DocTypeIndic
+      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:DocSpec/stf:DocTypeIndic
+      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:UTPRAttribution/globe:DocSpec/stf:DocTypeIndic
     element: DocTypeIndic
     rule: >-
       The Resend option may only be used with respect to the FilingInfo element. The
@@ -270,7 +270,7 @@ rules:
 
   - number: 60024
     targets:
-      - GLOBEBody/Summary/JurWithTaxingRights
+      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:Summary/globe:JurWithTaxingRights
     references:
       - GLOBEBody/Summary/SafeHarbour
       - GLOBEBody/Summary/ETRRange

@@ -76,6 +76,7 @@
     <globe:Summary>
       <globe:RecJurCode>AF</globe:RecJurCode>
       <globe:Jurisdiction/>
+      <globe:JurWithTaxingRights/>
       <globe:DocSpec>
         <stf:DocTypeIndic>OECD0</stf:DocTypeIndic>
         <stf:DocRefId>stf:DocRefId</stf:DocRefId>
