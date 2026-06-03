@@ -289,7 +289,7 @@ rules:
 
   - number: 60025
     targets:
-      - /GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/ETRRate
+      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:OverallComputation/globe:ETRRate
     references:
       - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/NetGlobeIncome/Total
       - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/Total
@@ -306,7 +306,7 @@ rules:
 
   - number: 60026
     targets:
-      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/TopUpTax
+      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:OverallComputation/globe:TopUpTax
     references:
       - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/TopUpTaxPercentage
       - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/ExcessProfits

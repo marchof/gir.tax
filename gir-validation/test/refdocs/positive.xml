@@ -85,7 +85,54 @@
     <globe:JurisdictionSection>
       <globe:RecJurCode>AF</globe:RecJurCode>
       <globe:Jurisdiction>AF</globe:Jurisdiction>
-      <globe:GLoBETax/>
+      <globe:GLoBETax>
+        <globe:ETR>
+          <globe:ETRStatus>
+            <globe:ETRComputation>
+              <globe:OverallComputation>
+                <globe:FANIL>0</globe:FANIL>
+                <globe:AdjustedFANIL>0</globe:AdjustedFANIL>
+                <globe:NetGlobeIncome>
+                  <globe:Total>0</globe:Total> 				 
+                </globe:NetGlobeIncome>
+                <globe:IncomeTaxExpense>0</globe:IncomeTaxExpense>
+                <globe:ETRRate>0</globe:ETRRate>
+                <globe:TopUpTaxPercentage>0</globe:TopUpTaxPercentage>
+                <globe:AdjustedCoveredTax>
+                  <globe:Total>0</globe:Total>
+                  <globe:AggregrateCurrentTax>0</globe:AggregrateCurrentTax>
+                </globe:AdjustedCoveredTax>
+                <globe:SubstanceExclusion>
+                  <globe:Total>0</globe:Total>
+                  <globe:PayrollCost>0</globe:PayrollCost>
+                  <globe:PayrollMarkUp>0</globe:PayrollMarkUp>
+                  <globe:TangibleAssetValue>0</globe:TangibleAssetValue>
+                  <globe:TangibleAssetMarkup>0</globe:TangibleAssetMarkup>
+                </globe:SubstanceExclusion>
+                <globe:ExcessProfits>0</globe:ExcessProfits>
+                <globe:AdditionalTopUpTax>
+                </globe:AdditionalTopUpTax>
+                <globe:QDMTT>
+                  <globe:FAS>0</globe:FAS>
+                  <globe:Amount>0</globe:Amount>
+                  <globe:MinRate>0</globe:MinRate>
+                  <globe:BasisforBlending>0</globe:BasisforBlending>
+                  <globe:SBIEAvailable>0</globe:SBIEAvailable>
+                  <globe:DeMinAvailable>0</globe:DeMinAvailable>
+                  <globe:Currency>EUR</globe:Currency>
+                </globe:QDMTT>
+                <globe:TopUpTax>0</globe:TopUpTax>
+                <globe:ExcessNegTaxExpense>
+                  <globe:PriorYearBalance>0</globe:PriorYearBalance>
+                  <globe:GeneratedInRFY>0</globe:GeneratedInRFY>
+                  <globe:UtilizedInRFY>0</globe:UtilizedInRFY>
+                  <globe:Remaining>0</globe:Remaining>
+                </globe:ExcessNegTaxExpense>
+              </globe:OverallComputation>
+            </globe:ETRComputation>
+          </globe:ETRStatus>
+        </globe:ETR>
+      </globe:GLoBETax>
       <globe:DocSpec>
         <stf:DocTypeIndic>OECD0</stf:DocTypeIndic>
         <stf:DocRefId>stf:DocRefId</stf:DocRefId>
