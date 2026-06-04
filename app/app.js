@@ -8,6 +8,7 @@ import "./components/ValidationStatus.js";
 import "./components/VersionInfo.js";
 import { csvToXml, looksLikeCsvFile, toXmlFileName } from "./csvimport.js";
 import { GirStatusMessage } from "./girstatusmessage.js";
+import { validateGirRules } from "./girvalidator.js";
 import { XMLSchema } from "./xmlschema.js";
 
 const xmlSchema = new XMLSchema("schemas/gir", "globexml_v1.0.xsd");
@@ -177,6 +178,7 @@ async function handleFileImport(file) {
   }
 
   statusMessage.setOriginalMessageRefId(extractMessageRefId(xml));
+  validateGirRules(xml, statusMessage);
   showValidation(statusMessage, xmlFileName);
 
   renderXmlOutline(xml);

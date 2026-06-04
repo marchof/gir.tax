@@ -70,7 +70,7 @@ class ValidationStatus extends HTMLElement {
         }
 
         .validation-container {
-          font-family: system-ui, -apple-system, Segoe UI, sans-serif;
+          font-family: "Avenir Next", "Segoe UI", sans-serif;
           padding: 1rem;
           overflow-y: auto;
           display: flex;
@@ -78,6 +78,7 @@ class ValidationStatus extends HTMLElement {
           height: 100%;
           box-sizing: border-box;
           gap: 1rem;
+          background: radial-gradient(circle at top right, #eef6ff 0%, #f9fcff 40%, #f5f8fc 100%);
         }
 
         .validation-output {
@@ -85,80 +86,126 @@ class ValidationStatus extends HTMLElement {
           margin: 0;
           font-size: 0.95em;
           line-height: 1.5;
-          border: 1px solid #ddd;
+          border: 1px solid #d6e1ef;
           padding: 1rem;
-          background: #fff;
-          border-radius: 8px;
+          background: rgba(255, 255, 255, 0.9);
+          border-radius: 12px;
+          box-shadow: 0 8px 20px rgba(17, 37, 62, 0.06);
         }
 
         .summary-grid {
           display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+          grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
           gap: 0.75rem;
-          margin-bottom: 1rem;
+          margin-bottom: 0.9rem;
         }
 
         .summary-item {
-          border: 1px solid #e1e7ef;
-          border-radius: 8px;
-          background: #f9fbfd;
-          padding: 0.6rem 0.7rem;
+          border: 1px solid #d7e2ef;
+          border-radius: 10px;
+          background: linear-gradient(180deg, #ffffff, #f7fafd);
+          padding: 0.65rem 0.75rem;
         }
 
         .summary-label {
           font-size: 0.78rem;
           letter-spacing: 0.03em;
           text-transform: uppercase;
-          color: #5a6878;
+          color: #4f5e71;
         }
 
         .summary-value {
           margin-top: 0.2rem;
-          color: #1f2d3d;
+          color: #1c2b3f;
           font-weight: 600;
           word-break: break-word;
         }
 
         .summary-value.status-accepted {
-          color: #0e7c42;
+          color: #0c7a38;
         }
 
         .summary-value.status-rejected {
-          color: #a1260d;
+          color: #ad2b10;
         }
 
-        .issues-section + .issues-section {
-          margin-top: 1rem;
+        .issue-cards {
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 0.6rem;
         }
 
-        .issues-heading {
-          margin: 0 0 0.5rem;
-          font-size: 1rem;
-          color: #1f2d3d;
+        .issue-card {
+          border: 1px solid #dce6f3;
+          border-radius: 10px;
+          padding: 0.7rem;
+          background: #fcfdff;
         }
 
-        .issues-list {
-          margin: 0;
-          padding-left: 1.1rem;
-        }
-
-        .issue-item + .issue-item {
-          margin-top: 0.45rem;
+        .issue-topline {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 0.5rem;
+          margin-bottom: 0.4rem;
         }
 
         .issue-code {
           font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-          font-size: 0.85rem;
-          padding: 0.08rem 0.35rem;
+          font-size: 0.8rem;
+          padding: 0.08rem 0.4rem;
           border-radius: 6px;
-          border: 1px solid #d7dfe8;
-          background: #f5f8fb;
-          margin-right: 0.35rem;
+          border: 1px solid #cc6666;
+          background: #ffaaaa;
+          color: #20415f;
+          white-space: nowrap;
+        }
+
+        .issue-language {
+          font-size: 0.74rem;
+          color: #4f5e71;
+          border: 1px dashed #c9d7e9;
+          border-radius: 6px;
+          padding: 0.08rem 0.35rem;
+          white-space: nowrap;
+        }
+
+        .issue-details {
+          margin: 0;
+          color: #1f2d3d;
+        }
+
+        .meta-grid {
+          margin-top: 0.5rem;
+          display: grid;
+          gap: 0.45rem;
+        }
+
+        .meta-row {
+          display: grid;
+          gap: 0.25rem;
+        }
+
+        .meta-label {
+          font-size: 0.72rem;
+          text-transform: uppercase;
+          letter-spacing: 0.03em;
+          color: #617186;
+        }
+
+        .mono-list {
+          font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+          font-size: 0.78rem;
+          margin: 0;
+          padding: 0;
+          color: #1f2d3d;
+          word-break: break-all;
+          white-space: pre-wrap;
         }
 
         .empty-state {
           margin: 0;
-          color: #5a6878;
+          color: #4d5f74;
         }
 
         .button-row {
@@ -186,6 +233,9 @@ class ValidationStatus extends HTMLElement {
   _renderValidationHtml(statusMessage) {
     const model = statusMessage.toValidationModel();
     const statusClass = model.status === "Accepted" ? "status-accepted" : "status-rejected";
+    const validatedBy = Array.isArray(model.validatedBy) && model.validatedBy.length > 0
+      ? model.validatedBy.join(", ")
+      : "-";
     const summary = `
       <section class="summary-grid">
         <div class="summary-item">
@@ -197,6 +247,14 @@ class ValidationStatus extends HTMLElement {
           <div class="summary-value">${model.errorCount}</div>
         </div>
         <div class="summary-item">
+          <div class="summary-label">File Errors</div>
+          <div class="summary-value">${Array.isArray(model.fileErrors) ? model.fileErrors.length : 0}</div>
+        </div>
+        <div class="summary-item">
+          <div class="summary-label">Record Errors</div>
+          <div class="summary-value">${Array.isArray(model.recordErrors) ? model.recordErrors.length : 0}</div>
+        </div>
+        <div class="summary-item">
           <div class="summary-label">Message Ref ID</div>
           <div class="summary-value">${this._escapeHtml(model.messageRefId || "-")}</div>
         </div>
@@ -206,19 +264,19 @@ class ValidationStatus extends HTMLElement {
         </div>
         <div class="summary-item">
           <div class="summary-label">Validated By</div>
-          <div class="summary-value">${this._escapeHtml(model.validatedBy.join(", "))}</div>
+          <div class="summary-value">${this._escapeHtml(validatedBy)}</div>
         </div>
       </section>
     `;
 
-    const fileIssues = this._renderIssuesSection("File Issues", model.fileErrors);
-    const recordIssues = this._renderIssuesSection("Record Issues", model.recordErrors);
+    const combinedIssues = this._mergeIssues(model.fileErrors, model.recordErrors);
+    const issues = this._renderIssuesSection(combinedIssues);
     const noIssues = model.errorCount === 0 ? "<p class=\"empty-state\">No validation issues found.</p>" : "";
 
-    return `${summary}${noIssues}${fileIssues}${recordIssues}`;
+    return `${summary}${noIssues}${issues}`;
   }
 
-  _renderIssuesSection(title, errors) {
+  _renderIssuesSection(errors) {
     if (!errors || errors.length === 0) {
       return "";
     }
@@ -226,14 +284,44 @@ class ValidationStatus extends HTMLElement {
     const items = errors.map(error => {
       const code = this._escapeHtml(error.code || "-");
       const details = this._escapeHtml(error.details || "No details");
-      return `<li class="issue-item"><span class="issue-code">${code}</span>${details}</li>`;
+      const language = error.language ? `<span class="issue-language">${this._escapeHtml(error.language)}</span>` : "";
+      const docRefIds = this._renderMonospaceRow("DocRef IDs", error.docRefIds);
+      const fieldPaths = this._renderMonospaceRow("Field Paths", error.fieldPaths);
+
+      return `
+        <article class="issue-card">
+          <div class="issue-topline">
+            <span class="issue-code">${code}</span>
+            ${language}
+          </div>
+          <p class="issue-details">${details}</p>
+          <div class="meta-grid">
+            ${docRefIds}
+            ${fieldPaths}
+          </div>
+        </article>
+      `;
     });
 
+    return `<div class="issue-cards">${items.join("")}</div>`;
+  }
+
+  _mergeIssues(fileErrors, recordErrors) {
+    const asArray = value => (Array.isArray(value) ? value : []);
+    return [...asArray(fileErrors), ...asArray(recordErrors)];
+  }
+
+  _renderMonospaceRow(label, values) {
+    const list = Array.isArray(values) ? values.filter(Boolean) : [];
+    const lines = list.length > 0
+      ? list.map(value => this._escapeHtml(value)).join("\n")
+      : "-";
+
     return `
-      <section class="issues-section">
-        <h3 class="issues-heading">${this._escapeHtml(title)}</h3>
-        <ul class="issues-list">${items.join("")}</ul>
-      </section>
+      <div class="meta-row">
+        <div class="meta-label">${this._escapeHtml(label)}</div>
+        <pre class="mono-list">${lines}</pre>
+      </div>
     `;
   }
 
