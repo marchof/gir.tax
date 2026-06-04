@@ -6,9 +6,9 @@ from lxml import etree
 import yaml
 
 REPO_ROOT_DIR = Path(__file__).resolve().parents[1]
-TESTDOCS_DIR = REPO_ROOT_DIR / "gir-validation" / "testdocs"
+TESTDOCS_DIR = REPO_ROOT_DIR / "gir-rules" / "testdocs"
 SCHEMA_FILE = REPO_ROOT_DIR / "schemas" / "gir" / "globexml_v1.0.xsd"
-RULES_FILE = REPO_ROOT_DIR / "gir-validation" / "rules.yaml"
+RULES_FILE = REPO_ROOT_DIR / "gir-rules" / "rules.yaml"
 
 with RULES_FILE.open("r", encoding="utf-8") as f:
     RULES = yaml.safe_load(f)

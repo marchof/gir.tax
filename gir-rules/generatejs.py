@@ -9,7 +9,7 @@ import yaml
 
 
 REPO_ROOT_DIR = Path(__file__).resolve().parents[1]
-RULES_FILE = REPO_ROOT_DIR / "gir-validation" / "rules.yaml"
+RULES_FILE = REPO_ROOT_DIR / "gir-rules" / "rules.yaml"
 OUTPUT_FILE = REPO_ROOT_DIR / "app" / "girrules.js"
 
 
