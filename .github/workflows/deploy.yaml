@@ -16,6 +16,16 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+    - name: Setup Python
+      uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
+      with:
+        python-version: '3.12'
+    - name: Install GIR Rule Dependencies
+      run: python -m pip install -r gir-rules/requirements.txt
+    - name: Test GIR Rules
+      run: python gir-rules/test.py
+    - name: Generate GIR Rules Module
+      run: python gir-rules/generatejs.py
     - name: Install Dependencies
       run: npm install
     - name: Check Licenses
