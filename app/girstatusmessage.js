@@ -3,7 +3,6 @@ import { XMLSchema } from "./xmlschema.js";
 const GIR_STATUS_SCHEMA = new XMLSchema("schemas/girstatus", "girstatusmessagexml_v1.0.xsd");
 
 const CSM_NS = "urn:oecd:ties:csm:v2";
-const ISO_NS = "urn:oecd:ties:isocsmtypes:v1";
 
 function compactIsoDateTime(value) {
   if (value instanceof Date) {
@@ -176,8 +175,6 @@ export class GirStatusMessage {
   toXmlString() {
     const doc = document.implementation.createDocument(CSM_NS, "csm:GIRStatusMessage_OECD", null);
     const root = doc.documentElement;
-    // root.setAttribute("xmlns:csm", CSM_NS);
-    // root.setAttribute("xmlns:iso", ISO_NS);
     root.setAttribute("version", "1.0");
 
     const messageSpec = appendElement(root, "MessageSpec");
