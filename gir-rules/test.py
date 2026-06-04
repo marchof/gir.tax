@@ -13,16 +13,16 @@ RULES_FILE = REPO_ROOT_DIR / "gir-rules" / "rules.yaml"
 with RULES_FILE.open("r", encoding="utf-8") as f:
     RULES = yaml.safe_load(f)
 
-POSITIVE_DOC = etree.parse(str(TESTDOCS_DIR / "positive.xml"))
+COMPLETE_DOC = etree.parse(str(TESTDOCS_DIR / "complete-1.xml"))
 NAMESPACES = RULES['xmlnamespaces']
 
 
 
 class TestGirXmlValidation(unittest.TestCase):
 
-    def test_positive_xml_is_valid_against_globexml_schema(self):
+    def test_complete_xml_is_valid_against_globexml_schema(self):
         xml_schema = etree.XMLSchema(etree.parse(str(SCHEMA_FILE)))
-        is_valid = xml_schema.validate(POSITIVE_DOC)
+        is_valid = xml_schema.validate(COMPLETE_DOC)
         error_log = "\n".join(str(err) for err in xml_schema.error_log)
         self.assertTrue(is_valid, f"XML failed schema validation:\n{error_log}")
 
@@ -34,7 +34,7 @@ class TestGirXmlValidation(unittest.TestCase):
     def test_target_does_exist(self, number, target):
         if ":" not in target:
             self.skipTest(f"Rule {number} target xpath is marked as IGNORE: {target}")
-        matches = POSITIVE_DOC.xpath(target, namespaces=NAMESPACES)
+        matches = COMPLETE_DOC.xpath(target, namespaces=NAMESPACES)
         self.assertTrue(matches, f"Rule {number} target xpath did not match any nodes in positive.xml: {target}")
 
     @parameterized.expand([
@@ -45,7 +45,7 @@ class TestGirXmlValidation(unittest.TestCase):
         if not test:
             self.skipTest(f"Rule {number} has no test defined")
         for target in targets:
-            for element in POSITIVE_DOC.xpath(target, namespaces=NAMESPACES):
+            for element in COMPLETE_DOC.xpath(target, namespaces=NAMESPACES):
                 serialized_element = etree.tostring(element, encoding="unicode")
                 self.assertTrue(
                     element.xpath(test, namespaces=NAMESPACES),
