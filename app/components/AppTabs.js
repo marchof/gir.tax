@@ -48,6 +48,9 @@ class AppTabs extends HTMLElement {
           font: 600 14px/1.2 sans-serif;
           padding: 8px 12px;
           transition: background-color 120ms ease, color 120ms ease, border-color 120ms ease;
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
         }
 
         .tab-button:hover {
@@ -59,6 +62,23 @@ class AppTabs extends HTMLElement {
           border-color: #cdd6df;
           color: #1f2d3d;
           box-shadow: 0 1px 2px rgba(16, 24, 40, 0.08);
+        }
+
+        .tab-chip {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          min-width: 1.5rem;
+          height: 1.25rem;
+          padding: 0 0.1rem;
+          border-radius: 999px;
+          background: #cf3f2e;
+          color: #ffffff;
+          font: 700 11px/1 sans-serif;
+        }
+
+        .tab-chip[hidden] {
+          display: none;
         }
 
         .panels {
@@ -103,7 +123,15 @@ class AppTabs extends HTMLElement {
     button.id = `${id}-button`;
     button.setAttribute("aria-selected", "false");
     button.setAttribute("aria-controls", `${id}-panel`);
-    button.textContent = label;
+
+    const labelNode = document.createElement("span");
+    labelNode.textContent = label;
+
+    const chipNode = document.createElement("span");
+    chipNode.className = "tab-chip";
+    chipNode.hidden = true;
+
+    button.append(labelNode, chipNode);
     button.addEventListener("click", () => {
       this.setActiveTab(id);
     });
@@ -119,8 +147,17 @@ class AppTabs extends HTMLElement {
     this._tabList.insertBefore(button, this._title);
     this._panels.appendChild(panel);
 
-    this._tabs.set(id, { button, panel, element, visible: true });
+    this._tabs.set(id, {
+      button,
+      panel,
+      element,
+      labelNode,
+      chipNode,
+      visible: true,
+    });
     this._tabOrder.push(id);
+
+    this.setTabChip(id, options.chip);
 
     if (options.activate || this._activeTabId === null) {
       this.setActiveTab(id);
@@ -173,6 +210,25 @@ class AppTabs extends HTMLElement {
     if (!this._activeTabId) {
       this.setActiveTab(id);
     }
+  }
+
+  setTabChip(id, chip) {
+    const tab = this._tabs.get(id);
+    if (!tab) {
+      return;
+    }
+
+    const chipText = this._normalizeChip(chip);
+    tab.chipNode.textContent = chipText || "";
+    tab.chipNode.hidden = chipText === null;
+  }
+
+  _normalizeChip(chip) {
+    if (chip === null || chip === undefined || chip === false || chip === "") {
+      return null;
+    }
+
+    return String(chip);
   }
 
   getActiveTab() {

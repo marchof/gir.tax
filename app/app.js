@@ -56,6 +56,7 @@ tabs.setActiveTab("file");
 function showValidation(statusMessage, xmlFileName) {
   validationStatus.statusMessage = statusMessage;
   validationStatus.xmlFileName = xmlFileName;
+  tabs.setTabChip("validation", statusMessage.errorCount > 0 ? statusMessage.errorCount : null);
   tabs.setTabVisible("viewer", false);
   tabs.setTabVisible("corporate-structure", false);
   tabs.setActiveTab("validation");
@@ -134,6 +135,7 @@ async function handleFileImport(file) {
   }
 
   tabs.setTabVisible("validation", true);
+  tabs.setTabChip("validation", null);
   exportXmlButton.clear();
 
   const statusMessage = createStatusMessage();
