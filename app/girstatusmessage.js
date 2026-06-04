@@ -176,8 +176,8 @@ export class GirStatusMessage {
   toXmlString() {
     const doc = document.implementation.createDocument(CSM_NS, "csm:GIRStatusMessage_OECD", null);
     const root = doc.documentElement;
-    root.setAttribute("xmlns:csm", CSM_NS);
-    root.setAttribute("xmlns:iso", ISO_NS);
+    // root.setAttribute("xmlns:csm", CSM_NS);
+    // root.setAttribute("xmlns:iso", ISO_NS);
     root.setAttribute("version", "1.0");
 
     const messageSpec = appendElement(root, "MessageSpec");
