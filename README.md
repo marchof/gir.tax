@@ -4,21 +4,7 @@ A online viewer and validator for [GloBE Information Return (GIR)](https://www.o
 
 The latest version is deployed at https://gir.tax/.
 
-## Open Tasks
-
-* [X] Validate if XML input is well formed
-* [X] Validate if XML input complies with schema
-* [X] Show XML errors
-* [X] Show XML tree
-* [X] Show description of elements in XML tree (tooltip), load from schema
-* [X] Show definition of enums in XML tree, load from schema
-* [X] Also accept CSV as input
-* [X] Download XML (especially when created from CSV)
-* [X] Show company structure as graph (element CorporateStructure)
-* [ ] Validate against additional GIR rules
-* [ ] Download validation result as GIR Status Message XML
-* [ ] Annotate GIR rule violations in XML tree
-* [ ] Show list of all issues
+See folder [`gir-rules/`](gir-rules) for details about the current implementation aproach and status of document vallidation rules.
 
 ## Usage
 
