@@ -5,15 +5,15 @@ from parameterized import parameterized
 from lxml import etree
 import yaml
 
-REPO_ROOT_DIR = Path(__file__).resolve().parents[2]
-REFDOCS_DIR = REPO_ROOT_DIR / "gir-validation" / "test" / "refdocs"
+REPO_ROOT_DIR = Path(__file__).resolve().parents[1]
+TESTDOCS_DIR = REPO_ROOT_DIR / "gir-validation" / "testdocs"
 SCHEMA_FILE = REPO_ROOT_DIR / "schemas" / "gir" / "globexml_v1.0.xsd"
 RULES_FILE = REPO_ROOT_DIR / "gir-validation" / "rules.yaml"
 
 with RULES_FILE.open("r", encoding="utf-8") as f:
     RULES = yaml.safe_load(f)
 
-POSITIVE_DOC = etree.parse(str(REFDOCS_DIR / "positive.xml"))
+POSITIVE_DOC = etree.parse(str(TESTDOCS_DIR / "positive.xml"))
 NAMESPACES = RULES['xmlnamespaces']
 
 
@@ -56,7 +56,7 @@ class TestGirXmlValidation(unittest.TestCase):
         (rule["number"], rule.get("test"), rule["targets"], xml_file)
         for rule in RULES["rules"]
         if rule.get("test") and rule.get("targets")
-        for xml_file in sorted((REFDOCS_DIR / str(rule["number"])).glob("*.xml"))
+        for xml_file in sorted((TESTDOCS_DIR / str(rule["number"])).glob("*.xml"))
         if (xml_file.name.startswith("ok-") or xml_file.name.startswith("nok-"))
     ])
     def test_rules_against_dedicated_test_files(self, number, test, targets, xml_file):
