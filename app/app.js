@@ -61,14 +61,6 @@ function showValidation(statusMessage, xmlFileName) {
   tabs.setActiveTab("validation");
 }
 
-function buildValidatorName() {
-  if (typeof VERSION_INFO !== "undefined" && VERSION_INFO.commitIdShort) {
-    return `oecd-gir-viewer@${VERSION_INFO.commitIdShort}`;
-  }
-
-  return "oecd-gir-viewer";
-}
-
 function extractMessageRefId(xml) {
   for (const node of xml.getElementsByTagName("*")) {
     if (node.localName === "MessageRefId") {
@@ -84,7 +76,7 @@ function extractMessageRefId(xml) {
 
 function createStatusMessage() {
   return new GirStatusMessage({
-    validatedBy: buildValidatorName(),
+    validatedBy: `gir.tax@${VERSION_INFO.commitIdShort}`,
   });
 }
 
