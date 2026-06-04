@@ -53,13 +53,16 @@ tabs.setTabVisible("corporate-structure", false);
 tabs.setTabVisible("validation", false);
 tabs.setActiveTab("file");
 
-function showValidation(statusMessage, xmlFileName) {
+function showValidation(statusMessage, xmlFileName, options = {}) {
   validationStatus.statusMessage = statusMessage;
   validationStatus.xmlFileName = xmlFileName;
   tabs.setTabChip("validation", statusMessage.errorCount > 0 ? statusMessage.errorCount : null);
   tabs.setTabVisible("viewer", false);
   tabs.setTabVisible("corporate-structure", false);
-  tabs.setActiveTab("validation");
+
+  if (options.activate) {
+    tabs.setActiveTab("validation");
+  }
 }
 
 function extractMessageRefId(xml) {
@@ -149,7 +152,7 @@ async function handleFileImport(file) {
     exportXmlButton.clear();
     corporateStructureGraph.xmlDocument = null;
     statusMessage.addParsingError(error instanceof Error ? error.message : String(error));
-    showValidation(statusMessage, "input.xml");
+    showValidation(statusMessage, "input.xml", { activate: true });
     return;
   }
 
@@ -159,7 +162,7 @@ async function handleFileImport(file) {
   if (!result.valid) {
     corporateStructureGraph.xmlDocument = null;
     statusMessage.addSchemaValidationResult(result);
-    showValidation(statusMessage, xmlFileName);
+    showValidation(statusMessage, xmlFileName, { activate: true });
     return;
   }
 
@@ -167,17 +170,23 @@ async function handleFileImport(file) {
   if (parserErrorText) {
     corporateStructureGraph.xmlDocument = null;
     statusMessage.addParsingError(parserErrorText);
-    showValidation(statusMessage, xmlFileName);
+    showValidation(statusMessage, xmlFileName, { activate: true });
     return;
   }
 
   statusMessage.setOriginalMessageRefId(extractMessageRefId(xml));
   validateGirRules(xml, statusMessage);
-  showValidation(statusMessage, xmlFileName);
+  const hasValidationErrors = statusMessage.errorCount > 0;
+
+  showValidation(statusMessage, xmlFileName, { activate: hasValidationErrors });
 
   renderXmlOutline(xml);
   tabs.setTabVisible("corporate-structure", true);
   corporateStructureGraph.xmlDocument = xml;
+
+  if (hasValidationErrors) {
+    tabs.setActiveTab("validation");
+  }
 }
 
 drop.addEventListener("filedropped", async e => {
