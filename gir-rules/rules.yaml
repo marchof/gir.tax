@@ -341,11 +341,11 @@ rules:
   - number: 60028
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:CEComputation/globe:AdjustedFANIL/globe:Total
-    references:
-      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/FANIL
-      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/MainEntityPEandFTE/Additions
-      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/MainEntityPEandFTE/Reductions
-    element: AdjustedFANIL/Total
+    test: >-
+      number(.) =
+      sum(../globe:FANIL) +
+      sum(../globe:Adjustment/globe:MainEntityPEandFTE/globe:Additions) -
+      sum(../globe:Adjustment/globe:MainEntityPEandFTE/globe:Reductions)
     rule: >-
       The Total must equal the following calculation: AdjustedFANIL/FANIL + (sum of
       all MainEntityPEandFTE/Additions elements) - (sum of all
