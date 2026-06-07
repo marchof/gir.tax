@@ -1878,6 +1878,8 @@ rules:
   - number: 70106
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:CEComputation/globe:AdjustedFANIL/globe:Adjustment/globe:CrossBorderAdjustments/globe:OtherTIN
+    test: >-
+      not(. = ancestor::globe:CEComputation/globe:TIN)
     references:
       - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/TIN
     element: OtherTIN
