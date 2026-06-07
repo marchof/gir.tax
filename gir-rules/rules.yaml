@@ -1417,12 +1417,12 @@ rules:
   - number: 70074
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:OverallComputation/globe:AdjustedCoveredTax/globe:DeemedDistTax/globe:Election/globe:Recapture/globe:TotalDDT
-    references:
-      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeemedDistTax/Election/Recapture/DDTYear-0
-      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeemedDistTax/Election/Recapture/DDTYear-1
-      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeemedDistTax/Election/Recapture/DDTYear-2
-      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeemedDistTax/Election/Recapture/DDTYear-3
-    element: TotalDDT
+    test: >-
+      number(.) =
+      sum(../globe:DDTYear-0) +
+      sum(../globe:DDTYear-1) +
+      sum(../globe:DDTYear-2) +
+      sum(../globe:DDTYear-3)
     rule: >-
       The TotalDDT is equal to the following calculation: DDTYear-0 + DDTYear-1 +
       DDTYear-2 + DDTYear-3
