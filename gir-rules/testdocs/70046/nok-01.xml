@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<globe:GLOBE_OECD xmlns:globe="urn:oecd:ties:globe:v2">
+  <globe:GLOBEBody>
+    <globe:JurisdictionSection>
+      <globe:GLoBETax>
+        <globe:ETR>
+          <!-- Missing SubGroup should fail rule 70046 -->
+          <globe:ETRStatus>
+            <globe:ETRException>
+              <globe:TransitionalCbCRSafeHarbour>
+                <globe:Revenue>0</globe:Revenue>
+              </globe:TransitionalCbCRSafeHarbour>
+            </globe:ETRException>
+          </globe:ETRStatus>
+        </globe:ETR>
+      </globe:GLoBETax>
+    </globe:JurisdictionSection>
+  </globe:GLOBEBody>
+</globe:GLOBE_OECD>

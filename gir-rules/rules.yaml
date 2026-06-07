@@ -1021,11 +1021,10 @@ rules:
 
   - number: 70046
     targets:
-      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:SubGroup
-      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:SubGroup/globe:TypeofSubGroup
-    references:
-      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRException/TransitionalCbCRSafeHarbour
-    element: SubGroup
+      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR
+    test: >-
+      not(globe:ETRStatus/globe:ETRException/globe:TransitionalCbCRSafeHarbour) or
+      (globe:SubGroup and (globe:SubGroup/globe:TypeofSubGroup='GIR1607' or globe:SubGroup/globe:TypeofSubGroup='GIR1608'))
     rule: >-
       When the TransitionalCbCRSafeHarbour is completed for a jurisdiction, then
       SubGroup element of the ETR must be completed, the TypeofSubGroup must contain

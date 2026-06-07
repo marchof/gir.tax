@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<globe:GLOBE_OECD xmlns:globe="urn:oecd:ties:globe:v2">
+  <globe:GLOBEBody>
+    <globe:JurisdictionSection>
+      <globe:GLoBETax>
+        <globe:ETR>
+          <globe:SubGroup>
+            <globe:TIN>TIN-1</globe:TIN>
+            <globe:TypeofSubGroup>GIR1607</globe:TypeofSubGroup>
+          </globe:SubGroup>
+          <globe:ETRStatus>
+            <globe:ETRException>
+              <globe:TransitionalCbCRSafeHarbour>
+                <globe:Revenue>0</globe:Revenue>
+              </globe:TransitionalCbCRSafeHarbour>
+            </globe:ETRException>
+          </globe:ETRStatus>
+        </globe:ETR>
+      </globe:GLoBETax>
+    </globe:JurisdictionSection>
+  </globe:GLOBEBody>
+</globe:GLOBE_OECD>

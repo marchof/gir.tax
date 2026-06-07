@@ -119,7 +119,7 @@
         <globe:ETR>
           <globe:SubGroup>
             <globe:TIN>globe:TIN</globe:TIN>
-            <globe:TypeofSubGroup>GIR1601</globe:TypeofSubGroup>
+            <globe:TypeofSubGroup>GIR1607</globe:TypeofSubGroup>
           </globe:SubGroup>
           <globe:ETRStatus>
             <globe:ETRException>
