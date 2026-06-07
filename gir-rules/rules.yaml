@@ -1407,7 +1407,8 @@ rules:
   - number: 70073
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:OverallComputation/globe:AdjustedCoveredTax/globe:DeemedDistTax/globe:Election/globe:Recapture/globe:EndAmount
-    element: EndAmount
+    test: >-
+      number(.) >= 0
     rule: >-
       The EndAmount must not be a negative.
     description: >-
