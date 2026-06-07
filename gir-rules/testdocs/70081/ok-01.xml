@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<globe:GLOBE_OECD xmlns:globe="urn:oecd:ties:globe:v2">
+  <globe:GLOBEBody>
+    <globe:JurisdictionSection>
+      <globe:GLoBETax>
+        <globe:ETR>
+          <globe:ETRStatus>
+            <globe:ETRComputation>
+              <globe:OverallComputation>
+                <globe:AdjustedCoveredTax>
+                  <globe:DeferTaxAdjustAmt>
+                    <globe:Transition>
+                      <globe:DeferredTaxAssets>
+                        <globe:DeferredTaxAssetStart>20</globe:DeferredTaxAssetStart>
+                        <globe:DeferredTaxAssetRecast>0</globe:DeferredTaxAssetRecast>
+                        <globe:DeferredTaxAssetExcluded>5</globe:DeferredTaxAssetExcluded>
+                        <globe:Total>15</globe:Total>
+                      </globe:DeferredTaxAssets>
+                    </globe:Transition>
+                  </globe:DeferTaxAdjustAmt>
+                </globe:AdjustedCoveredTax>
+              </globe:OverallComputation>
+            </globe:ETRComputation>
+          </globe:ETRStatus>
+        </globe:ETR>
+      </globe:GLoBETax>
+    </globe:JurisdictionSection>
+  </globe:GLOBEBody>
+</globe:GLOBE_OECD>
