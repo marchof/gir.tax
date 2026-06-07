@@ -1259,11 +1259,10 @@ rules:
 
   - number: 70061
     targets:
-      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:OverallComputation/globe:AdjustedCoveredTax/globe:Adjustments/globe:AdjustmentItem
-      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:OverallComputation/globe:AdjustedCoveredTax/globe:Adjustments/globe:Amount
-    references:
-      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/Election/Art4.6.1
-    element: AdjustmentItem
+      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:OverallComputation/globe:AdjustedCoveredTax/globe:Adjustments
+    test: >-
+      not(ancestor::globe:ETR/globe:Election/globe:Art4.6.1/globe:Status[.='true' or .='1']) or
+      (globe:AdjustmentItem='GIR2711' and number(globe:Amount) < 0)
     rule: >-
       When the 'Art4.6.1' election has the value of TRUE, the AdjustmentItem for the
       AdjustedCovered Tax must contain GIR2711 and the 'amount' must be a negative
