@@ -1749,9 +1749,6 @@ rules:
     description: >-
       AdditionalTopUpTax is calculated as follows: Recalculated/TopUpTax -
       Previous/TopUpTax
-    description: >-
-      AdditionalTopUpTax is calculated as follows: Recalculated/TopUpTax -
-      Previous/TopUpTax
 
   - number: 70097
     targets:
