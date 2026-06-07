@@ -6,6 +6,7 @@ import { promisify } from "node:util";
 
 const distDir = "./dist";
 const distMetaDir = `${distDir}/.meta`;
+const rulesGeneratorScript = "./scripts/generaterulesjs.js";
 
 const watch = process.argv.includes("--watch");
 const serve = process.argv.includes("--serve");
@@ -43,6 +44,10 @@ const writeThirdPartyLicenseReport = async () => {
   ]);
 };
 
+const writeGeneratedRules = async () => {
+  await execFileAsync(process.execPath, [rulesGeneratorScript]);
+};
+
 const options = {
   entryPoints: ["app/app.js"],
   bundle: true,
@@ -72,6 +77,7 @@ await rm(distDir, { recursive: true, force: true });
 await mkdir(distMetaDir, { recursive: true });
 await writeVersionMetadata();
 await writeThirdPartyLicenseReport();
+await writeGeneratedRules();
 
 if (watch) {
   const ctx = await context(options);

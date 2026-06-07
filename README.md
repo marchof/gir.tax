@@ -26,7 +26,7 @@ Local development requires the following standard tools:
 
 * [git](https://git-scm.com/install/)
 * [npm](https://nodejs.org/en/download)
-* [Python](https://www.python.org/downloads/)
+* [Python](https://www.python.org/downloads/) (for rule testing only)
 
 Also an IDE of your choice like [VS Code](https://code.visualstudio.com/docs/setup/setup-overview) is helpful to work on the project.
 
@@ -35,15 +35,6 @@ Then clone the source code from this repository:
 ```bash
 git clone https://github.com/marchof/gir.tax.git
 cd gir.tax
-```
-
-Generate the GIR rules for JavaScript:
-
-```bash
-cd gir-rules
-source setup_venv.sh
-python3 generatejs.py
-cd ..
 ```
 
 Install JavaScript dependencies and start a local web server:
