@@ -6,6 +6,7 @@ from lxml import etree
 import yaml
 
 REPO_ROOT_DIR = Path(__file__).resolve().parents[1]
+EXAMPLES_DIR = REPO_ROOT_DIR / "examples"
 TESTDOCS_DIR = REPO_ROOT_DIR / "gir-rules" / "testdocs"
 SCHEMA_FILE = REPO_ROOT_DIR / "schemas" / "gir" / "globexml_v1.0.xsd"
 RULES_FILE = REPO_ROOT_DIR / "gir-rules" / "rules.yaml"
@@ -14,9 +15,9 @@ with RULES_FILE.open("r", encoding="utf-8") as f:
     RULES = yaml.safe_load(f)
 
 COMPLETE_DOCS = [etree.parse(str(f)) for f in TESTDOCS_DIR.glob("complete-*.xml")]
+EXAMPLES_DOCS = [etree.parse(str(f)) for f in EXAMPLES_DIR.glob("globe-positive-*.xml")]
 
 NAMESPACES = RULES['xmlnamespaces']
-
 
 
 class TestGirXmlValidation(unittest.TestCase):
@@ -24,6 +25,13 @@ class TestGirXmlValidation(unittest.TestCase):
     def test_complete_xml_are_valid_against_globexml_schema(self):
         xml_schema = etree.XMLSchema(etree.parse(str(SCHEMA_FILE)))
         for doc in COMPLETE_DOCS:
+            is_valid = xml_schema.validate(doc)
+            error_log = "\n".join(str(err) for err in xml_schema.error_log)
+            self.assertTrue(is_valid, f"XML failed schema validation:\n{error_log}")
+    
+    def test_examples_xml_are_valid_against_globexml_schema(self):
+        xml_schema = etree.XMLSchema(etree.parse(str(SCHEMA_FILE)))
+        for doc in EXAMPLES_DOCS:
             is_valid = xml_schema.validate(doc)
             error_log = "\n".join(str(err) for err in xml_schema.error_log)
             self.assertTrue(is_valid, f"XML failed schema validation:\n{error_log}")
@@ -43,11 +51,11 @@ class TestGirXmlValidation(unittest.TestCase):
         (rule["number"], rule.get("test"), rule["targets"])
         for rule in RULES["rules"]
     ])
-    def test_rules_succeed(self, number, test, targets):
+    def test_rules_succeed_on_complete_docs_and_examples(self, number, test, targets):
         if not test:
             self.skipTest(f"Rule {number} has no test defined")
         for target in targets:
-            for doc in COMPLETE_DOCS:
+            for doc in COMPLETE_DOCS + EXAMPLES_DOCS:
                 for element in doc.xpath(target, namespaces=NAMESPACES):
                     serialized_element = etree.tostring(element, encoding="unicode")
                     self.assertTrue(
