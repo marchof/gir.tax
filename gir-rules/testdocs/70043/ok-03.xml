@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<globe:GLOBE_OECD xmlns:globe="urn:oecd:ties:globe:v2">
+  <globe:GLOBEBody>
+    <globe:Summary>
+      <globe:JurWithTaxingRights>
+        <globe:JurisdictionName>FR</globe:JurisdictionName>
+      </globe:JurWithTaxingRights>
+      <globe:SafeHarbour>GIR1202</globe:SafeHarbour>
+      <globe:ETRRange>GIR1101</globe:ETRRange>
+      <globe:SBIE>100</globe:SBIE>
+      <globe:QDMTTut>200</globe:QDMTTut>
+    </globe:Summary>
+  </globe:GLOBEBody>
+</globe:GLOBE_OECD>

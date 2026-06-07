@@ -975,13 +975,10 @@ rules:
 
   - number: 70043
     targets:
-      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:Summary/globe:ETRRange
-      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:Summary/globe:SBIE
-      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:Summary/globe:QDMTTut
-    references:
-      - GLOBEBody/Summary/JurWithTaxingRights
-      - GLOBEBody/Summary/SafeHarbour
-    element: ETRRange\nSBIE\nSafeHarbour\nQDMTTut
+      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:Summary
+    test: >-
+      not(globe:JurWithTaxingRights and globe:SafeHarbour='GIR1202') or
+      (globe:ETRRange and globe:SBIE and globe:QDMTTut)
     rule: >-
       If the JurWithTaxingRights element is completed, and the Safe Harbour element
       has the value of GIR1202, then the elements ETRRange, SBIE and QDMTTut must be
