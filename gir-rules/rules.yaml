@@ -700,9 +700,9 @@ rules:
   - number: 70025
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:GeneralSection/globe:CorporateStructure/globe:CE/globe:OwnershipChange/globe:PreOwnership/globe:TIN
-    references:
-      - GLOBEBody/GeneralSection/CorporateStructure/CE/OwnershipChange/PreOwnership/OwnershipType
-    element: OwnershipType
+    test: >-
+      not(../globe:OwnershipType='GIR805' or ../globe:OwnershipType='GIR806') or
+      (.='NOTIN' and @TypeOfTIN='GIR3004')
     rule: >-
       When the Ownership Type contains the value of GIR805 or GIR806, then the
       TypeOfTIN must contain the value GIR3004 and the TIN must contain the text,
