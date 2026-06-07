@@ -12,6 +12,9 @@ paths:
       responses:
         "200":
           description: "200 response"
+          headers:
+            Strict-Transport-Security:
+              type: "string"
       x-amazon-apigateway-integration:
         type: "aws"
         credentials: "arn:aws:iam::830482727482:role/gir-tax-s3-read-access"
@@ -21,12 +24,17 @@ paths:
           default:
             statusCode: "200"
             contentHandling: "CONVERT_TO_BINARY"
+            responseParameters:
+              method.response.header.Strict-Transport-Security: "'max-age=63072000; includeSubDomains; preload'"
         passthroughBehavior: "when_no_match"
   /{proxy+}:
     get:
       responses:
         "200":
           description: "200 response"
+          headers:
+            Strict-Transport-Security:
+              type: "string"
       parameters:
       - name: "proxy"
         in: "path"
@@ -41,6 +49,8 @@ paths:
           default:
             statusCode: "200"
             contentHandling: "CONVERT_TO_BINARY"
+            responseParameters:
+              method.response.header.Strict-Transport-Security: "'max-age=63072000; includeSubDomains; preload'"
         requestParameters:
           integration.request.path.proxy: "method.request.path.proxy"
         passthroughBehavior: "when_no_templates"
