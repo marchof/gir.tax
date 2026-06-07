@@ -1810,10 +1810,10 @@ rules:
 
   - number: 70101
     targets:
-      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:UTPRAttribution/globe:Attribution/globe:Employees
-    references:
-      - GLOBEBody/UTPRAttribution/Attribution/UTPRTopUpTaxCarryForward
-    element: Employees
+      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:UTPRAttribution/globe:Attribution
+    test: >-
+      number(globe:UTPRTopUpTaxCarryForward) = 0 or
+      globe:Employees
     rule: >-
       The Employees must be completed unless the UTPRTopUpTaxCarryForward contains the
       value of '0'

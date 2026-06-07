@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<globe:GLOBE_OECD xmlns:globe="urn:oecd:ties:globe:v2">
+  <globe:GLOBEBody>
+    <globe:UTPRAttribution>
+      <globe:Attribution>
+        <globe:UTPRTopUpTaxCarryForward>0</globe:UTPRTopUpTaxCarryForward>
+      </globe:Attribution>
+    </globe:UTPRAttribution>
+  </globe:GLOBEBody>
+</globe:GLOBE_OECD>
