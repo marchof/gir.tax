@@ -1619,18 +1619,16 @@ rules:
   - number: 70087
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:OverallComputation/globe:SubstanceExclusion/globe:Total
-    references:
-      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/SubstanceExclusion/PayrollCost
-      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/SubstanceExclusion/PayrollMarkUp
-      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/SubstanceExclusion/TangibleAssetValue
-      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/SubstanceExclusion/TangibleAssetMarkup
-    element: Total
+    test: >-
+      number(.) =
+      number(../globe:PayrollCost) * number(../globe:PayrollMarkUp) +
+      number(../globe:TangibleAssetValue) * number(../globe:TangibleAssetMarkup)
     rule: >-
-      The Total integer for the Substance Exclusion is equal to the following
+      The Total integer for the SubstanceExclusion is equal to the following
       calculation: PayrollCost * PayrollMarkUp + TangibleAssetValue * TangibleAssetMarkup
     description: >-
       The Total integer for the SubstanceExclusion is equal to the following
-      calculation: PayrollCost * PayrollMarkUp + Tangible AssetValue *
+      calculation: PayrollCost * PayrollMarkUp + TangibleAssetValue *
       TangibleAssetMarkup
 
   - number: 70088
