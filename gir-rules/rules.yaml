@@ -2065,12 +2065,12 @@ rules:
   - number: 70120
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:CEComputation/globe:AdjustedCoveredTax/globe:DeferTaxAdjustAmt/globe:Total
-    references:
-      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/DeferTaxExpense
-      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Adjustment/Amount
-      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Recast/Higher
-      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Recast/Lower
-    element: Total
+    test: >-
+      number(.) =
+      sum(../globe:DeferTaxExpense) +
+      sum(../globe:Adjustment/globe:Amount) +
+      sum(../globe:Recast/globe:Higher) +
+      sum(../globe:Recast/globe:Lower)
     rule: >-
       The Total element shall equal the following calculation: Defer TaxExpense + Sum
       of all values reported in Adjustments/Amount + Recast/Higher + Recast/Lower (if
