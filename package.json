@@ -4,9 +4,9 @@
   "license": "GPL-3.0-only",
   "type": "module",
   "scripts": {
-    "build": "node build.js",
-    "build:watch": "node build.js --watch",
-    "dev": "node build.js --watch --serve",
+    "build": "node scripts/build.js",
+    "build:watch": "node scripts/build.js --watch",
+    "dev": "node scripts/build.js --watch --serve",
     "lint": "eslint --max-warnings=0 .",
     "lint:fix": "eslint . --fix",
     "license-check": "license-checker-evergreen"

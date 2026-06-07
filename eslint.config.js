@@ -14,7 +14,7 @@ export default [
     },
   },
   {
-    files: ["build.js"],
+    files: ["scripts/**/*.js"],
     languageOptions: {
       ecmaVersion: "latest",
       sourceType: "module",
