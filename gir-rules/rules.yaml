@@ -1863,14 +1863,14 @@ rules:
   - number: 70105
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:UTPRAttribution/globe:Attribution/globe:UTPRTopUpTaxCarriedForward
-    references:
-      - GLOBEBody/UTPRAttribution/Attribution/UTPRTopUpTaxCarryForward
-      - GLOBEBody/UTPRAttribution/Attribution/UTPRTopUpTaxAttributed
-      - GLOBEBody/UTPRAttribution/Attribution/AddCashTaxExpense
-    element: UTPRTopUpTaxCarriedForward
+    test: >-
+      number(.) =
+      sum(../globe:UTPRTopUpTaxCarryForward) +
+      sum(../globe:UTPRTopUpTaxAttributed) -
+      sum(../globe:AddCashTaxExpense)
     rule: >-
-      The UTPRTopUpTaxCarriedForward is equal to the following calculation UTPRTopUp
-      TaxCarryForward + UTPRTopUpTaxAttributed - AddCash TaxExpense
+      The UTPRTopUpTaxCarriedForward is equal to the following calculation
+      UTPRTopUpTaxCarryForward + UTPRTopUpTaxAttributed - AddCashTaxExpense
     description: >-
       The UTPRTopUpTaxCarriedForward is equal to the following calculation
       UTPRTopUpTaxCarryForward + UTPRTopUpTaxAttributed - AddCashTaxExpense
