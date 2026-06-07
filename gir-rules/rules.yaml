@@ -1823,10 +1823,10 @@ rules:
 
   - number: 70102
     targets:
-      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:UTPRAttribution/globe:Attribution/globe:TangibleAssetValue
-    references:
-      - GLOBEBody/UTPRAttribution/Attribution/UTPRTopUpTaxCarryForward
-    element: TangibleAssetValue
+      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:UTPRAttribution/globe:Attribution
+    test: >-
+      number(globe:UTPRTopUpTaxCarryForward) = 0 or
+      globe:TangibleAssetValue
     rule: >-
       The TangibleAssetValue must be completed unless the UTPRTopUpTaxCarryForward
       contains the value of '0'
