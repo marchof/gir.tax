@@ -48,7 +48,7 @@ Now you can use the application under http://localhost:8080/
 
 ## Authors
 
-The project was created and is maintained by @marchof and @svpetersen.
+The project was created and is maintained by [@marchof](https://github.com/marchof) and [@svpetersen](https://github.com/svpetersen/).
 
 ## OECD Sources and Schema Attribution
 
