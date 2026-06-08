@@ -13,11 +13,11 @@
                     <globe:Adjustment>
                       <globe:Amount>-2</globe:Amount>
                       <globe:Amount>5</globe:Amount>
+                      <globe:Recast>
+                        <globe:Higher>1</globe:Higher>
+                        <globe:Lower>2</globe:Lower>
+                      </globe:Recast>
                     </globe:Adjustment>
-                    <globe:Recast>
-                      <globe:Higher>1</globe:Higher>
-                      <globe:Lower>2</globe:Lower>
-                    </globe:Recast>
                     <globe:Total>16</globe:Total>
                   </globe:DeferTaxAdjustAmt>
                 </globe:AdjustedCoveredTax>

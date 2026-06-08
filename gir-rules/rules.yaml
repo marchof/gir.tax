@@ -2075,8 +2075,8 @@ rules:
       number(.) =
       sum(../globe:DeferTaxExpense) +
       sum(../globe:Adjustment/globe:Amount) +
-      sum(../globe:Recast/globe:Higher) +
-      sum(../globe:Recast/globe:Lower)
+      sum(../globe:Adjustment/globe:Recast/globe:Higher) +
+      sum(../globe:Adjustment/globe:Recast/globe:Lower)
     rule: >-
       The Total element shall equal the following calculation: Defer TaxExpense + Sum
       of all values reported in Adjustments/Amount + Recast/Higher + Recast/Lower (if
@@ -2085,6 +2085,8 @@ rules:
       The Total element shall equal the following calculation: DeferTaxExpense + Sum
       of all values reported in Adjustments/Amount + Recast/Higher + Recast/Lower (if
       any element is not provided, it is treated as a 0 value)
+    implementation_notes: >-
+      According to the schema the Recast element is nested in Adjustment.
 
   - number: 70121
     targets:
