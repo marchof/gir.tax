@@ -98,7 +98,7 @@
                     <globe:UPEAdjustments>
                       <globe:Basis>GIR1901</globe:Basis>
                       <globe:Reductions>
-                        <globe:Amount>0</globe:Amount>
+                        <globe:Exception>false</globe:Exception>
                       </globe:Reductions>
                       <globe:IdentificationOfOwners>
                         <globe:OwnershipPercentage>0.000</globe:OwnershipPercentage>

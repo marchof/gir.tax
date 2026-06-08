@@ -19,22 +19,42 @@ EXAMPLES_DOCS = [etree.parse(str(f)) for f in EXAMPLES_DIR.glob("globe-positive-
 
 NAMESPACES = RULES['xmlnamespaces']
 
+class TestReferenceDocuments(unittest.TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        cls.all_paths = TestReferenceDocuments.extract_all_paths(COMPLETE_DOCS + EXAMPLES_DOCS)
+
+    @parameterized.expand([(xml,) for xml in COMPLETE_DOCS + EXAMPLES_DOCS])
+    def test_complete_reference_doc_has_valid_globexml_schema(self, xml):
+        xml_schema = etree.XMLSchema(etree.parse(str(SCHEMA_FILE)))
+        is_valid = xml_schema.validate(xml)
+        error_log = "\n".join(str(err) for err in xml_schema.error_log)
+        self.assertTrue(is_valid, error_log)
+
+    @parameterized.expand([(xmlfile,) for xmlfile in TESTDOCS_DIR.glob("*/*.xml")])
+    def test_fragment_reference_doc_should_only_contain_known_paths(self, xmlfile):
+        paths = TestReferenceDocuments.extract_all_paths([etree.parse(str(xmlfile))])
+        unknown_paths = paths - self.all_paths
+        self.assertFalse(unknown_paths, f"Unknown paths found in {xmlfile}")
+    
+    @staticmethod
+    def extract_all_paths(docs):
+
+        def iterate(element, path, result):
+            path = path + (element.tag,)
+            result.add(path)
+            for child in element:
+                if isinstance(child.tag, str):
+                    iterate(child, path, result)
+
+        result = set()
+        for doc in docs:
+            iterate(doc.getroot(), (), result)
+        return result
+
 
 class TestGirXmlValidation(unittest.TestCase):
-
-    def test_complete_xml_are_valid_against_globexml_schema(self):
-        xml_schema = etree.XMLSchema(etree.parse(str(SCHEMA_FILE)))
-        for doc in COMPLETE_DOCS:
-            is_valid = xml_schema.validate(doc)
-            error_log = "\n".join(str(err) for err in xml_schema.error_log)
-            self.assertTrue(is_valid, f"XML failed schema validation:\n{error_log}")
-    
-    def test_examples_xml_are_valid_against_globexml_schema(self):
-        xml_schema = etree.XMLSchema(etree.parse(str(SCHEMA_FILE)))
-        for doc in EXAMPLES_DOCS:
-            is_valid = xml_schema.validate(doc)
-            error_log = "\n".join(str(err) for err in xml_schema.error_log)
-            self.assertTrue(is_valid, f"XML failed schema validation:\n{error_log}")
 
     @parameterized.expand([
         (rule["number"], target)

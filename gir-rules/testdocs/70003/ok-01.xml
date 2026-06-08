@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <globe:GLOBE_OECD xmlns:globe="urn:oecd:ties:globe:v2">
-  <globe:TIN TypeOfTIN="GIR3004" unknown="true">NOTIN</globe:TIN>    
+  <globe:GLOBEBody>
+    <globe:FilingInfo>
+      <globe:FilingCE>
+        <globe:TIN TypeOfTIN="GIR3004" unknown="true">NOTIN</globe:TIN>
+      </globe:FilingCE>
+    </globe:FilingInfo>
+  </globe:GLOBEBody>
 </globe:GLOBE_OECD>

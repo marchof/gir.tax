@@ -98,7 +98,9 @@
           <globe:TypeofSubGroup>GIR1101</globe:TypeofSubGroup>
         </globe:Subgroup>
       </globe:Jurisdiction>
-      <globe:JurWithTaxingRights/>
+      <globe:JurWithTaxingRights>
+        <globe:JurisdictionName>AF</globe:JurisdictionName>
+      </globe:JurWithTaxingRights>
       <globe:SafeHarbour>GIR1201</globe:SafeHarbour>
       <globe:ETRRange>GIR1301</globe:ETRRange>
       <globe:SBIE>
@@ -134,6 +136,12 @@
                   <globe:Total>0</globe:Total>
                   <globe:FANIL>0</globe:FANIL>
                   <globe:Adjustment>
+                    <globe:MainEntityPEandFTE>
+                      <globe:Basis>GIR1701</globe:Basis>
+                      <globe:OtherTIN>otherTIN</globe:OtherTIN>
+                      <globe:Additions>0</globe:Additions>
+                      <globe:Reductions>0</globe:Reductions>
+                    </globe:MainEntityPEandFTE>
                     <globe:CrossBorderAdjustments>
                       <globe:Basis>GIR1801</globe:Basis>
                       <globe:OtherTIN>TIN</globe:OtherTIN>
@@ -203,6 +211,10 @@
                     <globe:Adjustment>
                       <globe:Amount>0</globe:Amount>
                       <globe:AdjustmentItem>GIR2501</globe:AdjustmentItem>
+                      <globe:Recast>
+                        <globe:Higher>0</globe:Higher>
+                        <globe:Lower>0</globe:Lower>
+                      </globe:Recast>
                     </globe:Adjustment>
                   </globe:DeferTaxAdjustAmt>
                 </globe:AdjustedCoveredTax>
@@ -412,6 +424,7 @@
             </globe:ETRComputation>
           </globe:ETRStatus>
           <globe:Election>
+            <globe:Art4.6.1>false</globe:Art4.6.1>
             <globe:Art3.2.2>
               <globe:Status>false</globe:Status>
               <globe:ElectionYear>2026-01-01</globe:ElectionYear>
