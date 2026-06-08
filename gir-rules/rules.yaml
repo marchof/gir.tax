@@ -489,13 +489,14 @@ rules:
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:GeneralSection/globe:CorporateStructure/globe:UPE/globe:ExcludedUPE/globe:ID/globe:GlobeStatus
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:GeneralSection/globe:CorporateStructure/globe:UPE/globe:OtherUPE/globe:ID/globe:GlobeStatus
-    element: GlobeStatus
+    test : >-
+      not(.='GIR305' or .='GIR307' or .='GIR308' or .='GIR309' or .='GIR312' or .='GIR313' or .='GIR314' or .='GIR315' or .='GIR317' or .='GIR318')
     rule: >-
       The UPE GlobeStatus should not accept the following values: GIR305,
-      GIR307,GIR308, GIR309,GIR312,GIR313,GIR314, GIR315,GIR317, GIR318
+      GIR307, GIR308, GIR309, GIR312, GIR313, GIR314, GIR315, GIR317, GIR318
     description: >-
-      An Invalid Globe Status of the UPE was provided. Please ensure that the
-      GlobeStatus of the UPE align with note 1.3.1.6 of the GIR.
+      An Invalid GloBE Status of the UPE was provided. Please ensure that the
+      GloBEStatus of the UPE align with note 1.3.1.6 of the GIR.
 
   - number: 70010
     targets: 
