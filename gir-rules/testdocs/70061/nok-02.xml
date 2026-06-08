@@ -17,9 +17,7 @@
             </globe:ETRComputation>
           </globe:ETRStatus>
           <globe:Election>
-            <globe:Art4.6.1>
-              <globe:Status>true</globe:Status>
-            </globe:Art4.6.1>
+            <globe:Art4.6.1>true</globe:Art4.6.1>
           </globe:Election>
         </globe:ETR>
       </globe:GLoBETax>

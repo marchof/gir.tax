@@ -1261,7 +1261,7 @@ rules:
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:OverallComputation/globe:AdjustedCoveredTax/globe:Adjustments
     test: >-
-      not(ancestor::globe:ETR/globe:Election/globe:Art4.6.1/globe:Status[.='true' or .='1']) or
+      not(ancestor::globe:ETR/globe:Election/globe:Art4.6.1[.='true' or .='1']) or
       (globe:AdjustmentItem='GIR2711' and number(globe:Amount) < 0)
     rule: >-
       When the 'Art4.6.1' election has the value of TRUE, the AdjustmentItem for the
