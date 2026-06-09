@@ -10,7 +10,7 @@ This is an attempt to [formalize](rules.yaml) the specified validation rules as 
 
 ## Current Implementation and Status
 
-Each rule is defined by two field and evaluated as follows:
+Each rule is defined and evaluated as follows:
 
 1. Select all elements that are selected by the `targets` XPaths.
 2. For each element execute the `test` XPath expression and expect `true` as the return value.
@@ -21,11 +21,13 @@ This is work in progress. Only rules with a `test` expression are active.
 
 The rules are automatically tested against the following set of test documents:
 
-1. To ensure the `targets` XPaths are valid within the GIR schema they are expected to always have a match in one of the schema-validated `complete-n.xml` documents.
-2. For each rule positive (`ok-n.xml`) and negative (`nok-n.xml`) test files are provided and executed. To keep these documents concise they are not validated against the schema and may only contain the relevant elements. To ensure consistency at least one XPath from `targets` must match on every test document.
+1. The positive [`../examples/`](../examples/) documents to ensure that the examples are valid with respect to all rules.
+2. A set of "complete" documents `testdocs/complete-*.xml` which are validated against the schema to ensure that all rule targets do actually exist in the schema.
+3. A set of rule specific positive and negative tests for every rule in `testdocs/<number>/[ok|nok]-<nn>.xml`. To ensure selectiveness the test files must match at least one target path. To keep the test documents concise they should only contain elements relevant for the respective rule elements. It is still verified that the documents are a valid subset of the schema (no unknown elements).
 
 
 ## References
 
-[^1]: OECD (2025), GloBE Information Return (Pillar Two) Status Message XML Schema: User Guide for Tax Administrations,
-OECD Publishing, Paris, https://doi.org/10.1787/449e3cc3-en.
+[^1]: OECD (2025), GloBE Information Return (Pillar Two) Status Message XML Schema: User Guide for Tax Administrations, OECD Publishing, Paris, https://doi.org/10.1787/449e3cc3-en.
+
+[^2]: OECD (2026), Tax Challenges Arising from the Digitalisation of the Economy – Guidance on the Use of the GIR XML Schema and Validation Rules for First GIR Filings and Exchanges: Inclusive Framework on BEPS, OECD, https://www.oecd.org/content/dam/oecd/en/topics/policy-sub-issues/global-minimum-tax/guidance-on-the-use-of-globe-information-return-xml-schema-june-2026.pdf

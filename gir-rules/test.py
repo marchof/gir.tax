@@ -54,75 +54,57 @@ class TestReferenceDocuments(unittest.TestCase):
         return result
 
 
-class TestGirXmlValidation(unittest.TestCase):
+class TestRules(unittest.TestCase):
 
-    @parameterized.expand([
-        (rule["number"], target)
-        for rule in RULES["rules"]
-        for target in rule.get("targets", [])
-    ])
-    def test_target_does_exist(self, number, target):
+    @parameterized.expand([ (rule["number"], target) for rule in RULES["rules"] for target in rule["targets"] ])
+    def test_target_path_does_exist(self, number, target):
         for doc in COMPLETE_DOCS:
             if doc.xpath(target, namespaces=NAMESPACES):
                 return
         self.fail(f"Rule {number} target xpath did not match any nodes in the complete xmls: {target}")
 
-    @parameterized.expand([
-        (rule["number"], rule.get("test"), rule["targets"])
-        for rule in RULES["rules"]
-    ])
-    def test_rules_succeed_on_complete_docs_and_examples(self, number, test, targets):
+    @parameterized.expand([ (rule["number"], rule.get("test"), rule["targets"]) for rule in RULES["rules"] ])
+    def test_rules_on_complete_docs_and_examples(self, number, test, targets):
         if not test:
             self.skipTest(f"Rule {number} has no test defined")
         for target in targets:
             for doc in COMPLETE_DOCS + EXAMPLES_DOCS:
                 for element in doc.xpath(target, namespaces=NAMESPACES):
-                    serialized_element = etree.tostring(element, encoding="unicode")
                     self.assertTrue(
                         element.xpath(test, namespaces=NAMESPACES),
-                        f"Rule {number} test failed for element:\n{serialized_element}",
+                        f"Rule {number} test failed for target {target} in file {doc.getroot().base}",
                     )
 
     @parameterized.expand([
-        (rule["number"], rule.get("test"), rule["targets"], xml_file)
+        (rule["number"], rule.get("test"), rule["targets"], xml_file.name in rule.get("target_does_not_exist_in_test_files", []), xml_file)
         for rule in RULES["rules"]
         if rule.get("test") and rule.get("targets")
         for xml_file in sorted((TESTDOCS_DIR / str(rule["number"])).glob("*.xml"))
-        if (xml_file.name.startswith("ok-") or xml_file.name.startswith("nok-"))
     ])
-    def test_rules_against_dedicated_test_files(self, number, test, targets, xml_file):
-        """Evaluate rule test expressions against dedicated test XML files.
-    
-        Files named ok-*.xml should pass the test; nok-*.xml should fail.
-        """
+    def test_rules_on_dedicated_test_files(self, number, test, targets, skipHitCheck, xml_file):
         try:
             doc = etree.parse(str(xml_file))
         except etree.XMLSyntaxError as e:
             self.fail(f"Failed to parse {xml_file.name}: {e}")
 
-        is_positive = xml_file.name.startswith("ok-")
-        is_negative = xml_file.name.startswith("nok-")
-
-        found_elements = False
+        found_elements = skipHitCheck
         for target in targets:
             for element in doc.xpath(target, namespaces=NAMESPACES):
                 found_elements = True
                 test_result = bool(element.xpath(test, namespaces=NAMESPACES))
-                serialized = etree.tostring(element, encoding="unicode")
 
-                if is_positive:
+                if xml_file.name.startswith("ok-"): # positive test case
                     self.assertTrue(
                         test_result,
-                        f"Rule {number} (ok-* test) failed for element in {xml_file.name}:\n{serialized}",
+                        f"Rule {number} failed for target {target} in positive test {xml_file.name}",
                     )
-                else:  # is_negative
+                else:  # negative test case
                     self.assertFalse(
                         test_result,
-                        f"Rule {number} (nok-* test) unexpectedly passed for element in {xml_file.name}:\n{serialized}",
+                        f"Rule {number} unexpectedly passed for target {target} in negative test{xml_file.name}",
                     )
 
-        if not found_elements:
-            self.skipTest(f"No elements matched targets in {xml_file.name}")
+        self.assertTrue(found_elements, f"No elements matched in {xml_file.name} for target {target}")
 
 if __name__ == "__main__":
     unittest.main()

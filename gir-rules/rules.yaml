@@ -1895,6 +1895,9 @@ rules:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:CEComputation/globe:AdjustedFANIL/globe:Adjustment/globe:CrossBorderAdjustments
     test: >-
       not(../globe:UPEAdjustments/globe:Reductions/globe:Exception[.='true' or .='1'])
+    target_does_not_exist_in_test_files:
+      - ok-03.xml
+      - ok-04.xml
     rule: >-
       Where the Exception element is TRUE, then the CrossBorderAdjustements must not
       be provided for that CEComputation section.
