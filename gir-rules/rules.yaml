@@ -2037,16 +2037,18 @@ rules:
 
   - number: 70117
     targets:
-      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:CEComputation/globe:Elections/globe:Art7.6
-    references:
-      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/NetGlobeIncome/Adjustments/AdjustmentItem
-    element: AdjustmentItem
+      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:CEComputation
+    test: >-
+      not(globe:NetGlobeIncome/globe:Adjustments/globe:AdjustmentItem = 'GIR2024') or
+      globe:Elections/globe:Art7.6
     rule: >-
       When the 'Adjustmentitem' element contains the value GIR2024 then the 'Art7.6'
       element must be completed
     description: >-
       An adjustment under article 7.6 has been made without completing the relevant
       table at 3.2.4.5.
+    implementation_notes: >-
+      We use the common parent element as a target otherwise we cannot check for the non-existence of the Art7.6 element.
 
   - number: 70118
     targets:

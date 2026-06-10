@@ -101,7 +101,7 @@ class TestRules(unittest.TestCase):
                 else:  # negative test case
                     self.assertFalse(
                         test_result,
-                        f"Rule {number} unexpectedly passed for target {target} in negative test{xml_file.name}",
+                        f"Rule {number} unexpectedly passed for target {target} in negative test {xml_file.name}",
                     )
 
         self.assertTrue(found_elements, f"No elements matched in {xml_file.name} for target {target}")
