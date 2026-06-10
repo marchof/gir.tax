@@ -1999,7 +1999,6 @@ rules:
       count(globe:Amount) != 2 or
       ((number(globe:Amount[1]) < 0 and number(globe:Amount[2]) > 0) or
        (number(globe:Amount[1]) > 0 and number(globe:Amount[2]) < 0))
-    element: Amount
     rule: >-
       If two values are provided for the'Amount', then one value must be negative and
       the other value positive (i.e. both values of the integer cannot be positive or
@@ -2011,16 +2010,19 @@ rules:
 
   - number: 70115
     targets:
-      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:CEComputation/globe:AdjustedFANIL/globe:Adjustment/globe:UPEAdjustments
-    references:
-      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/NetGlobeIncome/Adjustments/AdjustmentItem
-    element: AdjustmentItem
+      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:CEComputation
+    test: >-
+      not(globe:NetGlobeIncome/globe:Adjustments/globe:AdjustmentItem = 'GIR2022' or
+          globe:NetGlobeIncome/globe:Adjustments/globe:AdjustmentItem = 'GIR2023') or
+      globe:AdjustedFANIL/globe:Adjustment/globe:UPEAdjustments
     rule: >-
       When the 'Adjustmentitem' element contains the value GIR2022 and/or GIR2023 then
       the 'UPEAdjustments' element must be completed
     description: >-
       An adjustment under article 7.1 or 7.2 can only be selected when the table at
       3.2.4.1.d has been completed.
+    implementation_notes: >-
+      We use the common parent element as a target otherwise we cannot check for the non-existence of the UPEAdjustments element.
 
   - number: 70116
     targets:

@@ -7,9 +7,14 @@
           <globe:ETRStatus>
             <globe:ETRComputation>
               <globe:CEComputation>
+                <globe:AdjustedFANIL>
+                  <globe:Adjustment>
+                    <globe:UPEAdjustments/>
+                  </globe:Adjustment>
+                </globe:AdjustedFANIL>
                 <globe:NetGlobeIncome>
                   <globe:Adjustments>
-                    <globe:AdjustmentItem>GIR2022</globe:AdjustmentItem>
+                    <globe:AdjustmentItem>GIR2023</globe:AdjustmentItem>
                   </globe:Adjustments>
                   <globe:IntShippingIncome/>
                 </globe:NetGlobeIncome>   
