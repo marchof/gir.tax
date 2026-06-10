@@ -2024,16 +2024,18 @@ rules:
 
   - number: 70116
     targets:
-      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:CEComputation/globe:NetGlobeIncome/globe:IntShippingIncome
-    references:
-      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/NetGlobeIncome/Adjustments/AdjustmentItem
-    element: AdjustmentItem
+      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:CEComputation/globe:NetGlobeIncome
+    test: >-
+      not(globe:Adjustments/globe:AdjustmentItem = 'GIR2025') or
+      globe:IntShippingIncome
     rule: >-
       When the 'AdjustmentItem' element contains the value GIR2025 then the
       'IntShippingIncome' element must be completed
     description: >-
       An adjustment under article 3.3 has been made without completing the relevant
       table at 3.2.4.4.a.
+    implementation_notes: >-
+      We use the common parent element as a target otherwise we cannot check for the non-existence of the IntShippingIncome element.
 
   - number: 70117
     targets:
