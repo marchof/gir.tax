@@ -121,35 +121,9 @@ export class GirStatusMessage {
   addParsingError(details) {
     this.addValidationError({
       scope: "file",
-      code: "PARSE",
-      details,
-    });
-  }
-
-  addSchemaValidationError(details) {
-    this.addValidationError({
-      scope: "file",
       code: "50007",
       details,
     });
-  }
-
-  addSchemaValidationResult(result) {
-    if (result?.rawOutput) {
-      const lines = result.rawOutput
-        .split(/\r?\n/)
-        .map(line => line.trim())
-        .filter(Boolean);
-
-      if (lines.length > 0) {
-        for (const line of lines) {
-          this.addSchemaValidationError(line);
-        }
-        return;
-      }
-    }
-
-    this.addSchemaValidationError("Schema validation failed.");
   }
 
   get status() {

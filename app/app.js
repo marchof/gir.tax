@@ -161,7 +161,7 @@ async function handleFileImport(file) {
   const result = await xmlSchema.validate(xmlText, xmlFileName);
   if (!result.valid) {
     corporateStructureGraph.xmlDocument = null;
-    statusMessage.addSchemaValidationResult(result);
+    statusMessage.addParsingError(result.rawOutput);
     showValidation(statusMessage, xmlFileName, { activate: true });
     return;
   }
