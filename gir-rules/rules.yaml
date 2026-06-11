@@ -1959,10 +1959,10 @@ rules:
 
   - number: 70111
     targets:
-      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:CEComputation/globe:AdjustedFANIL/globe:Adjustment/globe:UPEAdjustments/globe:IdentificationOfOwners/globe:EntityOwner/globe:ExTypeOfEntity
-    references:
-      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/UPEAdjustments/Basis
-    element: ExTypeOfEntity
+      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:CEComputation/globe:AdjustedFANIL/globe:Adjustment/globe:UPEAdjustments
+    test: >-
+      not(globe:Basis = 'GIR1904' or globe:Basis = 'GIR1909') or
+      globe:IdentificationOfOwners/globe:EntityOwner/globe:ExTypeOfEntity
     rule: >-
       When the 'Basis' is GIR1904 or GIR1909, then the 'ExTypeOfEntity' must be
       completed (i.e. the choice must be 'EntityOwner')
