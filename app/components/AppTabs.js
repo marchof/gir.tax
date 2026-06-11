@@ -57,6 +57,10 @@ class AppTabs extends HTMLElement {
           background: #e8edf2;
         }
 
+        .tab-button[hidden] {
+          display: none;
+        }
+
         .tab-button[aria-selected="true"] {
           background: #ffffff;
           border-color: #cdd6df;
