@@ -101,7 +101,7 @@ export class GirStatusMessage {
     this.originalMessage.originalMessageRefId = value || "";
   }
 
-  addRecordValidationError(error) {
+  addRecordValidationError(error, element) {
     const normalizedError = {
       code: error.code,
       details: error.details,
@@ -111,6 +111,9 @@ export class GirStatusMessage {
     };
 
     this.recordErrors.push(normalizedError);
+
+    element.validationErrors ??= [];
+    element.validationErrors.push(normalizedError);
   }
 
   addFileValidationError(details) {

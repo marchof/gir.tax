@@ -111,7 +111,7 @@ export function validateGirRules(xmlDocument, statusMessage) {
           details: ruleMessage,
           docRefIds: docRefId ? [docRefId] : [],
           fieldPaths: [matchedPath],
-        });
+        }, targetNode);
       }
     }
   }

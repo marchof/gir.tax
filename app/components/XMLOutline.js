@@ -43,8 +43,17 @@ class XMLOutline extends HTMLElement {
           transition: background-color 120ms ease;
         }
 
+        .validation-error {
+          background: #ffcccc;
+          cursor: help;
+        }
+
         div.xml-code:not(:has(div.xml-code:hover)):hover > .xml-tag {
           background: #d8d8d8;
+        }
+
+        div.xml-code:not(:has(div.xml-code:hover)):hover > .validation-error {
+          background: #ffa0a0;
         }
 
         .xml-tag-name {
@@ -83,6 +92,63 @@ class XMLOutline extends HTMLElement {
           font-family: sans-serif;
           font-style: italic;
           font-size: 80%;
+        }
+
+        .validation-tooltip {
+          position: absolute;
+          background: #fff3cd;
+          border: 1px solid #ff6b6b;
+          border-radius: 6px;
+          padding: 12px;
+          margin-left: 8px;
+          margin-top: 16px;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+          z-index: 1000;
+          font-family: sans-serif;
+          font-size: 13px;
+          min-width: 250px;
+          max-width: 400px;
+          display: none;
+          pointer-events: none;
+          text-indent: 0px;
+        }
+
+        .validation-tooltip.show {
+          display: block;
+        }
+
+        .validation-tooltip-title {
+          font-weight: 700;
+          color: #c92a2a;
+          margin-bottom: 8px;
+          font-size: 12px;
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+        }
+
+        .validation-error-item {
+          margin-bottom: 8px;
+          padding-bottom: 8px;
+          border-bottom: 1px solid rgba(255, 107, 107, 0.2);
+        }
+
+        .validation-error-item:last-child {
+          margin-bottom: 0;
+          padding-bottom: 0;
+          border-bottom: none;
+        }
+
+        .validation-error-code {
+          font-family: monospace;
+          font-weight: 600;
+          color: #c92a2a;
+          font-size: 12px;
+          margin-bottom: 4px;
+        }
+
+        .validation-error-message {
+          color: #5c5c5c;
+          line-height: 1.4;
         }
       </style>
       <div id="container" part="container"></div>
@@ -123,11 +189,30 @@ class XMLOutline extends HTMLElement {
   }
 
   _renderElement(element) {
+    const errors = element.validationErrors || [];
     const wrapper = document.createElement("div");
     wrapper.className = "xml-code";
 
     const tag = document.createElement("span");
     tag.className = "xml-tag";
+
+    if (errors.length > 0) {
+      tag.classList.add('validation-error');
+      
+      // Create tooltip
+      const tooltip = document.createElement("div");
+      tooltip.className = "validation-tooltip";
+      tooltip.innerHTML = this._buildTooltipHTML(errors);
+      wrapper.appendChild(tooltip);
+      
+      // Add hover handlers
+      tag.addEventListener("mouseenter", () => {
+        tooltip.classList.add("show");
+      });
+      tag.addEventListener("mouseleave", () => {
+        tooltip.classList.remove("show");
+      });
+    }
 
     const isEmpty = element.childNodes.length === 0;
     tag.appendChild(document.createTextNode("<"));
@@ -228,6 +313,22 @@ class XMLOutline extends HTMLElement {
 
   _describeTag(name) {
     return this._tagDescriptions.get(name) || this._tagDescriptions.get(name.split(":").pop()) || "";
+  }
+
+  _buildTooltipHTML(errors) {
+    const title = `<div class="validation-tooltip-title">Validation Errors (${errors.length})</div>`;
+    const items = errors.map(error => {
+      const code = error.code ? `<div class="validation-error-code">${this._escapeHtml(error.code)}</div>` : "";
+      const message = error.details ? `<div class="validation-error-message">${this._escapeHtml(error.details)}</div>` : "";
+      return `<div class="validation-error-item">${code}${message}</div>`;
+    }).join("");
+    return title + items;
+  }
+
+  _escapeHtml(text) {
+    const div = document.createElement("div");
+    div.textContent = text;
+    return div.innerHTML;
   }
 }
 
