@@ -344,7 +344,7 @@ rules:
     test: >-
       number(.) =
       sum(../globe:FANIL) +
-      sum(../globe:Adjustment/globe:MainEntityPEandFTE/globe:Additions) -
+      sum(../globe:Adjustment/globe:MainEntityPEandFTE/globe:Additions) +
       sum(../globe:Adjustment/globe:MainEntityPEandFTE/globe:Reductions)
     rule: >-
       The Total must equal the following calculation: AdjustedFANIL/FANIL + (sum of
@@ -354,6 +354,10 @@ rules:
       The Total must equal the following calculation: FANIL/FANIL + (sum of all Main
       EntityPEandFTE/Additions elements) - (sum of all MainEntityPEandFTE/Reductions
       elements) Adjusted
+    implementation_notes: >-
+      As the Reductions elements are supposed to be negative we assume that the SUM
+      of all Additions and Reduction elements has to be calculated.
+
 
   - number: 70001
     targets:

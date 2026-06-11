@@ -13,8 +13,8 @@
                     <globe:MainEntityPEandFTE>
                       <globe:Additions>20</globe:Additions>
                       <globe:Additions>5</globe:Additions>
-                      <globe:Reductions>10</globe:Reductions>
-                      <globe:Reductions>2</globe:Reductions>
+                      <globe:Reductions>-10</globe:Reductions>
+                      <globe:Reductions>-2</globe:Reductions>
                     </globe:MainEntityPEandFTE>
                   </globe:Adjustment>
                   <globe:Total>113</globe:Total>
