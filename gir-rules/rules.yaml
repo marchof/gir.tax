@@ -1946,10 +1946,10 @@ rules:
 
   - number: 70110
     targets:
-      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:CEComputation/globe:AdjustedFANIL/globe:Adjustment/globe:UPEAdjustments/globe:IdentificationOfOwners/globe:IndOwners
-    references:
-      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/UPEAdjustments/Basis
-    element: IndOwners
+      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:CEComputation/globe:AdjustedFANIL/globe:Adjustment/globe:UPEAdjustments
+    test: >-
+      not(globe:Basis = 'GIR1903' or globe:Basis = 'GIR1908') or
+      globe:IdentificationOfOwners/globe:IndOwners
     rule: >-
       When the 'Basis' is GIR1903 or GIR1908, then the IndOwners element must be
       completed

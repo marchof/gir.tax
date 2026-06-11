@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<globe:GLOBE_OECD xmlns:globe="urn:oecd:ties:globe:v2">
+  <globe:GLOBEBody>
+    <globe:JurisdictionSection>
+      <globe:GLoBETax>
+        <globe:ETR>
+          <globe:ETRStatus>
+            <globe:ETRComputation>
+              <globe:CEComputation>
+                <globe:AdjustedFANIL>
+                  <globe:Adjustment>
+                    <globe:UPEAdjustments>
+                      <globe:Basis>GIR1908</globe:Basis>
+                      <globe:IdentificationOfOwners/>
+                    </globe:UPEAdjustments>
+                  </globe:Adjustment>
+                  </globe:AdjustedFANIL>
+              </globe:CEComputation>
+            </globe:ETRComputation>
+          </globe:ETRStatus>
+        </globe:ETR>
+      </globe:GLoBETax>
+    </globe:JurisdictionSection>
+  </globe:GLOBEBody>  
+</globe:GLOBE_OECD>
