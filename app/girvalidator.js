@@ -97,39 +97,16 @@ export function validateGirRules(xmlDocument, statusMessage) {
     const targets = rule.targets;
 
     for (const target of targets) {
-      let targetNodes;
-      try {
-        targetNodes = evaluateNodes(xmlDocument, xmlDocument, target, namespaceResolver);
-      } catch (error) {
-        statusMessage.addValidationError({
-          scope: "file",
-          code: ruleCode,
-          details: `Invalid target XPath for rule ${ruleCode}: ${error.message}`,
-        });
-        continue;
-      }
+      const targetNodes = evaluateNodes(xmlDocument, xmlDocument, target, namespaceResolver);
 
       for (const targetNode of targetNodes) {
-        let passed;
-        try {
-          passed = evaluateBoolean(xmlDocument, targetNode, rule.test, namespaceResolver);
-        } catch (error) {
-          statusMessage.addValidationError({
-            scope: "file",
-            code: ruleCode,
-            details: `Invalid test XPath for rule ${ruleCode}: ${error.message}`,
-          });
-          continue;
-        }
-
-        if (passed) {
+        if (evaluateBoolean(xmlDocument, targetNode, rule.test, namespaceResolver)) {
           continue;
         }
 
         const docRefId = extractNearestDocRefId(xmlDocument, targetNode);
         const matchedPath = nodeXPath(targetNode) || target;
-        statusMessage.addValidationError({
-          scope: "record",
+        statusMessage.addRecordValidationError({
           code: ruleCode,
           details: ruleMessage,
           docRefIds: docRefId ? [docRefId] : [],

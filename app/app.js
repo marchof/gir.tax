@@ -151,7 +151,7 @@ async function handleFileImport(file) {
   } catch (error) {
     exportXmlButton.clear();
     corporateStructureGraph.xmlDocument = null;
-    statusMessage.addParsingError(error instanceof Error ? error.message : String(error));
+    statusMessage.addFileValidationError(error instanceof Error ? error.message : String(error));
     showValidation(statusMessage, "input.xml", { activate: true });
     return;
   }
@@ -161,7 +161,7 @@ async function handleFileImport(file) {
   const result = await xmlSchema.validate(xmlText, xmlFileName);
   if (!result.valid) {
     corporateStructureGraph.xmlDocument = null;
-    statusMessage.addParsingError(result.rawOutput);
+    statusMessage.addFileValidationError(result.rawOutput);
     showValidation(statusMessage, xmlFileName, { activate: true });
     return;
   }
@@ -169,7 +169,7 @@ async function handleFileImport(file) {
   const { xml, parserErrorText } = parseXmlDocument(xmlText);
   if (parserErrorText) {
     corporateStructureGraph.xmlDocument = null;
-    statusMessage.addParsingError(parserErrorText);
+    statusMessage.addFileValidationError(parserErrorText);
     showValidation(statusMessage, xmlFileName, { activate: true });
     return;
   }

@@ -101,29 +101,28 @@ export class GirStatusMessage {
     this.originalMessage.originalMessageRefId = value || "";
   }
 
-  addValidationError(error) {
+  addRecordValidationError(error) {
     const normalizedError = {
-      code: error.code || "VAL0001",
-      details: error.details || "",
-      language: error.language || "",
+      code: error.code,
+      details: error.details,
+      language: "EN",
       docRefIds: asArray(error.docRefIds),
       fieldPaths: asArray(error.fieldPaths),
     };
 
-    if (error.scope === "record") {
-      this.recordErrors.push(normalizedError);
-      return;
-    }
-
-    this.fileErrors.push(normalizedError);
+    this.recordErrors.push(normalizedError);
   }
 
-  addParsingError(details) {
-    this.addValidationError({
-      scope: "file",
+  addFileValidationError(details) {
+    const normalizedError = {
       code: "50007",
-      details,
-    });
+      details: details,
+      language: "EN",
+      docRefIds: [],
+      fieldPaths: [],
+    };
+
+    this.fileErrors.push(normalizedError);
   }
 
   get status() {
