@@ -23,9 +23,10 @@ class VersionInfo extends HTMLElement {
         }
       </style>
       <div>
-        <a href="https://github.com/marchof/gir.tax">https://github.com/marchof/gir.tax</a> |
+        <a href="https://github.com/marchof/gir.tax">github.com/marchof/gir.tax</a> @
         <a href="https://github.com/marchof/gir.tax/commit/${VERSION_INFO.commitId}">${VERSION_INFO.commitIdShort}</a> |
-        ${VERSION_INFO.commitTimestampIso}
+        ${VERSION_INFO.commitTimestampIso} |
+        <a href="https://github.com/marchof/gir.tax#hosted-service-terms">Terms of Service</a>
       </div>
     `;
   }
