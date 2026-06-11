@@ -1972,10 +1972,10 @@ rules:
 
   - number: 70112
     targets:
-      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:CEComputation/globe:AdjustedFANIL/globe:Adjustment/globe:UPEAdjustments/globe:IdentificationOfOwners/globe:EntityOwner/globe:ExTypeOfEntity
-    references:
-      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/UPEAdjustments/Basis
-    element: ExTypeOfEntity
+      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:CEComputation/globe:AdjustedFANIL/globe:Adjustment/globe:UPEAdjustments
+    test: >-
+      not(globe:Basis = 'GIR1904') or
+      globe:IdentificationOfOwners/globe:EntityOwner/globe:ExTypeOfEntity != 'GIR2805'
     rule: >-
       When the 'Basis' is GIR1904, then the 'ExTypeOfEntity' must not contain the
       value of GIR2805.
