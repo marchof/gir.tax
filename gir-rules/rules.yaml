@@ -134,7 +134,7 @@ rules:
     test: >-
       not(../stf:DocTypeIndic='OECD0' or ../stf:DocTypeIndic='OECD1')
     rule: >-
-      When DocTypeIndic is OECD1 or OECDO, the CorrDocRefld field must be omitted.
+      When DocTypeIndic is OECD1 or OECD0, the CorrDocRefld field must be omitted.
     description: >-
       When an element has DocTypeIndic of OECD1 or OECD0, which indicates that a new
       lodgment or a resend is being made, the CorrDocRefld field must not be
@@ -153,10 +153,10 @@ rules:
       not(.='OECD0')
     rule: >-
       The Resend option may only be used with respect to the FilingInfo element. The
-      value of OECDO is not an acceptable input in the DocTypeIndic for the
+      value of OECD0 is not an acceptable input in the DocTypeIndic for the
       GeneralSection, Summary, JurisdictionSection, UTPRAttribution
     description: >-
-      OECDO is only a valid input for the DocTypeIndic of the FilingInfo and should
+      OECD0 is only a valid input for the DocTypeIndic of the FilingInfo and should
       not be used for any other element.
     target_does_not_exist_in_test_files:
       - ok-05.xml
@@ -166,10 +166,10 @@ rules:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:FilingInfo/globe:DocSpec/stf:DocRefId
     element: DocRefld
     rule: >-
-      When the DocTypeIndic is OECDO for the FilingInfo, The DocRefID must be the same
+      When the DocTypeIndic is OECD0 for the FilingInfo, The DocRefID must be the same
       as the DocReflD that was used for the latest version of the FilingInfo
     description: >-
-      An unknown or invalid DocRefID was specified for the Resend option (OECDO).
+      An unknown or invalid DocRefID was specified for the Resend option (OECD0).
 
   - number: 60015
     targets:
@@ -185,14 +185,18 @@ rules:
 
   - number: 60016
     targets:
-      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:FilingInfo/globe:DocSpec/stf:DocTypeIndic
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:GeneralSection/globe:DocSpec/stf:DocTypeIndic
+    test: >-
+      not (../../../globe:FilingInfo/globe:DocSpec/stf:DocTypeIndic='OECD0') or
+      not (.='OECD1')
     rule: >-
-      If the value of FilingInfo DoctypeIndic element is OECDO, if General Section is
+      If the value of FilingInfo DoctypeIndic element is OECD0, if General Section is
       provided, the value of General Section DocTypeIndic element must not be OECD1.
     description: >-
       A new General Section can't be filed if one already exists. Please process with
       a correction or deletion if the General Section has to be modified.
+    target_does_not_exist_in_test_files:
+      - ok-01.xml
 
   - number: 60017
     targets:
