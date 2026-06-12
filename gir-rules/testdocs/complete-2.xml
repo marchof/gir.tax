@@ -29,7 +29,7 @@
       </globe:Period>
       <globe:NameMNE>NameMNE</globe:NameMNE>
       <globe:DocSpec>
-        <stf:DocTypeIndic>OECD0</stf:DocTypeIndic>
+        <stf:DocTypeIndic>OECD2</stf:DocTypeIndic>
         <stf:DocRefId>DocRefId</stf:DocRefId>
         <stf:CorrDocRefId>CorrDocRefId</stf:CorrDocRefId>
       </globe:DocSpec>

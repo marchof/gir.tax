@@ -131,13 +131,17 @@ rules:
   - number: 60012
     targets:
       - //stf:CorrDocRefId
-    element: CorrDocRefld
+    test: >-
+      not(../stf:DocTypeIndic='OECD0' or ../stf:DocTypeIndic='OECD1')
     rule: >-
       When DocTypeIndic is OECD1 or OECDO, the CorrDocRefld field must be omitted.
     description: >-
       When an element has DocTypeIndic of OECD1 or OECD0, which indicates that a new
       lodgment or a resend is being made, the CorrDocRefld field must not be
       completed.
+    target_does_not_exist_in_test_files:
+      - ok-01.xml
+      - ok-02.xml
 
   - number: 60013
     targets:

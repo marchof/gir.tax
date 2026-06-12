@@ -33,7 +33,6 @@
       <globe:DocSpec>
         <stf:DocTypeIndic>OECD0</stf:DocTypeIndic>
         <stf:DocRefId>DocRefId</stf:DocRefId>
-        <stf:CorrDocRefId>CorrDocRefId</stf:CorrDocRefId>
       </globe:DocSpec>
     </globe:FilingInfo>
     <globe:GeneralSection>
