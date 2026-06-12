@@ -200,7 +200,10 @@ rules:
 
   - number: 60017
     targets:
-      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:FilingInfo/globe:DocSpec/stf:DocTypeIndic
+      - /globe:GLOBE_OECD/globe:GLOBEBody
+    test: >-
+      not (globe:FilingInfo/globe:DocSpec/stf:DocTypeIndic='OECD1') or
+      globe:GeneralSection
     rule: >-
       If the value of FilingInfo DoctypeIndic element is OECD1, the General Section
       must be provided.
