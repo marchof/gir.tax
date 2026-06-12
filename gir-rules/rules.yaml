@@ -173,8 +173,10 @@ rules:
 
   - number: 60015
     targets:
-      - .//stf:CorrDocRefId
-    element: CorrDocRefld
+      - //globe:DocSpec
+    test: >-
+      not(stf:DocTypeIndic='OECD2' or stf:DocTypeIndic='OECD3') or
+      stf:CorrDocRefId
     rule: >-
       The corrected element does not specify any CorrDocRefld (OECD2/3 without
       CorrDocRefld data).

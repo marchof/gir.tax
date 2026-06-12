@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<globe:GLOBE_OECD version="1" xmlns:globe="urn:oecd:ties:globe:v2" xmlns:iso="urn:oecd:ties:isoglobetypes:v1" xmlns:stf="urn:oecd:ties:globestf:v5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oecd:ties:globe:v2 globe-xsd/GLOBEXML_v1.0.xsd">
+  <globe:GLOBEBody>
+    <globe:FilingInfo>
+      <globe:DocSpec>
+        <stf:DocTypeIndic>OECD3</stf:DocTypeIndic>
+        <stf:CorrDocRefId>CorrDocRefId</stf:CorrDocRefId>
+      </globe:DocSpec>
+    </globe:FilingInfo>
+  </globe:GLOBEBody>
+</globe:GLOBE_OECD>
