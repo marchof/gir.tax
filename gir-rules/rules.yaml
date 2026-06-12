@@ -149,7 +149,8 @@ rules:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:Summary/globe:DocSpec/stf:DocTypeIndic
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:DocSpec/stf:DocTypeIndic
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:UTPRAttribution/globe:DocSpec/stf:DocTypeIndic
-    element: DocTypeIndic
+    test: >-
+      not(.='OECD0')
     rule: >-
       The Resend option may only be used with respect to the FilingInfo element. The
       value of OECDO is not an acceptable input in the DocTypeIndic for the
@@ -157,6 +158,8 @@ rules:
     description: >-
       OECDO is only a valid input for the DocTypeIndic of the FilingInfo and should
       not be used for any other element.
+    target_does_not_exist_in_test_files:
+      - ok-05.xml
 
   - number: 60014
     targets:

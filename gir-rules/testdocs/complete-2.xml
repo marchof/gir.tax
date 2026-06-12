@@ -75,8 +75,9 @@
         </globe:CE>
       </globe:CorporateStructure>
       <globe:DocSpec>
-        <stf:DocTypeIndic>OECD0</stf:DocTypeIndic>
-        <stf:DocRefId>stf:DocRefId</stf:DocRefId>
+        <stf:DocTypeIndic>OECD2</stf:DocTypeIndic>
+        <stf:DocRefId>DocRefId</stf:DocRefId>
+        <stf:CorrDocRefId>CorrDocRefId</stf:CorrDocRefId>
       </globe:DocSpec>
     </globe:GeneralSection>
     <globe:JurisdictionSection>
@@ -161,8 +162,9 @@
         </globe:ETR>
       </globe:GLoBETax>
       <globe:DocSpec>
-        <stf:DocTypeIndic>OECD0</stf:DocTypeIndic>
-        <stf:DocRefId>sDocRefId</stf:DocRefId>
+        <stf:DocTypeIndic>OECD2</stf:DocTypeIndic>
+        <stf:DocRefId>DocRefId</stf:DocRefId>
+        <stf:CorrDocRefId>CorrDocRefId</stf:CorrDocRefId>
       </globe:DocSpec>
     </globe:JurisdictionSection>
   </globe:GLOBEBody>

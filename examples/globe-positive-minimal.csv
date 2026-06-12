@@ -29,7 +29,7 @@ x28;x27;urn:oecd:ties:globe:v2;Element;Start;2001-01-01
 x29;x27;urn:oecd:ties:globe:v2;Element;End;2001-01-01
 x30;x14;urn:oecd:ties:globe:v2;Element;NameMNE;globe:NameMNE
 x31;x14;urn:oecd:ties:globe:v2;Element;DocSpec;
-x32;x31;urn:oecd:ties:globestf:v5;Element;DocTypeIndic;OECD0
+x32;x31;urn:oecd:ties:globestf:v5;Element;DocTypeIndic;OECD1
 x33;x31;urn:oecd:ties:globestf:v5;Element;DocRefId;stf:DocRefId
 
 
