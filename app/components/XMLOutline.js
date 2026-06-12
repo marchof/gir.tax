@@ -29,9 +29,18 @@ class XMLOutline extends HTMLElement {
           border-bottom: 1px solid #e0e0e0;
         }
 
+        div.xml-code:has(div.xml-code):has(> span.validation-error) {
+          border-left: 1px solid #ffcccc;
+          border-bottom: 1px solid #ffcccc;
+        }
+
         div.xml-code:not(:has(div.xml-code:hover)):hover {
           background: #f8f8f8;
           border-color: #d8d8d8;
+        }
+
+        div.xml-code:not(:has(div.xml-code:hover)):hover:has(> span.validation-error) {
+          border-color: #ffa0a0;
         }
 
         .xml-tag {
@@ -46,6 +55,10 @@ class XMLOutline extends HTMLElement {
         .validation-error {
           background: #ffcccc;
           cursor: help;
+        }
+
+        .validation-error:before {
+          content: "❌ ";
         }
 
         div.xml-code:not(:has(div.xml-code:hover)):hover > .xml-tag {
@@ -97,7 +110,7 @@ class XMLOutline extends HTMLElement {
         .validation-tooltip {
           position: absolute;
           background: #fff3cd;
-          border: 1px solid #ff6b6b;
+          border: 1px solid #c1b899;
           border-radius: 6px;
           padding: 12px;
           margin-left: 8px;
