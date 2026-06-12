@@ -1522,10 +1522,7 @@ rules:
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:OverallComputation/globe:AdjustedCoveredTax/globe:DeferTaxAdjustAmt/globe:Transition/globe:DeferredTaxAssets/globe:Total
     test: >-
-      number(.) =
-      number(../globe:DeferredTaxAssetStart) - number(../globe:DeferredTaxAssetExcluded) or
-      number(.) =
-      number(../globe:DeferredTaxAssetRecast) - number(../globe:DeferredTaxAssetExcluded)
+      number(.) = number(../globe:DeferredTaxAssetStart) + number(../globe:DeferredTaxAssetRecast) - number(../globe:DeferredTaxAssetExcluded)
     rule: >-
       The total element should be equal to the following calculation:
       DeferredTaxAssetStart - DeferredTaxAssetExcluded OR
@@ -1537,11 +1534,10 @@ rules:
 
   - number: 70082
     targets:
-      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:OverallComputation/globe:AdjustedCoveredTax/globe:DeferTaxAdjustAmt/globe:Transition/globe:DeferredTaxAssets/globe:DeferredTaxAssetStart
-      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:OverallComputation/globe:AdjustedCoveredTax/globe:DeferTaxAdjustAmt/globe:Transition/globe:DeferredTaxAssets/globe:DeferredTaxAssetRecast
-    references:
-      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Transition/DeferredTaxAssets
-    element: DeferredTaxAsset
+      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:OverallComputation/globe:AdjustedCoveredTax/globe:DeferTaxAdjustAmt/globe:Transition/globe:DeferredTaxAssets
+    test: >-
+      number(globe:DeferredTaxAssetStart) = 0 or
+      number(globe:DeferredTaxAssetRecast) = 0
     rule: >-
       When the DeferredTaxAssets element is provided, then one of
       DeferredTaxAssetStart or DeferredTaxAssetRecast must contain the value of '0'
