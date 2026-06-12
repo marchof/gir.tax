@@ -380,7 +380,7 @@
                     <globe:AdditionalTopUpTax>0</globe:AdditionalTopUpTax>
                   </globe:NONArt4.1.5>
                   <globe:Art4.1.5>
-                    <globe:AdjustedCoveredTax>0</globe:AdjustedCoveredTax>
+                    <globe:AdjustedCoveredTax>-100</globe:AdjustedCoveredTax>
                     <globe:GlobeLoss>0</globe:GlobeLoss>
                     <globe:ExpectedAdjustedCoveredTax>0</globe:ExpectedAdjustedCoveredTax>
                     <globe:AdditionalTopUpTax>0</globe:AdditionalTopUpTax>
