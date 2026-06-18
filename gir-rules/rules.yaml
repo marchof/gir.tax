@@ -1316,9 +1316,8 @@ rules:
   - number: 70064
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:OverallComputation/globe:AdjustedCoveredTax/globe:PostFilingAdjust/globe:DeferTaxAsset/globe:Total
-    references:
-      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/PostFilingAdjust/DeferTaxAsset/AmountAttributed/Amount
-    element: Total
+    test: >-
+      number(.) = sum(../globe:AmountAttributed/globe:Amount)
     rule: >-
       The PostFilingAdjust/ DeferTaxAsset / Total should equal to the following
       calculation: sum of all 'PostFilingAdjust / DeferTaxAsset / AmountAttributed /
@@ -1897,9 +1896,6 @@ rules:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:CEComputation/globe:AdjustedFANIL/globe:Adjustment/globe:CrossBorderAdjustments/globe:OtherTIN
     test: >-
       not(. = ancestor::globe:CEComputation/globe:TIN)
-    references:
-      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/TIN
-    element: OtherTIN
     rule: >-
       The Other TIN must not be the same as the CEComputations/TIN.
     description: >-
