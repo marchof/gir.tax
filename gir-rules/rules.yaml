@@ -1413,10 +1413,8 @@ rules:
   - number: 70072
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:OverallComputation/globe:AdjustedCoveredTax/globe:DeemedDistTax/globe:Election/globe:Recapture/globe:EndAmount
-    references:
-      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeemedDistTax/Election/Recapture/StartAmount
-      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeemedDistTax/Election/Recapture/TotalDDT
-    element: EndAmount
+    test: >-
+      number(.) = number(../globe:StartAmount) - number(../globe:TotalDDT)
     rule: >-
       The EndAmount is equal to the following calculation: StartAmount - TotalDDT
     description: >-
