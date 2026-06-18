@@ -208,6 +208,30 @@ class ValidationStatus extends HTMLElement {
           color: #4d5f74;
         }
 
+        .rules-hint {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 0.75rem;
+          border: 1px solid #bcd6f5;
+          border-radius: 10px;
+          padding: 0.6rem 0.9rem;
+          background: linear-gradient(180deg, #eaf3ff, #f6faff);
+          color: #1c3b5e;
+          font-size: 0.9rem;
+        }
+
+        .rules-hint a {
+          color: #0d5e51;
+          font-weight: 700;
+          text-decoration: none;
+          white-space: nowrap;
+        }
+
+        .rules-hint a:hover {
+          text-decoration: underline;
+        }
+
         .button-row {
           display: flex;
           gap: 0.75rem;
@@ -217,6 +241,10 @@ class ValidationStatus extends HTMLElement {
         ${BUTTON_BASE_CSS}
       </style>
       <div class="validation-container">
+        <div class="rules-hint">
+          <span>Validation is based on the currently implemented GIR rules.</span>
+          <a href="rules/" target="_blank" rel="noopener noreferrer">View implemented rules <span aria-hidden="true">&rarr;</span></a>
+        </div>
         <div class="validation-output">${content}</div>
         <div class="button-row">
           <button class="button-base" id="export-btn">Export GIR Status Message</button>
