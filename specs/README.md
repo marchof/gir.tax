@@ -9,6 +9,8 @@ code consistently without re-deriving conventions from scratch each time.
 
 - [ui-styleguide.md](ui-styleguide.md) — design tokens and component patterns
   for the web app's custom elements and the generated rules page.
+- [gir-rule-writing.md](gir-rule-writing.md) — how GIR validation rules are
+  defined in `rules.yaml` and tested against fixture documents.
 
 More specs will be added over time (e.g. integration test principles).
 
