@@ -3,6 +3,7 @@ import { copy } from "esbuild-plugin-copy";
 import { mkdir, readFile, rm, writeFile } from "node:fs/promises";
 import { execFile } from "node:child_process";
 import { promisify } from "node:util";
+import { CSS_TOKENS } from "./styleTokens.js";
 
 const distDir = "./dist";
 const distMetaDir = `${distDir}/.meta`;
@@ -57,6 +58,12 @@ const writeGeneratedRulesHtml = async () => {
   ]);
 };
 
+const writeIndexHtml = async () => {
+  const template = await readFile("./index.html", "utf8");
+  const html = template.replace("/* TOKENS-PLACEHOLDER */", CSS_TOKENS);
+  await writeFile(`${distDir}/index.html`, html);
+};
+
 const options = {
   entryPoints: ["app/app.js"],
   bundle: true,
@@ -70,7 +77,6 @@ const options = {
     copy({
       resolveFrom: "cwd",
       assets: [
-        { from: ["./index.html"], to: [`./${distDir}/index.html`] },
         { from: ["./schemas/**/*"], to: [`./${distDir}/schemas/`] },
         { from: ["./node_modules/xmllint-wasm/xmllint-browser.mjs"], to: [`./${distDir}/app/xmllint-browser.mjs`] },
         { from: ["./node_modules/xmllint-wasm/xmllint.wasm"], to: [`./${distDir}/app/xmllint.wasm`] },
@@ -88,6 +94,7 @@ await writeVersionMetadata();
 await writeThirdPartyLicenseReport();
 await writeGeneratedRules();
 await writeGeneratedRulesHtml();
+await writeIndexHtml();
 
 if (watch) {
   const ctx = await context(options);

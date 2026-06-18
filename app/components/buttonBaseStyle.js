@@ -5,8 +5,8 @@ export const BUTTON_BASE_CSS = `
     align-items: center;
     justify-content: center;
     border: 1px solid #cdd6df;
-    border-radius: 9px;
-    background: #ffffff;
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
     color: #1f2d3d;
     cursor: pointer;
     font: 600 14px/1.2 sans-serif;
@@ -26,6 +26,6 @@ export const BUTTON_BASE_CSS = `
 
   .button-base:focus-visible {
     outline: none;
-    box-shadow: 0 0 0 3px rgba(125, 176, 226, 0.35);
+    box-shadow: var(--shadow-focus);
   }
 `;

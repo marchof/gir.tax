@@ -229,8 +229,8 @@ class CorporateStructureGraph extends HTMLElement {
         .export-btn {
           appearance: none;
           border: 1px solid #cdd6df;
-          border-radius: 8px;
-          background: #ffffff;
+          border-radius: var(--radius-md);
+          background: var(--color-surface);
           color: #1f2d3d;
           cursor: pointer;
           font: 600 12px/1.2 sans-serif;
@@ -251,8 +251,8 @@ class CorporateStructureGraph extends HTMLElement {
         .empty {
           display: none;
           padding: 18px;
-          border: 1px solid #d9dee3;
-          border-radius: 12px;
+          border: var(--border-frame);
+          border-radius: var(--radius-lg);
           color: #5f6f82;
           background: #f7f9fb;
           font: 14px/1.5 sans-serif;
@@ -262,9 +262,9 @@ class CorporateStructureGraph extends HTMLElement {
           width: 100%;
           height: 72vh;
           min-height: 500px;
-          border: 1px solid #d9dee3;
-          border-radius: 12px;
-          background: linear-gradient(180deg, #ffffff 0%, #f9fbfc 100%);
+          border: var(--border-frame);
+          border-radius: var(--radius-lg);
+          background: linear-gradient(180deg, var(--color-surface) 0%, #f9fbfc 100%);
           overflow: hidden;
         }
 

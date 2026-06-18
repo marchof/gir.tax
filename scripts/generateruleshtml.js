@@ -1,6 +1,7 @@
 import { mkdir, readFile, readdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { parse } from "yaml";
+import { CSS_TOKENS } from "./styleTokens.js";
 
 const repoRootDir = ".";
 
@@ -145,11 +146,7 @@ const generateRulesHtml = async () => {
   <title>Implemented GIR Rules</title>
   <style>
     :root {
-      --card-bg: #ffffff;
-      --ink: #16253a;
-      --ink-soft: #4f6075;
-      --line: #d9e1ea;
-      --accent-soft: #dff4ef;
+      ${CSS_TOKENS}
       --code-bg: #f6f9fc;
     }
 
@@ -159,16 +156,16 @@ const generateRulesHtml = async () => {
 
     body {
       margin: 20px;
-      background: #ffffff;
-      color: var(--ink);
-      font: 16px/1.5 "Avenir Next", "Segoe UI", sans-serif;
+      background: var(--color-surface);
+      color: var(--color-ink);
+      font: 16px/1.5 var(--font-ui);
     }
 
     .frame {
-      border: 1px solid #d9dee3;
-      border-radius: 12px;
+      border: var(--border-frame);
+      border-radius: var(--radius-lg);
       overflow: hidden;
-      background: #fff;
+      background: var(--color-surface);
       margin-bottom: 1rem;
     }
 
@@ -178,7 +175,7 @@ const generateRulesHtml = async () => {
       gap: 6px;
       padding: 8px;
       background: linear-gradient(180deg, #f7f9fb 0%, #eef2f6 100%);
-      border-bottom: 1px solid #d9dee3;
+      border-bottom: var(--border-frame);
     }
 
     .frame-title {
@@ -211,7 +208,7 @@ const generateRulesHtml = async () => {
 
     .panel {
       padding: 14px;
-      background: #ffffff;
+      background: var(--color-surface);
     }
 
     h1 {
@@ -228,9 +225,9 @@ const generateRulesHtml = async () => {
     }
 
     .summary-item {
-      border: 1px solid var(--line);
-      border-radius: 10px;
-      background: linear-gradient(180deg, #ffffff, #f7fafd);
+      border: var(--border-card);
+      border-radius: var(--radius-md);
+      background: linear-gradient(180deg, var(--color-surface), var(--color-surface-muted));
       padding: 0.65rem 0.75rem;
     }
 
@@ -238,12 +235,12 @@ const generateRulesHtml = async () => {
       font-size: 0.78rem;
       letter-spacing: 0.03em;
       text-transform: uppercase;
-      color: var(--ink-soft);
+      color: var(--color-ink-soft);
     }
 
     .summary-value {
       margin-top: 0.2rem;
-      color: var(--ink);
+      color: var(--color-ink);
       font-weight: 600;
       word-break: break-word;
     }
@@ -256,9 +253,9 @@ const generateRulesHtml = async () => {
     }
 
     .rule-card {
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      background: var(--card-bg);
+      border: var(--border-card);
+      border-radius: var(--radius-lg);
+      background: var(--color-surface);
       padding: 0.95rem;
       display: flex;
       flex-direction: column;
@@ -270,7 +267,7 @@ const generateRulesHtml = async () => {
       align-items: center;
       border-radius: 999px;
       border: 1px solid #a9d6cb;
-      background: var(--accent-soft);
+      background: var(--color-accent-soft);
       color: #0d5e51;
       padding: 0.15rem 0.55rem;
       font-size: 0.82rem;
@@ -288,7 +285,7 @@ const generateRulesHtml = async () => {
 
     .rule-description {
       margin: 0;
-      color: var(--ink-soft);
+      color: var(--color-ink-soft);
       overflow-wrap: anywhere;
     }
 
@@ -300,7 +297,7 @@ const generateRulesHtml = async () => {
 
     details {
       border: 1px dashed #c9d5e2;
-      border-radius: 10px;
+      border-radius: var(--radius-md);
       padding: 0.45rem 0.6rem;
       background: #fbfdff;
     }
@@ -312,7 +309,7 @@ const generateRulesHtml = async () => {
     }
 
     code {
-      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-family: var(--font-mono);
       font-size: 0.81rem;
     }
 
@@ -324,9 +321,9 @@ const generateRulesHtml = async () => {
     pre {
       margin: 0.55rem 0 0;
       padding: 0.7rem;
-      border-radius: 9px;
+      border-radius: var(--radius-md);
       background: var(--code-bg);
-      border: 1px solid #dce5ef;
+      border: var(--border-card);
       overflow-x: auto;
       white-space: pre-wrap;
       word-break: break-word;

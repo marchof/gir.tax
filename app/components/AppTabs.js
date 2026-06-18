@@ -15,10 +15,10 @@ class AppTabs extends HTMLElement {
         }
 
         .tabs {
-          border: 1px solid #d9dee3;
-          border-radius: 12px;
+          border: var(--border-frame);
+          border-radius: var(--radius-lg);
           overflow: hidden;
-          background: #fff;
+          background: var(--color-surface);
         }
 
         .tab-list {
@@ -27,7 +27,7 @@ class AppTabs extends HTMLElement {
           gap: 6px;
           padding: 8px;
           background: linear-gradient(180deg, #f7f9fb 0%, #eef2f6 100%);
-          border-bottom: 1px solid #d9dee3;
+          border-bottom: var(--border-frame);
         }
 
         .tab-title {
@@ -41,7 +41,7 @@ class AppTabs extends HTMLElement {
         .tab-button {
           appearance: none;
           border: 1px solid transparent;
-          border-radius: 9px;
+          border-radius: var(--radius-md);
           background: transparent;
           color: #425466;
           cursor: pointer;
@@ -62,7 +62,7 @@ class AppTabs extends HTMLElement {
         }
 
         .tab-button[aria-selected="true"] {
-          background: #ffffff;
+          background: var(--color-surface);
           border-color: #cdd6df;
           color: #1f2d3d;
           box-shadow: 0 1px 2px rgba(16, 24, 40, 0.08);
@@ -76,8 +76,8 @@ class AppTabs extends HTMLElement {
           height: 1.25rem;
           padding: 0 0.1rem;
           border-radius: 999px;
-          background: #cf3f2e;
-          color: #ffffff;
+          background: var(--color-error-chip);
+          color: var(--color-surface);
           font: 700 11px/1 sans-serif;
         }
 
@@ -87,7 +87,7 @@ class AppTabs extends HTMLElement {
 
         .panels {
           padding: 14px;
-          background: #ffffff;
+          background: var(--color-surface);
           min-height: 120px;
         }
 

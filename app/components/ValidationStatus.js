@@ -70,7 +70,7 @@ class ValidationStatus extends HTMLElement {
         }
 
         .validation-container {
-          font-family: "Avenir Next", "Segoe UI", sans-serif;
+          font-family: var(--font-ui);
           padding: 1rem 0;
           overflow-y: auto;
           display: flex;
@@ -78,7 +78,7 @@ class ValidationStatus extends HTMLElement {
           height: 100%;
           box-sizing: border-box;
           gap: 1rem;
-          background: #ffffff;
+          background: var(--color-surface);
         }
 
         .validation-output {
@@ -95,9 +95,9 @@ class ValidationStatus extends HTMLElement {
         }
 
         .summary-item {
-          border: 1px solid #d7e2ef;
-          border-radius: 10px;
-          background: linear-gradient(180deg, #ffffff, #f7fafd);
+          border: var(--border-card);
+          border-radius: var(--radius-md);
+          background: linear-gradient(180deg, var(--color-surface), var(--color-surface-muted));
           padding: 0.65rem 0.75rem;
         }
 
@@ -110,17 +110,17 @@ class ValidationStatus extends HTMLElement {
 
         .summary-value {
           margin-top: 0.2rem;
-          color: #1c2b3f;
+          color: var(--color-ink);
           font-weight: 600;
           word-break: break-word;
         }
 
         .summary-value.status-accepted {
-          color: #0c7a38;
+          color: var(--color-success);
         }
 
         .summary-value.status-rejected {
-          color: #ad2b10;
+          color: var(--color-danger);
         }
 
         .issue-cards {
@@ -130,9 +130,9 @@ class ValidationStatus extends HTMLElement {
         }
 
         .issue-card {
-          border: 1px solid #d9e1ea;
-          border-radius: 14px;
-          background: #ffffff;
+          border: var(--border-card);
+          border-radius: var(--radius-lg);
+          background: var(--color-surface);
           padding: 0.95rem;
         }
 
@@ -145,12 +145,12 @@ class ValidationStatus extends HTMLElement {
         }
 
         .issue-code {
-          font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+          font-family: var(--font-mono);
           font-size: 0.8rem;
           padding: 0.08rem 0.4rem;
-          border-radius: 6px;
-          border: 1px solid #cc6666;
-          background: #ffaaaa;
+          border-radius: var(--radius-sm);
+          border: 1px solid var(--color-danger-soft-border);
+          background: var(--color-danger-soft-bg);
           color: #20415f;
           white-space: nowrap;
         }
@@ -159,7 +159,7 @@ class ValidationStatus extends HTMLElement {
           font-size: 0.74rem;
           color: #4f5e71;
           border: 1px dashed #c9d7e9;
-          border-radius: 6px;
+          border-radius: var(--radius-sm);
           padding: 0.08rem 0.35rem;
           white-space: nowrap;
         }
@@ -188,7 +188,7 @@ class ValidationStatus extends HTMLElement {
         }
 
         .mono-list {
-          font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+          font-family: var(--font-mono);
           font-size: 0.78rem;
           margin: 0;
           padding: 0;
@@ -208,7 +208,7 @@ class ValidationStatus extends HTMLElement {
           justify-content: space-between;
           gap: 0.75rem;
           border: 1px solid #bcd6f5;
-          border-radius: 10px;
+          border-radius: var(--radius-md);
           padding: 0.6rem 0.9rem;
           background: linear-gradient(180deg, #eaf3ff, #f6faff);
           color: #1c3b5e;

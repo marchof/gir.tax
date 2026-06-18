@@ -3,43 +3,57 @@
 Scope: the web app's custom elements (`app/components/*.js`) and the
 statically generated rules page (`scripts/generateruleshtml.js` →
 `dist/rules/index.html`). Both render plain HTML/CSS (no framework, no CSS
-preprocessor), so this spec is the single source of truth for the values
-components should reuse — there is currently no shared CSS-variables module
-enforcing it in code (see "How to use this spec" below).
+preprocessor), so this spec is the catalog of design tokens and component
+patterns components should reuse.
+
+The color, radius, font, and shadow tokens below are defined once in
+`scripts/styleTokens.js` — that file is the source of truth for their
+*values*; this document only records what each token means and where it's
+used, so the two never need to be kept in sync by hand. The tokens are
+injected as a `:root` block into both `index.html` (via `scripts/build.js`)
+and the generated rules page (via `scripts/generateruleshtml.js`), so
+`var(--color-ink)` etc. resolve identically on both pages. Custom-element
+shadow roots inherit these variables automatically since custom-property
+inheritance pierces shadow DOM boundaries — components reference
+`var(--color-ink)` directly, with no fallback value, since the token is
+always defined by the time any component renders.
 
 ## Color tokens
 
-| Token | Value | Use |
-|---|---|---|
-| `color-ink` | `#1c2b3f` | Primary text |
-| `color-ink-soft` | `#4f6075` | Secondary/muted text, labels |
-| `color-line` | `#d9e1ea` | Default borders |
-| `color-line-strong` | `#d9dee3` | Borders on frame/header chrome (AppTabs, rules-page frame) |
-| `color-surface` | `#ffffff` | Card/panel background |
-| `color-surface-muted` | `#f7fafd` / `#f6f9fc` | Subtle gradient end, code block background |
-| `color-accent` | `#0f7c6b` | Teal accent (rule badges) |
-| `color-accent-soft` | `#dff4ef` | Accent badge background |
-| `color-success` | `#0c7a38` | "Accepted" status |
-| `color-danger` | `#ad2b10` | "Rejected" status |
-| `color-danger-soft-bg` | `#ffaaaa` | Issue/error code chip background |
-| `color-danger-soft-border` | `#cc6666` | Issue/error code chip border |
-| `color-error-chip` | `#cf3f2e` | Tab error-count chip background |
+Values live in `scripts/styleTokens.js` (the single source of truth) — this
+table only documents what each one is *for*, so the two never drift apart:
 
-These are the values already used by `AppTabs.js`, `ValidationStatus.js`,
-`VersionInfo.js`, `buttonBaseStyle.js`, and `generateruleshtml.js`. Use them
-verbatim in new components rather than picking a nearby shade.
+| Token | Use |
+|---|---|
+| `color-ink` | Primary text |
+| `color-ink-soft` | Secondary/muted text, labels |
+| `color-line` | Default borders |
+| `color-line-strong` | Borders on frame/header chrome (AppTabs, rules-page frame) |
+| `color-surface` | Card/panel background |
+| `color-surface-muted` | Subtle gradient end, code block background |
+| `color-accent` | Teal accent (rule badges) |
+| `color-accent-soft` | Accent badge background |
+| `color-success` | "Accepted" status |
+| `color-danger` | "Rejected" status |
+| `color-danger-soft-bg` | Issue/error code chip background |
+| `color-danger-soft-border` | Issue/error code chip border |
+| `color-error-chip` | Tab error-count chip background |
+
+These are the tokens already used by `AppTabs.js`, `ValidationStatus.js`,
+`buttonBaseStyle.js`, `FileDrop.js`, `XMLOutline.js`, `CorporateStructureGraph.js`,
+and `generateruleshtml.js`. Use `var(--color-*)` verbatim in new components
+rather than picking a nearby shade or a new hex value.
 
 ## Spacing & radii
 
 There is no strict 4px/8px grid in the existing code, but new components
-should round to one of these:
+should round to one of the radius tokens in `scripts/styleTokens.js`:
 
-| Radius | Value | Use |
-|---|---|---|
-| `radius-sm` | `6px` | Small chips/badges (issue-code, xml-tag) |
-| `radius-md` | `9–10px` | Buttons, summary-item boxes, tab buttons |
-| `radius-lg` | `12px` | Outer frame containers (AppTabs `.tabs`, rules-page `.frame`) |
-| `radius-xl` | `14px` | Content cards (rule-card, issue-card) |
+| Radius | Use |
+|---|---|
+| `radius-sm` | Small chips/badges (issue-code, xml-tag) |
+| `radius-md` | Buttons, summary-item boxes, tab buttons |
+| `radius-lg` | Outer frame containers (AppTabs `.tabs`, rules-page `.frame`, rule-card, issue-card) |
 
 Spacing: prefer `4px`, `8px`, `12px`, `14px`, `16px` (`1rem`) for padding and
 gaps. `14px` is the standard horizontal gutter inside a frame's panel
@@ -49,20 +63,36 @@ on top of it, to keep left/right alignment consistent across pages.
 
 ## Shadows
 
-| Token | Value | Use |
-|---|---|---|
-| `shadow-card` | `0 5px 18px rgba(17, 37, 62, 0.05)` | Cards (rule-card, issue-card) |
-| `shadow-focus` | `0 0 0 3px rgba(125, 176, 226, 0.35)` | `:focus-visible` ring on buttons |
+| Token | Use |
+|---|---|
+| `shadow-card` | Cards (rule-card, issue-card) |
+| `shadow-focus` | `:focus-visible` ring on buttons |
 
-Frame containers (the outer bordered box) use a border only, no shadow — the
-shadow is reserved for cards *inside* a frame.
+Values live in `scripts/styleTokens.js`. Frame containers (the outer
+bordered box) use a border only, no shadow — the shadow is reserved for
+cards *inside* a frame.
+
+## Borders
+
+| Token | Use |
+|---|---|
+| `border-card` | Card/box border (`1px solid var(--color-line)`) |
+| `border-frame` | Frame/chrome border (`1px solid var(--color-line-strong)`) |
+
+Values live in `scripts/styleTokens.js` (the single source of truth) — this
+table only documents what each one is *for*. Use `border: var(--border-card)`
+directly in new components rather than repeating the literal border
+declaration.
 
 ## Typography
 
-- UI font stack: `"Avenir Next", "Segoe UI", sans-serif`. This is the
-  preferred stack for any new component or page content.
-- Monospace stack (code, XPath expressions, error codes):
-  `ui-monospace, SFMono-Regular, Menlo, monospace`.
+- UI font stack: `--font-ui`. This is the preferred stack for any new
+  component or page content.
+- Monospace stack (code, XPath expressions, error codes): `--font-mono`.
+- Both are defined in `scripts/styleTokens.js` alongside the color/radius/
+  shadow tokens and already wired into `index.html` and the rules page —
+  use `font-family: var(--font-ui)` / `var(--font-mono)` in new components
+  rather than repeating the literal stack.
 - Base size/line-height: `1rem` / `1.5`.
 - Uppercase labels (`summary-label`, `meta-label`): `0.78rem`, `text-transform:
   uppercase`, `letter-spacing: 0.03em`, color `color-ink-soft`.
@@ -102,7 +132,7 @@ hidden`, containing:
 - a header bar (`linear-gradient(180deg, #f7f9fb 0%, #eef2f6 100%)`
   background, bottom border, flex row, `8px` padding) holding
   navigation/tabs and a right-aligned title, and
-- a panel (white background, `14px` padding) holding the actual content.
+- a panel (`color-surface`, `14px` padding) holding the actual content.
 
 Any new top-level page or full-height component should reuse this pattern
 rather than inventing a new outer chrome.
@@ -114,7 +144,7 @@ Used by `summary-item`, `rule-card`, and `issue-card`: a bordered
 Two variants exist:
 - **Summary box** (`radius-md`, light gradient background, label-over-value):
   for compact key/value facts (`summary-label` + `summary-value`).
-- **Content card** (`radius-xl`, white background, `shadow-card`): for larger
+- **Content card** (`radius-lg`, `color-surface`, `shadow-card`): for larger
   repeated entries (one rule, one validation issue).
 
 ### Button pattern
@@ -198,16 +228,22 @@ a component is found that doesn't match it, add an actionable item here
 
 ## How to use this spec
 
-There is no shared CSS-variables file yet — every component currently
-hardcodes these hex values independently, so this document is the
-enforcement mechanism for now. When writing or reviewing a new component:
+`scripts/styleTokens.js` defines the `--font-*`/`--color-*`/`--radius-*`/
+`--shadow-*` custom properties; this document is the catalog of what they
+mean, not a second copy of their values. When writing or reviewing a new
+component:
 
-1. Reuse the literal values from the tables above instead of approximating.
-2. If a new pattern doesn't fit "Frame", "Card", "Button", "Badge", or
+1. Use `var(--color-ink)` etc. directly, with no literal fallback — every
+   page that hosts a component already injects the `:root` token block, so
+   a fallback would just reintroduce the duplication this spec is meant to
+   avoid.
+2. If a value you need isn't a token yet but matches an existing one, add
+   `var(--token-name)`; if it's genuinely new, add it to
+   `scripts/styleTokens.js` first and document it in the relevant table
+   above.
+3. If a new pattern doesn't fit "Frame", "Card", "Button", "Badge", or
    "Hint", consider whether it should — and if it doesn't, add a new pattern
    section here so the next component can reuse it too.
-3. If you find yourself repeating the same set of values across a third
-   component, that's the signal to extract them into a shared module (e.g. a
-   `tokens.js` exporting a CSS string of `:root` custom properties, following
-   the precedent of `buttonBaseStyle.js`) — update this document to point at
-   that module once it exists, rather than leaving two sources of truth.
+4. Shared *class* fragments (not just variables), like `buttonBaseStyle.js`,
+   should stay as their own exported module once a pattern repeats across a
+   third component — update this document to point at that module.
