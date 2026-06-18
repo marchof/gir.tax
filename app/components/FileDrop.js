@@ -8,26 +8,27 @@ class FileDrop extends HTMLElement {
       <style>
         :host {
           display: block;
+          font-family: "Avenir Next", "Segoe UI", sans-serif;
         }
 
         .drop-zone {
-          border: 2px dashed #ccc;
+          border: 2px dashed #d9dee3;
           border-radius: 9px;
           padding: 40px;
           text-align: center;
-          color: #999;
+          color: #4f6075;
           transition: background-color 120ms ease, border-color 120ms ease, color 120ms ease;
         }
 
         .drop-zone:hover {
-          border-color: #aaa;
-          color: #666;
+          border-color: #0f7c6b;
+          color: #1c2b3f;
         }
 
         .drop-zone.is-over {
-          background-color: #f0f0f0;
-          border-color: #888;
-          color: #555;
+          background-color: #dff4ef;
+          border-color: #0f7c6b;
+          color: #1c2b3f;
         }
 
         .label {
@@ -35,9 +36,9 @@ class FileDrop extends HTMLElement {
         }
 
         .warning {
-            font-size: 0.8em;
+            font-size: 0.8rem;
             margin-top: 20px;
-            color: #bbb;
+            color: rgba(28, 43, 63, 0.55);
         }
 
         ::slotted(*) {

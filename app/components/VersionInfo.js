@@ -14,7 +14,7 @@ class VersionInfo extends HTMLElement {
         :host {
           display: block;
           margin-top: 10px;
-          font-size: 0.9em;
+          font-size: 0.8rem;
           color: #ccc;
         }
 

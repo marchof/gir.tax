@@ -9,11 +9,12 @@ class XMLOutline extends HTMLElement {
       <style>
         :host {
           display: block;
+          font-family: "Avenir Next", "Segoe UI", sans-serif;
         }
 
         div.xml-code {
           display: table;
-          font-family: monospace;
+          font-size: 0.85rem;
           border-radius: 5px;
           margin-left: 20px;
           margin-top: 4px;
@@ -25,27 +26,28 @@ class XMLOutline extends HTMLElement {
         }
 
         div.xml-code:has(div.xml-code) {
-          border-left: 1px solid #e0e0e0;
-          border-bottom: 1px solid #e0e0e0;
+          border-left: 1px solid #d9e1ea;
+          border-bottom: 1px solid #d9e1ea;
         }
 
         div.xml-code:has(div.xml-code):has(> span.validation-error) {
-          border-left: 1px solid #ffcccc;
-          border-bottom: 1px solid #ffcccc;
+          border-left: 1px solid #cc6666;
+          border-bottom: 1px solid #cc6666;
         }
 
         div.xml-code:not(:has(div.xml-code:hover)):hover {
-          background: #f8f8f8;
-          border-color: #d8d8d8;
+          background: #f7fafd;
+          border-color: #d9dee3;
         }
 
         div.xml-code:not(:has(div.xml-code:hover)):hover:has(> span.validation-error) {
-          border-color: #ffa0a0;
+          border-color: #ad2b10;
         }
 
         .xml-tag {
+          font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
           color: #aaa;
-          background: #e0e0e0;
+          background: #d9e1ea;
           padding: 2px 4px;
           border-radius: 4px;
           margin-right: 4px;
@@ -53,7 +55,7 @@ class XMLOutline extends HTMLElement {
         }
 
         .validation-error {
-          background: #ffcccc;
+          background: #ffaaaa;
           cursor: help;
         }
 
@@ -62,11 +64,11 @@ class XMLOutline extends HTMLElement {
         }
 
         div.xml-code:not(:has(div.xml-code:hover)):hover > .xml-tag {
-          background: #d8d8d8;
+          background: #d9dee3;
         }
 
         div.xml-code:not(:has(div.xml-code:hover)):hover > .validation-error {
-          background: #ffa0a0;
+          background: #cc6666;
         }
 
         .xml-tag-name {
@@ -97,14 +99,13 @@ class XMLOutline extends HTMLElement {
         }
 
         .xml-text {
+          font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
           color: #000;
         }
 
         .schema-documentation {
           color: #888;
-          font-family: sans-serif;
           font-style: italic;
-          font-size: 80%;
         }
 
         .validation-tooltip {
@@ -117,7 +118,6 @@ class XMLOutline extends HTMLElement {
           margin-top: 16px;
           box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
           z-index: 1000;
-          font-family: sans-serif;
           font-size: 13px;
           min-width: 250px;
           max-width: 400px;
@@ -152,7 +152,7 @@ class XMLOutline extends HTMLElement {
         }
 
         .validation-error-code {
-          font-family: monospace;
+          font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
           font-weight: 600;
           color: #c92a2a;
           font-size: 12px;

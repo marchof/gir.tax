@@ -84,7 +84,6 @@ class ValidationStatus extends HTMLElement {
         .validation-output {
           flex: 1;
           margin: 0;
-          font-size: 0.95em;
           line-height: 1.5;
         }
 
