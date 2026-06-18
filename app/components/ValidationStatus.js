@@ -71,14 +71,14 @@ class ValidationStatus extends HTMLElement {
 
         .validation-container {
           font-family: "Avenir Next", "Segoe UI", sans-serif;
-          padding: 1rem;
+          padding: 1rem 0;
           overflow-y: auto;
           display: flex;
           flex-direction: column;
           height: 100%;
           box-sizing: border-box;
           gap: 1rem;
-          background: radial-gradient(circle at top right, #eef6ff 0%, #f9fcff 40%, #f5f8fc 100%);
+          background: #ffffff;
         }
 
         .validation-output {
@@ -86,11 +86,6 @@ class ValidationStatus extends HTMLElement {
           margin: 0;
           font-size: 0.95em;
           line-height: 1.5;
-          border: 1px solid #d6e1ef;
-          padding: 1rem;
-          background: rgba(255, 255, 255, 0.9);
-          border-radius: 12px;
-          box-shadow: 0 8px 20px rgba(17, 37, 62, 0.06);
         }
 
         .summary-grid {
@@ -132,14 +127,14 @@ class ValidationStatus extends HTMLElement {
         .issue-cards {
           display: grid;
           grid-template-columns: 1fr;
-          gap: 0.6rem;
+          gap: 0.9rem;
         }
 
         .issue-card {
-          border: 1px solid #dce6f3;
-          border-radius: 10px;
-          padding: 0.7rem;
-          background: #fcfdff;
+          border: 1px solid #d9e1ea;
+          border-radius: 14px;
+          background: #ffffff;
+          padding: 0.95rem;
         }
 
         .issue-topline {

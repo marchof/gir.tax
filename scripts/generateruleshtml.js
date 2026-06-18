@@ -145,15 +145,12 @@ const generateRulesHtml = async () => {
   <title>Implemented GIR Rules</title>
   <style>
     :root {
-      --bg: #f2f5f8;
       --card-bg: #ffffff;
       --ink: #16253a;
       --ink-soft: #4f6075;
       --line: #d9e1ea;
-      --accent: #0f7c6b;
       --accent-soft: #dff4ef;
       --code-bg: #f6f9fc;
-      --shadow: 0 10px 30px rgba(17, 37, 62, 0.08);
     }
 
     * {
@@ -263,7 +260,6 @@ const generateRulesHtml = async () => {
       border-radius: 14px;
       background: var(--card-bg);
       padding: 0.95rem;
-      box-shadow: 0 5px 18px rgba(17, 37, 62, 0.05);
       display: flex;
       flex-direction: column;
       gap: 0.65rem;
