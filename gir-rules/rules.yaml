@@ -1565,11 +1565,9 @@ rules:
   - number: 70083
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:OverallComputation/globe:ExcessNegTaxExpense/globe:Remaining
-    references:
-      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/ExcessNegTaxExpense/PriorYearBalance
-      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/ExcessNegTaxExpense/GeneratedInRFY
-      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/ExcessNegTaxExpense/UtilizedInRFY
-    element: Remaining
+    test: >-
+      number(.) = number(../globe:PriorYearBalance) +
+      number(../globe:GeneratedInRFY) - number(../globe:UtilizedInRFY)
     rule: >-
       The Remaining value should equal the following calculation: Prior YearBalance +
       GeneratedInRFY - UtilizedInRFY

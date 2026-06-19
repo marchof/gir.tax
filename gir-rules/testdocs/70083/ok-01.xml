@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<globe:GLOBE_OECD xmlns:globe="urn:oecd:ties:globe:v2">
+  <globe:GLOBEBody>
+    <globe:JurisdictionSection>
+      <globe:GLoBETax>
+        <globe:ETR>
+          <globe:ETRStatus>
+            <globe:ETRComputation>
+              <globe:OverallComputation>
+                <globe:ExcessNegTaxExpense>
+                  <globe:PriorYearBalance>100</globe:PriorYearBalance>
+                  <globe:GeneratedInRFY>20</globe:GeneratedInRFY>
+                  <globe:UtilizedInRFY>30</globe:UtilizedInRFY>
+                  <globe:Remaining>90</globe:Remaining>
+                </globe:ExcessNegTaxExpense>
+              </globe:OverallComputation>
+            </globe:ETRComputation>
+          </globe:ETRStatus>
+        </globe:ETR>
+      </globe:GLoBETax>
+    </globe:JurisdictionSection>
+  </globe:GLOBEBody>
+</globe:GLOBE_OECD>
