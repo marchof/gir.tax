@@ -134,10 +134,16 @@ directory:
   rule's logic (e.g. rule `60012` has two `ok` and two `nok` cases covering
   `OECD0`/`OECD1`/`OECD2`/etc.).
 * Each fragment is a minimal but schema-shaped document: start from the
-  `<globe:GLOBE_OECD>` root with the three standard namespace declarations
-  (`globe`, `iso`, `stf`) and only include the ancestor/sibling elements
+  `<globe:GLOBE_OECD>` root and only include the ancestor/sibling elements
   actually needed to exercise the rule — don't pad fragments with unrelated
   content.
+* Keep the root element itself minimal too: declare only the namespace
+  prefixes (`globe`, `stf`, ...) that are actually used somewhere in that
+  specific fragment — don't carry over a fixed boilerplate header. In
+  particular, omit `xmlns:xsi` / `xsi:schemaLocation` (a schema reference
+  has no bearing on what a fragment is testing) and the `version` attribute
+  (optional in the schema, irrelevant to rule logic) unless a rule's
+  `test`/`targets` actually concerns one of them.
 * Despite being minimal, fragments must still validate as a structurally
   valid *subset* of the schema: only known element names/paths are allowed
   (enforced by `test_fragment_reference_doc_should_only_contain_known_paths`,
