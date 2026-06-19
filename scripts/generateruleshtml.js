@@ -382,6 +382,16 @@ const generateRulesHtml = async () => {
       text-decoration: underline;
     }
 
+    .footer-info {
+      margin-top: 10px;
+      font-size: 0.8rem;
+      color: #ccc;
+    }
+
+    .footer-info a {
+      color: inherit;
+    }
+
     @media (max-width: 700px) {
       .rule-card {
         padding: 0.8rem;
@@ -430,6 +440,12 @@ const generateRulesHtml = async () => {
           ${ruleCards}
         </section>
       </div>
+    </div>
+    <div class="footer-info">
+      <a href="https://github.com/marchof/gir.tax">github.com/marchof/gir.tax</a> @
+      <a href="https://github.com/marchof/gir.tax/commit/${commitId}">${escapeHtml(commitId)}</a> |
+      ${escapeHtml(commitTimestamp)} |
+      <a href="https://github.com/marchof/gir.tax#hosted-service-terms">Terms of Service</a>
     </div>
   </main>
 </body>
