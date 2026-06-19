@@ -1441,15 +1441,18 @@ rules:
   - number: 70071
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:OverallComputation/globe:AdjustedCoveredTax/globe:DeemedDistTax/globe:Election/globe:Recapture/globe:Year
-    references:
-      - GLOBEBody/FilingInfo/Period/End
-    element: Year
+    test: >-
+      number(substring(., 1, 4)) >=
+      number(substring(ancestor::globe:GLOBEBody/globe:FilingInfo/globe:Period/globe:End, 1, 4)) - 3
     rule: >-
       The year cannot contain a date which is 4 years or more before the Period End
       Date (i.e. Reporting Fiscal Year and previous 3 Fiscal Years)
     description: >-
       The year cannot contain a date which is 4 years or more before the Period End
       Date (i.e. Reporting Fiscal Year and previous 3 Fiscal Years)
+    implementation_notes: >-
+      Lower bound only (70070 covers the upper bound). "4 years or more before" maps
+      to year >= Period End year - 3. Same year-extraction idiom as 70070.
 
   - number: 70072
     targets:
