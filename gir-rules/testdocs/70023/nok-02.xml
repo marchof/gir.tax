@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Same year, but ChangeDate day after Period End -> violation (full-date, not just year). -->
+<globe:GLOBE_OECD xmlns:globe="urn:oecd:ties:globe:v2">
+  <globe:GLOBEBody>
+    <globe:FilingInfo>
+      <globe:Period>
+        <globe:Start>2024-01-01</globe:Start>
+        <globe:End>2024-06-30</globe:End>
+      </globe:Period>
+    </globe:FilingInfo>
+    <globe:GeneralSection>
+      <globe:CorporateStructure>
+        <globe:CE>
+          <globe:OwnershipChange>
+            <globe:ChangeDate>2024-07-01</globe:ChangeDate>
+          </globe:OwnershipChange>
+        </globe:CE>
+      </globe:CorporateStructure>
+    </globe:GeneralSection>
+  </globe:GLOBEBody>
+</globe:GLOBE_OECD>

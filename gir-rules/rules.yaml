@@ -705,28 +705,40 @@ rules:
   - number: 70022
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:GeneralSection/globe:CorporateStructure/globe:CE/globe:OwnershipChange/globe:ChangeDate
-    references:
-      - GLOBEBody/FilingInfo/Period/Start
-    element: ChangeDate
+    test: >-
+      number(translate(., '-', '')) >=
+      number(translate(ancestor::globe:GLOBEBody/globe:FilingInfo/globe:Period/globe:Start, '-', ''))
     rule: >-
       The ChangeDate must not be a date which takes place before the Period Start date
       as reported in the Filing Info
     description: >-
       An ownership change has a change date which takes place before the reporting
       fiscal year
+    implementation_notes: >-
+      ChangeDate must not precede the filing's Period Start. The Period Start is taken
+      from the FilingInfo of the same GLOBEBody (ancestor::globe:GLOBEBody) so that in
+      a multi-filing message each ChangeDate is checked against its own filing period.
+      Dates are normalised to YYYYMMDD integers via translate(.,'-','') as XPath 1.0
+      cannot compare date strings directly.
 
   - number: 70023
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:GeneralSection/globe:CorporateStructure/globe:CE/globe:OwnershipChange/globe:ChangeDate
-    references:
-      - GLOBEBody/FilingInfo/Period/End
-    element: ChangeDate
+    test: >-
+      number(translate(., '-', '')) <=
+      number(translate(ancestor::globe:GLOBEBody/globe:FilingInfo/globe:Period/globe:End, '-', ''))
     rule: >-
       The ChangeDate must not be a date which takes place after the Period End date as
       reported in the Filing Info
     description: >-
       An ownership change has a change date which takes place after the reporting
       fiscal year
+    implementation_notes: >-
+      Mirror of 70022 against Period End: ChangeDate must not follow the filing's
+      Period End, taken from the FilingInfo of the same GLOBEBody
+      (ancestor::globe:GLOBEBody) so each ChangeDate is checked against its own
+      filing period. Dates are normalised to YYYYMMDD integers via translate(.,'-','')
+      because XPath 1.0 cannot compare date strings directly.
 
   - number: 70024
     targets:
