@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Articles does not contain GIR2602 -> rule does not apply; any Year is fine. -->
+<globe:GLOBE_OECD xmlns:globe="urn:oecd:ties:globe:v2">
+  <globe:GLOBEBody>
+    <globe:FilingInfo>
+      <globe:Period>
+        <globe:Start>2024-01-01</globe:Start>
+        <globe:End>2024-12-31</globe:End>
+      </globe:Period>
+    </globe:FilingInfo>
+    <globe:JurisdictionSection>
+      <globe:GLoBETax>
+        <globe:ETR>
+          <globe:ETRStatus>
+            <globe:ETRComputation>
+              <globe:OverallComputation>
+                <globe:AdditionalTopUpTax>
+                  <globe:NONArt4.1.5>
+                    <globe:Articles>GIR2601</globe:Articles>
+                    <globe:Year>2024-01-01</globe:Year>
+                  </globe:NONArt4.1.5>
+                </globe:AdditionalTopUpTax>
+              </globe:OverallComputation>
+            </globe:ETRComputation>
+          </globe:ETRStatus>
+        </globe:ETR>
+      </globe:GLoBETax>
+    </globe:JurisdictionSection>
+  </globe:GLOBEBody>
+</globe:GLOBE_OECD>
