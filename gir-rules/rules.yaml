@@ -78,9 +78,9 @@ rules:
       The same DocRefID cannot be corrected or deleted twice in the same message,
       therefore each CorrDocRefID must be unique within the same message.
     implementation_notes: >-
-      Uniqueness within the message is checked per CorrDocRefId target by
-      comparing its value against every other CorrDocRefId via the preceding and
-      following axes.
+      Uses the preceding/following axes to compare each value against all the
+      others, because XPath 1.0 has no current() for a count()-based uniqueness
+      form.
 
   - number: 60007
     targets:
@@ -275,10 +275,8 @@ rules:
       The Reporting Period End Date must not be a date which is beyond the Reporting
       Period date in the MessageHeader
     implementation_notes: >-
-      The Period End (per GLOBEBody) is compared against the single message-level
-      MessageSpec/ReportingPeriod reached by absolute path. As in 60020, both
-      YYYY-MM-DD dates are normalised to YYYYMMDD integers via translate(.,'-','')
-      because XPath 1.0 cannot compare date strings directly.
+      Reaches the single message-level MessageSpec/ReportingPeriod by absolute
+      path. Date comparison uses the YYYYMMDD-integer idiom (see 60020).
 
   - number: 60022
     targets:
@@ -715,11 +713,9 @@ rules:
       An ownership change has a change date which takes place before the reporting
       fiscal year
     implementation_notes: >-
-      ChangeDate must not precede the filing's Period Start. The Period Start is taken
-      from the FilingInfo of the same GLOBEBody (ancestor::globe:GLOBEBody) so that in
-      a multi-filing message each ChangeDate is checked against its own filing period.
-      Dates are normalised to YYYYMMDD integers via translate(.,'-','') as XPath 1.0
-      cannot compare date strings directly.
+      Period Start is reached via ancestor::globe:GLOBEBody so that in a
+      multi-filing message each ChangeDate is checked against its own filing's
+      period. Date comparison uses the YYYYMMDD-integer idiom (see 60020).
 
   - number: 70023
     targets:
@@ -734,11 +730,8 @@ rules:
       An ownership change has a change date which takes place after the reporting
       fiscal year
     implementation_notes: >-
-      Mirror of 70022 against Period End: ChangeDate must not follow the filing's
-      Period End, taken from the FilingInfo of the same GLOBEBody
-      (ancestor::globe:GLOBEBody) so each ChangeDate is checked against its own
-      filing period. Dates are normalised to YYYYMMDD integers via translate(.,'-','')
-      because XPath 1.0 cannot compare date strings directly.
+      Mirror of 70022 against Period End (same ancestor::globe:GLOBEBody scoping
+      and YYYYMMDD-integer date idiom).
 
   - number: 70024
     targets:
@@ -1379,15 +1372,22 @@ rules:
 
   - number: 70066
     targets:
-      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:FilingInfo/globe:Period/globe:Start
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:OverallComputation/globe:AdjustedCoveredTax/globe:PostFilingAdjust/globe:DeferTaxAsset/globe:AmountAttributed/globe:Year
-    element: Year
+    test: >-
+      number(substring(., 1, 4)) <=
+      number(substring(ancestor::globe:GLOBEBody/globe:FilingInfo/globe:Period/globe:Start, 1, 4))
     rule: >-
       The Year should correspond to or be before the YYYY value reported in the Period
       Start Date
     description: >-
       The provided year for the Loss Carry Back must be a prior Fiscal Year and must
       be the same as or prior to the Reporting Fiscal Year.
+    implementation_notes: >-
+      Compared by year only: both operands are xsd:date, so the 4-digit year is
+      extracted with substring(.,1,4) and compared numerically. Period Start is
+      reached via ancestor::globe:GLOBEBody (per-filing). The spec's second cited
+      path (Period/Start) is a reference, not a target, so it was dropped from
+      targets.
 
   - number: 70067
     targets:
@@ -1401,15 +1401,17 @@ rules:
   - number: 70068
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:OverallComputation/globe:AdjustedCoveredTax/globe:PostFilingAdjust/globe:CoveredTaxRefund/globe:AmountAttributed/globe:Year
-    references:
-      - GLOBEBody/FilingInfo/Period/Start
-    element: Year
+    test: >-
+      number(substring(., 1, 4)) <=
+      number(substring(ancestor::globe:GLOBEBody/globe:FilingInfo/globe:Period/globe:Start, 1, 4))
     rule: >-
       The Year should correspond to or be before the YYYY value reported in the Period
       Start Date
     description: >-
       The provided year for the Loss Carry Back must be a prior Fiscal Year and must
       be the same as or prior to the Reporting Fiscal Year.
+    implementation_notes: >-
+      Same year-extraction idiom as 70066, against the Period Start year.
 
   - number: 70069
     targets:
@@ -1423,14 +1425,18 @@ rules:
   - number: 70070
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:OverallComputation/globe:AdjustedCoveredTax/globe:DeemedDistTax/globe:Election/globe:Recapture/globe:Year
-    references:
-      - GLOBEBody/FilingInfo/Period/End
-    element: Year
+    test: >-
+      number(substring(., 1, 4)) <=
+      number(substring(ancestor::globe:GLOBEBody/globe:FilingInfo/globe:Period/globe:End, 1, 4))
     rule: >-
       The year cannot be a date which is after the Period End Date
     description: >-
       The deemed distribution tax election under article 7.3.1 has been elected for a
       year which is not the Reporting Fiscal Year or a prior Fiscal Year
+    implementation_notes: >-
+      Assumes a year-only comparison, reading the Recapture Year as a fiscal year:
+      substring(.,1,4) against the Period End year, scoped via
+      ancestor::globe:GLOBEBody.
 
   - number: 70071
     targets:
@@ -1748,13 +1754,15 @@ rules:
   - number: 70093
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:OverallComputation/globe:AdditionalTopUpTax/globe:NONArt4.1.5/globe:Year
-    references:
-      - GLOBEBody/FilingInfo/Period/End
-    element: Year
+    test: >-
+      number(substring(., 1, 4)) <=
+      number(substring(ancestor::globe:GLOBEBody/globe:FilingInfo/globe:Period/globe:End, 1, 4))
     rule: >-
       The Year must not be greater than the YYYY value reported in the Period End Date
     description: >-
       The Year must not be greater than the YYYY value reported in the Period End Date
+    implementation_notes: >-
+      Same year-extraction idiom as 70070, against the Period End year.
 
   - number: 70094
     targets:

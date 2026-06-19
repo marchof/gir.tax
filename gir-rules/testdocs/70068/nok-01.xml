@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- CoveredTaxRefund AmountAttributed Year after the Period Start year -> violation. -->
+<globe:GLOBE_OECD xmlns:globe="urn:oecd:ties:globe:v2">
+  <globe:GLOBEBody>
+    <globe:FilingInfo>
+      <globe:Period>
+        <globe:Start>2024-01-01</globe:Start>
+        <globe:End>2024-12-31</globe:End>
+      </globe:Period>
+    </globe:FilingInfo>
+    <globe:JurisdictionSection>
+      <globe:GLoBETax>
+        <globe:ETR>
+          <globe:ETRStatus>
+            <globe:ETRComputation>
+              <globe:OverallComputation>
+                <globe:AdjustedCoveredTax>
+                  <globe:PostFilingAdjust>
+                    <globe:CoveredTaxRefund>
+                      <globe:AmountAttributed>
+                        <globe:Year>2025-06-30</globe:Year>
+                      </globe:AmountAttributed>
+                    </globe:CoveredTaxRefund>
+                  </globe:PostFilingAdjust>
+                </globe:AdjustedCoveredTax>
+              </globe:OverallComputation>
+            </globe:ETRComputation>
+          </globe:ETRStatus>
+        </globe:ETR>
+      </globe:GLoBETax>
+    </globe:JurisdictionSection>
+  </globe:GLOBEBody>
+</globe:GLOBE_OECD>

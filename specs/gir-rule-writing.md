@@ -31,7 +31,7 @@ is a YAML mapping with the following fields:
 | `rule` | yes | The rule text, copied verbatim/paraphrased as closely as possible from the OECD specification. Never edited to match implementation details. |
 | `description` | yes | The explanatory/error message text shown to a filer when the rule fails, again copied as-is from the OECD wording. |
 | `references` | no | Dotted, schema-relative paths (not XPath) to other elements the rule's logic depends on, extracted from the spec before a `test` existed. Removed once `test` is implemented — see below. |
-| `implementation_notes` | no | Free text explaining any deviation between the literal spec wording and how the `test` XPath actually implements it (e.g. combining multiple conditions into one target). |
+| `implementation_notes` | no | Notes about the *implementation only* — never a restatement of the rule. See [implementation_notes](#implementation_notes) for what does and does not belong here. |
 | `target_does_not_exist_in_test_files` | no | List of test file names (see below) where none of the `targets` are expected to match. Used to suppress the "no elements matched" assertion for negative tests that test absence rather than a target's content. |
 
 Namespaces used in XPath expressions are declared once at the top of the
@@ -106,6 +106,30 @@ planned to be implemented this way.
   documents but isn't yet wired up as enforced logic, leave `test` absent
   rather than writing a placeholder — absence is the signal that the rule is
   not yet automatically enforced.
+
+## `implementation_notes`
+
+`implementation_notes` documents the *implementation*, not the rule. The rule
+and its intent already live in `rule`/`description`; do not paraphrase or
+restate them here. Most rules need no `implementation_notes` at all — a
+straightforward `test` that maps directly onto the spec wording should have
+none. Add the field only when something about the encoding isn't obvious from
+reading the `test`, namely:
+
+* **Targets changed for technical reasons** — when `targets` had to be moved to
+  a common ancestor, narrowed, or otherwise diverge from the path the spec
+  cites, so the `test` has a usable context node (see rule `70027`; or a
+  spec-cited reference path that was dropped from `targets` because it is a
+  reference, not a thing the rule is checked against).
+* **A non-obvious encoding** — when the XPath uses a trick that isn't
+  self-evident, e.g. normalising `YYYY-MM-DD` dates to integers because
+  XPath 1.0 has no date comparison, or a `translate()`-based character check.
+  Note the technique, not the rule it enforces.
+* **Assumptions about an unclear rule** — when the spec wording is ambiguous and
+  the `test` commits to one reading (e.g. interpreting a date field as a
+  year-only comparison), record the assumption that was made.
+
+If a note would just re-describe what the rule requires, leave it out.
 
 ## Test documents
 

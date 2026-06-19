@@ -9,7 +9,7 @@
     <globe:Contact>globe:Contact</globe:Contact>
     <globe:MessageRefId>MessageRefId</globe:MessageRefId>
     <globe:MessageTypeIndic>GIR101</globe:MessageTypeIndic>
-    <globe:ReportingPeriod>2001-01-01</globe:ReportingPeriod>
+    <globe:ReportingPeriod>2026-12-31</globe:ReportingPeriod>
     <globe:Timestamp>2001-12-31T12:00:00</globe:Timestamp>
   </globe:MessageSpec>
   <globe:GLOBEBody>
@@ -26,8 +26,8 @@
         <globe:Currency>AED</globe:Currency>
       </globe:AccountingInfo>
       <globe:Period>
-        <globe:Start>2001-01-01</globe:Start>
-        <globe:End>2001-01-01</globe:End>
+        <globe:Start>2026-01-01</globe:Start>
+        <globe:End>2026-12-31</globe:End>
       </globe:Period>
       <globe:NameMNE>NameMNE</globe:NameMNE>
       <globe:DocSpec>
@@ -58,7 +58,7 @@
         		<globe:GlobeStatus>GIR301</globe:GlobeStatus>
         	</globe:ID>
           <globe:OwnershipChange>
-            <globe:ChangeDate>2001-01-01</globe:ChangeDate>
+            <globe:ChangeDate>2026-06-15</globe:ChangeDate>
             <globe:PreGlobeStatus>GIR701</globe:PreGlobeStatus>
             <globe:PreOwnership>
               <globe:OwnershipType>GIR801</globe:OwnershipType>
