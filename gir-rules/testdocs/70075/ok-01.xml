@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Recapture Year differs from Period End year -> DDTYear-0..3 are unconstrained. -->
+<globe:GLOBE_OECD xmlns:globe="urn:oecd:ties:globe:v2">
+  <globe:GLOBEBody>
+    <globe:FilingInfo>
+      <globe:Period>
+        <globe:Start>2024-01-01</globe:Start>
+        <globe:End>2024-12-31</globe:End>
+      </globe:Period>
+    </globe:FilingInfo>
+    <globe:JurisdictionSection>
+      <globe:GLoBETax>
+        <globe:ETR>
+          <globe:ETRStatus>
+            <globe:ETRComputation>
+              <globe:OverallComputation>
+                <globe:AdjustedCoveredTax>
+                  <globe:DeemedDistTax>
+                    <globe:Election>
+                      <globe:Recapture>
+                        <globe:Year>2023-01-01</globe:Year>
+                        <globe:DDTYear-0>10</globe:DDTYear-0>
+                        <globe:DDTYear-1>20</globe:DDTYear-1>
+                        <globe:DDTYear-2>30</globe:DDTYear-2>
+                        <globe:DDTYear-3>40</globe:DDTYear-3>
+                      </globe:Recapture>
+                    </globe:Election>
+                  </globe:DeemedDistTax>
+                </globe:AdjustedCoveredTax>
+              </globe:OverallComputation>
+            </globe:ETRComputation>
+          </globe:ETRStatus>
+        </globe:ETR>
+      </globe:GLoBETax>
+    </globe:JurisdictionSection>
+  </globe:GLOBEBody>
+</globe:GLOBE_OECD>

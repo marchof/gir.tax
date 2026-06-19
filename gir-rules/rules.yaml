@@ -1496,10 +1496,10 @@ rules:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:OverallComputation/globe:AdjustedCoveredTax/globe:DeemedDistTax/globe:Election/globe:Recapture/globe:DDTYear-1
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:OverallComputation/globe:AdjustedCoveredTax/globe:DeemedDistTax/globe:Election/globe:Recapture/globe:DDTYear-2
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:OverallComputation/globe:AdjustedCoveredTax/globe:DeemedDistTax/globe:Election/globe:Recapture/globe:DDTYear-3
-    references:
-      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeemedDistTax/Election/Recapture/Year
-      - GLOBEBody/FilingInfo/Period/End
-    element: Year
+    test: >-
+      not(number(substring(../globe:Year, 1, 4)) =
+      number(substring(ancestor::globe:GLOBEBody/globe:FilingInfo/globe:Period/globe:End, 1, 4)))
+      or number(.) = 0
     rule: >-
       When the Year equals YYYY value reported in the Period End Date, then the
       following elements should be completed by entering "0": DDTYear-0, DDTYear-1,
@@ -1508,6 +1508,10 @@ rules:
       When the Year equals YYYY value reported in the Period End Date, then the
       following elements should be completed by entering "0": DDTYear-0, DDTYear-1,
       DDTYear-2 and DDTYear-3
+    implementation_notes: >-
+      The four DDTYear-N are separate targets so each is checked independently; the
+      trigger compares the sibling Recapture/Year against Period End by year (idiom
+      per 70070).
 
   - number: 70076
     targets:
