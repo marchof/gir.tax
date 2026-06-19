@@ -308,6 +308,10 @@
                     <globe:BefRecastAdjust>0</globe:BefRecastAdjust>
                     <globe:TotalAdjust>0</globe:TotalAdjust>
                     <globe:PreRecast>0</globe:PreRecast>
+                    <globe:Recast>
+                      <globe:Higher>0</globe:Higher>
+                      <globe:Lower>0</globe:Lower>
+                    </globe:Recast>
                     <globe:Adjustments>
                       <globe:Amount>0</globe:Amount>
                       <globe:AdjustmentItem>GIR2501</globe:AdjustmentItem>

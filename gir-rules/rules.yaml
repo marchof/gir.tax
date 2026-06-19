@@ -1481,7 +1481,9 @@ rules:
   - number: 70077
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:OverallComputation/globe:AdjustedCoveredTax/globe:DeferTaxAdjustAmt/globe:Total
-    element: Total
+    test: >-
+      number(.) = number(../globe:PreRecast) +
+      sum(../globe:Recast/globe:Lower) - sum(../globe:Recast/globe:Higher)
     rule: >-
       The total element should be equal to the following calculation: PreRecast +
       Recast/Lower - Recast/Higher If Recast/Lower and/or Recast/Higher is not
