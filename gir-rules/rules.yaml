@@ -121,7 +121,10 @@ rules:
   - number: 60010
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:FilingInfo/globe:DocSpec/stf:DocTypeIndic
-    element: DocTypeIndic
+    test: >-
+      not(. = 'OECD3') or
+      count(ancestor::globe:GLOBEBody/*[self::globe:GeneralSection or self::globe:Summary
+      or self::globe:JurisdictionSection or self::globe:UTPRAttribution]/globe:DocSpec/stf:DocTypeIndic[. != 'OECD3']) = 0
     rule: >-
       The FilingInfo cannot be deleted without deleting all related General Section,
       Summary, JurisdictionSection and UTPRAttribution records

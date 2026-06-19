@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Two filings in one message: a deletion GLOBEBody and a correction GLOBEBody.
+     The deleted FilingInfo must only be judged against its OWN GLOBEBody's
+     records, not the correction GLOBEBody's non-deletion records. -->
+<globe:GLOBE_OECD xmlns:globe="urn:oecd:ties:globe:v2" xmlns:stf="urn:oecd:ties:globestf:v5">
+  <globe:GLOBEBody>
+    <globe:FilingInfo>
+      <globe:DocSpec>
+        <stf:DocTypeIndic>OECD3</stf:DocTypeIndic>
+      </globe:DocSpec>
+    </globe:FilingInfo>
+    <globe:GeneralSection>
+      <globe:DocSpec>
+        <stf:DocTypeIndic>OECD3</stf:DocTypeIndic>
+      </globe:DocSpec>
+    </globe:GeneralSection>
+  </globe:GLOBEBody>
+  <globe:GLOBEBody>
+    <globe:FilingInfo>
+      <globe:DocSpec>
+        <stf:DocTypeIndic>OECD2</stf:DocTypeIndic>
+      </globe:DocSpec>
+    </globe:FilingInfo>
+    <globe:GeneralSection>
+      <globe:DocSpec>
+        <stf:DocTypeIndic>OECD2</stf:DocTypeIndic>
+      </globe:DocSpec>
+    </globe:GeneralSection>
+  </globe:GLOBEBody>
+</globe:GLOBE_OECD>
