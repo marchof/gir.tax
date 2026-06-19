@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Period End is beyond the MessageHeader ReportingPeriod -> violation. -->
+<globe:GLOBE_OECD xmlns:globe="urn:oecd:ties:globe:v2">
+  <globe:MessageSpec>
+    <globe:ReportingPeriod>2024-12-31</globe:ReportingPeriod>
+  </globe:MessageSpec>
+  <globe:GLOBEBody>
+    <globe:FilingInfo>
+      <globe:Period>
+        <globe:End>2025-01-01</globe:End>
+      </globe:Period>
+    </globe:FilingInfo>
+  </globe:GLOBEBody>
+</globe:GLOBE_OECD>

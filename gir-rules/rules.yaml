@@ -251,26 +251,34 @@ rules:
   - number: 60020
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:FilingInfo/globe:Period/globe:Start
-    references:
-      - GLOBEBody/FilingInfo/Period/End
-    element: Start
+    test: >-
+      number(translate(., '-', '')) <= number(translate(../globe:End, '-', ''))
     rule: >-
       Period start date must not be later than the Period end date
     description: >-
       Period start date must be earlier than or same as Period end date.
+    implementation_notes: >-
+      XPath 1.0 has no date type and its comparison operators coerce to number, so
+      the YYYY-MM-DD dates are normalised to YYYYMMDD integers via translate(.,'-','')
+      before comparing; numeric order of YYYYMMDD matches chronological order.
 
   - number: 60021
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:FilingInfo/globe:Period/globe:End
-    references:
-      - MessageSpec/ReportingPeriod
-    element: End
+    test: >-
+      number(translate(., '-', '')) <=
+      number(translate(/globe:GLOBE_OECD/globe:MessageSpec/globe:ReportingPeriod, '-', ''))
     rule: >-
       Reporting Period End Date must not be later than the Reporting Period in the
       Message Header.
     description: >-
       The Reporting Period End Date must not be a date which is beyond the Reporting
       Period date in the MessageHeader
+    implementation_notes: >-
+      The Period End (per GLOBEBody) is compared against the single message-level
+      MessageSpec/ReportingPeriod reached by absolute path. As in 60020, both
+      YYYY-MM-DD dates are normalised to YYYYMMDD integers via translate(.,'-','')
+      because XPath 1.0 cannot compare date strings directly.
 
   - number: 60022
     targets:

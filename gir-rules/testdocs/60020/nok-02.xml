@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Same year, but Start month/day after End -> violation (exercises full-date, not just year). -->
+<globe:GLOBE_OECD xmlns:globe="urn:oecd:ties:globe:v2">
+  <globe:GLOBEBody>
+    <globe:FilingInfo>
+      <globe:Period>
+        <globe:Start>2024-08-01</globe:Start>
+        <globe:End>2024-07-31</globe:End>
+      </globe:Period>
+    </globe:FilingInfo>
+  </globe:GLOBEBody>
+</globe:GLOBE_OECD>

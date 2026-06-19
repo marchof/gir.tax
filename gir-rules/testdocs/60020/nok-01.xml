@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Start later than End -> violation. -->
+<globe:GLOBE_OECD xmlns:globe="urn:oecd:ties:globe:v2">
+  <globe:GLOBEBody>
+    <globe:FilingInfo>
+      <globe:Period>
+        <globe:Start>2024-12-31</globe:Start>
+        <globe:End>2024-01-01</globe:End>
+      </globe:Period>
+    </globe:FilingInfo>
+  </globe:GLOBEBody>
+</globe:GLOBE_OECD>
