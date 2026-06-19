@@ -373,6 +373,15 @@ const generateRulesHtml = async () => {
       color: #66778e;
     }
 
+    .summary-value a {
+      color: #25538a;
+      text-decoration: none;
+    }
+
+    .summary-value a:hover {
+      text-decoration: underline;
+    }
+
     @media (max-width: 700px) {
       .rule-card {
         padding: 0.8rem;
@@ -401,6 +410,20 @@ const generateRulesHtml = async () => {
           <div class="summary-item">
             <div class="summary-label">Commit ID</div>
             <div class="summary-value">${escapeHtml(commitId)}</div>
+          </div>
+          <div class="summary-item">
+            <div class="summary-label">Rules Source</div>
+            <div class="summary-value">
+              <a href="https://doi.org/10.1787/449e3cc3-en" target="_blank" rel="noreferrer">OECD (2025),
+              GloBE Information Return (Pillar Two) Status Message XML Schema: User Guide for Tax Administrations</a>
+            </div>
+          </div>
+          <div class="summary-item">
+            <div class="summary-label">Source Copyright</div>
+            <div class="summary-value">
+              &copy; OECD. Published under the
+              <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noreferrer">Creative Commons Attribution 4.0 International licence</a>.
+            </div>
           </div>
         </section>
         <section class="rules-grid">
