@@ -70,12 +70,17 @@ rules:
   - number: 60006
     targets:
       - //stf:CorrDocRefId
-    element: CorrDocRefld
+    test: >-
+      not(. = preceding::stf:CorrDocRefId or . = following::stf:CorrDocRefId)
     rule: >-
       The same DocReflD cannot be corrected or deleted twice in the same message.
     description: >-
       The same DocRefID cannot be corrected or deleted twice in the same message,
       therefore each CorrDocRefID must be unique within the same message.
+    implementation_notes: >-
+      Uniqueness within the message is checked per CorrDocRefId target by
+      comparing its value against every other CorrDocRefId via the preceding and
+      following axes.
 
   - number: 60007
     targets:

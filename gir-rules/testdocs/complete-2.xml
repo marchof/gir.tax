@@ -30,8 +30,8 @@
       <globe:NameMNE>NameMNE</globe:NameMNE>
       <globe:DocSpec>
         <stf:DocTypeIndic>OECD2</stf:DocTypeIndic>
-        <stf:DocRefId>DocRefId</stf:DocRefId>
-        <stf:CorrDocRefId>CorrDocRefId</stf:CorrDocRefId>
+        <stf:DocRefId>DocRefId-FilingInfo</stf:DocRefId>
+        <stf:CorrDocRefId>CorrDocRefId-FilingInfo</stf:CorrDocRefId>
       </globe:DocSpec>
     </globe:FilingInfo>
     <globe:GeneralSection>
@@ -76,8 +76,8 @@
       </globe:CorporateStructure>
       <globe:DocSpec>
         <stf:DocTypeIndic>OECD2</stf:DocTypeIndic>
-        <stf:DocRefId>DocRefId</stf:DocRefId>
-        <stf:CorrDocRefId>CorrDocRefId</stf:CorrDocRefId>
+        <stf:DocRefId>DocRefId-GeneralSection</stf:DocRefId>
+        <stf:CorrDocRefId>CorrDocRefId-GeneralSection</stf:CorrDocRefId>
       </globe:DocSpec>
     </globe:GeneralSection>
     <globe:JurisdictionSection>
@@ -163,8 +163,8 @@
       </globe:GLoBETax>
       <globe:DocSpec>
         <stf:DocTypeIndic>OECD2</stf:DocTypeIndic>
-        <stf:DocRefId>DocRefId</stf:DocRefId>
-        <stf:CorrDocRefId>CorrDocRefId</stf:CorrDocRefId>
+        <stf:DocRefId>DocRefId-JurisdictionSection</stf:DocRefId>
+        <stf:CorrDocRefId>CorrDocRefId-JurisdictionSection</stf:CorrDocRefId>
       </globe:DocSpec>
     </globe:JurisdictionSection>
   </globe:GLOBEBody>
