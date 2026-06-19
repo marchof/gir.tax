@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<globe:GLOBE_OECD xmlns:globe="urn:oecd:ties:globe:v2" xmlns:stf="urn:oecd:ties:globestf:v5">
+  <globe:GLOBEBody>
+    <globe:FilingInfo>
+      <globe:DocSpec>
+        <stf:DocTypeIndic>OECD1</stf:DocTypeIndic>
+      </globe:DocSpec>
+    </globe:FilingInfo>
+    <globe:GeneralSection>
+      <globe:DocSpec>
+        <stf:DocTypeIndic>OECD2</stf:DocTypeIndic>
+      </globe:DocSpec>
+    </globe:GeneralSection>
+  </globe:GLOBEBody>
+</globe:GLOBE_OECD>

@@ -40,7 +40,10 @@ rules:
 
   - number: 60004
     targets:
-      - //stf:DocTypeIndic
+      - /globe:GLOBE_OECD
+    test: >-
+      not((//stf:DocTypeIndic='OECD1') and (//stf:DocTypeIndic='OECD2' or
+      //stf:DocTypeIndic='OECD3'))
     rule: >-
       A message can contain either new records (OECD1) or corrections (OECD2 or
       OECD3), but should not contain a mixture of both.
@@ -48,6 +51,10 @@ rules:
       This message contains a mix of new records (OECD1) and corrections
       (OECD2/OECD3). Please ensure the DocTypeIndic elements contain either new
       records (OECD1) or corrections (OECD2 or OECD3), but not a mixture of both.
+    implementation_notes: >-
+      The rule is a whole-message property, not a per-element one, so the test is
+      a document-wide condition, therefore the target has been adjusted to the root
+      element of the message.
 
   - number: 60005
     targets:

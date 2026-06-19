@@ -85,9 +85,8 @@
         </globe:CE>
       </globe:CorporateStructure>
       <globe:DocSpec>
-        <stf:DocTypeIndic>OECD2</stf:DocTypeIndic>
+        <stf:DocTypeIndic>OECD1</stf:DocTypeIndic>
         <stf:DocRefId>DocRefId</stf:DocRefId>
-        <stf:CorrDocRefId>CorrDocRefId</stf:CorrDocRefId>
       </globe:DocSpec>
     </globe:GeneralSection>
     <globe:Summary>
@@ -110,9 +109,8 @@
       <globe:QDMTTut>GIR1401</globe:QDMTTut>
       <globe:GLoBETut>GIR1501</globe:GLoBETut>
       <globe:DocSpec>
-        <stf:DocTypeIndic>OECD2</stf:DocTypeIndic>
+        <stf:DocTypeIndic>OECD1</stf:DocTypeIndic>
         <stf:DocRefId>DocRefId</stf:DocRefId>
-        <stf:CorrDocRefId>CorrDocRefId</stf:CorrDocRefId>
       </globe:DocSpec>
     </globe:Summary>
     <globe:JurisdictionSection>
@@ -473,9 +471,8 @@
         </globe:UTPR>
       </globe:LowTaxJurisdiction>
       <globe:DocSpec>
-        <stf:DocTypeIndic>OECD2</stf:DocTypeIndic>
+        <stf:DocTypeIndic>OECD1</stf:DocTypeIndic>
         <stf:DocRefId>DocRefId</stf:DocRefId>
-        <stf:CorrDocRefId>CorrDocRefId</stf:CorrDocRefId>
       </globe:DocSpec>
     </globe:JurisdictionSection>
     <globe:UTPRAttribution>
