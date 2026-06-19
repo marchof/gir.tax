@@ -81,6 +81,9 @@ const renderRuleCard = (rule, testFiles, commitId) => {
   const shortRule = escapeHtml(rule.rule || "No rule text");
   const description = escapeHtml(rule.description || "No description");
   const test = escapeHtml(rule.test || "");
+  const implementationNotes = rule.implementation_notes
+    ? `<p class="impl-notes">${escapeHtml(rule.implementation_notes)}</p>`
+    : "";
 
   return `
     <article class="rule-card" id="rule-${number}">
@@ -94,6 +97,7 @@ const renderRuleCard = (rule, testFiles, commitId) => {
         ${renderRuleTargets(rule.targets)}
         <h3>Implementation XPath test</h3>
         <pre><code>${test}</code></pre>
+        ${implementationNotes}
       </section>
       <section>
         <h3>Tests</h3>
@@ -334,6 +338,13 @@ const generateRulesHtml = async () => {
       padding-left: 1.1rem;
       display: grid;
       gap: 0.25rem;
+    }
+
+    .impl-notes {
+      margin: 0.4rem 0 0;
+      font-size: 0.8rem;
+      color: var(--color-ink-soft);
+      overflow-wrap: anywhere;
     }
 
     .tests-links {
