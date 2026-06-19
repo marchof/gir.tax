@@ -1774,16 +1774,20 @@ rules:
   - number: 70094
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:OverallComputation/globe:AdditionalTopUpTax/globe:NONArt4.1.5/globe:Year
-    references:
-      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdditionalTopUpTax/NONArt4.1.5/Articles
-      - GLOBEBody/FilingInfo/Period/End
-    element: Year
+    test: >-
+      not(../globe:Articles = 'GIR2605') or
+      number(substring(., 1, 4)) <=
+      number(substring(ancestor::globe:GLOBEBody/globe:FilingInfo/globe:Period/globe:End, 1, 4)) - 4
     rule: >-
       When the Articles contain the value of GIR2605, then the Year should be at least
       '4 years' before the YYYY value reported in the Period End Date.
     description: >-
       When the Articles contain the value of GIR2605, then the Year should be at least
       '4 years' before the YYYY value reported in the Period End Date
+    implementation_notes: >-
+      Gated on the sibling Articles (repeatable, so = matches if any equals GIR2605).
+      "At least 4 years before" maps to year <= Period End year - 4. Year-extraction
+      idiom per 70070.
 
   - number: 70095
     targets:
