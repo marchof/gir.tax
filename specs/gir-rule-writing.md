@@ -153,10 +153,10 @@ directory:
 ### Conventions for rule-specific fragment files
 
 * File naming: `ok-NN.xml` for a positive case (rule must pass) and
-  `nok-NN.xml` for a negative case (rule must fail), numbered from `01`.
-  Provide enough of both to cover the meaningfully distinct branches of the
-  rule's logic (e.g. rule `60012` has two `ok` and two `nok` cases covering
-  `OECD0`/`OECD1`/`OECD2`/etc.).
+  `nok-NN.xml` for a negative case (rule must fail), numbered from `01`. One
+  `ok` plus one `nok` is rarely sufficient — work through
+  [Covering every branch](#covering-every-branch) below and add a fixture for
+  every branch that applies.
 * Each fragment is a minimal but schema-shaped document: start from the
   `<globe:GLOBE_OECD>` root and only include the ancestor/sibling elements
   actually needed to exercise the rule — don't pad fragments with unrelated
@@ -180,6 +180,47 @@ directory:
   target node exists, list that filename under the rule's
   `target_does_not_exist_in_test_files` instead of silently relying on the
   "no elements matched" check to fail the test.
+
+### Covering every branch
+
+A passing `test` against one `ok` and one `nok` only proves the rule fires in
+two of its states; the branches in between have repeatedly turned out to be
+broken or untested (a missing enumerated value, an unmatched "at least one"
+candidate). Treat the list below as a checklist and add a fixture for each
+item that the rule's `test` actually contains — the goal is that *every*
+operand and branch of the XPath changes the outcome of at least one fixture:
+
+* **Every value of an enumerated trigger.** When the condition keys off a set
+  of values (e.g. `Role` ∈ {GIR403, GIR404, GIR405}, `DocTypeIndic` ∈ {OECD2,
+  OECD3}), exercise *each* listed value, on both sides where it can pass and
+  fail — rule `60019` needs a `nok` for GIR403, GIR404 **and** GIR405, not one
+  standing in for the rest. A single representative value silently leaves the
+  others unverified.
+* **The "not triggered" branch.** For an implication `not(condition) or
+  consequence`, add an `ok` where the condition is *false* so the rule passes
+  vacuously — and give it consequence-data that is deliberately "wrong" so the
+  fixture would start failing if the gate were ever dropped (see rule `60022`'s
+  non-GIR401 `ok` whose TIN matches nothing).
+* **"At least one of N" / existence.** Provide an `ok` where several candidates
+  exist and the matching one is *neither the only one nor first in document
+  order* (rule `60022`'s OtherUPE-matches-while-ExcludedUPE-doesn't `ok`), plus
+  a `nok` where none match. Matching only ever the first candidate hides
+  node-set comparison bugs.
+* **Both edges of a comparison.** For `<=`, `>=`, `= X - k`, or a window, put a
+  fixture exactly *on* the boundary on the passing side (equal date, `End - 4`,
+  …) and one just past it on the failing side. A two-sided window (rule
+  `70071`) needs both the too-low and the too-high edge.
+* **Guarded / absent branches.** If the `test` guards a missing element (e.g.
+  `not(//globe:RecJurCode) or …`), add an `ok` with that element absent so the
+  guard branch is actually executed, not just assumed.
+
+One framework constraint shapes the `nok` fixtures: the runner asserts the
+`test` fails for **every** target node matched in a `nok-` file. When a rule
+has several same-kind target nodes (e.g. the four `DDTYear-N` of rule `70075`,
+or repeated `RecJurCode`), a `nok` must make *all* matched nodes fail — so
+isolate the branch under test by including only the single offending node in
+that file, and use one `nok` per node when each must be shown to fail on its
+own.
 
 ## Test execution
 
