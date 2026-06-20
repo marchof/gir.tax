@@ -249,7 +249,9 @@ rules:
   - number: 60019
     targets:
       - //globe:RecJurCode
-    element: RecJurCode
+    test: >-
+      not(ancestor::globe:GLOBEBody/globe:FilingInfo/globe:FilingCE/globe:Role[. = 'GIR403' or . = 'GIR404' or . = 'GIR405'])
+      or . = ancestor::globe:GLOBEBody/globe:FilingInfo/globe:FilingCE/globe:ResCountryCode
     rule: >-
       Where the Role of the Filing CE is GIR403, GIR404, GIR405, then the GIR is only
       a local lodgement and must not be exchanged.
@@ -257,6 +259,12 @@ rules:
       The RecJurCode should be (name of the local jurisdiction) as the FilingCE role
       provide suggests that the GIR is only a local lodgment and must not be
       exchanged.
+    implementation_notes: >-
+      "Local jurisdiction" is read as the FilingCE ResCountryCode (the filer's
+      residence, tied to the Transmitting Country by 60023). When the same GLOBEBody's
+      FilingCE Role is a local-lodgement role (GIR403/404/405), every RecJurCode in
+      that GLOBEBody must equal that ResCountryCode; the FilingCE is reached via
+      ancestor::globe:GLOBEBody so each filing is checked against its own role/residence.
 
   - number: 60020
     targets:

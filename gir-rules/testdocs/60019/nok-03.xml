@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Local-lodgement role (GIR405) but RecJurCode is a foreign jurisdiction -> violation. -->
+<globe:GLOBE_OECD xmlns:globe="urn:oecd:ties:globe:v2">
+  <globe:GLOBEBody>
+    <globe:FilingInfo>
+      <globe:FilingCE>
+        <globe:ResCountryCode>AF</globe:ResCountryCode>
+        <globe:Role>GIR405</globe:Role>
+      </globe:FilingCE>
+    </globe:FilingInfo>
+    <globe:GeneralSection>
+      <globe:RecJurCode>DE</globe:RecJurCode>
+    </globe:GeneralSection>
+  </globe:GLOBEBody>
+</globe:GLOBE_OECD>

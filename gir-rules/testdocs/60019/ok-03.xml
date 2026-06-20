@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Local-lodgement role (GIR405) with several RecJurCode, all equal to the local
+     jurisdiction -> allowed. -->
+<globe:GLOBE_OECD xmlns:globe="urn:oecd:ties:globe:v2">
+  <globe:GLOBEBody>
+    <globe:FilingInfo>
+      <globe:FilingCE>
+        <globe:ResCountryCode>AF</globe:ResCountryCode>
+        <globe:Role>GIR405</globe:Role>
+      </globe:FilingCE>
+    </globe:FilingInfo>
+    <globe:GeneralSection>
+      <globe:RecJurCode>AF</globe:RecJurCode>
+    </globe:GeneralSection>
+    <globe:Summary>
+      <globe:RecJurCode>AF</globe:RecJurCode>
+    </globe:Summary>
+  </globe:GLOBEBody>
+</globe:GLOBE_OECD>

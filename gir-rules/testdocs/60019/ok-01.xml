@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Local-lodgement role (GIR403) and RecJurCode equals the FilingCE ResCountryCode -> allowed. -->
+<globe:GLOBE_OECD xmlns:globe="urn:oecd:ties:globe:v2">
+  <globe:GLOBEBody>
+    <globe:FilingInfo>
+      <globe:FilingCE>
+        <globe:ResCountryCode>AF</globe:ResCountryCode>
+        <globe:Role>GIR403</globe:Role>
+      </globe:FilingCE>
+    </globe:FilingInfo>
+    <globe:GeneralSection>
+      <globe:RecJurCode>AF</globe:RecJurCode>
+    </globe:GeneralSection>
+  </globe:GLOBEBody>
+</globe:GLOBE_OECD>

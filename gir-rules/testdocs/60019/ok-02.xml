@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Role is not a local-lodgement role (GIR401), so the GIR may be exchanged: a
+     RecJurCode different from the FilingCE ResCountryCode is fine. -->
+<globe:GLOBE_OECD xmlns:globe="urn:oecd:ties:globe:v2">
+  <globe:GLOBEBody>
+    <globe:FilingInfo>
+      <globe:FilingCE>
+        <globe:ResCountryCode>AF</globe:ResCountryCode>
+        <globe:Role>GIR401</globe:Role>
+      </globe:FilingCE>
+    </globe:FilingInfo>
+    <globe:GeneralSection>
+      <globe:RecJurCode>DE</globe:RecJurCode>
+    </globe:GeneralSection>
+  </globe:GLOBEBody>
+</globe:GLOBE_OECD>
