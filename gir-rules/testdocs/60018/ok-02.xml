@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Several RecJurCode across sections; at least one (in the Summary) matches the
+     ReceivingCountry -> allowed. -->
+<globe:GLOBE_OECD xmlns:globe="urn:oecd:ties:globe:v2">
+  <globe:MessageSpec>
+    <globe:ReceivingCountry>AF</globe:ReceivingCountry>
+  </globe:MessageSpec>
+  <globe:GLOBEBody>
+    <globe:GeneralSection>
+      <globe:RecJurCode>DE</globe:RecJurCode>
+      <globe:RecJurCode>FR</globe:RecJurCode>
+    </globe:GeneralSection>
+    <globe:Summary>
+      <globe:RecJurCode>AF</globe:RecJurCode>
+    </globe:Summary>
+  </globe:GLOBEBody>
+</globe:GLOBE_OECD>

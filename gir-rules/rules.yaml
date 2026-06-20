@@ -227,14 +227,24 @@ rules:
 
   - number: 60018
     targets:
-      - //globe:RecJurCode
-    element: RecJurCode
+      - /globe:GLOBE_OECD
+    test: >-
+      not(//globe:RecJurCode) or
+      //globe:RecJurCode = /globe:GLOBE_OECD/globe:MessageSpec/globe:ReceivingCountry
     rule: >-
       At least one Country ISO Code in RecJurCode must be the same as the
       ReceivingCountry.
     description: >-
       At least one Country ISO Code in RecJurCode must be the same as the
       ReceivingCountry.
+    implementation_notes: >-
+      Whole-message existence check (one of the many RecJurCode must match the single
+      ReceivingCountry), so the target is the message root rather than each RecJurCode.
+      The node-set = node comparison is true when any RecJurCode value equals
+      ReceivingCountry. Guarded with not(//globe:RecJurCode) because every
+      RecJurCode-bearing section is optional in the schema, so a FilingInfo-only
+      message (e.g. a resend or deletion) is valid and carries no RecJurCode for this
+      routing rule to apply to.
 
   - number: 60019
     targets:

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- A single RecJurCode equal to the ReceivingCountry -> allowed. -->
+<globe:GLOBE_OECD xmlns:globe="urn:oecd:ties:globe:v2">
+  <globe:MessageSpec>
+    <globe:ReceivingCountry>AF</globe:ReceivingCountry>
+  </globe:MessageSpec>
+  <globe:GLOBEBody>
+    <globe:GeneralSection>
+      <globe:RecJurCode>AF</globe:RecJurCode>
+    </globe:GeneralSection>
+  </globe:GLOBEBody>
+</globe:GLOBE_OECD>

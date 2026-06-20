@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- FilingInfo-only message (schema-valid: every RecJurCode-bearing section is optional).
+     No RecJurCode exists, so this routing rule does not apply -> vacuously allowed. -->
+<globe:GLOBE_OECD xmlns:globe="urn:oecd:ties:globe:v2" xmlns:stf="urn:oecd:ties:globestf:v5">
+  <globe:MessageSpec>
+    <globe:ReceivingCountry>AF</globe:ReceivingCountry>
+  </globe:MessageSpec>
+  <globe:GLOBEBody>
+    <globe:FilingInfo>
+      <globe:DocSpec>
+        <stf:DocTypeIndic>OECD0</stf:DocTypeIndic>
+      </globe:DocSpec>
+    </globe:FilingInfo>
+  </globe:GLOBEBody>
+</globe:GLOBE_OECD>

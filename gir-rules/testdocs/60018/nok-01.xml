@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- None of the RecJurCode values match the ReceivingCountry -> violation. -->
+<globe:GLOBE_OECD xmlns:globe="urn:oecd:ties:globe:v2">
+  <globe:MessageSpec>
+    <globe:ReceivingCountry>AF</globe:ReceivingCountry>
+  </globe:MessageSpec>
+  <globe:GLOBEBody>
+    <globe:GeneralSection>
+      <globe:RecJurCode>DE</globe:RecJurCode>
+    </globe:GeneralSection>
+    <globe:Summary>
+      <globe:RecJurCode>FR</globe:RecJurCode>
+    </globe:Summary>
+  </globe:GLOBEBody>
+</globe:GLOBE_OECD>
