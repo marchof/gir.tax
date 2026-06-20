@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Recapture Year equals Period End year, but DDTYear-0 is non-zero -> violation.
-     Only DDTYear-0 is present so it is the single target checked in this file. -->
+<!-- Recapture Year equals Period End year, only DDTYear-0 is non-zero -> violation.
+     One nok per DDTYear-N (violation isolated to that element) so the fixture set
+     confirms every DDTYear-N is covered by the rule, not just one of them. -->
 <globe:GLOBE_OECD xmlns:globe="urn:oecd:ties:globe:v2">
   <globe:GLOBEBody>
     <globe:FilingInfo>
@@ -20,7 +21,10 @@
                     <globe:Election>
                       <globe:Recapture>
                         <globe:Year>2024-06-30</globe:Year>
-                        <globe:DDTYear-0>1</globe:DDTYear-0>
+                        <globe:DDTYear-0>5</globe:DDTYear-0>
+                        <globe:DDTYear-1>0</globe:DDTYear-1>
+                        <globe:DDTYear-2>0</globe:DDTYear-2>
+                        <globe:DDTYear-3>0</globe:DDTYear-3>
                       </globe:Recapture>
                     </globe:Election>
                   </globe:DeemedDistTax>

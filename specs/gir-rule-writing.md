@@ -214,20 +214,31 @@ operand and branch of the XPath changes the outcome of at least one fixture:
   `not(//globe:RecJurCode) or …`), add an `ok` with that element absent so the
   guard branch is actually executed, not just assumed.
 
-One framework constraint shapes the `nok` fixtures: the runner asserts the
-`test` fails for **every** target node matched in a `nok-` file. When a rule
-has several same-kind target nodes (e.g. the four `DDTYear-N` of rule `70075`,
-or repeated `RecJurCode`), a `nok` must make *all* matched nodes fail — so
-isolate the branch under test by including only the single offending node in
-that file, and use one `nok` per node when each must be shown to fail on its
-own.
+The runner treats the two fixture kinds asymmetrically, matching what
+valid/invalid documents actually mean: a positive (`ok-`) file must satisfy the
+`test` for *every* matched target node, while a negative (`nok-`) file only needs
+*at least one* matched target to fail
+(`test_positive_rules_on_dedicated_test_files` vs.
+`test_negative_rules_on_dedicated_test_files`).
+
+Treat `targets` and `test` as *implementation details* of the rule: the fixture
+set is the rule's behavioural spec, and should be complete enough to catch a
+wrong **or incomplete** implementation — including a `targets` list that misses
+an element the rule is supposed to cover. So when a rule applies the same
+condition to several same-kind elements (e.g. the four `DDTYear-N` of rule
+`70075`, or each of the listed `DocTypeIndic` paths), give **each element its
+own `nok`** with the violation isolated to that one element. If that element
+were dropped from `targets`, no matched target would fail and its `nok` would
+break — which is exactly the signal we want. A single shared `nok` would leave
+the missing-target case undetected, so don't collapse them, even though the
+`test` expression is identical for each.
 
 ## Test execution
 
 [gir-rules/test.py](../gir-rules/test.py) is the single source of truth for
 how rules are executed; it is a `unittest` suite run via
 `parameterized.expand` so every rule/target/file combination shows up as its
-own test case. Three test classes:
+own test case. The suite's checks:
 
 * `TestReferenceDocuments` — schema-validates the `complete-*.xml` and
   example docs, and checks every fragment file only contains paths known
@@ -238,11 +249,17 @@ own test case. Three test classes:
   `test`, evaluates it against every matching node in the complete +
   example documents and asserts it passes (these are all meant to be valid
   filings).
-* `TestRules.test_rules_on_dedicated_test_files` — for rules with both
-  `test` and `targets`, runs every `testdocs/<number>/*.xml` file: `ok-*`
-  files must pass, `nok-*` files must fail, and (unless the file is listed
-  under `target_does_not_exist_in_test_files`) at least one target match
-  must be found in the file.
+* `TestRules.test_positive_rules_on_dedicated_test_files` — for rules with
+  both `test` and `targets`, runs every `testdocs/<number>/ok-*.xml` file and
+  asserts the `test` holds for **every** matched target node (a valid document
+  must satisfy the rule everywhere). Unless the file is listed under
+  `target_does_not_exist_in_test_files`, at least one target match must be
+  found in the file.
+* `TestRules.test_negative_rules_on_dedicated_test_files` — likewise runs every
+  `testdocs/<number>/nok-*.xml` file but asserts the `test` fails for **at least
+  one** matched target node (an invalid document need only violate the rule
+  somewhere, not at every target). At least one target match must be found in
+  the file.
 
 Run the suite from the repo root with the project's virtualenv (see
 [gir-rules/setup_venv.sh](../gir-rules/setup_venv.sh) /
