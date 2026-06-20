@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Summary has SafeHarbour but no JurWithTaxingRights/JurisdictionName -> violation.
+     One nok per trigger element so each is confirmed to require JurisdictionName. -->
+<globe:GLOBE_OECD xmlns:globe="urn:oecd:ties:globe:v2">
+  <globe:GLOBEBody>
+    <globe:Summary>
+      <globe:RecJurCode>AF</globe:RecJurCode>
+      <globe:SafeHarbour>GIR1201</globe:SafeHarbour>
+    </globe:Summary>
+  </globe:GLOBEBody>
+</globe:GLOBE_OECD>

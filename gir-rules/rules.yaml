@@ -328,14 +328,10 @@ rules:
 
   - number: 60024
     targets:
-      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:Summary/globe:JurWithTaxingRights
-    references:
-      - GLOBEBody/Summary/SafeHarbour
-      - GLOBEBody/Summary/ETRRange
-      - GLOBEBody/Summary/SBIE
-      - GLOBEBody/Summary/QDMTTut
-      - GLOBEBody/Summary/GLoBETut
-    element: JurWithTaxingRights
+      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:Summary
+    test: >-
+      not(globe:SafeHarbour or globe:ETRRange or globe:SBIE or globe:QDMTTut or globe:GLoBETut)
+      or globe:JurWithTaxingRights/globe:JurisdictionName
     rule: >-
       If the Summary contains any of the following elements: SafeHarbour, ETRRange,
       SBIE, QDMTTut, GLoBETut, then the JurWithTaxingRights/JurisdictionName must be
@@ -344,6 +340,10 @@ rules:
       If the Summary contains any of the following elements: SafeHarbour, ETRRange,
       SBIE, QDMTTut, GLoBETut, then the JurWithTaxingRights/JurisdictionName must be
       provided.
+    implementation_notes: >-
+      Targets the Summary element, not Summary/JurWithTaxingRights, so the violation
+      where JurWithTaxingRights/JurisdictionName is entirely absent is still detected
+      (a target on the absent element would simply not match and pass vacuously).
 
   - number: 60025
     targets:

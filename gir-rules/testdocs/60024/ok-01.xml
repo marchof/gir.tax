@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Summary contains a trigger element (SafeHarbour) and JurWithTaxingRights/JurisdictionName
+     is provided -> allowed. -->
+<globe:GLOBE_OECD xmlns:globe="urn:oecd:ties:globe:v2">
+  <globe:GLOBEBody>
+    <globe:Summary>
+      <globe:RecJurCode>AF</globe:RecJurCode>
+      <globe:JurWithTaxingRights>
+        <globe:JurisdictionName>AF</globe:JurisdictionName>
+      </globe:JurWithTaxingRights>
+      <globe:SafeHarbour>GIR1201</globe:SafeHarbour>
+    </globe:Summary>
+  </globe:GLOBEBody>
+</globe:GLOBE_OECD>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Summary has SBIE but no JurWithTaxingRights/JurisdictionName -> violation. -->
+<globe:GLOBE_OECD xmlns:globe="urn:oecd:ties:globe:v2">
+  <globe:GLOBEBody>
+    <globe:Summary>
+      <globe:RecJurCode>AF</globe:RecJurCode>
+      <globe:SBIE>
+        <globe:NotApplicable>false</globe:NotApplicable>
+        <globe:NoTut>false</globe:NoTut>
+      </globe:SBIE>
+    </globe:Summary>
+  </globe:GLOBEBody>
+</globe:GLOBE_OECD>

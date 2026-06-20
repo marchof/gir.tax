@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Summary contains none of the trigger elements -> JurWithTaxingRights/JurisdictionName
+     is not required, so its absence is fine. -->
+<globe:GLOBE_OECD xmlns:globe="urn:oecd:ties:globe:v2">
+  <globe:GLOBEBody>
+    <globe:Summary>
+      <globe:RecJurCode>AF</globe:RecJurCode>
+    </globe:Summary>
+  </globe:GLOBEBody>
+</globe:GLOBE_OECD>
