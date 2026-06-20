@@ -319,9 +319,8 @@ rules:
   - number: 60023
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:FilingInfo/globe:FilingCE/globe:ResCountryCode
-    references:
-      - MessageSpec/TransmittingCountry
-    element: ResCountryCode
+    test: >-
+      . = /globe:GLOBE_OECD/globe:MessageSpec/globe:TransmittingCountry
     rule: >-
       The ResCountryCode of the FilingCE must match to the Transmitting Country
     description: >-
