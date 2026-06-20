@@ -299,11 +299,10 @@ rules:
   - number: 60022
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:FilingInfo/globe:FilingCE/globe:TIN
-    references:
-      - GLOBEBody/FilingInfo/FilingCE/Role
-      - GLOBEBody/GeneralSection/CorporateStructure/UPE/ExcludedUPE/ID/TIN
-      - GLOBEBody/GeneralSection/CorporateStructure/UPE/OtherUPE/ID/TIN
-    element: Role
+    test: >-
+      not(../globe:Role = 'GIR401')
+      or . = ancestor::globe:GLOBEBody/globe:GeneralSection/globe:CorporateStructure/globe:UPE/globe:ExcludedUPE/globe:ID/globe:TIN
+      or . = ancestor::globe:GLOBEBody/globe:GeneralSection/globe:CorporateStructure/globe:UPE/globe:OtherUPE/globe:ID/globe:TIN
     rule: >-
       When the role is GIR401, the FilingCE TIN should match at least one of the TINs
       provided in the ID of the UPE element, whether it is OtherUPE or ExcludedUPE
@@ -311,6 +310,11 @@ rules:
       When the UPE is lodging the GIR, then the contents of the FilingCE must match at
       least one of the TINs provided in the UPE element (either the OtherUPE or
       ExcludedUPE)
+    implementation_notes: >-
+      Matched by TIN value: . = node-set is true when the FilingCE TIN equals any
+      ExcludedUPE or OtherUPE ID/TIN. The UPE TINs are reached via
+      ancestor::globe:GLOBEBody so the FilingCE is matched against its own filing's
+      corporate structure.
 
   - number: 60023
     targets:
