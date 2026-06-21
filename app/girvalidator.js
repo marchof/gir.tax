@@ -1,28 +1,50 @@
 import { GIRNAMESPACES, GIRRULES } from "./girrules.js";
+import { RuleEvaluator } from "./ruleeval.js";
 
-function evaluateNodes(xmlDocument, contextNode, expression, namespaceResolver) {
-  const result = xmlDocument.evaluate(
-    expression,
-    contextNode,
-    namespaceResolver,
-    XPathResult.ORDERED_NODE_SNAPSHOT_TYPE,
-    null,
+// The five-method xpath adapter ruleeval.js expects, implemented over the DOM's
+// document.evaluate and bound to one document + namespace resolver. Browsers'
+// XPath is XPath 1.0 spec-compliant (e.g. number() of an empty value is NaN),
+// which is the contract scripts/xpathconformance.js pins.
+function makeBrowserXPathAdapter(xmlDocument, namespaceResolver) {
+  const evaluate = (expr, ctx, resultType) => xmlDocument.evaluate(
+    String(expr), ctx, namespaceResolver, resultType, null,
   );
-  const nodes = [];
-  for (let i = 0; i < result.snapshotLength; i += 1) {
-    nodes.push(result.snapshotItem(i));
-  }
-  return nodes;
-}
 
-function evaluateBoolean(xmlDocument, contextNode, expression, namespaceResolver) {
-  return xmlDocument.evaluate(
-    expression,
-    contextNode,
-    namespaceResolver,
-    XPathResult.BOOLEAN_TYPE,
-    null,
-  ).booleanValue;
+  return {
+    nodes(expr, ctx) {
+      const snapshot = evaluate(expr, ctx, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE);
+      const result = [];
+      for (let i = 0; i < snapshot.snapshotLength; i += 1) {
+        result.push(snapshot.snapshotItem(i));
+      }
+      return result;
+    },
+    number(expr, ctx) {
+      return evaluate(`number(${expr})`, ctx, XPathResult.NUMBER_TYPE).numberValue;
+    },
+    boolean(expr, ctx) {
+      return evaluate(expr, ctx, XPathResult.BOOLEAN_TYPE).booleanValue;
+    },
+    string(expr, ctx) {
+      return evaluate(expr, ctx, XPathResult.STRING_TYPE).stringValue;
+    },
+    values(expr, ctx) {
+      // A node-set yields each node's string value in document order; any other
+      // result (string literal, number) yields its single XPath string value.
+      const any = evaluate(expr, ctx, XPathResult.ANY_TYPE);
+      const isNodeSet = any.resultType === XPathResult.UNORDERED_NODE_ITERATOR_TYPE
+        || any.resultType === XPathResult.ORDERED_NODE_ITERATOR_TYPE;
+      if (!isNodeSet) {
+        return [evaluate(`string(${expr})`, ctx, XPathResult.STRING_TYPE).stringValue];
+      }
+      const snapshot = evaluate(expr, ctx, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE);
+      const result = [];
+      for (let i = 0; i < snapshot.snapshotLength; i += 1) {
+        result.push(snapshot.snapshotItem(i).textContent);
+      }
+      return result;
+    },
+  };
 }
 
 function extractNearestDocRefId(xmlDocument, contextNode) {
@@ -90,25 +112,25 @@ export function validateGirRules(xmlDocument, statusMessage) {
   }
 
   const namespaceResolver = prefix => GIRNAMESPACES[prefix];
+  const xpath = makeBrowserXPathAdapter(xmlDocument, namespaceResolver);
+  const evaluator = new RuleEvaluator(xpath, GIRNAMESPACES);
 
   for (const rule of GIRRULES) {
-    const ruleCode = rule.number;
-    const ruleMessage = rule.description;
-    const targets = rule.targets;
-
-    for (const target of targets) {
-      const targetNodes = evaluateNodes(xmlDocument, xmlDocument, target, namespaceResolver);
+    for (const target of rule.targets) {
+      const targetNodes = xpath.nodes(target, xmlDocument);
 
       for (const targetNode of targetNodes) {
-        if (evaluateBoolean(xmlDocument, targetNode, rule.test, namespaceResolver)) {
+        const result = evaluator.evaluate(rule, targetNode);
+        if (result.ok) {
           continue;
         }
 
         const docRefId = extractNearestDocRefId(xmlDocument, targetNode);
         const matchedPath = nodeXPath(targetNode) || target;
         statusMessage.addRecordValidationError({
-          code: ruleCode,
-          details: ruleMessage,
+          code: rule.number,
+          message: result.message,
+          description: rule.description,
           docRefIds: docRefId ? [docRefId] : [],
           fieldPaths: [matchedPath],
         }, targetNode);

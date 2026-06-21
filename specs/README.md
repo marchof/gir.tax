@@ -9,8 +9,11 @@ code consistently without re-deriving conventions from scratch each time.
 
 - [ui-styleguide.md](ui-styleguide.md) — design tokens and component patterns
   for the web app's custom elements and the generated rules page.
-- [gir-rule-writing.md](gir-rule-writing.md) — how GIR validation rules are
-  defined in `rules.yaml` and tested against fixture documents.
+- [gir-rule-authoring.md](gir-rule-authoring.md) — conventions for writing GIR
+  validation rules in `rules.yaml` and building the test fixtures that pin their
+  behaviour. The rule format itself (operator vocabulary, operands, error
+  messages) is documented in
+  [gir-rules/README.md](../gir-rules/README.md).
 
 More specs will be added over time (e.g. integration test principles).
 

@@ -1,0 +1,1 @@
+Expected EndAmount to be at least 0 but was -1

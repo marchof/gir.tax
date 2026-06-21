@@ -1,0 +1,1 @@
+Expected TangibleAssetValue to be present, but it is missing

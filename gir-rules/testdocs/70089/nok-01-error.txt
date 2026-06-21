@@ -1,0 +1,1 @@
+Expected AdjustedCoveredTax to be less than 0 but was 0

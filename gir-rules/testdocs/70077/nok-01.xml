@@ -9,7 +9,7 @@
               <globe:OverallComputation>
                 <globe:AdjustedCoveredTax>
                   <globe:DeferTaxAdjustAmt>
-                    <globe:Total>111</globe:Total>
+                    <globe:Total>120</globe:Total>
                     <globe:PreRecast>100</globe:PreRecast>
                     <globe:Recast>
                       <globe:Higher>20</globe:Higher>

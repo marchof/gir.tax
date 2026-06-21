@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Within the 1% calculation margin: expected 115, reported 116 (0.87%). -->
+<globe:GLOBE_OECD xmlns:globe="urn:oecd:ties:globe:v2">
+  <globe:GLOBEBody>
+    <globe:JurisdictionSection>
+      <globe:GLoBETax>
+        <globe:ETR>
+          <globe:Election>
+            <globe:Art3.2.1.c>
+              <globe:QualOwnerIntentBalance>100</globe:QualOwnerIntentBalance>
+              <globe:Additions>20</globe:Additions>
+              <globe:Reductions>5</globe:Reductions>
+              <globe:OutstandingBalance>116</globe:OutstandingBalance>
+            </globe:Art3.2.1.c>
+          </globe:Election>
+        </globe:ETR>
+      </globe:GLoBETax>
+    </globe:JurisdictionSection>
+  </globe:GLOBEBody>
+</globe:GLOBE_OECD>

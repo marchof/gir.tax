@@ -5,6 +5,8 @@ from parameterized import parameterized
 from lxml import etree
 import yaml
 
+from rule_eval import ASSERTION_OPS, RuleEvaluator, rule_is_active
+
 REPO_ROOT_DIR = Path(__file__).resolve().parents[1]
 EXAMPLES_DIR = REPO_ROOT_DIR / "examples"
 TESTDOCS_DIR = REPO_ROOT_DIR / "gir-rules" / "testdocs"
@@ -18,6 +20,9 @@ COMPLETE_DOCS = [etree.parse(str(f)) for f in TESTDOCS_DIR.glob("complete-*.xml"
 EXAMPLES_DOCS = [etree.parse(str(f)) for f in EXAMPLES_DIR.glob("globe-positive-*.xml")]
 
 NAMESPACES = RULES['xmlnamespaces']
+
+EVALUATOR = RuleEvaluator(NAMESPACES)
+
 
 class TestReferenceDocuments(unittest.TestCase):
 
@@ -54,6 +59,20 @@ class TestReferenceDocuments(unittest.TestCase):
         return result
 
 
+class TestRuleSyntax(unittest.TestCase):
+
+    @parameterized.expand([(rule["number"], rule) for rule in RULES["rules"]])
+    def test_rule_has_at_most_one_operator(self, number, rule):
+        # The evaluator picks the first operator in ASSERTION_OPS order and
+        # silently ignores any others, so a rule with two operator keys would
+        # have one of its checks dropped. Catch that at build time here.
+        operators = [op for op in ASSERTION_OPS if op in rule]
+        self.assertLessEqual(
+            len(operators), 1,
+            f"Rule {number} has multiple assertion operators: {operators}",
+        )
+
+
 class TestRules(unittest.TestCase):
 
     @parameterized.expand([ (rule["number"], target) for rule in RULES["rules"] for target in rule["targets"] ])
@@ -63,15 +82,15 @@ class TestRules(unittest.TestCase):
                 return
         self.fail(f"Rule {number} target xpath did not match any nodes in the complete xmls: {target}")
 
-    @parameterized.expand([ (rule["number"], rule.get("test"), rule["targets"]) for rule in RULES["rules"] ])
-    def test_rules_on_complete_docs_and_examples(self, number, test, targets):
-        if not test:
+    @parameterized.expand([ (rule["number"], rule) for rule in RULES["rules"] ])
+    def test_rules_on_complete_docs_and_examples(self, number, rule):
+        if not rule_is_active(rule):
             self.skipTest(f"Rule {number} has no test defined")
-        for target in targets:
+        for target in rule["targets"]:
             for doc in COMPLETE_DOCS + EXAMPLES_DOCS:
                 for element in doc.xpath(target, namespaces=NAMESPACES):
                     self.assertTrue(
-                        element.xpath(test, namespaces=NAMESPACES),
+                        EVALUATOR.evaluate(rule, element),
                         f"Rule {number} test failed for target {target} in file {doc.getroot().base}",
                     )
 
@@ -82,50 +101,66 @@ class TestRules(unittest.TestCase):
             self.fail(f"Failed to parse {xml_file.name}: {e}")
 
     @parameterized.expand([
-        (rule["number"], rule.get("test"), rule["targets"], xml_file.name in rule.get("target_does_not_exist_in_test_files", []), xml_file)
+        (rule["number"], rule, xml_file.name in rule.get("target_does_not_exist_in_test_files", []), xml_file)
         for rule in RULES["rules"]
-        if rule.get("test") and rule.get("targets")
+        if rule_is_active(rule) and rule.get("targets")
         for xml_file in sorted((TESTDOCS_DIR / str(rule["number"])).glob("ok-*.xml"))
     ])
-    def test_positive_rules_on_dedicated_test_files(self, number, test, targets, skipHitCheck, xml_file):
+    def test_positive_rules_on_dedicated_test_files(self, number, rule, skipHitCheck, xml_file):
         # A positive (ok-*) document is valid, so the rule must hold for *every*
         # matched target node.
         doc = self._parse_test_doc(xml_file)
 
         found_elements = skipHitCheck
-        for target in targets:
+        for target in rule["targets"]:
             for element in doc.xpath(target, namespaces=NAMESPACES):
                 found_elements = True
                 self.assertTrue(
-                    bool(element.xpath(test, namespaces=NAMESPACES)),
+                    EVALUATOR.evaluate(rule, element),
                     f"Rule {number} failed for target {target} in positive test {xml_file.name}",
                 )
 
         self.assertTrue(found_elements, f"No elements matched in {xml_file.name}")
 
     @parameterized.expand([
-        (rule["number"], rule.get("test"), rule["targets"], xml_file.name in rule.get("target_does_not_exist_in_test_files", []), xml_file)
+        (rule["number"], rule, xml_file.name in rule.get("target_does_not_exist_in_test_files", []), xml_file)
         for rule in RULES["rules"]
-        if rule.get("test") and rule.get("targets")
+        if rule_is_active(rule) and rule.get("targets")
         for xml_file in sorted((TESTDOCS_DIR / str(rule["number"])).glob("nok-*.xml"))
     ])
-    def test_negative_rules_on_dedicated_test_files(self, number, test, targets, skipHitCheck, xml_file):
+    def test_negative_rules_on_dedicated_test_files(self, number, rule, skipHitCheck, xml_file):
         # A negative (nok-*) document is invalid, so the rule must fail for at
-        # least one matched target node (not necessarily all of them).
+        # least one matched target node (not necessarily all of them). The exact
+        # failure message(s) are pinned by a mandatory sibling nok-NN-error.txt
+        # (one line per failing target, in document order) so wording changes
+        # are deliberate and a fixture can't silently stop being checked.
         doc = self._parse_test_doc(xml_file)
 
         found_elements = skipHitCheck
-        all_passed = True
-        for target in targets:
+        messages = []
+        for target in rule["targets"]:
             for element in doc.xpath(target, namespaces=NAMESPACES):
                 found_elements = True
-                if not bool(element.xpath(test, namespaces=NAMESPACES)):
-                    all_passed = False
+                result = EVALUATOR.evaluate(rule, element)
+                if not result.ok:
+                    messages.append(result.message)
 
         self.assertTrue(found_elements, f"No elements matched in {xml_file.name}")
-        self.assertFalse(
-            all_passed,
+        self.assertTrue(
+            messages,
             f"Rule {number} unexpectedly passed for all targets in negative test {xml_file.name}",
+        )
+
+        error_file = xml_file.with_name(f"{xml_file.stem}-error.txt")
+        self.assertTrue(
+            error_file.exists(),
+            f"Missing expected-error sidecar {error_file.name} for negative test {xml_file.name}",
+        )
+        actual = "\n".join(messages)
+        expected = error_file.read_text(encoding="utf-8").strip()
+        self.assertEqual(
+            actual, expected,
+            f"Rule {number} error message mismatch for {xml_file.name}",
         )
 
 if __name__ == "__main__":

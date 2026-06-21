@@ -32,6 +32,8 @@ jobs:
       run: npm run lint
     - name: Build
       run: npm run build
+    - name: Run JavaScript Tests
+      run: npm run test
     - name: Upload Distribution
       uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f #v7.0.0
       with:

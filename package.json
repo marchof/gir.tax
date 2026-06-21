@@ -7,17 +7,20 @@
     "build": "node scripts/build.js",
     "build:watch": "node scripts/build.js --watch",
     "dev": "node scripts/build.js --watch --serve",
+    "test": "node scripts/generaterulesjs.js && node --test scripts/testrulesjs.js",
     "lint": "eslint --max-warnings=0 .",
     "lint:fix": "eslint . --fix",
     "license-check": "license-checker-evergreen"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
+    "@xmldom/xmldom": "^0.9.10",
     "esbuild": "^0.23.1",
     "esbuild-plugin-copy": "^2.1.1",
     "eslint": "^10.4.1",
     "globals": "^17.6.0",
     "license-checker-evergreen": "^6.3.1",
+    "xpath": "^0.0.34",
     "yaml": "^2.9.0"
   },
   "dependencies": {

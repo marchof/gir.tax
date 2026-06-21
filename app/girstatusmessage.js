@@ -46,8 +46,11 @@ function appendErrorNode(parent, error, nodeName) {
   const errorNode = appendElement(parent, nodeName);
   appendElement(errorNode, "Code", error.code);
 
-  if (error.details) {
-    const detailsNode = appendElement(errorNode, "Details", error.details);
+  // The schema carries a single Details element, so the specific rule message
+  // and the general rule description are joined here — specific first.
+  const detailsText = [error.message, error.description].filter(Boolean).join("\n");
+  if (detailsText) {
+    const detailsNode = appendElement(errorNode, "Details", detailsText);
     if (error.language) {
       detailsNode.setAttribute("Language", error.language);
     }
@@ -102,9 +105,14 @@ export class GirStatusMessage {
   }
 
   addRecordValidationError(error, element) {
+    // Two distinct texts are kept separately: `message` is the rule
+    // evaluator's specific (expected-vs-actual) message, `description` is the
+    // general OECD rule wording. They are shown in separate UI fields and only
+    // joined into the single <Details> element at export time.
     const normalizedError = {
       code: error.code,
-      details: error.details,
+      message: error.message,
+      description: error.description,
       language: "EN",
       docRefIds: asArray(error.docRefIds),
       fieldPaths: asArray(error.fieldPaths),
@@ -116,10 +124,13 @@ export class GirStatusMessage {
     element.validationErrors.push(normalizedError);
   }
 
-  addFileValidationError(details) {
+  addFileValidationError(message) {
+    // File-level (e.g. parser) errors have only the one specific message; there
+    // is no general rule description to pair with it.
     const normalizedError = {
       code: "50007",
-      details: details,
+      message: message,
+      description: "",
       language: "EN",
       docRefIds: [],
       fieldPaths: [],

@@ -41,9 +41,8 @@ rules:
   - number: 60004
     targets:
       - /globe:GLOBE_OECD
-    test: >-
-      not((//stf:DocTypeIndic='OECD1') and (//stf:DocTypeIndic='OECD2' or
-      //stf:DocTypeIndic='OECD3'))
+    when: //stf:DocTypeIndic = 'OECD1'
+    absent: //stf:DocTypeIndic[. = 'OECD2' or . = 'OECD3']
     rule: >-
       A message can contain either new records (OECD1) or corrections (OECD2 or
       OECD3), but should not contain a mixture of both.
@@ -69,18 +68,16 @@ rules:
 
   - number: 60006
     targets:
-      - //stf:CorrDocRefId
-    test: >-
-      not(. = preceding::stf:CorrDocRefId or . = following::stf:CorrDocRefId)
+      - /globe:GLOBE_OECD
+    distinct: //stf:CorrDocRefId
     rule: >-
       The same DocReflD cannot be corrected or deleted twice in the same message.
     description: >-
       The same DocRefID cannot be corrected or deleted twice in the same message,
       therefore each CorrDocRefID must be unique within the same message.
     implementation_notes: >-
-      Uses the preceding/following axes to compare each value against all the
-      others, because XPath 1.0 has no current() for a count()-based uniqueness
-      form.
+      Uniqueness is scoped to the whole message, so the target is the message
+      root and `distinct` collects every CorrDocRefId in it.
 
   - number: 60007
     targets:
@@ -121,10 +118,10 @@ rules:
   - number: 60010
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:FilingInfo/globe:DocSpec/stf:DocTypeIndic
-    test: >-
-      not(. = 'OECD3') or
-      count(ancestor::globe:GLOBEBody/*[self::globe:GeneralSection or self::globe:Summary
-      or self::globe:JurisdictionSection or self::globe:UTPRAttribution]/globe:DocSpec/stf:DocTypeIndic[. != 'OECD3']) = 0
+    when: . = 'OECD3'
+    absent: >-
+      ancestor::globe:GLOBEBody/*[self::globe:GeneralSection or self::globe:Summary
+      or self::globe:JurisdictionSection or self::globe:UTPRAttribution]/globe:DocSpec/stf:DocTypeIndic[. != 'OECD3']
     rule: >-
       The FilingInfo cannot be deleted without deleting all related General Section,
       Summary, JurisdictionSection and UTPRAttribution records
@@ -145,18 +142,20 @@ rules:
 
   - number: 60012
     targets:
-      - //stf:CorrDocRefId
-    test: >-
-      not(../stf:DocTypeIndic='OECD0' or ../stf:DocTypeIndic='OECD1')
+      - //globe:DocSpec
+    when: stf:DocTypeIndic = 'OECD0' or stf:DocTypeIndic = 'OECD1'
+    absent: stf:CorrDocRefId
     rule: >-
       When DocTypeIndic is OECD1 or OECD0, the CorrDocRefld field must be omitted.
     description: >-
       When an element has DocTypeIndic of OECD1 or OECD0, which indicates that a new
       lodgment or a resend is being made, the CorrDocRefld field must not be
       completed.
-    target_does_not_exist_in_test_files:
-      - ok-01.xml
-      - ok-02.xml
+    implementation_notes: >-
+      Targets the DocSpec (the CorrDocRefId's parent) rather than the CorrDocRefId
+      itself, so the consequence "CorrDocRefId must be omitted" can be expressed as
+      an `absent` check (a target on the CorrDocRefId could never observe its own
+      absence).
 
   - number: 60013
     targets:
@@ -164,8 +163,8 @@ rules:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:Summary/globe:DocSpec/stf:DocTypeIndic
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:DocSpec/stf:DocTypeIndic
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:UTPRAttribution/globe:DocSpec/stf:DocTypeIndic
-    test: >-
-      not(.='OECD0')
+    notEquals:
+      expected: "'OECD0'"
     rule: >-
       The Resend option may only be used with respect to the FilingInfo element. The
       value of OECD0 is not an acceptable input in the DocTypeIndic for the
@@ -189,9 +188,8 @@ rules:
   - number: 60015
     targets:
       - //globe:DocSpec
-    test: >-
-      not(stf:DocTypeIndic='OECD2' or stf:DocTypeIndic='OECD3') or
-      stf:CorrDocRefId
+    when: stf:DocTypeIndic = 'OECD2' or stf:DocTypeIndic = 'OECD3'
+    present: stf:CorrDocRefId
     rule: >-
       The corrected element does not specify any CorrDocRefld (OECD2/3 without
       CorrDocRefld data).
@@ -201,9 +199,10 @@ rules:
   - number: 60016
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:GeneralSection/globe:DocSpec/stf:DocTypeIndic
-    test: >-
-      not (../../../globe:FilingInfo/globe:DocSpec/stf:DocTypeIndic='OECD0') or
-      not (.='OECD1')
+    when: >-
+      ../../../globe:FilingInfo/globe:DocSpec/stf:DocTypeIndic = 'OECD0'
+    notEquals:
+      expected: "'OECD1'"
     rule: >-
       If the value of FilingInfo DoctypeIndic element is OECD0, if General Section is
       provided, the value of General Section DocTypeIndic element must not be OECD1.
@@ -216,9 +215,9 @@ rules:
   - number: 60017
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody
-    test: >-
-      not (globe:FilingInfo/globe:DocSpec/stf:DocTypeIndic='OECD1') or
-      globe:GeneralSection
+    when: >-
+      globe:FilingInfo/globe:DocSpec/stf:DocTypeIndic = 'OECD1'
+    present: globe:GeneralSection
     rule: >-
       If the value of FilingInfo DoctypeIndic element is OECD1, the General Section
       must be provided.
@@ -228,9 +227,10 @@ rules:
   - number: 60018
     targets:
       - /globe:GLOBE_OECD
-    test: >-
-      not(//globe:RecJurCode) or
-      //globe:RecJurCode = /globe:GLOBE_OECD/globe:MessageSpec/globe:ReceivingCountry
+    when: //globe:RecJurCode
+    equals:
+      actual: //globe:RecJurCode
+      expected: /globe:GLOBE_OECD/globe:MessageSpec/globe:ReceivingCountry
     rule: >-
       At least one Country ISO Code in RecJurCode must be the same as the
       ReceivingCountry.
@@ -239,19 +239,19 @@ rules:
       ReceivingCountry.
     implementation_notes: >-
       Whole-message existence check (one of the many RecJurCode must match the single
-      ReceivingCountry), so the target is the message root rather than each RecJurCode.
-      The node-set = node comparison is true when any RecJurCode value equals
-      ReceivingCountry. Guarded with not(//globe:RecJurCode) because every
-      RecJurCode-bearing section is optional in the schema, so a FilingInfo-only
-      message (e.g. a resend or deletion) is valid and carries no RecJurCode for this
-      routing rule to apply to.
+      ReceivingCountry), so the target is the message root rather than each RecJurCode
+      and `equals` is satisfied when any RecJurCode value equals ReceivingCountry.
+      Guarded on the presence of RecJurCode because every RecJurCode-bearing section
+      is optional in the schema, so a FilingInfo-only message (e.g. a resend or
+      deletion) is valid and carries no RecJurCode for this routing rule to apply to.
 
   - number: 60019
     targets:
       - //globe:RecJurCode
-    test: >-
-      not(ancestor::globe:GLOBEBody/globe:FilingInfo/globe:FilingCE/globe:Role[. = 'GIR403' or . = 'GIR404' or . = 'GIR405'])
-      or . = ancestor::globe:GLOBEBody/globe:FilingInfo/globe:FilingCE/globe:ResCountryCode
+    when: >-
+      ancestor::globe:GLOBEBody/globe:FilingInfo/globe:FilingCE/globe:Role[. = 'GIR403' or . = 'GIR404' or . = 'GIR405']
+    equals:
+      expected: ancestor::globe:GLOBEBody/globe:FilingInfo/globe:FilingCE/globe:ResCountryCode
     rule: >-
       Where the Role of the Filing CE is GIR403, GIR404, GIR405, then the GIR is only
       a local lodgement and must not be exchanged.
@@ -269,40 +269,34 @@ rules:
   - number: 60020
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:FilingInfo/globe:Period/globe:Start
-    test: >-
-      number(translate(., '-', '')) <= number(translate(../globe:End, '-', ''))
+    atMost:
+      expected: ../globe:End
+      type: date
     rule: >-
       Period start date must not be later than the Period end date
     description: >-
       Period start date must be earlier than or same as Period end date.
-    implementation_notes: >-
-      XPath 1.0 has no date type and its comparison operators coerce to number, so
-      the YYYY-MM-DD dates are normalised to YYYYMMDD integers via translate(.,'-','')
-      before comparing; numeric order of YYYYMMDD matches chronological order.
 
   - number: 60021
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:FilingInfo/globe:Period/globe:End
-    test: >-
-      number(translate(., '-', '')) <=
-      number(translate(/globe:GLOBE_OECD/globe:MessageSpec/globe:ReportingPeriod, '-', ''))
+    atMost:
+      expected: /globe:GLOBE_OECD/globe:MessageSpec/globe:ReportingPeriod
+      type: date
     rule: >-
       Reporting Period End Date must not be later than the Reporting Period in the
       Message Header.
     description: >-
       The Reporting Period End Date must not be a date which is beyond the Reporting
       Period date in the MessageHeader
-    implementation_notes: >-
-      Reaches the single message-level MessageSpec/ReportingPeriod by absolute
-      path. Date comparison uses the YYYYMMDD-integer idiom (see 60020).
 
   - number: 60022
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:FilingInfo/globe:FilingCE/globe:TIN
-    test: >-
-      not(../globe:Role = 'GIR401')
-      or . = ancestor::globe:GLOBEBody/globe:GeneralSection/globe:CorporateStructure/globe:UPE/globe:ExcludedUPE/globe:ID/globe:TIN
-      or . = ancestor::globe:GLOBEBody/globe:GeneralSection/globe:CorporateStructure/globe:UPE/globe:OtherUPE/globe:ID/globe:TIN
+    when: ../globe:Role = 'GIR401'
+    in:
+      - ancestor::globe:GLOBEBody/globe:GeneralSection/globe:CorporateStructure/globe:UPE/globe:ExcludedUPE/globe:ID/globe:TIN
+      - ancestor::globe:GLOBEBody/globe:GeneralSection/globe:CorporateStructure/globe:UPE/globe:OtherUPE/globe:ID/globe:TIN
     rule: >-
       When the role is GIR401, the FilingCE TIN should match at least one of the TINs
       provided in the ID of the UPE element, whether it is OtherUPE or ExcludedUPE
@@ -311,16 +305,15 @@ rules:
       least one of the TINs provided in the UPE element (either the OtherUPE or
       ExcludedUPE)
     implementation_notes: >-
-      Matched by TIN value: . = node-set is true when the FilingCE TIN equals any
-      ExcludedUPE or OtherUPE ID/TIN. The UPE TINs are reached via
-      ancestor::globe:GLOBEBody so the FilingCE is matched against its own filing's
-      corporate structure.
+      Matched by TIN value: `in` holds when the FilingCE TIN equals any ExcludedUPE or
+      OtherUPE ID/TIN. The UPE TINs are reached via ancestor::globe:GLOBEBody so the
+      FilingCE is matched against its own filing's corporate structure.
 
   - number: 60023
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:FilingInfo/globe:FilingCE/globe:ResCountryCode
-    test: >-
-      . = /globe:GLOBE_OECD/globe:MessageSpec/globe:TransmittingCountry
+    equals:
+      expected: /globe:GLOBE_OECD/globe:MessageSpec/globe:TransmittingCountry
     rule: >-
       The ResCountryCode of the FilingCE must match to the Transmitting Country
     description: >-
@@ -329,9 +322,9 @@ rules:
   - number: 60024
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:Summary
-    test: >-
-      not(globe:SafeHarbour or globe:ETRRange or globe:SBIE or globe:QDMTTut or globe:GLoBETut)
-      or globe:JurWithTaxingRights/globe:JurisdictionName
+    when: >-
+      globe:SafeHarbour or globe:ETRRange or globe:SBIE or globe:QDMTTut or globe:GLoBETut
+    present: globe:JurWithTaxingRights/globe:JurisdictionName
     rule: >-
       If the Summary contains any of the following elements: SafeHarbour, ETRRange,
       SBIE, QDMTTut, GLoBETut, then the JurWithTaxingRights/JurisdictionName must be
@@ -399,11 +392,11 @@ rules:
   - number: 60028
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:CEComputation/globe:AdjustedFANIL/globe:Total
-    test: >-
-      number(.) =
-      sum(../globe:FANIL) +
-      sum(../globe:Adjustment/globe:MainEntityPEandFTE/globe:Additions) +
-      sum(../globe:Adjustment/globe:MainEntityPEandFTE/globe:Reductions)
+    almostEquals:
+      expected: >-
+        sum(../globe:FANIL) +
+        sum(../globe:Adjustment/globe:MainEntityPEandFTE/globe:Additions) +
+        sum(../globe:Adjustment/globe:MainEntityPEandFTE/globe:Reductions)
     rule: >-
       The Total must equal the following calculation: AdjustedFANIL/FANIL + (sum of
       all MainEntityPEandFTE/Additions elements) - (sum of all
@@ -420,9 +413,12 @@ rules:
   - number: 70001
     targets:
       - //globe:TIN
-    test: >-
-      not(@TypeOfTIN='GIR3004') or
-      (.='NOTIN' and (@unknown='true' or @unknown='1') and not(@issuedBy))
+    when: "@TypeOfTIN = 'GIR3004'"
+    allOf:
+      - equals:
+          expected: "'NOTIN'"
+      - isTrue: "@unknown"
+      - absent: "@issuedBy"
     rule: >-
       If TypeOfTIN is GIR3004 then TIN must contain the text 'NOTIN', flag Unknown
       must be TRUE and IssuedBy must not be provided
@@ -433,9 +429,13 @@ rules:
   - number: 70002
     targets:
       - //globe:TIN
-    test: >-
-      not(.='NOTIN') or
-      (@TypeOfTIN='GIR3004' and (@unknown='true' or @unknown='1') and not(@issuedBy))
+    when: ". = 'NOTIN'"
+    allOf:
+      - equals:
+          actual: "@TypeOfTIN"
+          expected: "'GIR3004'"
+      - isTrue: "@unknown"
+      - absent: "@issuedBy"
     rule: >-
       If TIN value is 'NOTIN' then TypeOfTIN must be GIR3004, flag Unknown must be
       TRUE and IssuedBy must not be provided.
@@ -446,9 +446,15 @@ rules:
   - number: 70003
     targets:
       - //globe:TIN
-    test: >-
-      not(@unknown='true' or @unknown='1') or
-      (.='NOTIN' and @TypeOfTIN='GIR3004' and not(@issuedBy))
+    when:
+      isTrue: "@unknown"
+    allOf:
+      - equals:
+          expected: "'NOTIN'"
+      - equals:
+          actual: "@TypeOfTIN"
+          expected: "'GIR3004'"
+      - absent: "@issuedBy"
     rule: >-
       If flag Unknown is TRUE then TIN must be NOTIN, TypeOfTIN must be GIR3004 and
       IssuedBy must not be provided.
@@ -532,10 +538,10 @@ rules:
   - number: 70008
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:UTPRAttribution/globe:RecJurCode
-    test: >-
-      . = ancestor::globe:GLOBEBody/globe:GeneralSection/globe:CorporateStructure/globe:UPE/globe:ExcludedUPE/globe:ID/globe:ResCountryCode
-      or . = ancestor::globe:GLOBEBody/globe:GeneralSection/globe:CorporateStructure/globe:UPE/globe:OtherUPE/globe:ID/globe:ResCountryCode
-      or . = ancestor::globe:GLOBEBody/globe:JurisdictionSection/globe:JurWithTaxingRights/globe:JurisdictionName
+    in:
+      - ancestor::globe:GLOBEBody/globe:GeneralSection/globe:CorporateStructure/globe:UPE/globe:ExcludedUPE/globe:ID/globe:ResCountryCode
+      - ancestor::globe:GLOBEBody/globe:GeneralSection/globe:CorporateStructure/globe:UPE/globe:OtherUPE/globe:ID/globe:ResCountryCode
+      - ancestor::globe:GLOBEBody/globe:JurisdictionSection/globe:JurWithTaxingRights/globe:JurisdictionName
     rule: >-
       The Jurisdiction reported in the RecJurCode must be the UPE jurisdiction or one
       of the Jurisdictions reported in the JurisdictionName element of the repeatable
@@ -550,15 +556,23 @@ rules:
       The UPE jurisdiction is the ResCountryCode of whichever UPE form is present
       (ExcludedUPE or OtherUPE ID). The JurisdictionName is matched against any
       JurWithTaxingRights in the GLOBEBody's JurisdictionSection(s) rather than a
-      single jurisdiction-specific section. All sources are reached via
-      ancestor::globe:GLOBEBody and matched by value (. = node-set is true on any hit).
+      single jurisdiction-specific section.
 
   - number: 70009
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:GeneralSection/globe:CorporateStructure/globe:UPE/globe:ExcludedUPE/globe:ID/globe:GlobeStatus
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:GeneralSection/globe:CorporateStructure/globe:UPE/globe:OtherUPE/globe:ID/globe:GlobeStatus
-    test : >-
-      not(.='GIR305' or .='GIR307' or .='GIR308' or .='GIR309' or .='GIR312' or .='GIR313' or .='GIR314' or .='GIR315' or .='GIR317' or .='GIR318')
+    notIn:
+      - "'GIR305'"
+      - "'GIR307'"
+      - "'GIR308'"
+      - "'GIR309'"
+      - "'GIR312'"
+      - "'GIR313'"
+      - "'GIR314'"
+      - "'GIR315'"
+      - "'GIR317'"
+      - "'GIR318'"
     rule: >-
       The UPE GlobeStatus should not accept the following values: GIR305,
       GIR307, GIR308, GIR309, GIR312, GIR313, GIR314, GIR315, GIR317, GIR318
@@ -730,9 +744,9 @@ rules:
   - number: 70022
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:GeneralSection/globe:CorporateStructure/globe:CE/globe:OwnershipChange/globe:ChangeDate
-    test: >-
-      number(translate(., '-', '')) >=
-      number(translate(ancestor::globe:GLOBEBody/globe:FilingInfo/globe:Period/globe:Start, '-', ''))
+    atLeast:
+      expected: ancestor::globe:GLOBEBody/globe:FilingInfo/globe:Period/globe:Start
+      type: date
     rule: >-
       The ChangeDate must not be a date which takes place before the Period Start date
       as reported in the Filing Info
@@ -742,14 +756,14 @@ rules:
     implementation_notes: >-
       Period Start is reached via ancestor::globe:GLOBEBody so that in a
       multi-filing message each ChangeDate is checked against its own filing's
-      period. Date comparison uses the YYYYMMDD-integer idiom (see 60020).
+      period.
 
   - number: 70023
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:GeneralSection/globe:CorporateStructure/globe:CE/globe:OwnershipChange/globe:ChangeDate
-    test: >-
-      number(translate(., '-', '')) <=
-      number(translate(ancestor::globe:GLOBEBody/globe:FilingInfo/globe:Period/globe:End, '-', ''))
+    atMost:
+      expected: ancestor::globe:GLOBEBody/globe:FilingInfo/globe:Period/globe:End
+      type: date
     rule: >-
       The ChangeDate must not be a date which takes place after the Period End date as
       reported in the Filing Info
@@ -757,8 +771,7 @@ rules:
       An ownership change has a change date which takes place after the reporting
       fiscal year
     implementation_notes: >-
-      Mirror of 70022 against Period End (same ancestor::globe:GLOBEBody scoping
-      and YYYYMMDD-integer date idiom).
+      Mirror of 70022 against Period End (same ancestor::globe:GLOBEBody scoping).
 
   - number: 70024
     targets:
@@ -776,9 +789,13 @@ rules:
   - number: 70025
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:GeneralSection/globe:CorporateStructure/globe:CE/globe:OwnershipChange/globe:PreOwnership/globe:TIN
-    test: >-
-      not(../globe:OwnershipType='GIR805' or ../globe:OwnershipType='GIR806') or
-      (.='NOTIN' and @TypeOfTIN='GIR3004')
+    when: ../globe:OwnershipType = 'GIR805' or ../globe:OwnershipType = 'GIR806'
+    allOf:
+      - equals:
+          expected: "'NOTIN'"
+      - equals:
+          actual: "@TypeOfTIN"
+          expected: "'GIR3004'"
     rule: >-
       When the Ownership Type contains the value of GIR805 or GIR806, then the
       TypeOfTIN must contain the value GIR3004 and the TIN must contain the text,
@@ -791,9 +808,9 @@ rules:
   - number: 70026
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:GeneralSection/globe:CorporateStructure/globe:CE/globe:Ownership/globe:OwnershipPercentage
-    test: >-
-      not(ancestor::globe:CE[1]/globe:ID/globe:GlobeStatus='GIR305') or
-      number(.)=1.000
+    when: ancestor::globe:CE[1]/globe:ID/globe:GlobeStatus = 'GIR305'
+    equals:
+      expected: 1
     rule: >-
       When the GloBEStatus contains the value of GIR305, then the Ownership Percentage
       must equal 100%
@@ -803,12 +820,17 @@ rules:
   - number: 70027
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:GeneralSection/globe:CorporateStructure/globe:CE/globe:Ownership
-    test: >-
-      not(parent::globe:CE/globe:ID/globe:GlobeStatus='GIR318') or (
-        number(./globe:OwnershipPercentage) = 0.000 and
-        ./globe:TIN = 'NOTIN' and
-        ./globe:OwnershipType = 'GIR806'
-      )
+    when: parent::globe:CE/globe:ID/globe:GlobeStatus = 'GIR318'
+    allOf:
+      - equals:
+          actual: globe:OwnershipPercentage
+          expected: 0
+      - equals:
+          actual: globe:TIN
+          expected: "'NOTIN'"
+      - equals:
+          actual: globe:OwnershipType
+          expected: "'GIR806'"
     rule: >-
       When the GloBEStatus contains the value of GIR318, then the OwnershipPercentage
       should have the value of 0%, the TIN value should be NOTIN and OwnershipType
@@ -1037,9 +1059,14 @@ rules:
   - number: 70042
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:Summary
-    test: >-
-      not(globe:JurWithTaxingRights and (not(globe:SafeHarbour) or count(globe:SafeHarbour[.!='GIR1206'])=0)) or
-      (globe:ETRRange and globe:SBIE and globe:QDMTTut and globe:GLoBETut)
+    when: >-
+      globe:JurWithTaxingRights and
+      (not(globe:SafeHarbour) or count(globe:SafeHarbour[. != 'GIR1206']) = 0)
+    allOf:
+      - present: globe:ETRRange
+      - present: globe:SBIE
+      - present: globe:QDMTTut
+      - present: globe:GLoBETut
     rule: >-
       If the JurWithTaxingRights element is completed, and the Safe Harbour element is
       not completed or only has the value of GIR1206, then the elements ETRRange,
@@ -1052,9 +1079,11 @@ rules:
   - number: 70043
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:Summary
-    test: >-
-      not(globe:JurWithTaxingRights and globe:SafeHarbour='GIR1202') or
-      (globe:ETRRange and globe:SBIE and globe:QDMTTut)
+    when: globe:JurWithTaxingRights and globe:SafeHarbour = 'GIR1202'
+    allOf:
+      - present: globe:ETRRange
+      - present: globe:SBIE
+      - present: globe:QDMTTut
     rule: >-
       If the JurWithTaxingRights element is completed, and the Safe Harbour element
       has the value of GIR1202, then the elements ETRRange, SBIE and QDMTTut must be
@@ -1098,9 +1127,8 @@ rules:
   - number: 70046
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR
-    test: >-
-      not(globe:ETRStatus/globe:ETRException/globe:TransitionalCbCRSafeHarbour) or
-      (globe:SubGroup and (globe:SubGroup/globe:TypeofSubGroup='GIR1607' or globe:SubGroup/globe:TypeofSubGroup='GIR1608'))
+    when: globe:ETRStatus/globe:ETRException/globe:TransitionalCbCRSafeHarbour
+    present: globe:SubGroup/globe:TypeofSubGroup[. = 'GIR1607' or . = 'GIR1608']
     rule: >-
       When the TransitionalCbCRSafeHarbour is completed for a jurisdiction, then
       SubGroup element of the ETR must be completed, the TypeofSubGroup must contain
@@ -1256,9 +1284,8 @@ rules:
   - number: 70055
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:Election/globe:Art3.2.1.c/globe:OutstandingBalance
-    test: >-
-      number(.) = number(../globe:QualOwnerIntentBalance) +
-      number(../globe:Additions) - number(../globe:Reductions)
+    almostEquals:
+      expected: ../globe:QualOwnerIntentBalance + ../globe:Additions - ../globe:Reductions
     rule: >-
       The OutstandingBalance should be equal to the following calculation:
       QualOwnerIntentBalance + Additions - Reductions
@@ -1334,9 +1361,15 @@ rules:
   - number: 70061
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:OverallComputation/globe:AdjustedCoveredTax/globe:Adjustments
-    test: >-
-      not(ancestor::globe:ETR/globe:Election/globe:Art4.6.1[.='true' or .='1']) or
-      (globe:AdjustmentItem='GIR2711' and number(globe:Amount) < 0)
+    when:
+      isTrue: ancestor::globe:ETR/globe:Election/globe:Art4.6.1
+    allOf:
+      - equals:
+          actual: globe:AdjustmentItem
+          expected: "'GIR2711'"
+      - lessThan:
+          actual: globe:Amount
+          expected: 0
     rule: >-
       When the 'Art4.6.1' election has the value of TRUE, the AdjustmentItem for the
       AdjustedCovered Tax must contain GIR2711 and the 'amount' must be a negative
@@ -1371,8 +1404,8 @@ rules:
   - number: 70064
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:OverallComputation/globe:AdjustedCoveredTax/globe:PostFilingAdjust/globe:DeferTaxAsset/globe:Total
-    test: >-
-      number(.) = sum(../globe:AmountAttributed/globe:Amount)
+    almostEquals:
+      expected: sum(../globe:AmountAttributed/globe:Amount)
     rule: >-
       The PostFilingAdjust/ DeferTaxAsset / Total should equal to the following
       calculation: sum of all 'PostFilingAdjust / DeferTaxAsset / AmountAttributed /
@@ -1400,9 +1433,9 @@ rules:
   - number: 70066
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:OverallComputation/globe:AdjustedCoveredTax/globe:PostFilingAdjust/globe:DeferTaxAsset/globe:AmountAttributed/globe:Year
-    test: >-
-      number(substring(., 1, 4)) <=
-      number(substring(ancestor::globe:GLOBEBody/globe:FilingInfo/globe:Period/globe:Start, 1, 4))
+    atMost:
+      expected: ancestor::globe:GLOBEBody/globe:FilingInfo/globe:Period/globe:Start
+      type: year
     rule: >-
       The Year should correspond to or be before the YYYY value reported in the Period
       Start Date
@@ -1410,11 +1443,9 @@ rules:
       The provided year for the Loss Carry Back must be a prior Fiscal Year and must
       be the same as or prior to the Reporting Fiscal Year.
     implementation_notes: >-
-      Compared by year only: both operands are xsd:date, so the 4-digit year is
-      extracted with substring(.,1,4) and compared numerically. Period Start is
-      reached via ancestor::globe:GLOBEBody (per-filing). The spec's second cited
-      path (Period/Start) is a reference, not a target, so it was dropped from
-      targets.
+      Compared by year only (both operands are xsd:date). Period Start is reached via
+      ancestor::globe:GLOBEBody (per-filing). The spec's second cited path
+      (Period/Start) is a reference, not a target, so it was dropped from targets.
 
   - number: 70067
     targets:
@@ -1428,17 +1459,15 @@ rules:
   - number: 70068
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:OverallComputation/globe:AdjustedCoveredTax/globe:PostFilingAdjust/globe:CoveredTaxRefund/globe:AmountAttributed/globe:Year
-    test: >-
-      number(substring(., 1, 4)) <=
-      number(substring(ancestor::globe:GLOBEBody/globe:FilingInfo/globe:Period/globe:Start, 1, 4))
+    atMost:
+      expected: ancestor::globe:GLOBEBody/globe:FilingInfo/globe:Period/globe:Start
+      type: year
     rule: >-
       The Year should correspond to or be before the YYYY value reported in the Period
       Start Date
     description: >-
       The provided year for the Loss Carry Back must be a prior Fiscal Year and must
       be the same as or prior to the Reporting Fiscal Year.
-    implementation_notes: >-
-      Same year-extraction idiom as 70066, against the Period Start year.
 
   - number: 70069
     targets:
@@ -1452,25 +1481,25 @@ rules:
   - number: 70070
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:OverallComputation/globe:AdjustedCoveredTax/globe:DeemedDistTax/globe:Election/globe:Recapture/globe:Year
-    test: >-
-      number(substring(., 1, 4)) <=
-      number(substring(ancestor::globe:GLOBEBody/globe:FilingInfo/globe:Period/globe:End, 1, 4))
+    atMost:
+      expected: ancestor::globe:GLOBEBody/globe:FilingInfo/globe:Period/globe:End
+      type: year
     rule: >-
       The year cannot be a date which is after the Period End Date
     description: >-
       The deemed distribution tax election under article 7.3.1 has been elected for a
       year which is not the Reporting Fiscal Year or a prior Fiscal Year
     implementation_notes: >-
-      Assumes a year-only comparison, reading the Recapture Year as a fiscal year:
-      substring(.,1,4) against the Period End year, scoped via
-      ancestor::globe:GLOBEBody.
+      Assumes a year-only comparison, reading the Recapture Year as a fiscal year
+      against the Period End year, scoped via ancestor::globe:GLOBEBody.
 
   - number: 70071
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:OverallComputation/globe:AdjustedCoveredTax/globe:DeemedDistTax/globe:Election/globe:Recapture/globe:Year
-    test: >-
-      number(substring(., 1, 4)) >=
-      number(substring(ancestor::globe:GLOBEBody/globe:FilingInfo/globe:Period/globe:End, 1, 4)) - 3
+    atLeast:
+      expected: ancestor::globe:GLOBEBody/globe:FilingInfo/globe:Period/globe:End
+      type: year
+      offset: -3
     rule: >-
       The year cannot contain a date which is 4 years or more before the Period End
       Date (i.e. Reporting Fiscal Year and previous 3 Fiscal Years)
@@ -1478,14 +1507,14 @@ rules:
       The year cannot contain a date which is 4 years or more before the Period End
       Date (i.e. Reporting Fiscal Year and previous 3 Fiscal Years)
     implementation_notes: >-
-      Lower bound only (70070 covers the upper bound). "4 years or more before" maps
-      to year >= Period End year - 3. Same year-extraction idiom as 70070.
+      Lower bound only; 70070 covers the upper bound. "4 years or more before"
+      maps to year >= Period End year - 3 (offset -3).
 
   - number: 70072
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:OverallComputation/globe:AdjustedCoveredTax/globe:DeemedDistTax/globe:Election/globe:Recapture/globe:EndAmount
-    test: >-
-      number(.) = number(../globe:StartAmount) - number(../globe:TotalDDT)
+    almostEquals:
+      expected: ../globe:StartAmount - ../globe:TotalDDT
     rule: >-
       The EndAmount is equal to the following calculation: StartAmount - TotalDDT
     description: >-
@@ -1494,8 +1523,8 @@ rules:
   - number: 70073
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:OverallComputation/globe:AdjustedCoveredTax/globe:DeemedDistTax/globe:Election/globe:Recapture/globe:EndAmount
-    test: >-
-      number(.) >= 0
+    atLeast:
+      expected: 0
     rule: >-
       The EndAmount must not be a negative.
     description: >-
@@ -1504,12 +1533,12 @@ rules:
   - number: 70074
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:OverallComputation/globe:AdjustedCoveredTax/globe:DeemedDistTax/globe:Election/globe:Recapture/globe:TotalDDT
-    test: >-
-      number(.) =
-      sum(../globe:DDTYear-0) +
-      sum(../globe:DDTYear-1) +
-      sum(../globe:DDTYear-2) +
-      sum(../globe:DDTYear-3)
+    almostEquals:
+      expected: >-
+        sum(../globe:DDTYear-0) +
+        sum(../globe:DDTYear-1) +
+        sum(../globe:DDTYear-2) +
+        sum(../globe:DDTYear-3)
     rule: >-
       The TotalDDT is equal to the following calculation: DDTYear-0 + DDTYear-1 +
       DDTYear-2 + DDTYear-3
@@ -1523,10 +1552,13 @@ rules:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:OverallComputation/globe:AdjustedCoveredTax/globe:DeemedDistTax/globe:Election/globe:Recapture/globe:DDTYear-1
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:OverallComputation/globe:AdjustedCoveredTax/globe:DeemedDistTax/globe:Election/globe:Recapture/globe:DDTYear-2
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:OverallComputation/globe:AdjustedCoveredTax/globe:DeemedDistTax/globe:Election/globe:Recapture/globe:DDTYear-3
-    test: >-
-      not(number(substring(../globe:Year, 1, 4)) =
-      number(substring(ancestor::globe:GLOBEBody/globe:FilingInfo/globe:Period/globe:End, 1, 4)))
-      or number(.) = 0
+    when:
+      equals:
+        actual: ../globe:Year
+        expected: ancestor::globe:GLOBEBody/globe:FilingInfo/globe:Period/globe:End
+        type: year
+    equals:
+      expected: 0
     rule: >-
       When the Year equals YYYY value reported in the Period End Date, then the
       following elements should be completed by entering "0": DDTYear-0, DDTYear-1,
@@ -1537,8 +1569,7 @@ rules:
       DDTYear-2 and DDTYear-3
     implementation_notes: >-
       The four DDTYear-N are separate targets so each is checked independently; the
-      trigger compares the sibling Recapture/Year against Period End by year (idiom
-      per 70070).
+      `when` guard compares the sibling Recapture/Year against Period End by year.
 
   - number: 70076
     targets:
@@ -1556,9 +1587,10 @@ rules:
   - number: 70077
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:OverallComputation/globe:AdjustedCoveredTax/globe:DeferTaxAdjustAmt/globe:Total
-    test: >-
-      number(.) = number(../globe:PreRecast) +
-      sum(../globe:Recast/globe:Lower) - sum(../globe:Recast/globe:Higher)
+    almostEquals:
+      expected: >-
+        ../globe:PreRecast +
+        sum(../globe:Recast/globe:Lower) - sum(../globe:Recast/globe:Higher)
     rule: >-
       The total element should be equal to the following calculation: PreRecast +
       Recast/Lower - Recast/Higher If Recast/Lower and/or Recast/Higher is not
@@ -1571,11 +1603,11 @@ rules:
   - number: 70078
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:OverallComputation/globe:AdjustedCoveredTax/globe:DeferTaxAdjustAmt/globe:BefRecastAdjust
-    test: >-
-      number(.) =
-      number(../globe:DefTaxAmt) -
-      number(../globe:DiffCarryValue) +
-      number(../globe:GLoBEValue)
+    almostEquals:
+      expected: >-
+        ../globe:DefTaxAmt -
+        ../globe:DiffCarryValue +
+        ../globe:GLoBEValue
     rule: >-
       The BefRecastAdjust element should be equal to the following calculation:
       DefTaxAmt - DiffCarryValue + GLoBEValue.
@@ -1586,8 +1618,8 @@ rules:
   - number: 70079
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:OverallComputation/globe:AdjustedCoveredTax/globe:DeferTaxAdjustAmt/globe:PreRecast
-    test: >-
-      number(.) = number(../globe:BefRecastAdjust) + number(../globe:TotalAdjust)
+    almostEquals:
+      expected: ../globe:BefRecastAdjust + ../globe:TotalAdjust
     rule: >-
       The PreRecast element should be equal to the following calculation:
       BefRecastAdjust + TotalAdjust
@@ -1609,8 +1641,9 @@ rules:
   - number: 70081
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:OverallComputation/globe:AdjustedCoveredTax/globe:DeferTaxAdjustAmt/globe:Transition/globe:DeferredTaxAssets/globe:Total
-    test: >-
-      number(.) = number(../globe:DeferredTaxAssetStart) + number(../globe:DeferredTaxAssetRecast) - number(../globe:DeferredTaxAssetExcluded)
+    almostEquals:
+      expected: >-
+        ../globe:DeferredTaxAssetStart + ../globe:DeferredTaxAssetRecast - ../globe:DeferredTaxAssetExcluded
     rule: >-
       The total element should be equal to the following calculation:
       DeferredTaxAssetStart - DeferredTaxAssetExcluded OR
@@ -1623,9 +1656,13 @@ rules:
   - number: 70082
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:OverallComputation/globe:AdjustedCoveredTax/globe:DeferTaxAdjustAmt/globe:Transition/globe:DeferredTaxAssets
-    test: >-
-      number(globe:DeferredTaxAssetStart) = 0 or
-      number(globe:DeferredTaxAssetRecast) = 0
+    anyOf:
+      - equals:
+          actual: globe:DeferredTaxAssetStart
+          expected: 0
+      - equals:
+          actual: globe:DeferredTaxAssetRecast
+          expected: 0
     rule: >-
       When the DeferredTaxAssets element is provided, then one of
       DeferredTaxAssetStart or DeferredTaxAssetRecast must contain the value of '0'
@@ -1640,9 +1677,10 @@ rules:
   - number: 70083
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:OverallComputation/globe:ExcessNegTaxExpense/globe:Remaining
-    test: >-
-      number(.) = number(../globe:PriorYearBalance) +
-      number(../globe:GeneratedInRFY) - number(../globe:UtilizedInRFY)
+    almostEquals:
+      expected: >-
+        ../globe:PriorYearBalance +
+        ../globe:GeneratedInRFY - ../globe:UtilizedInRFY
     rule: >-
       The Remaining value should equal the following calculation: Prior YearBalance +
       GeneratedInRFY - UtilizedInRFY
@@ -1706,10 +1744,10 @@ rules:
   - number: 70087
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:OverallComputation/globe:SubstanceExclusion/globe:Total
-    test: >-
-      number(.) =
-      number(../globe:PayrollCost) * number(../globe:PayrollMarkUp) +
-      number(../globe:TangibleAssetValue) * number(../globe:TangibleAssetMarkup)
+    almostEquals:
+      expected: >-
+        ../globe:PayrollCost * ../globe:PayrollMarkUp +
+        ../globe:TangibleAssetValue * ../globe:TangibleAssetMarkup
     rule: >-
       The Total integer for the SubstanceExclusion is equal to the following
       calculation: PayrollCost * PayrollMarkUp + TangibleAssetValue * TangibleAssetMarkup
@@ -1734,8 +1772,8 @@ rules:
   - number: 70089
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:OverallComputation/globe:AdditionalTopUpTax/globe:Art4.1.5/globe:AdjustedCoveredTax
-    test: >-
-      number(.) < 0
+    lessThan:
+      expected: 0
     rule: >-
       The AdjustedCoveredTax value should be a negative value
     description: >-
@@ -1788,23 +1826,22 @@ rules:
   - number: 70093
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:OverallComputation/globe:AdditionalTopUpTax/globe:NONArt4.1.5/globe:Year
-    test: >-
-      number(substring(., 1, 4)) <=
-      number(substring(ancestor::globe:GLOBEBody/globe:FilingInfo/globe:Period/globe:End, 1, 4))
+    atMost:
+      expected: ancestor::globe:GLOBEBody/globe:FilingInfo/globe:Period/globe:End
+      type: year
     rule: >-
       The Year must not be greater than the YYYY value reported in the Period End Date
     description: >-
       The Year must not be greater than the YYYY value reported in the Period End Date
-    implementation_notes: >-
-      Same year-extraction idiom as 70070, against the Period End year.
 
   - number: 70094
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:OverallComputation/globe:AdditionalTopUpTax/globe:NONArt4.1.5/globe:Year
-    test: >-
-      not(../globe:Articles = 'GIR2605') or
-      number(substring(., 1, 4)) <=
-      number(substring(ancestor::globe:GLOBEBody/globe:FilingInfo/globe:Period/globe:End, 1, 4)) - 4
+    when: ../globe:Articles = 'GIR2605'
+    atMost:
+      expected: ancestor::globe:GLOBEBody/globe:FilingInfo/globe:Period/globe:End
+      type: year
+      offset: -4
     rule: >-
       When the Articles contain the value of GIR2605, then the Year should be at least
       '4 years' before the YYYY value reported in the Period End Date.
@@ -1812,26 +1849,23 @@ rules:
       When the Articles contain the value of GIR2605, then the Year should be at least
       '4 years' before the YYYY value reported in the Period End Date
     implementation_notes: >-
-      Gated on the sibling Articles (repeatable, so = matches if any equals GIR2605).
-      "At least 4 years before" maps to year <= Period End year - 4. Year-extraction
-      idiom per 70070.
+      Gated on the sibling Articles (repeatable, so the guard matches if any equals
+      GIR2605). "At least 4 years before" maps to year <= Period End year - 4.
 
   - number: 70095
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:OverallComputation/globe:AdditionalTopUpTax/globe:NONArt4.1.5/globe:Year
-    test: >-
-      not(../globe:Articles = 'GIR2602') or
-      number(substring(., 1, 4)) =
-      number(substring(ancestor::globe:GLOBEBody/globe:FilingInfo/globe:Period/globe:End, 1, 4)) - 5
+    when: ../globe:Articles = 'GIR2602'
+    equals:
+      expected: ancestor::globe:GLOBEBody/globe:FilingInfo/globe:Period/globe:End
+      type: year
+      offset: -5
     rule: >-
       When the Articles contain the value of GIR2602, then the Year should be the
       fifth Fiscal Year preceding the YYYY value reported in the Period End Date.
     description: >-
       When the Articles contain the value of GIR2602, then the Year should be the
       fifth Fiscal Year preceding the YYYY value reported in the Period End Date
-    implementation_notes: >-
-      Like 70094 but an exact match: "fifth Fiscal Year preceding" maps to year =
-      Period End year - 5. Gated on the sibling Articles containing GIR2602.
 
   - number: 70096
     targets:
@@ -1908,9 +1942,11 @@ rules:
   - number: 70101
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:UTPRAttribution/globe:Attribution
-    test: >-
-      number(globe:UTPRTopUpTaxCarryForward) = 0 or
-      globe:Employees
+    when:
+      notEquals:
+        actual: globe:UTPRTopUpTaxCarryForward
+        expected: 0
+    present: globe:Employees
     rule: >-
       The Employees must be completed unless the UTPRTopUpTaxCarryForward contains the
       value of '0'
@@ -1921,9 +1957,11 @@ rules:
   - number: 70102
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:UTPRAttribution/globe:Attribution
-    test: >-
-      number(globe:UTPRTopUpTaxCarryForward) = 0 or
-      globe:TangibleAssetValue
+    when:
+      notEquals:
+        actual: globe:UTPRTopUpTaxCarryForward
+        expected: 0
+    present: globe:TangibleAssetValue
     rule: >-
       The TangibleAssetValue must be completed unless the UTPRTopUpTaxCarryForward
       contains the value of '0'
@@ -1951,8 +1989,8 @@ rules:
   - number: 70104
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:UTPRAttribution/globe:Attribution/globe:UTPRTopUpTaxCarriedForward
-    test: >-
-      number(.) >= 0
+    atLeast:
+      expected: 0
     rule: >-
       The UTPRTopUpTaxCarriedForward cannot be a negative value.
     description: >-
@@ -1961,11 +1999,11 @@ rules:
   - number: 70105
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:UTPRAttribution/globe:Attribution/globe:UTPRTopUpTaxCarriedForward
-    test: >-
-      number(.) =
-      sum(../globe:UTPRTopUpTaxCarryForward) +
-      sum(../globe:UTPRTopUpTaxAttributed) -
-      sum(../globe:AddCashTaxExpense)
+    almostEquals:
+      expected: >-
+        sum(../globe:UTPRTopUpTaxCarryForward) +
+        sum(../globe:UTPRTopUpTaxAttributed) -
+        sum(../globe:AddCashTaxExpense)
     rule: >-
       The UTPRTopUpTaxCarriedForward is equal to the following calculation
       UTPRTopUpTaxCarryForward + UTPRTopUpTaxAttributed - AddCashTaxExpense
@@ -1976,8 +2014,8 @@ rules:
   - number: 70106
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:CEComputation/globe:AdjustedFANIL/globe:Adjustment/globe:CrossBorderAdjustments/globe:OtherTIN
-    test: >-
-      not(. = ancestor::globe:CEComputation/globe:TIN)
+    notEquals:
+      expected: ancestor::globe:CEComputation/globe:TIN
     rule: >-
       The Other TIN must not be the same as the CEComputations/TIN.
     description: >-
@@ -1986,8 +2024,7 @@ rules:
   - number: 70107
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:CEComputation/globe:AdjustedFANIL/globe:Adjustment/globe:CrossBorderAdjustments
-    test: >-
-      not(../globe:UPEAdjustments/globe:Reductions/globe:Exception[.='true' or .='1'])
+    absent: ../globe:UPEAdjustments/globe:Reductions/globe:Exception[. = 'true' or . = '1']
     target_does_not_exist_in_test_files:
       - ok-03.xml
       - ok-04.xml
@@ -2009,11 +2046,11 @@ rules:
   - number: 70108
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:CEComputation/globe:AdjustedFANIL/globe:Adjustment/globe:UPEAdjustments
-      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:CEComputation/globe:AdjustedFANIL/globe:Adjustment/globe:UPEAdjustments
-    test: >-
-      not(globe:Basis = 'GIR1901' or globe:Basis = 'GIR1902' or globe:Basis = 'GIR1905' or globe:Basis = 'GIR1906') or
-      globe:IdentificationOfOwners/globe:IndOwners/globe:TaxRate or
-      globe:IdentificationOfOwners/globe:EntityOwner/globe:TaxRate
+    when: >-
+      globe:Basis = 'GIR1901' or globe:Basis = 'GIR1902' or globe:Basis = 'GIR1905' or globe:Basis = 'GIR1906'
+    anyOf:
+      - present: globe:IdentificationOfOwners/globe:IndOwners/globe:TaxRate
+      - present: globe:IdentificationOfOwners/globe:EntityOwner/globe:TaxRate
     rule: >-
       When the 'Basis' is GIR1901, GIR1902, GIR1905, GIR1906 then the
       'EntityOwner/TaxRate' element or 'IndOwners/TaxRate' element must be completed
@@ -2024,9 +2061,8 @@ rules:
   - number: 70109
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:CEComputation/globe:AdjustedFANIL/globe:Adjustment/globe:UPEAdjustments
-    test: >-
-      not(globe:Basis = 'GIR1907') or
-      globe:IdentificationOfOwners/globe:IndOwners/globe:ResCountryCode
+    when: globe:Basis = 'GIR1907'
+    present: globe:IdentificationOfOwners/globe:IndOwners/globe:ResCountryCode
     rule: >-
       When the 'Basis' is GIR1907 then the 'ResCountryCode' element must be completed
       (i.e. the choice must be 'IndOwners')
@@ -2037,9 +2073,8 @@ rules:
   - number: 70110
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:CEComputation/globe:AdjustedFANIL/globe:Adjustment/globe:UPEAdjustments
-    test: >-
-      not(globe:Basis = 'GIR1903' or globe:Basis = 'GIR1908') or
-      globe:IdentificationOfOwners/globe:IndOwners
+    when: globe:Basis = 'GIR1903' or globe:Basis = 'GIR1908'
+    present: globe:IdentificationOfOwners/globe:IndOwners
     rule: >-
       When the 'Basis' is GIR1903 or GIR1908, then the IndOwners element must be
       completed
@@ -2050,9 +2085,8 @@ rules:
   - number: 70111
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:CEComputation/globe:AdjustedFANIL/globe:Adjustment/globe:UPEAdjustments
-    test: >-
-      not(globe:Basis = 'GIR1904' or globe:Basis = 'GIR1909') or
-      globe:IdentificationOfOwners/globe:EntityOwner/globe:ExTypeOfEntity
+    when: globe:Basis = 'GIR1904' or globe:Basis = 'GIR1909'
+    present: globe:IdentificationOfOwners/globe:EntityOwner/globe:ExTypeOfEntity
     rule: >-
       When the 'Basis' is GIR1904 or GIR1909, then the 'ExTypeOfEntity' must be
       completed (i.e. the choice must be 'EntityOwner')
@@ -2063,36 +2097,46 @@ rules:
   - number: 70112
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:CEComputation/globe:AdjustedFANIL/globe:Adjustment/globe:UPEAdjustments
-    test: >-
-      not(globe:Basis = 'GIR1904') or
-      globe:IdentificationOfOwners/globe:EntityOwner/globe:ExTypeOfEntity != 'GIR2805'
+    when: globe:Basis = 'GIR1904'
+    notEquals:
+      actual: globe:IdentificationOfOwners/globe:EntityOwner/globe:ExTypeOfEntity
+      expected: "'GIR2805'"
     rule: >-
       When the 'Basis' is GIR1904, then the 'ExTypeOfEntity' must not contain the
       value of GIR2805.
     description: >-
       When the 'Basis' is GIR1904, then the 'ExTypeOfEntity' must not contain the
       value of GIR2805.
+    implementation_notes: >-
+      Only the value is checked here; ExTypeOfEntity's presence under GIR1904 is
+      already enforced by 70111. notEquals on an absent ExTypeOfEntity is vacuously
+      satisfied, so this rule purely guards against the GIR2805 value.
 
   - number: 70113
     targets: 
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:CEComputation/globe:AdjustedFANIL/globe:Adjustment/globe:UPEAdjustments
-    test: >-
-      not(globe:Basis = 'GIR1909') or
-      globe:IdentificationOfOwners/globe:EntityOwner/globe:ExTypeOfEntity != 'GIR2804'
+    when: globe:Basis = 'GIR1909'
+    notEquals:
+      actual: globe:IdentificationOfOwners/globe:EntityOwner/globe:ExTypeOfEntity
+      expected: "'GIR2804'"
     rule: >-
       When the 'Basis' is GIR1909, then the 'ExTypeOfEntity' must not contain the
       value of GIR2804.
     description: >-
       When the 'Basis' is GIR1909, then the 'ExTypeOfEntity' must not contain the
       value of GIR2804.
+    implementation_notes: >-
+      Only the value is checked here; ExTypeOfEntity's presence under GIR1909 is
+      already enforced by 70111. notEquals on an absent ExTypeOfEntity is vacuously
+      satisfied, so this rule purely guards against the GIR2804 value.
 
   - number: 70114
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:CEComputation/globe:NetGlobeIncome/globe:Adjustments
-    test: >-
-      count(globe:Amount) != 2 or
-      ((number(globe:Amount[1]) < 0 and number(globe:Amount[2]) > 0) or
-       (number(globe:Amount[1]) > 0 and number(globe:Amount[2]) < 0))
+    when: count(globe:Amount) = 2
+    allOf:
+      - present: globe:Amount[. < 0]
+      - present: globe:Amount[. > 0]
     rule: >-
       If two values are provided for the'Amount', then one value must be negative and
       the other value positive (i.e. both values of the integer cannot be positive or
@@ -2101,14 +2145,18 @@ rules:
       If two values are provided for the'Amount', then one value must be negative and
       the other value positive (i.e. both values of the integer cannot be positive or
       negative)
+    implementation_notes: >-
+      "One negative and one positive" is expressed as the presence of an Amount < 0
+      and the presence of an Amount > 0; combined with the count = 2 guard this forces
+      exactly one of each sign (and rejects a 0, which is neither).
 
   - number: 70115
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:CEComputation
-    test: >-
-      not(globe:NetGlobeIncome/globe:Adjustments/globe:AdjustmentItem = 'GIR2022' or
-          globe:NetGlobeIncome/globe:Adjustments/globe:AdjustmentItem = 'GIR2023') or
-      globe:AdjustedFANIL/globe:Adjustment/globe:UPEAdjustments
+    when: >-
+      globe:NetGlobeIncome/globe:Adjustments/globe:AdjustmentItem = 'GIR2022' or
+      globe:NetGlobeIncome/globe:Adjustments/globe:AdjustmentItem = 'GIR2023'
+    present: globe:AdjustedFANIL/globe:Adjustment/globe:UPEAdjustments
     rule: >-
       When the 'Adjustmentitem' element contains the value GIR2022 and/or GIR2023 then
       the 'UPEAdjustments' element must be completed
@@ -2121,9 +2169,8 @@ rules:
   - number: 70116
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:CEComputation/globe:NetGlobeIncome
-    test: >-
-      not(globe:Adjustments/globe:AdjustmentItem = 'GIR2025') or
-      globe:IntShippingIncome
+    when: globe:Adjustments/globe:AdjustmentItem = 'GIR2025'
+    present: globe:IntShippingIncome
     rule: >-
       When the 'AdjustmentItem' element contains the value GIR2025 then the
       'IntShippingIncome' element must be completed
@@ -2136,9 +2183,8 @@ rules:
   - number: 70117
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:CEComputation
-    test: >-
-      not(globe:NetGlobeIncome/globe:Adjustments/globe:AdjustmentItem = 'GIR2024') or
-      globe:Elections/globe:Art7.6
+    when: globe:NetGlobeIncome/globe:Adjustments/globe:AdjustmentItem = 'GIR2024'
+    present: globe:Elections/globe:Art7.6
     rule: >-
       When the 'Adjustmentitem' element contains the value GIR2024 then the 'Art7.6'
       element must be completed
@@ -2175,12 +2221,12 @@ rules:
   - number: 70120
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:CEComputation/globe:AdjustedCoveredTax/globe:DeferTaxAdjustAmt/globe:Total
-    test: >-
-      number(.) =
-      sum(../globe:DeferTaxExpense) +
-      sum(../globe:Adjustment/globe:Amount) +
-      sum(../globe:Adjustment/globe:Recast/globe:Higher) +
-      sum(../globe:Adjustment/globe:Recast/globe:Lower)
+    almostEquals:
+      expected: >-
+        sum(../globe:DeferTaxExpense) +
+        sum(../globe:Adjustment/globe:Amount) +
+        sum(../globe:Adjustment/globe:Recast/globe:Higher) +
+        sum(../globe:Adjustment/globe:Recast/globe:Lower)
     rule: >-
       The Total element shall equal the following calculation: Defer TaxExpense + Sum
       of all values reported in Adjustments/Amount + Recast/Higher + Recast/Lower (if
@@ -2205,11 +2251,11 @@ rules:
 
   - number: 70122
     targets:
-      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:CEComputation/globe:AdjustedCoveredTax/globe:DeferTaxAdjustAmt/globe:Adjustment/globe:Amount
-    test: >-
-      count(../globe:Amount) != 2 or
-      ((number(../globe:Amount[1]) < 0 and number(../globe:Amount[2]) > 0) or
-       (number(../globe:Amount[1]) > 0 and number(../globe:Amount[2]) < 0))
+      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:CEComputation/globe:AdjustedCoveredTax/globe:DeferTaxAdjustAmt/globe:Adjustment
+    when: count(globe:Amount) = 2
+    allOf:
+      - present: globe:Amount[. < 0]
+      - present: globe:Amount[. > 0]
     rule: >-
       If two values are provided for the Amount element, then one value must be
       negative and the other value must be positive (i.e. the values of the integer
@@ -2218,12 +2264,16 @@ rules:
       If two values are provided for the Amount element, then one value must be
       negative and the other value must be positive (i.e. the values of the integer
       cannot be both positive or negative)
+    implementation_notes: >-
+      Targets the Adjustment (parent of Amount) so the count = 2 guard and the two
+      sign-presence checks are evaluated once per Adjustment rather than once per
+      Amount; see 70114 for the same "one negative and one positive" idiom.
 
   - number: 70123
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:CEComputation/globe:AdjustedIncomeTax/globe:CrossAllocation/globe:Additions
-    test: >-
-      number(.) >= 0
+    atLeast:
+      expected: 0
     rule: >-
       The Additions element must not have a negative value.
     description: >-
@@ -2232,8 +2282,8 @@ rules:
   - number: 70124
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:CEComputation/globe:AdjustedIncomeTax/globe:CrossAllocation/globe:Reductions
-    test: >-
-      number(.) <= 0
+    atMost:
+      expected: 0
     rule: >-
       The Reductions element must not be a positive value.
     description: >-

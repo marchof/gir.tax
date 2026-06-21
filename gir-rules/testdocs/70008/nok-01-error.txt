@@ -1,0 +1,1 @@
+Expected RecJurCode to be one of [AF, DE] but was 'US'

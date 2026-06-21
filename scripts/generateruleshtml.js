@@ -1,6 +1,7 @@
 import { mkdir, readFile, readdir, writeFile } from "node:fs/promises";
 import path from "node:path";
-import { parse } from "yaml";
+import { parse, stringify } from "yaml";
+import { ASSERTION_OPS, ruleIsActive } from "../app/ruleeval.js";
 import { CSS_TOKENS } from "./styleTokens.js";
 
 const repoRootDir = ".";
@@ -15,15 +16,6 @@ const escapeHtml = (value) => String(value)
   .replaceAll(">", "&gt;")
   .replaceAll('"', "&quot;")
   .replaceAll("'", "&#39;");
-
-const renderRuleTargets = (targets) => {
-  if (!Array.isArray(targets) || targets.length === 0) {
-    return "<span class=\"muted\">No targets</span>";
-  }
-
-  const items = targets.map((target) => `<li><code>${escapeHtml(target)}</code></li>`).join("\n");
-  return `<ul class="target-list">${items}</ul>`;
-};
 
 const getTestDocsTreeBaseUrl = (commitId) => `https://github.com/marchof/gir.tax/tree/${commitId}/gir-rules/testdocs`;
 const getTestDocsBlobBaseUrl = (commitId) => `https://github.com/marchof/gir.tax/blob/${commitId}/gir-rules/testdocs`;
@@ -76,11 +68,24 @@ const renderRuleTests = (ruleNumber, testFiles, commitId) => {
   `;
 };
 
+// Serialize a rule's executable definition — its `targets`, optional `when:`
+// guard, and single assertion operator with operands — back to the YAML the
+// rule is authored in, so the page shows the structured rule rather than a raw
+// XPath. Fields are emitted in authoring order to mirror rules.yaml.
+const renderImplementation = (rule) => {
+  const operator = ASSERTION_OPS.find((op) => op in rule);
+  const assertion = { targets: rule.targets };
+  if ("when" in rule) {
+    assertion.when = rule.when;
+  }
+  assertion[operator] = rule[operator];
+  return escapeHtml(stringify(assertion).trimEnd());
+};
+
 const renderRuleCard = (rule, testFiles, commitId) => {
   const number = escapeHtml(rule.number);
   const shortRule = escapeHtml(rule.rule || "No rule text");
   const description = escapeHtml(rule.description || "No description");
-  const test = escapeHtml(rule.test || "");
   const implementationNotes = rule.implementation_notes
     ? `<p class="impl-notes">${escapeHtml(rule.implementation_notes)}</p>`
     : "";
@@ -93,10 +98,8 @@ const renderRuleCard = (rule, testFiles, commitId) => {
       <h2 class="rule-title">${shortRule}</h2>
       <p class="rule-description">${description}</p>
       <section>
-        <h3>Targets</h3>
-        ${renderRuleTargets(rule.targets)}
-        <h3>Implementation XPath test</h3>
-        <pre><code>${test}</code></pre>
+        <h3>Implementation</h3>
+        <pre><code>${renderImplementation(rule)}</code></pre>
         ${implementationNotes}
       </section>
       <section>
@@ -114,7 +117,7 @@ const generateRulesHtml = async () => {
   const rulesData = parse(rulesRaw);
 
   const implementedRules = (rulesData.rules || [])
-    .filter((rule) => Object.prototype.hasOwnProperty.call(rule, "test"))
+    .filter(ruleIsActive)
     .sort((a, b) => Number(a.number) - Number(b.number));
 
   const testFilesByRule = new Map();
@@ -317,11 +320,6 @@ const generateRulesHtml = async () => {
       font-size: 0.81rem;
     }
 
-    .target-list code {
-      overflow-wrap: anywhere;
-      word-break: break-word;
-    }
-
     pre {
       margin: 0.55rem 0 0;
       padding: 0.7rem;
@@ -331,13 +329,6 @@ const generateRulesHtml = async () => {
       overflow-x: auto;
       white-space: pre-wrap;
       word-break: break-word;
-    }
-
-    .target-list {
-      margin: 0;
-      padding-left: 1.1rem;
-      display: grid;
-      gap: 0.25rem;
     }
 
     .impl-notes {

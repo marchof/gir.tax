@@ -163,6 +163,13 @@ class XMLOutline extends HTMLElement {
           color: #5c5c5c;
           line-height: 1.4;
         }
+
+        .validation-error-description {
+          margin-top: 4px;
+          color: #8a8a8a;
+          font-size: 12px;
+          line-height: 1.4;
+        }
       </style>
       <div id="container" part="container"></div>
     `;
@@ -332,8 +339,9 @@ class XMLOutline extends HTMLElement {
     const title = `<div class="validation-tooltip-title">Validation Errors (${errors.length})</div>`;
     const items = errors.map(error => {
       const code = error.code ? `<div class="validation-error-code">${this._escapeHtml(error.code)}</div>` : "";
-      const message = error.details ? `<div class="validation-error-message">${this._escapeHtml(error.details)}</div>` : "";
-      return `<div class="validation-error-item">${code}${message}</div>`;
+      const message = error.message ? `<div class="validation-error-message">${this._escapeHtml(error.message)}</div>` : "";
+      const description = error.description ? `<div class="validation-error-description">${this._escapeHtml(error.description)}</div>` : "";
+      return `<div class="validation-error-item">${code}${message}${description}</div>`;
     }).join("");
     return title + items;
   }

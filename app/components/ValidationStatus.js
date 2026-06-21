@@ -169,6 +169,14 @@ class ValidationStatus extends HTMLElement {
           color: #1f2d3d;
         }
 
+        .issue-description {
+          margin: 0.4rem 0 0;
+          padding-top: 0.4rem;
+          border-top: 1px dashed #d6e0ec;
+          font-size: 0.85rem;
+          color: #5a6b80;
+        }
+
         .meta-grid {
           margin-top: 0.5rem;
           display: grid;
@@ -305,7 +313,10 @@ class ValidationStatus extends HTMLElement {
 
     const items = errors.map(error => {
       const code = this._escapeHtml(error.code || "-");
-      const details = this._escapeHtml(error.details || "No details");
+      const message = this._escapeHtml(error.message || "No details");
+      const description = error.description
+        ? `<p class="issue-description">${this._escapeHtml(error.description)}</p>`
+        : "";
       const language = error.language ? `<span class="issue-language">${this._escapeHtml(error.language)}</span>` : "";
       const docRefIds = this._renderMonospaceRow("DocRef IDs", error.docRefIds);
       const fieldPaths = this._renderMonospaceRow("Field Paths", error.fieldPaths);
@@ -316,7 +327,8 @@ class ValidationStatus extends HTMLElement {
             <span class="issue-code">${code}</span>
             ${language}
           </div>
-          <p class="issue-details">${details}</p>
+          <p class="issue-details">${message}</p>
+          ${description}
           <div class="meta-grid">
             ${docRefIds}
             ${fieldPaths}

@@ -1,0 +1,1 @@
+Expected OwnershipPercentage to equal 1 but was 0.98
