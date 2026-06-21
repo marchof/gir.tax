@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- RecJurCode is not the UPE jurisdiction (AF) but is a JurisdictionName of a
+     JurisdictionSection JurWithTaxingRights (FR) -> allowed. -->
+<globe:GLOBE_OECD xmlns:globe="urn:oecd:ties:globe:v2">
+  <globe:GLOBEBody>
+    <globe:GeneralSection>
+      <globe:CorporateStructure>
+        <globe:UPE>
+          <globe:ExcludedUPE>
+            <globe:ID>
+              <globe:ResCountryCode>AF</globe:ResCountryCode>
+            </globe:ID>
+          </globe:ExcludedUPE>
+        </globe:UPE>
+      </globe:CorporateStructure>
+    </globe:GeneralSection>
+    <globe:JurisdictionSection>
+      <globe:JurWithTaxingRights>
+        <globe:JurisdictionName>FR</globe:JurisdictionName>
+      </globe:JurWithTaxingRights>
+    </globe:JurisdictionSection>
+    <globe:UTPRAttribution>
+      <globe:RecJurCode>FR</globe:RecJurCode>
+    </globe:UTPRAttribution>
+  </globe:GLOBEBody>
+</globe:GLOBE_OECD>

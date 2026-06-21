@@ -532,10 +532,10 @@ rules:
   - number: 70008
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:UTPRAttribution/globe:RecJurCode
-    references:
-      - GLOBEBody/JurisdictionSection/JurWithTaxingRights/JurisdictionName
-      - GLOBEBody/GeneralSection/CorporateStructure/UPE/ID/ResCountryCode
-    element: RecJurCode
+    test: >-
+      . = ancestor::globe:GLOBEBody/globe:GeneralSection/globe:CorporateStructure/globe:UPE/globe:ExcludedUPE/globe:ID/globe:ResCountryCode
+      or . = ancestor::globe:GLOBEBody/globe:GeneralSection/globe:CorporateStructure/globe:UPE/globe:OtherUPE/globe:ID/globe:ResCountryCode
+      or . = ancestor::globe:GLOBEBody/globe:JurisdictionSection/globe:JurWithTaxingRights/globe:JurisdictionName
     rule: >-
       The Jurisdiction reported in the RecJurCode must be the UPE jurisdiction or one
       of the Jurisdictions reported in the JurisdictionName element of the repeatable
@@ -546,6 +546,12 @@ rules:
       The Jurisdiction reported in the RecJurCode must be the UPE jurisdiction or one
       of the jurisdictions reported in the JurisdictionName element of the repeatable
       JurWith TaxingRights element.
+    implementation_notes: >-
+      The UPE jurisdiction is the ResCountryCode of whichever UPE form is present
+      (ExcludedUPE or OtherUPE ID). The JurisdictionName is matched against any
+      JurWithTaxingRights in the GLOBEBody's JurisdictionSection(s) rather than a
+      single jurisdiction-specific section. All sources are reached via
+      ancestor::globe:GLOBEBody and matched by value (. = node-set is true on any hit).
 
   - number: 70009
     targets:

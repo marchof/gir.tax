@@ -44,6 +44,7 @@
             <globe:ExcludedUPEStatus>GIR601</globe:ExcludedUPEStatus>
             <globe:ID>
               <globe:Name>globe:Name</globe:Name>
+              <globe:ResCountryCode>AF</globe:ResCountryCode>
               <globe:TIN TypeOfTIN="GIR3004" unknown="true">NOTIN</globe:TIN>
               <globe:GlobeStatus>GIR301</globe:GlobeStatus>
             </globe:ID>

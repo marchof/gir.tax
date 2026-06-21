@@ -43,6 +43,7 @@
             <globe:ExcludedUPEStatus>GIR601</globe:ExcludedUPEStatus>
             <globe:ID>
               <globe:Name>globe:Name</globe:Name>
+              <globe:ResCountryCode>AF</globe:ResCountryCode>
               <globe:TIN TypeOfTIN="GIR3004" unknown="true">NOTIN</globe:TIN>
               <globe:Rules>GIR201</globe:Rules>
               <globe:GlobeStatus>GIR301</globe:GlobeStatus>
@@ -116,6 +117,9 @@
     <globe:JurisdictionSection>
       <globe:RecJurCode>AF</globe:RecJurCode>
       <globe:Jurisdiction>AF</globe:Jurisdiction>
+      <globe:JurWithTaxingRights>
+        <globe:JurisdictionName>AF</globe:JurisdictionName>
+      </globe:JurWithTaxingRights>
       <globe:GLoBETax>
         <globe:ETR>
           <globe:SubGroup>
