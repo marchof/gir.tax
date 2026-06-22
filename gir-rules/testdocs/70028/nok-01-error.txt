@@ -1,0 +1,1 @@
+Expected OwnershipPercentage not to equal 0 but was 0

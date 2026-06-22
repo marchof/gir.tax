@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- GlobeStatus is repeatable: GIR318 appears second, so the existential guard
+     still treats this as the Non-Group-Member exception and the 0% passes. -->
+<globe:GLOBE_OECD xmlns:globe="urn:oecd:ties:globe:v2">
+  <globe:GLOBEBody>
+    <globe:GeneralSection>
+      <globe:CorporateStructure>
+        <globe:CE>
+          <globe:ID>
+            <globe:GlobeStatus>GIR301</globe:GlobeStatus>
+            <globe:GlobeStatus>GIR318</globe:GlobeStatus>
+          </globe:ID>
+          <globe:Ownership>
+            <globe:OwnershipType>GIR806</globe:OwnershipType>
+            <globe:TIN>NOTIN</globe:TIN>
+            <globe:OwnershipPercentage>0</globe:OwnershipPercentage>
+          </globe:Ownership>
+        </globe:CE>
+      </globe:CorporateStructure>
+    </globe:GeneralSection>
+  </globe:GLOBEBody>
+</globe:GLOBE_OECD>

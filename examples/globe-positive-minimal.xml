@@ -62,7 +62,7 @@
         		<globe:OwnershipType>GIR801</globe:OwnershipType>
         		<globe:TIN>globe:TIN</globe:TIN>
         		<globe:OwnershipPercentage>
-        			0.0
+        			1
         		</globe:OwnershipPercentage>
         	</globe:Ownership>
         </globe:CE>

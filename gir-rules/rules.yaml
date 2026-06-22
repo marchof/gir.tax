@@ -881,9 +881,9 @@ rules:
   - number: 70028
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:GeneralSection/globe:CorporateStructure/globe:CE/globe:Ownership/globe:OwnershipPercentage
-    references:
-      - GLOBEBody/GeneralSection/CorporateStructure/CE/ID/GlobeStatus
-    element: OwnershipPercentage
+    when: not(ancestor::globe:CE[1]/globe:ID/globe:GlobeStatus = 'GIR318')
+    notEquals:
+      expected: 0
     rule: >-
       Unless the GloBEStatus contains the value of GIR318, then the
       OwnershipPercentage must not be 0%
