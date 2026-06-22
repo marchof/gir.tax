@@ -132,6 +132,13 @@ function parseXmlDocument(xmlText) {
   };
 }
 
+// Yield long enough for the browser to paint a pending status update before a
+// synchronous, CPU-bound step (XML parsing, GIR rule evaluation) blocks the
+// main thread. A double rAF guarantees a frame has actually been painted.
+function yieldToRender() {
+  return new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+}
+
 async function handleFileImport(file) {
   if (!file) {
     return;
@@ -139,6 +146,8 @@ async function handleFileImport(file) {
 
   tabs.setTabVisible("validation", true);
   tabs.setTabChip("validation", null);
+  tabs.setActiveTab("validation");
+  validationStatus.loading = "Reading file…";
   exportXmlButton.clear();
 
   const statusMessage = createStatusMessage();
@@ -158,6 +167,7 @@ async function handleFileImport(file) {
 
   exportXmlButton.setDownload(new Blob([xmlText], { type: "application/xml" }), xmlFileName);
 
+  validationStatus.loading = "Loading validation engine & validating against schema…";
   const result = await xmlSchema.validate(xmlText, xmlFileName);
   if (!result.valid) {
     corporateStructureGraph.xmlDocument = null;
@@ -166,6 +176,8 @@ async function handleFileImport(file) {
     return;
   }
 
+  validationStatus.loading = "Parsing XML document…";
+  await yieldToRender();
   const { xml, parserErrorText } = parseXmlDocument(xmlText);
   if (parserErrorText) {
     corporateStructureGraph.xmlDocument = null;
@@ -174,6 +186,8 @@ async function handleFileImport(file) {
     return;
   }
 
+  validationStatus.loading = "Applying GIR validation rules…";
+  await yieldToRender();
   statusMessage.setOriginalMessageRefId(extractMessageRefId(xml));
   validateGirRules(xml, statusMessage);
   const hasValidationErrors = statusMessage.errorCount > 0;

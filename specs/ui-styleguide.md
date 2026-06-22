@@ -183,6 +183,20 @@ generic grays:
   surface is currently receiving input" rather than "this is a category
   label" — the token pairing is shared, the meaning is contextual.
 
+### Loading / in-progress pattern
+
+For async work that would otherwise leave a panel looking frozen (see the
+validation flow in `ValidationStatus.js` / `app.js`), show an inline spinner
+plus a short status message rather than blocking or leaving the panel empty.
+
+- Spinner: a small ring built from `border: 2px solid var(--color-accent-soft)`
+  with `border-top-color: var(--color-accent)`, animated with a single
+  `@keyframes spin` (`rotate(360deg)`). The accent pairing reuses the badge
+  tokens to signal activity.
+- Message: `color-ink-soft`, laid out beside the spinner with a small gap.
+- Respect `@media (prefers-reduced-motion: reduce)` by slowing the spin rather
+  than removing the indicator.
+
 ### Postit / floating tooltip pattern
 
 Used by the validation-error tooltip in `XMLOutline.js` (`.validation-tooltip`).

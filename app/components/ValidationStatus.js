@@ -7,6 +7,7 @@ class ValidationStatus extends HTMLElement {
     this._statusMessage = null;
     this._xmlFileName = null;
     this._objectUrl = undefined;
+    this._loading = null;
   }
 
   connectedCallback() {
@@ -19,11 +20,21 @@ class ValidationStatus extends HTMLElement {
 
   set statusMessage(value) {
     this._statusMessage = value;
+    this._loading = null;
     this.render();
   }
 
   get statusMessage() {
     return this._statusMessage;
+  }
+
+  set loading(message) {
+    this._loading = message || null;
+    this.render();
+  }
+
+  get loading() {
+    return this._loading;
   }
 
   set xmlFileName(value) {
@@ -57,9 +68,14 @@ class ValidationStatus extends HTMLElement {
   }
 
   render() {
-    const content = this._statusMessage
-      ? this._renderValidationHtml(this._statusMessage)
-      : "<p class=\"empty-state\">No validation data.</p>";
+    let content;
+    if (this._loading) {
+      content = this._renderLoadingHtml(this._loading);
+    } else if (this._statusMessage) {
+      content = this._renderValidationHtml(this._statusMessage);
+    } else {
+      content = "<p class=\"empty-state\">No validation data.</p>";
+    }
 
     this.shadowRoot.innerHTML = `
       <style>
@@ -210,6 +226,36 @@ class ValidationStatus extends HTMLElement {
           color: #4d5f74;
         }
 
+        .loading-state {
+          display: flex;
+          align-items: center;
+          gap: 0.7rem;
+          margin: 0;
+          color: var(--color-ink-soft);
+        }
+
+        .spinner {
+          flex: none;
+          width: 1.1rem;
+          height: 1.1rem;
+          border: 2px solid var(--color-accent-soft);
+          border-top-color: var(--color-accent);
+          border-radius: 50%;
+          animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+          to {
+            transform: rotate(360deg);
+          }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .spinner {
+            animation-duration: 2s;
+          }
+        }
+
         .rules-hint {
           display: flex;
           align-items: center;
@@ -258,6 +304,15 @@ class ValidationStatus extends HTMLElement {
     if (exportBtn) {
       exportBtn.addEventListener("click", () => this.exportStatusXml());
     }
+  }
+
+  _renderLoadingHtml(message) {
+    return `
+      <p class="loading-state">
+        <span class="spinner" aria-hidden="true"></span>
+        <span>${this._escapeHtml(message)}</span>
+      </p>
+    `;
   }
 
   _renderValidationHtml(statusMessage) {
