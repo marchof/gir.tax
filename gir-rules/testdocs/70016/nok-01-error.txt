@@ -1,0 +1,1 @@
+Expected ../GlobeStatus[. = 'GIR309'] to be present, but it is missing

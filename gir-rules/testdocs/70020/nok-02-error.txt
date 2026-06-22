@@ -1,0 +1,1 @@
+Expected GlobeStatus to be absent, but it is present

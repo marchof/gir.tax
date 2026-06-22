@@ -631,7 +631,8 @@ rules:
   - number: 70013
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:GeneralSection/globe:CorporateStructure/globe:CE/globe:ID/globe:GlobeStatus
-    element: GlobeStatus
+    when: . = 'GIR313'
+    absent: ../globe:GlobeStatus[. = 'GIR314']
     rule: >-
       When the GlobeStatus contains the value of GIR313, the value of GIR314 must not
       also be reported for the same CE
@@ -643,7 +644,8 @@ rules:
   - number: 70014
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:GeneralSection/globe:CorporateStructure/globe:CE/globe:ID/globe:GlobeStatus
-    element: GlobeStatus
+    when: . = 'GIR307'
+    absent: ../globe:GlobeStatus[. = 'GIR308']
     rule: >-
       When the GlobeStatus contains the value of GIR307, the value of GIR308 must not
       also be reported for the same CE
@@ -669,6 +671,8 @@ rules:
   - number: 70016
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:GeneralSection/globe:CorporateStructure/globe:CE/globe:ID/globe:GlobeStatus
+    when: . = 'GIR307'
+    present: ../globe:GlobeStatus[. = 'GIR309']
     rule: >-
       When the GlobeStatus contains the value of GIR307, the value of GIR309 should
       also be reported in the GlobeStatus
@@ -680,7 +684,8 @@ rules:
   - number: 70017
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:GeneralSection/globe:CorporateStructure/globe:CE/globe:ID/globe:GlobeStatus
-    element: GlobeStatus
+    when: . = 'GIR308'
+    present: ../globe:GlobeStatus[. = 'GIR309']
     rule: >-
       When the GlobeStatus contains the value of GIR308, the value of GIR309 should
       also be reported in the GlobeStatus
@@ -692,7 +697,8 @@ rules:
   - number: 70018
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:GeneralSection/globe:CorporateStructure/globe:CE/globe:ID/globe:GlobeStatus
-    element: GlobeStatus
+    when: . = 'GIR305'
+    absent: ../globe:GlobeStatus[. = 'GIR306']
     rule: >-
       When the GlobeStatus contains the value of GIR305, the value of GIR306 must not
       also be reported for the same CE
@@ -717,7 +723,11 @@ rules:
   - number: 70020
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:GeneralSection/globe:CorporateStructure/globe:CE/globe:ID/globe:GlobeStatus
-    element: GlobeStatus
+    when: . = 'GIR316' or . = 'GIR318'
+    absent: ../globe:GlobeStatus[2]
+    implementation_notes: >-
+      The schema allows unbounded GlobeStatus; once one carries GIR316/GIR318,
+      asserting no second occurrence enforces the "no other value" restriction.
     rule: >-
       If the GlobeStatus contains the value of GIR316 or GIR318, then there should be
       no other value in the GlobeStatus (if GlobeStatus = GIR316 - GlobeStatus can
@@ -729,7 +739,6 @@ rules:
       GlobeStatus of GIR316 or GIR318, it can only contain the single value in the
       GlobeStatus (i.e. only GIR316 or only GIR318)
 
-    other_record_errors:
   - number: 70021
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:GeneralSection/globe:CorporateStructure/globe:CE/globe:ID/globe:GlobeStatus
