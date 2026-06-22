@@ -581,9 +581,12 @@ rules:
       GloBEStatus of the UPE align with note 1.3.1.6 of the GIR.
 
   - number: 70010
-    targets: 
-      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:GeneralSection/globe:CorporateStructure/globe:UPE/globe:OtherUPE/globe:ID/globe:ResCountryCode
-    element: ResCountryCode
+    targets:
+      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:GeneralSection/globe:CorporateStructure/globe:UPE/globe:OtherUPE/globe:ID
+    absent: globe:ResCountryCode[2]
+    implementation_notes: >-
+      The schema allows unbounded ResCountryCode; targeting the ID and asserting
+      no second occurrence enforces the "only one value" restriction.
     rule: >-
       Only one value is allowed for the ResCountryCode of the UPE/OtherUPE
     description: >-
@@ -593,8 +596,11 @@ rules:
 
   - number: 70011
     targets:
-      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:GeneralSection/globe:CorporateStructure/globe:CE/globe:ID/globe:ResCountryCode
-    element: ResCountryCode
+      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:GeneralSection/globe:CorporateStructure/globe:CE/globe:ID
+    absent: globe:ResCountryCode[2]
+    implementation_notes: >-
+      The schema allows unbounded ResCountryCode; targeting the ID and asserting
+      no second occurrence enforces the "only one value" restriction.
     rule: >-
       Only one value is allowed for the ResCountryCode of the CE
     description: >-
@@ -1336,8 +1342,11 @@ rules:
 
   - number: 70059
     targets:
-      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:OverallComputation/globe:NetGlobeIncome/globe:Adjustments/globe:AdjustmentItem
-    element: AdjustmentItem
+      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR
+    distinct: globe:ETRStatus/globe:ETRComputation/globe:OverallComputation/globe:NetGlobeIncome/globe:Adjustments/globe:AdjustmentItem
+    implementation_notes: >-
+      Targets the ETR so the uniqueness check is scoped per ETR element; the
+      operand selects the AdjustmentItem at this location.
     rule: >-
       Each code for this AdjustmentItem element cannot be used more than once per ETR
       element in the Jurisdiction Section.
@@ -1392,8 +1401,11 @@ rules:
 
   - number: 70063
     targets:
-      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:OverallComputation/globe:AdjustedCoveredTax/globe:Adjustments/globe:AdjustmentItem
-    element: AdjustmentItem
+      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR
+    distinct: globe:ETRStatus/globe:ETRComputation/globe:OverallComputation/globe:AdjustedCoveredTax/globe:Adjustments/globe:AdjustmentItem
+    implementation_notes: >-
+      Targets the ETR so the uniqueness check is scoped per ETR element; the
+      operand selects the AdjustmentItem at this location.
     rule: >-
       Each code for this AdjustmentItem element cannot be used more than once per ETR
       element in the Jurisdiction Section.
@@ -1449,8 +1461,12 @@ rules:
 
   - number: 70067
     targets:
-      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:OverallComputation/globe:AdjustedCoveredTax/globe:PostFilingAdjust/globe:DeferTaxAsset/globe:AmountAttributed/globe:Year
-    element: Year
+      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:OverallComputation/globe:AdjustedCoveredTax/globe:PostFilingAdjust/globe:DeferTaxAsset
+    distinct: globe:AmountAttributed/globe:Year
+    implementation_notes: >-
+      Targets DeferTaxAsset so uniqueness is scoped to its AmountAttributed
+      entries. Year is an xsd:date reported at year granularity (YYYY-01-01) in
+      the corpus, so distinctness of the date string is distinctness of the year.
     rule: >-
       If more than one AmountAttributed is provided, the years cannot be the same
     description: >-
@@ -1471,8 +1487,12 @@ rules:
 
   - number: 70069
     targets:
-      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:OverallComputation/globe:AdjustedCoveredTax/globe:PostFilingAdjust/globe:CoveredTaxRefund/globe:AmountAttributed/globe:Year
-    element: Year
+      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:OverallComputation/globe:AdjustedCoveredTax/globe:PostFilingAdjust/globe:CoveredTaxRefund
+    distinct: globe:AmountAttributed/globe:Year
+    implementation_notes: >-
+      Targets CoveredTaxRefund so uniqueness is scoped to its AmountAttributed
+      entries. Year is an xsd:date reported at year granularity (YYYY-01-01) in
+      the corpus, so distinctness of the date string is distinctness of the year.
     rule: >-
       If more than one AmountAttributed is provided, the years cannot be the same
     description: >-
@@ -1629,8 +1649,11 @@ rules:
 
   - number: 70080
     targets:
-      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:OverallComputation/globe:AdjustedCoveredTax/globe:DeferTaxAdjustAmt/globe:Adjustments/globe:AdjustmentItem
-    element: AdjustmentItem
+      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR
+    distinct: globe:ETRStatus/globe:ETRComputation/globe:OverallComputation/globe:AdjustedCoveredTax/globe:DeferTaxAdjustAmt/globe:Adjustments/globe:AdjustmentItem
+    implementation_notes: >-
+      Targets the ETR so the uniqueness check is scoped per ETR element; the
+      operand selects the AdjustmentItem at this location.
     rule: >-
       Each code for this AdjustmentItem element cannot be used more than once per ETR
       element in the Jurisdiction Section.
@@ -2209,8 +2232,12 @@ rules:
 
   - number: 70119
     targets:
-      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:CEComputation/globe:AdjustedCoveredTax/globe:Adjustments/globe:AdjustmentItem
-    element: AdjustmentItem
+      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR
+    distinct: globe:ETRStatus/globe:ETRComputation/globe:CEComputation/globe:AdjustedCoveredTax/globe:Adjustments/globe:AdjustmentItem
+    implementation_notes: >-
+      Targets the ETR so the uniqueness check is scoped per ETR element (across
+      all of its CEComputations, per the literal "per ETR" wording); the operand
+      selects the AdjustmentItem at this location.
     rule: >-
       Each code for this AdjustmentItem element cannot be used more than once per ETR
       element in the Jurisdiction Section.
@@ -2240,8 +2267,12 @@ rules:
 
   - number: 70121
     targets:
-      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:CEComputation/globe:AdjustedCoveredTax/globe:DeferTaxAdjustAmt/globe:Adjustment/globe:AdjustmentItem
-    element: AdjustmentItem
+      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR
+    distinct: globe:ETRStatus/globe:ETRComputation/globe:CEComputation/globe:AdjustedCoveredTax/globe:DeferTaxAdjustAmt/globe:Adjustment/globe:AdjustmentItem
+    implementation_notes: >-
+      Targets the ETR so the uniqueness check is scoped per ETR element (across
+      all of its CEComputations, per the literal "per ETR" wording); the operand
+      selects the AdjustmentItem at this location.
     rule: >-
       Each code for this Adjustmentltem element cannot be used more than once per ETR
       element in the Jurisdiction Section.
