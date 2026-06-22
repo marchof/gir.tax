@@ -1169,7 +1169,7 @@ rules:
   - number: 70044
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus
-    element: ETRStatus
+    present: globe:ETRException | globe:ETRComputation
     rule: >-
       When the ETRStatus is completed, it must contain at least one of ETRException or
       ETRComputation.
