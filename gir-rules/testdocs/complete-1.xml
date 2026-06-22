@@ -75,10 +75,10 @@
         		</globe:OwnershipPercentage>
         	</globe:Ownership>
           <globe:QIIR>
-            <globe:POPE-IPE>GIR901</globe:POPE-IPE>
+            <globe:POPE-IPE>GIR902</globe:POPE-IPE>
             <globe:Exception>
               <globe:ExceptionRule>
-                <globe:Art2.1.3>false</globe:Art2.1.3>
+                <globe:Art2.1.3>true</globe:Art2.1.3>
               </globe:ExceptionRule>
               <globe:TIN>globe:TIN</globe:TIN>
             </globe:Exception>

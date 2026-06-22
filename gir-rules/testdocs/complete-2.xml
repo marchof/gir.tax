@@ -67,7 +67,7 @@
             <globe:POPE-IPE>GIR901</globe:POPE-IPE>
             <globe:Exception>
               <globe:ExceptionRule>
-                <globe:Art2.1.5>false</globe:Art2.1.5>
+                <globe:Art2.1.5>true</globe:Art2.1.5>
               </globe:ExceptionRule>
               <globe:TIN>globe:TIN</globe:TIN>
             </globe:Exception>

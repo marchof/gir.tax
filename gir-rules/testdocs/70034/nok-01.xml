@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<globe:GLOBE_OECD xmlns:globe="urn:oecd:ties:globe:v2">
+  <globe:GLOBEBody>
+    <globe:GeneralSection>
+      <globe:CorporateStructure>
+        <globe:CE>
+          <globe:QIIR>
+            <globe:POPE-IPE>GIR902</globe:POPE-IPE>
+            <globe:Exception>
+              <globe:ExceptionRule>
+                <globe:Art2.1.3>false</globe:Art2.1.3>
+              </globe:ExceptionRule>
+              <globe:TIN>globe:TIN</globe:TIN>
+            </globe:Exception>
+          </globe:QIIR>
+        </globe:CE>
+      </globe:CorporateStructure>
+    </globe:GeneralSection>
+  </globe:GLOBEBody>
+</globe:GLOBE_OECD>

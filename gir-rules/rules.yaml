@@ -966,11 +966,15 @@ rules:
 
   - number: 70034
     targets:
-      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:GeneralSection/globe:CorporateStructure/globe:CE/globe:QIIR/globe:Exception/globe:ExceptionRule/globe:Art2.1.3
-    references:
-      - GLOBEBody/GeneralSection/CorporateStructure/CE/QIIR/POPE-IPE
-      - GLOBEBody/GeneralSection/CorporateStructure/CE/QIIR/Exception
-    element: Art2.1.3
+      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:GeneralSection/globe:CorporateStructure/globe:CE/globe:QIIR
+    when: globe:POPE-IPE = 'GIR902' and globe:Exception
+    isTrue: globe:Exception/globe:ExceptionRule/globe:Art2.1.3
+    implementation_notes: >-
+      Targets the common QIIR ancestor (not the Art2.1.3 leaf the spec cites) so
+      the guard requires a completed Exception explicitly and the consequence
+      still fails when GIR902 selects Art2.1.5 instead (Art2.1.3 then missing).
+      POPE-IPE carries the bare enum value 'GIR902' (the spec's 'GIR902-IPE'
+      label appends the #9 enumeration's "IPE" description).
     rule: >-
       If the POPE-IPE element has the value of 'GIR902-IPE' and the Exception element
       is completed because an exception applies, the Art.2.1.3 element must have the
@@ -981,11 +985,15 @@ rules:
 
   - number: 70035
     targets:
-      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:GeneralSection/globe:CorporateStructure/globe:CE/globe:QIIR/globe:Exception/globe:ExceptionRule/globe:Art2.1.5
-    references:
-      - GLOBEBody/GeneralSection/CorporateStructure/CE/QIIR/POPE-IPE
-      - GLOBEBody/GeneralSection/CorporateStructure/CE/QIIR/Exception
-    element: Art2.1.5
+      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:GeneralSection/globe:CorporateStructure/globe:CE/globe:QIIR
+    when: globe:POPE-IPE = 'GIR901' and globe:Exception
+    isTrue: globe:Exception/globe:ExceptionRule/globe:Art2.1.5
+    implementation_notes: >-
+      Targets the common QIIR ancestor (not the Art2.1.5 leaf the spec cites) so
+      the guard requires a completed Exception explicitly and the consequence
+      still fails when GIR901 selects Art2.1.3 instead (Art2.1.5 then missing).
+      POPE-IPE carries the bare enum value 'GIR901' (the spec's 'GIR901-POPE'
+      label appends the #9 enumeration's "POPE" description).
     rule: >-
       If the POPE-IPE element has the value of 'GIR901-POPE' and the Exception element
       is completed because an exception applies, the Art.2.1.5 element must have the
