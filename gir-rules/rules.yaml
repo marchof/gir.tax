@@ -942,9 +942,7 @@ rules:
   - number: 70032
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:GeneralSection/globe:CorporateStructure/globe:CE/globe:QIIR
-    references:
-      - GLOBEBody/GeneralSection/CorporateStructure/CE/ID/Rules
-    element: QIIR
+    present: ../globe:ID/globe:Rules[. = 'GIR201' or . = 'GIR202']
     rule: >-
       When the QIIR element is provided, then the Rules element as provided in the CE
       element must contain either GIR201 or GIR202
