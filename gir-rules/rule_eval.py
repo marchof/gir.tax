@@ -305,7 +305,9 @@ class RuleEvaluator:
             return ctx.xpath("local-name(.)")
         step = self._strip_ns(expr).split("/")[-1]
         step = step.split("::")[-1].split("[")[0]
-        return step.strip()
+        # Aggregate/arithmetic operands (e.g. `sum(.../Total)`) leave a trailing
+        # paren on the last step; strip wrapping parens so the label stays clean.
+        return step.strip().strip("()")
 
     def _value_str(self, expr, ctx):
         """Render an operand's value for a message: number, 'string', or (missing)."""

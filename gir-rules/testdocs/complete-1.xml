@@ -390,7 +390,7 @@
                     <globe:AdjustedCoveredTax>-100</globe:AdjustedCoveredTax>
                     <globe:GlobeLoss>0</globe:GlobeLoss>
                     <globe:ExpectedAdjustedCoveredTax>0</globe:ExpectedAdjustedCoveredTax>
-                    <globe:AdditionalTopUpTax>0</globe:AdditionalTopUpTax>
+                    <globe:AdditionalTopUpTax>100</globe:AdditionalTopUpTax>
                   </globe:Art4.1.5>
                 </globe:AdditionalTopUpTax>
                 <globe:QDMTT>
@@ -402,7 +402,7 @@
                   <globe:DeMinAvailable>0</globe:DeMinAvailable>
                   <globe:Currency>EUR</globe:Currency>
                 </globe:QDMTT>
-                <globe:TopUpTax>0</globe:TopUpTax>
+                <globe:TopUpTax>100</globe:TopUpTax>
                 <globe:ExcessNegTaxExpense>
                   <globe:PriorYearBalance>0</globe:PriorYearBalance>
                   <globe:GeneratedInRFY>0</globe:GeneratedInRFY>

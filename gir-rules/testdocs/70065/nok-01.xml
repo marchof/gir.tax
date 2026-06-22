@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<globe:GLOBE_OECD xmlns:globe="urn:oecd:ties:globe:v2">
+  <globe:GLOBEBody>
+    <globe:JurisdictionSection>
+      <globe:GLoBETax>
+        <globe:ETR>
+          <globe:ETRStatus>
+            <globe:ETRComputation>
+              <globe:OverallComputation>
+                <globe:AdjustedCoveredTax>
+                  <globe:PostFilingAdjust>
+                    <globe:CoveredTaxRefund>
+                      <globe:Total>90</globe:Total>
+                          <globe:AmountAttributed>
+                            <globe:Amount>30</globe:Amount>
+                          </globe:AmountAttributed>
+                          <globe:AmountAttributed>
+                            <globe:Amount>70</globe:Amount>
+                          </globe:AmountAttributed>
+                    </globe:CoveredTaxRefund>
+                  </globe:PostFilingAdjust>
+                </globe:AdjustedCoveredTax>
+              </globe:OverallComputation>
+            </globe:ETRComputation>
+          </globe:ETRStatus>
+        </globe:ETR>
+      </globe:GLoBETax>
+    </globe:JurisdictionSection>
+  </globe:GLOBEBody>
+</globe:GLOBE_OECD>

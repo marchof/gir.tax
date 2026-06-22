@@ -341,10 +341,13 @@ rules:
   - number: 60025
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:OverallComputation/globe:ETRRate
-    references:
-      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/NetGlobeIncome/Total
-      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/Total
-    element: ETRRate
+    when: ../globe:NetGlobeIncome/globe:Total > 0
+    almostEquals:
+      expected: sum(../globe:AdjustedCoveredTax/globe:Total) div ../globe:NetGlobeIncome/globe:Total
+    implementation_notes: >-
+      Guarded on a positive NetGlobeIncome, the case the rule says it applies to
+      (this also avoids the divide-by-zero); a missing AdjustedCoveredTax/Total is
+      summed to 0 per the rule.
     rule: >-
       The ETRRate must be equal to the integer value reported at the AdjustedCovered
       Tax/Total element DIVIDED by the integer reported at the NetGlobeIncome/Total
@@ -358,13 +361,14 @@ rules:
   - number: 60026
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:OverallComputation/globe:TopUpTax
-    references:
-      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/TopUpTaxPercentage
-      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/ExcessProfits
-      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdditionalTopUpTax/NONArt4.1.5/AdditionalTopUpTax
-      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdditionalTopUpTax/Art4.1.5/AdditionalTopUpTax
-      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/QDMTT/Amount
-    element: TopUpTax
+    almostEquals:
+      expected: >-
+        sum(../globe:TopUpTaxPercentage) * sum(../globe:ExcessProfits) +
+        sum(../globe:AdditionalTopUpTax/globe:NONArt4.1.5/globe:AdditionalTopUpTax) +
+        sum(../globe:AdditionalTopUpTax/globe:Art4.1.5/globe:AdditionalTopUpTax) -
+        sum(../globe:QDMTT/globe:Amount)
+    implementation_notes: >-
+      Every operand is summed so a missing element counts as 0 per the rule.
     rule: >-
       TopUpTax must equal the following calculation: (TopUp TaxPercentage * Excess
       Profits) + (NONArt.4.1.5/Additional TopUpTax + Art4.1.5AdditionalTopUpTax/) -
@@ -378,10 +382,8 @@ rules:
   - number: 60027
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:LowTaxJurisdiction/globe:LTCE/globe:IIR/globe:ParentEntity/globe:TopUpTax
-    references:
-      - GLOBEBody/JurisdictionSection/LowTaxJurisdiction/LTCE/IIR/ParentEntity/TopUpTaxShare
-      - GLOBEBody/JurisdictionSection/LowTaxJurisdiction/LTCE/IIR/ParentEntity/IIROffSet
-    element: TopUpTax
+    almostEquals:
+      expected: ../globe:TopUpTaxShare - sum(../globe:IIROffSet)
     rule: >-
       The IIR/ParentEntity/TopUp Tax integer must equal the following calculation:
       IIR/ParentEntity/TopUpTaxShare - IIROffSet
@@ -1430,9 +1432,8 @@ rules:
   - number: 70065
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:OverallComputation/globe:AdjustedCoveredTax/globe:PostFilingAdjust/globe:CoveredTaxRefund/globe:Total
-    references:
-      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/PostFilingAdjust/CoveredTaxRefund/AmountAttributed/Amount
-    element: Total
+    almostEquals:
+      expected: sum(../globe:AmountAttributed/globe:Amount)
     rule: >-
       The PostFilingAdjust / Covered TaxRefund / Total should equal to the following
       calculation: Sum of all 'PostFilingAdjust/ Covered TaxRefund / AmountAttributed
@@ -1594,9 +1595,8 @@ rules:
   - number: 70076
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:OverallComputation/globe:AdjustedCoveredTax/globe:TransBlendCFC/globe:Total
-    references:
-      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/TransBlendCFC/CFCJur/Allocation/AggAllocTax
-    element: Total
+    almostEquals:
+      expected: sum(../globe:CFCJur/globe:Allocation/globe:AggAllocTax)
     rule: >-
       The TransBlendCFC total should equal the following calculation: Sum of all
       'AggAllocTax'
@@ -1747,10 +1747,19 @@ rules:
   - number: 70086
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:OverallComputation/globe:ExcessProfits
-    references:
-      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/NetGlobeIncome/Total
-      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/SubstanceExclusion/Total
-    element: ExcessProfits
+    anyOf:
+      - almostEquals:
+          expected: ../globe:NetGlobeIncome/globe:Total - sum(../globe:SubstanceExclusion/globe:Total)
+      - allOf:
+          - atMost:
+              actual: ../globe:NetGlobeIncome/globe:Total - sum(../globe:SubstanceExclusion/globe:Total)
+              expected: 0
+          - equals:
+              expected: 0
+    implementation_notes: >-
+      ExcessProfits is the difference floored at 0: it equals NetGlobeIncome/Total
+      - SubstanceExclusion/Total, or 0 when that difference is negative
+      (SubstanceExclusion/Total summed so a missing value counts as 0).
     rule: >-
       The ExcessProfits integer is equal to the following calculation:
       NetGlobeIncome/Total - SubstanceExclusion/Total. If SubstanceExclusion/Total
@@ -1805,9 +1814,8 @@ rules:
   - number: 70090
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:OverallComputation/globe:AdditionalTopUpTax/globe:Art4.1.5/globe:GlobeLoss
-    references:
-      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/NetGlobeIncome/Total
-    element: GlobeLoss
+    equals:
+      expected: ancestor::globe:OverallComputation/globe:NetGlobeIncome/globe:Total
     rule: >-
       The GlobeLoss element must be the same as
       OverallComputation/NetGlobeIncome/Total value.
@@ -1818,9 +1826,8 @@ rules:
   - number: 70091
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:OverallComputation/globe:AdditionalTopUpTax/globe:Art4.1.5/globe:ExpectedAdjustedCoveredTax
-    references:
-      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdditionalTopUpTax/Art4.1.5/GlobeLoss
-    element: ExpectedAdjustedCoveredTax
+    almostEquals:
+      expected: ../globe:GlobeLoss * 0.15
     rule: >-
       The ExpectedAdjustedCoveredTax must be equal to the following calculation:
       GlobeLoss * 15%
@@ -1831,10 +1838,19 @@ rules:
   - number: 70092
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:OverallComputation/globe:AdditionalTopUpTax/globe:Art4.1.5/globe:AdditionalTopUpTax
-    references:
-      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdditionalTopUpTax/Art4.1.5/ExpectedAdjustedCoveredTax
-      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdditionalTopUpTax/Art4.1.5/AdjustedCoveredTax
-    element: AdditionalTopUpTax
+    anyOf:
+      - almostEquals:
+          expected: ../globe:ExpectedAdjustedCoveredTax - ../globe:AdjustedCoveredTax
+      - allOf:
+          - atMost:
+              actual: ../globe:ExpectedAdjustedCoveredTax - ../globe:AdjustedCoveredTax
+              expected: 0
+          - equals:
+              expected: 0
+    implementation_notes: >-
+      AdditionalTopUpTax is the difference floored at 0: it equals
+      ExpectedAdjustedCoveredTax - AdjustedCoveredTax, or 0 when that difference is
+      negative.
     rule: >-
       The AdditionalTopUpTax integer is equal to the following calculation:
       ExpectedAdjustedCoveredTax - AdjustedCoveredTax. If the
@@ -1893,10 +1909,8 @@ rules:
   - number: 70096
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:OverallComputation/globe:AdditionalTopUpTax/globe:NONArt4.1.5/globe:AdditionalTopUpTax
-    references:
-      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdditionalTopUpTax/NONArt4.1.5/Recalculated/TopUpTax
-      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdditionalTopUpTax/NONArt4.1.5/Previous/TopUpTax
-    element: AdditionalTopUpTax
+    almostEquals:
+      expected: ../globe:Recalculated/globe:TopUpTax - ../globe:Previous/globe:TopUpTax
     rule: >-
       Additional TopUpTax is calculated as follows: Recalculated/TopUpTax -
       Previous/TopUpTax
@@ -1907,10 +1921,14 @@ rules:
   - number: 70097
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:LowTaxJurisdiction/globe:LTCE/globe:IIR/globe:ParentEntity/globe:InclusionRatio
-    references:
-      - GLOBEBody/JurisdictionSection/LowTaxJurisdiction/LTCE/IIR/NetGlobeIncome
-      - GLOBEBody/JurisdictionSection/LowTaxJurisdiction/LTCE/IIR/ParentEntity/OtherOwnershipAllocation
-    element: InclusionRatio
+    when: ancestor::globe:IIR/globe:NetGlobeIncome != 0
+    almostEquals:
+      expected: >-
+        (ancestor::globe:IIR/globe:NetGlobeIncome - sum(../globe:OtherOwnershipAllocation))
+        div ancestor::globe:IIR/globe:NetGlobeIncome
+    implementation_notes: >-
+      Guarded on a non-zero NetGlobeIncome since the ratio is otherwise undefined
+      (divide-by-zero); OtherOwnershipAllocation is summed so a missing value is 0.
     rule: >-
       The InclusionRatio must equal the following calculation: (NetGlobeIncome - Other
       OwnershipAllocation) DIVIDED by NetGlobeIncome
@@ -1921,10 +1939,8 @@ rules:
   - number: 70098
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:LowTaxJurisdiction/globe:LTCE/globe:IIR/globe:ParentEntity/globe:TopUpTaxShare
-    references:
-      - GLOBEBody/JurisdictionSection/LowTaxJurisdiction/LTCE/IIR/TopUpTax
-      - GLOBEBody/JurisdictionSection/LowTaxJurisdiction/LTCE/IIR/ParentEntity/InclusionRatio
-    element: TopUpTaxShare
+    almostEquals:
+      expected: ancestor::globe:IIR/globe:TopUpTax * ../globe:InclusionRatio
     rule: >-
       The IIR/ParentEntity/TopUpTaxShare must equal the following calculation:
       IIR/TopUpTax * InclusionRatio
@@ -1934,11 +1950,13 @@ rules:
 
   - number: 70099
     targets:
-      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:UTPRAttribution/globe:Attribution/globe:UTPRTopUpTaxAttributed
-    references:
-      - GLOBEBody/JurisdictionSection/LowTaxJurisdiction/UTPR/UTPRCalculation/TotalUTPRTopUpTax
-      - GLOBEBody/UTPRAttribution/Attribution/UTPRPercentage
-    element: TotalUTPRTopUpTax
+      - /globe:GLOBE_OECD/globe:GLOBEBody
+    almostEquals:
+      actual: sum(globe:UTPRAttribution/globe:Attribution/globe:UTPRTopUpTaxAttributed)
+      expected: sum(globe:JurisdictionSection/globe:LowTaxJurisdiction/globe:UTPR/globe:UTPRCalculation/globe:TotalUTPRTopUpTax)
+    implementation_notes: >-
+      A whole-message aggregate (sum across all jurisdictions), so the target is
+      the GLOBEBody to give the two sums a single context.
     rule: >-
       The sum of 'UTPRTopUp TaxAttributed' should be equal to the sum of
       TotalUTPRTopUpTax amount in the JurisdictionSection element in respect to all

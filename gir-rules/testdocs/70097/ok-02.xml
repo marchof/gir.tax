@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<globe:GLOBE_OECD xmlns:globe="urn:oecd:ties:globe:v2">
+  <globe:GLOBEBody>
+    <globe:JurisdictionSection>
+      <globe:LowTaxJurisdiction>
+        <globe:LTCE>
+          <globe:IIR>
+            <globe:NetGlobeIncome>0</globe:NetGlobeIncome>
+            <globe:ParentEntity>
+              <globe:OtherOwnershipAllocation>200</globe:OtherOwnershipAllocation>
+              <globe:InclusionRatio>0.5</globe:InclusionRatio>
+            </globe:ParentEntity>
+          </globe:IIR>
+        </globe:LTCE>
+      </globe:LowTaxJurisdiction>
+    </globe:JurisdictionSection>
+  </globe:GLOBEBody>
+</globe:GLOBE_OECD>

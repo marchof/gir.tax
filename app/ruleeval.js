@@ -333,7 +333,9 @@ export class RuleEvaluator {
     }
     let step = this._stripNs(e).split("/").pop();
     step = step.split("::").pop().split("[")[0];
-    return step.trim();
+    // Aggregate/arithmetic operands (e.g. `sum(.../Total)`) leave a trailing
+    // paren on the last step; strip wrapping parens so the label stays clean.
+    return step.trim().replace(/^\(+|\)+$/g, "");
   }
 
   // Render an operand's value for a message: number, 'string', or (missing).

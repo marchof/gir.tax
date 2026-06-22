@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<globe:GLOBE_OECD xmlns:globe="urn:oecd:ties:globe:v2">
+  <globe:GLOBEBody>
+    <globe:JurisdictionSection>
+      <globe:GLoBETax>
+        <globe:ETR>
+          <globe:ETRStatus>
+            <globe:ETRComputation>
+              <globe:OverallComputation>
+                <globe:AdjustedCoveredTax>
+                  <globe:TransBlendCFC>
+                    <globe:Total>100</globe:Total>
+                  <globe:CFCJur>
+                    <globe:Allocation>
+                      <globe:AggAllocTax>40</globe:AggAllocTax>
+                    </globe:Allocation>
+                  </globe:CFCJur>
+                  <globe:CFCJur>
+                    <globe:Allocation>
+                      <globe:AggAllocTax>60</globe:AggAllocTax>
+                    </globe:Allocation>
+                  </globe:CFCJur>
+                  </globe:TransBlendCFC>
+                </globe:AdjustedCoveredTax>
+              </globe:OverallComputation>
+            </globe:ETRComputation>
+          </globe:ETRStatus>
+        </globe:ETR>
+      </globe:GLoBETax>
+    </globe:JurisdictionSection>
+  </globe:GLOBEBody>
+</globe:GLOBE_OECD>

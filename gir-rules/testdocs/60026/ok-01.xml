@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<globe:GLOBE_OECD xmlns:globe="urn:oecd:ties:globe:v2">
+  <globe:GLOBEBody>
+    <globe:JurisdictionSection>
+      <globe:GLoBETax>
+        <globe:ETR>
+          <globe:ETRStatus>
+            <globe:ETRComputation>
+              <globe:OverallComputation>
+                <globe:TopUpTaxPercentage>0.15</globe:TopUpTaxPercentage>
+                <globe:ExcessProfits>1000</globe:ExcessProfits>
+                <globe:AdditionalTopUpTax>
+                  <globe:NONArt4.1.5>
+                    <globe:AdditionalTopUpTax>10</globe:AdditionalTopUpTax>
+                  </globe:NONArt4.1.5>
+                  <globe:Art4.1.5>
+                    <globe:AdditionalTopUpTax>20</globe:AdditionalTopUpTax>
+                  </globe:Art4.1.5>
+                </globe:AdditionalTopUpTax>
+                <globe:QDMTT>
+                  <globe:Amount>5</globe:Amount>
+                </globe:QDMTT>
+                <globe:TopUpTax>175</globe:TopUpTax>
+              </globe:OverallComputation>
+            </globe:ETRComputation>
+          </globe:ETRStatus>
+        </globe:ETR>
+      </globe:GLoBETax>
+    </globe:JurisdictionSection>
+  </globe:GLOBEBody>
+</globe:GLOBE_OECD>
