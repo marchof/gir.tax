@@ -1112,13 +1112,29 @@ rules:
 
   - number: 70045
     targets:
-      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRException/globe:TransitionalCbCRSafeHarbour
-    references:
-      - GLOBEBody/Summary/SafeHarbour
-      - GLOBEBody/Summary/Jurisdiction
-      - GLOBEBody/Summary/Jurisdiction/Subgroup
-      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/SubGroup
-    element: TransitionalCbCRSafeHarbour
+      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR
+    when: >-
+      ancestor::globe:GLOBEBody/globe:Summary[(globe:SafeHarbour = 'GIR1203' or
+      globe:SafeHarbour = 'GIR1204' or globe:SafeHarbour =
+      'GIR1205')][not(globe:Jurisdiction/globe:Subgroup)]/globe:Jurisdiction/globe:JurisdictionName
+      = ancestor::globe:JurisdictionSection/globe:Jurisdiction
+      or
+      ancestor::globe:GLOBEBody/globe:Summary[(globe:SafeHarbour = 'GIR1203' or
+      globe:SafeHarbour = 'GIR1204' or globe:SafeHarbour =
+      'GIR1205')][globe:Jurisdiction/globe:Subgroup]/globe:Jurisdiction/globe:Subgroup/globe:TIN
+      = globe:SubGroup/globe:TIN
+    present: globe:ETRStatus/globe:ETRException/globe:TransitionalCbCRSafeHarbour
+    implementation_notes: >-
+      The SafeHarbour input lives in the Summary while the dependent element lives in
+      the JurisdictionSection, so the target is the ETR (a stable context with a usable
+      Jurisdiction and SubGroup/TIN) and the guard correlates back to the Summary by
+      existential node-set equality. The spec's two-level key becomes two clauses: a
+      Summary carrying the input code with no Subgroup matches by jurisdiction
+      (Summary/Jurisdiction/JurisdictionName = JurisdictionSection/Jurisdiction); a
+      Summary with a Subgroup matches by TIN against this ETR's own SubGroup/TIN
+      (Summary/Jurisdiction/Subgroup/TIN = ETR/SubGroup/TIN). Comparing the TIN against
+      this specific ETR pins the jurisdiction too, assuming subgroup TINs are unique
+      across jurisdictions. See specs/cross-section-correlation-design.md.
     rule: >-
       When the SafeHarbour element has the input of GIR1203, GIR1204 or GIR1205 for a
       jurisdiction (or for a subgroup), then the TransitionalCbCRSafeHarbour element
@@ -1147,10 +1163,20 @@ rules:
 
   - number: 70047
     targets:
-      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:Summary/globe:SafeHarbour
-    references:
-      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRException/TransitionalCbCRSafeHarbour/Revenue
-    element: Revenue
+      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR
+    when: >-
+      ancestor::globe:GLOBEBody/globe:Summary[globe:SafeHarbour =
+      'GIR1203'][not(globe:Jurisdiction/globe:Subgroup)]/globe:Jurisdiction/globe:JurisdictionName
+      = ancestor::globe:JurisdictionSection/globe:Jurisdiction
+      or
+      ancestor::globe:GLOBEBody/globe:Summary[globe:SafeHarbour =
+      'GIR1203'][globe:Jurisdiction/globe:Subgroup]/globe:Jurisdiction/globe:Subgroup/globe:TIN
+      = globe:SubGroup/globe:TIN
+    present: globe:ETRStatus/globe:ETRException/globe:TransitionalCbCRSafeHarbour/globe:Revenue
+    implementation_notes: >-
+      Targets the ETR and correlates back to the Summary by the two-clause existential
+      match described in rule 70045 (jurisdiction for non-subgroup Summaries, SubGroup/
+      TIN for subgroup Summaries), keyed on the GIR1203 input.
     rule: >-
       When the SafeHarbour element has the input of GIR1203 for a jurisdiction (or for
       a subgroup), then the revenue element must be completed for that jurisdiction
@@ -1164,10 +1190,20 @@ rules:
 
   - number: 70048
     targets:
-      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:Summary/globe:SafeHarbour
-    references:
-      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRException/TransitionalCbCRSafeHarbour/IncomeTax
-    element: IncomeTax
+      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR
+    when: >-
+      ancestor::globe:GLOBEBody/globe:Summary[globe:SafeHarbour =
+      'GIR1204'][not(globe:Jurisdiction/globe:Subgroup)]/globe:Jurisdiction/globe:JurisdictionName
+      = ancestor::globe:JurisdictionSection/globe:Jurisdiction
+      or
+      ancestor::globe:GLOBEBody/globe:Summary[globe:SafeHarbour =
+      'GIR1204'][globe:Jurisdiction/globe:Subgroup]/globe:Jurisdiction/globe:Subgroup/globe:TIN
+      = globe:SubGroup/globe:TIN
+    present: globe:ETRStatus/globe:ETRException/globe:TransitionalCbCRSafeHarbour/globe:IncomeTax
+    implementation_notes: >-
+      Targets the ETR and correlates back to the Summary by the two-clause existential
+      match described in rule 70045 (jurisdiction for non-subgroup Summaries, SubGroup/
+      TIN for subgroup Summaries), keyed on the GIR1204 input.
     rule: >-
       When the SafeHarbour element has the input of GIR1204 for a jurisdiction (or for
       a subgroup), then the IncomeTax element must be completed for that jurisdiction
@@ -1181,10 +1217,20 @@ rules:
 
   - number: 70049
     targets:
-      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:Summary/globe:SafeHarbour
-    references:
-      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRException/UTPRSafeHarbour/CITRate
-    element: UTPRSafeHarbour
+      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR
+    when: >-
+      ancestor::globe:GLOBEBody/globe:Summary[globe:SafeHarbour =
+      'GIR1206'][not(globe:Jurisdiction/globe:Subgroup)]/globe:Jurisdiction/globe:JurisdictionName
+      = ancestor::globe:JurisdictionSection/globe:Jurisdiction
+      or
+      ancestor::globe:GLOBEBody/globe:Summary[globe:SafeHarbour =
+      'GIR1206'][globe:Jurisdiction/globe:Subgroup]/globe:Jurisdiction/globe:Subgroup/globe:TIN
+      = globe:SubGroup/globe:TIN
+    present: globe:ETRStatus/globe:ETRException/globe:UTPRSafeHarbour
+    implementation_notes: >-
+      Targets the ETR and correlates back to the Summary by the two-clause existential
+      match described in rule 70045 (jurisdiction for non-subgroup Summaries, SubGroup/
+      TIN for subgroup Summaries), keyed on the GIR1206 input.
     rule: >-
       When the SafeHarbour element has the input of GIR1206 for a jurisdiction (or for
       a subgroup), then the UTPRSafeHarbour element must be completed for that
@@ -1199,10 +1245,22 @@ rules:
 
   - number: 70050
     targets:
-      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:Summary/globe:SafeHarbour
-    references:
-      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/Non-MaterialCE
-    element: Non-MaterialCE
+      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR
+    when: >-
+      ancestor::globe:GLOBEBody/globe:Summary[(globe:SafeHarbour = 'GIR1207' or
+      globe:SafeHarbour = 'GIR1208' or globe:SafeHarbour =
+      'GIR1209')][not(globe:Jurisdiction/globe:Subgroup)]/globe:Jurisdiction/globe:JurisdictionName
+      = ancestor::globe:JurisdictionSection/globe:Jurisdiction
+      or
+      ancestor::globe:GLOBEBody/globe:Summary[(globe:SafeHarbour = 'GIR1207' or
+      globe:SafeHarbour = 'GIR1208' or globe:SafeHarbour =
+      'GIR1209')][globe:Jurisdiction/globe:Subgroup]/globe:Jurisdiction/globe:Subgroup/globe:TIN
+      = globe:SubGroup/globe:TIN
+    present: globe:ETRStatus/globe:ETRComputation/globe:Non-MaterialCE
+    implementation_notes: >-
+      Targets the ETR and correlates back to the Summary by the two-clause existential
+      match described in rule 70045 (jurisdiction for non-subgroup Summaries, SubGroup/
+      TIN for subgroup Summaries), keyed on the GIR1207, GIR1208 or GIR1209 input.
     rule: >-
       When the SafeHarbour element has the input of GIR1207, GIR1208 or GIR1209 for a
       jurisdiction (or for a subgroup), then the Non-MaterialCE element must be
@@ -1216,13 +1274,22 @@ rules:
       jurisdiction (or for a subgroup), then the Non-MaterialCE element must be
       completed for that jurisdiction (or for that subgroup)
 
-    other_record_errors_continued:
   - number: 70051
     targets:
-      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:Summary/globe:SafeHarbour
-    references:
-      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/Non-MaterialCE/RFY/AggregateSimplified
-    element: AggregateSimplified
+      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR
+    when: >-
+      ancestor::globe:GLOBEBody/globe:Summary[globe:SafeHarbour =
+      'GIR1208'][not(globe:Jurisdiction/globe:Subgroup)]/globe:Jurisdiction/globe:JurisdictionName
+      = ancestor::globe:JurisdictionSection/globe:Jurisdiction
+      or
+      ancestor::globe:GLOBEBody/globe:Summary[globe:SafeHarbour =
+      'GIR1208'][globe:Jurisdiction/globe:Subgroup]/globe:Jurisdiction/globe:Subgroup/globe:TIN
+      = globe:SubGroup/globe:TIN
+    present: globe:ETRStatus/globe:ETRComputation/globe:Non-MaterialCE/globe:RFY/globe:AggregateSimplified
+    implementation_notes: >-
+      Targets the ETR and correlates back to the Summary by the two-clause existential
+      match described in rule 70045 (jurisdiction for non-subgroup Summaries, SubGroup/
+      TIN for subgroup Summaries), keyed on the GIR1208 input.
     rule: >-
       When the SafeHarbour element has the input of GIR1208 for a jurisdiction (or for
       a subgroup), then the Aggregate Simplified element must be completed for that
@@ -1238,11 +1305,20 @@ rules:
 
   - number: 70052
     targets:
-      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:OverallComputation/globe:SubstanceExclusion
-    references:
-      - Summary/SafeHarbour
-      - JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/SubstanceExclusion
-    element: SubstanceExclusion
+      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR
+    when: >-
+      ancestor::globe:GLOBEBody/globe:Summary[globe:SafeHarbour =
+      'GIR1209'][not(globe:Jurisdiction/globe:Subgroup)]/globe:Jurisdiction/globe:JurisdictionName
+      = ancestor::globe:JurisdictionSection/globe:Jurisdiction
+      or
+      ancestor::globe:GLOBEBody/globe:Summary[globe:SafeHarbour =
+      'GIR1209'][globe:Jurisdiction/globe:Subgroup]/globe:Jurisdiction/globe:Subgroup/globe:TIN
+      = globe:SubGroup/globe:TIN
+    present: globe:ETRStatus/globe:ETRComputation/globe:OverallComputation/globe:SubstanceExclusion
+    implementation_notes: >-
+      Targets the ETR and correlates back to the Summary by the two-clause existential
+      match described in rule 70045 (jurisdiction for non-subgroup Summaries, SubGroup/
+      TIN for subgroup Summaries), keyed on the GIR1209 input.
     rule: >-
       When the SafeHarbour element has the input of GIR1209 for a jurisdiction (or for
       a subgroup), then the Substance Exclusion element must be completed for that
@@ -1257,12 +1333,24 @@ rules:
 
   - number: 70053
     targets:
-      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:OverallComputation/globe:SubstanceExclusion
-    references:
-      - Summary/SafeHarbour
-      - JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/SubstanceExclusion
-      - JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRException/TransitionalCbCRSafeHarbour/Profit
-    element: SubstanceExclusion
+      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR
+    when: >-
+      (ancestor::globe:GLOBEBody/globe:Summary[globe:SafeHarbour =
+      'GIR1205'][not(globe:Jurisdiction/globe:Subgroup)]/globe:Jurisdiction/globe:JurisdictionName
+      = ancestor::globe:JurisdictionSection/globe:Jurisdiction
+      or
+      ancestor::globe:GLOBEBody/globe:Summary[globe:SafeHarbour =
+      'GIR1205'][globe:Jurisdiction/globe:Subgroup]/globe:Jurisdiction/globe:Subgroup/globe:TIN
+      = globe:SubGroup/globe:TIN) and
+      globe:ETRStatus/globe:ETRException/globe:TransitionalCbCRSafeHarbour/globe:Profit > 0
+    present: globe:ETRStatus/globe:ETRComputation/globe:OverallComputation/globe:SubstanceExclusion
+    implementation_notes: >-
+      Targets the ETR and correlates back to the Summary by the two-clause existential
+      match described in rule 70045 (jurisdiction for non-subgroup Summaries, SubGroup/
+      TIN for subgroup Summaries), keyed on the GIR1205 input. The Profit exception is
+      local to the ETR, so the guard also requires this ETR's
+      TransitionalCbCRSafeHarbour/Profit to be positive (a Profit of 0 or negative
+      leaves the rule vacuous).
     rule: >-
       When the SafeHarbour element has the input of GIR1205 for a jurisdiction (or for
       a subgroup) then the Substance Exclusion element must be completed for that

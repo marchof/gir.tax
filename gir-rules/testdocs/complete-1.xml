@@ -93,6 +93,7 @@
     <globe:Summary>
       <globe:RecJurCode>AF</globe:RecJurCode>
       <globe:Jurisdiction>
+        <globe:JurisdictionName>AF</globe:JurisdictionName>
         <globe:Subgroup>
           <globe:TIN>globe:TIN</globe:TIN>
           <globe:TypeofSubGroup>GIR1101</globe:TypeofSubGroup>
@@ -131,7 +132,11 @@
               <globe:TransitionalCbCRSafeHarbour>
                 <globe:Revenue>0</globe:Revenue>
                 <globe:Profit>0</globe:Profit>
+                <globe:IncomeTax>0</globe:IncomeTax>
               </globe:TransitionalCbCRSafeHarbour>
+              <globe:UTPRSafeHarbour>
+                <globe:CITRate>0.000</globe:CITRate>
+              </globe:UTPRSafeHarbour>
             </globe:ETRException>
             <globe:ETRComputation>
               <globe:CEComputation>
@@ -413,6 +418,7 @@
               <globe:Non-MaterialCE>
                 <globe:RFY>
                   <globe:TotalRevenue>0</globe:TotalRevenue>
+                  <globe:AggregateSimplified>0</globe:AggregateSimplified>
                 </globe:RFY>
                 <globe:RFY-2>
                   <globe:TotalRevenue>0</globe:TotalRevenue>

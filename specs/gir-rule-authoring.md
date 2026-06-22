@@ -54,6 +54,14 @@ part of adding the operator — not before, and not left behind "just in case".
 * For year/date arithmetic, use the `type`/`offset` fields on the comparison and
   `equals` operators rather than hand-rolling `translate()`/`substring()` — see
   [gir-rules/README.md](../gir-rules/README.md#ordering-comparisons-and-type--offset).
+* To correlate two sections that share no parent/child relationship (e.g. a
+  `Summary` value gating a `JurisdictionSection` element), target the element that
+  carries the *consequence*'s context and pin the *match* in `when:` via
+  **existential node-set equality** (`A = B` holds when any value of `A` equals
+  any value of `B`). This keeps the operand portable XPath 1.0 — no `current()` or
+  variables, which the browser XPath engine lacks. One cross-context key fits one
+  `=`; a second key needs to ride as a local predicate on one side (see the
+  SafeHarbour subgroup-TIN rules 70045/70047–70053).
 
 ## `implementation_notes`
 

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<globe:GLOBE_OECD xmlns:globe="urn:oecd:ties:globe:v2">
+  <globe:GLOBEBody>
+    <globe:Summary>
+      <globe:Jurisdiction>
+        <globe:JurisdictionName>AF</globe:JurisdictionName>
+      </globe:Jurisdiction>
+      <globe:SafeHarbour>GIR1201</globe:SafeHarbour>
+    </globe:Summary>
+    <globe:JurisdictionSection>
+      <globe:Jurisdiction>AF</globe:Jurisdiction>
+      <globe:GLoBETax>
+        <globe:ETR>
+          <globe:ETRStatus>
+            <globe:ETRException>
+              <globe:TransitionalCbCRSafeHarbour>
+                <globe:Profit>1</globe:Profit>
+              </globe:TransitionalCbCRSafeHarbour>
+            </globe:ETRException>
+            <globe:ETRComputation>
+              <globe:OverallComputation>
+                <globe:FANIL>0</globe:FANIL>
+              </globe:OverallComputation>
+            </globe:ETRComputation>
+          </globe:ETRStatus>
+        </globe:ETR>
+      </globe:GLoBETax>
+    </globe:JurisdictionSection>
+  </globe:GLOBEBody>
+</globe:GLOBE_OECD>
