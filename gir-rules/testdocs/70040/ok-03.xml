@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<globe:GLOBE_OECD xmlns:globe="urn:oecd:ties:globe:v2">
+  <globe:GLOBEBody>
+    <globe:GeneralSection>
+      <globe:CorporateStructure>
+        <globe:UPE>
+          <globe:ExcludedUPE>
+            <globe:ID>
+              <globe:ResCountryCode>AF</globe:ResCountryCode>
+            </globe:ID>
+          </globe:ExcludedUPE>
+        </globe:UPE>
+      </globe:CorporateStructure>
+    </globe:GeneralSection>
+    <globe:Summary>
+      <globe:Jurisdiction>
+        <globe:JurisdictionName>AF</globe:JurisdictionName>
+      </globe:Jurisdiction>
+      <globe:SafeHarbour>GIR1206</globe:SafeHarbour>
+    </globe:Summary>
+  </globe:GLOBEBody>
+</globe:GLOBE_OECD>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<globe:GLOBE_OECD xmlns:globe="urn:oecd:ties:globe:v2">
+  <globe:GLOBEBody>
+    <globe:FilingInfo>
+      <globe:AccountingInfo>
+        <globe:CFSofUPE>GIR502</globe:CFSofUPE>
+      </globe:AccountingInfo>
+    </globe:FilingInfo>
+    <globe:Summary>
+      <globe:SafeHarbour>GIR1201</globe:SafeHarbour>
+    </globe:Summary>
+  </globe:GLOBEBody>
+</globe:GLOBE_OECD>

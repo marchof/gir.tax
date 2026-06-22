@@ -1017,10 +1017,21 @@ rules:
   - number: 70038
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:Summary/globe:SafeHarbour
-    references:
-      - MessageSpec/ReportingPeriod
-      - GLOBEBody/FilingInfo/Period/End
-    element: SafeHarbour
+    when: >-
+      translate(ancestor::globe:GLOBE_OECD/globe:MessageSpec/globe:ReportingPeriod, '-', '') > 20280630
+      or
+      translate(ancestor::globe:GLOBEBody/globe:FilingInfo/globe:Period/globe:End, '-', '') > 20280630
+    notIn:
+      - "'GIR1203'"
+      - "'GIR1204'"
+      - "'GIR1205'"
+    implementation_notes: >-
+      Either the MessageSpec ReportingPeriod or the FilingInfo Period/End being later
+      than the 30/06/2028 transitional cut-off triggers the restriction, so the guard
+      ORs both. Both are YYYY-MM-DD, so translate() strips the dashes to compare them as
+      integers against 20280630 (a missing date becomes NaN and is silently
+      non-triggering; the cut-off date itself is not "later", so the compare is strict).
+      The forbidden inputs are checked with notIn against the target SafeHarbour value.
     rule: >-
       When the Reporting Period or Period End Date is later than 30/06/2028, then the
       SafeHarbour element cannot have the input of GIR1203, GIR1204 or GIR1205.
@@ -1031,10 +1042,18 @@ rules:
   - number: 70039
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:Summary/globe:SafeHarbour
-    references:
-      - MessageSpec/ReportingPeriod
-      - GLOBEBody/FilingInfo/Period/End
-    element: SafeHarbour
+    when: >-
+      translate(ancestor::globe:GLOBE_OECD/globe:MessageSpec/globe:ReportingPeriod, '-', '') > 20261231
+      or
+      translate(ancestor::globe:GLOBEBody/globe:FilingInfo/globe:Period/globe:End, '-', '') > 20261231
+    notEquals:
+      expected: "'GIR1206'"
+    implementation_notes: >-
+      Same shape as 70038 with the UTPR Safe Harbour cut-off of 31/12/2026: either the
+      MessageSpec ReportingPeriod or the FilingInfo Period/End being later triggers the
+      restriction, translate() strips the YYYY-MM-DD dashes for an integer compare
+      against 20261231 (strict, so the cut-off date itself is allowed). A single
+      forbidden input reads better as notEquals than a one-element notIn.
     rule: >-
       When the Reporting Period or Period End Date is later than 31/12/2026, then the
       SafeHarbour element cannot have the input of GIR1206
@@ -1045,10 +1064,17 @@ rules:
   - number: 70040
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:Summary/globe:SafeHarbour
-    references:
-      - GLOBEBody/Summary/Jurisdiction/JurisdictionName
-      - GLOBEBody/GeneralSection/CorporateStructure/UPE/OtherUPE/ID/ResCountryCode
-    element: SafeHarbour
+    when: . = 'GIR1206'
+    equals:
+      actual: ../globe:Jurisdiction/globe:JurisdictionName
+      expected: >-
+        ancestor::globe:GLOBEBody/globe:GeneralSection/globe:CorporateStructure/globe:UPE/*/globe:ID/globe:ResCountryCode
+    implementation_notes: >-
+      GIR1206 is only valid in the UPE jurisdiction, so when the target SafeHarbour is
+      GIR1206 the Summary's Jurisdiction/JurisdictionName must equal a UPE ResCountryCode.
+      The UPE ID sits under either ExcludedUPE or OtherUPE, so the path wildcards that
+      choice (UPE/*/ID/ResCountryCode); equals is an existential node-set match, so any
+      one UPE jurisdiction satisfies it.
     rule: >-
       The SafeHarbour element can only have the input of GIR1206 in the UPE
       jurisdiction. (i.e., Summary/Jurisdiction/JurisdictionName must be equal to the
@@ -1061,9 +1087,19 @@ rules:
   - number: 70041
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:Summary/globe:SafeHarbour
-    references:
-      - GLOBEBody/FilingInfo/AccountingInfo/CFSofUPE
-    element: SafeHarbour
+    when: >-
+      ancestor::globe:GLOBEBody/globe:FilingInfo/globe:AccountingInfo/globe:CFSofUPE = 'GIR502'
+      or
+      ancestor::globe:GLOBEBody/globe:FilingInfo/globe:AccountingInfo/globe:CFSofUPE = 'GIR504'
+    notIn:
+      - "'GIR1207'"
+      - "'GIR1208'"
+      - "'GIR1209'"
+    implementation_notes: >-
+      The NMCE Simplified Calculations (GIR1207/1208/1209) are only available when the
+      UPE prepares qualifying Consolidated Financial Statements, i.e. CFSofUPE is not
+      GIR502 or GIR504. The guard reaches the FilingInfo AccountingInfo CFSofUPE and
+      notIn forbids those three inputs on the target SafeHarbour value.
     rule: >-
       When the FilingInfo CFSofUPE has the input of GIR502 or GIR504, then SafeHarbour
       element cannot have the input of GIR1207, GIR1208 , or GIR1209.

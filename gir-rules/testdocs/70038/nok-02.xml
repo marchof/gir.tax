@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<globe:GLOBE_OECD xmlns:globe="urn:oecd:ties:globe:v2">
+  <globe:MessageSpec>
+    <globe:ReportingPeriod>2028-06-30</globe:ReportingPeriod>
+  </globe:MessageSpec>
+  <globe:GLOBEBody>
+    <globe:FilingInfo>
+      <globe:Period>
+        <globe:End>2028-07-01</globe:End>
+      </globe:Period>
+    </globe:FilingInfo>
+    <globe:Summary>
+      <globe:SafeHarbour>GIR1204</globe:SafeHarbour>
+    </globe:Summary>
+  </globe:GLOBEBody>
+</globe:GLOBE_OECD>
