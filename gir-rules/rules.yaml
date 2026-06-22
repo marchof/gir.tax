@@ -656,8 +656,14 @@ rules:
 
   - number: 70015
     targets:
-      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:GeneralSection/globe:CorporateStructure/globe:CE/globe:ID/globe:GlobeStatus
-    element: GlobeStatus
+      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:GeneralSection/globe:CorporateStructure
+    when: globe:CE/globe:ID/globe:GlobeStatus = 'GIR308'
+    present: globe:CE/globe:ID/globe:GlobeStatus[. = 'GIR307']
+    implementation_notes: >-
+      Targets the CorporateStructure (the common parent of the CEs being compared) so
+      the operands stay plain child-axis paths. "Another CE with GIR307" reduces to
+      "some CE has GIR307": a single CE cannot carry both GIR307 and GIR308 (70014
+      forbids it), so any GIR307 found necessarily sits on a different CE.
     rule: >-
       When the GlobeStatus contains the value of GIR308, then there must be another CE
       in the corporate structure which contains the value of GIR307 (i.e. when
@@ -709,8 +715,13 @@ rules:
 
   - number: 70019
     targets:
-      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:GeneralSection/globe:CorporateStructure/globe:CE/globe:ID/globe:GlobeStatus
-    element: GlobeStatus
+      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:GeneralSection/globe:CorporateStructure
+    when: globe:CE/globe:ID/globe:GlobeStatus = 'GIR305'
+    present: globe:CE/globe:ID/globe:GlobeStatus[. = 'GIR306']
+    implementation_notes: >-
+      Same shape as 70015 (GIR308 -> GIR307), targeting the CorporateStructure: "another
+      CE with GIR306" reduces to "some CE has GIR306" because 70018 forbids GIR305 and
+      GIR306 on one CE, so the match is necessarily a different CE.
     rule: >-
       When the GlobeStatus contains the value of GIR305, then there must be another CE
       which contains the GlobeStatus of GIR306 (i.e. when CE/ID/GlobeStatus = GIR305,
@@ -741,11 +752,14 @@ rules:
 
   - number: 70021
     targets:
-      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:GeneralSection/globe:CorporateStructure/globe:CE/globe:ID/globe:GlobeStatus
-    references:
-      - GLOBEBody/GeneralSection/CorporateStructure/CE/OwnershipChange
-      - GLOBEBody/GeneralSection/CorporateStructure/CE/OwnershipChange/PreGlobeStatus
-    element: GlobeStatus
+      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:GeneralSection/globe:CorporateStructure/globe:CE
+    when: globe:ID/globe:GlobeStatus = 'GIR316' or globe:ID/globe:GlobeStatus = 'GIR318'
+    present: globe:OwnershipChange
+    implementation_notes: >-
+      Targets the CE (the common parent of its GlobeStatus and OwnershipChange) so both
+      operands are plain child paths. The rule's TIN-match parenthetical only re-states
+      that the OwnershipChange belongs to the same CE, which the nesting already
+      guarantees, so a presence check on the CE's own OwnershipChange suffices.
     rule: >-
       The GlobeStatus element cannot contain the value of GIR316 or GIR318, unless
       there is a completed OwnershipChange for the CE element (i.e., when Corporate

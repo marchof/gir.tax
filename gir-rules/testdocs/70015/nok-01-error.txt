@@ -1,0 +1,1 @@
+Expected CE/ID/GlobeStatus[. = 'GIR307'] to be present, but it is missing
