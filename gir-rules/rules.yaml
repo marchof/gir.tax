@@ -806,10 +806,13 @@ rules:
 
   - number: 70024
     targets:
-      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:GeneralSection/globe:CorporateStructure/globe:CE/globe:OwnershipChange/globe:PreOwnership
-    references:
-      - GLOBEBody/GeneralSection/CorporateStructure/CE/OwnershipChange/PreGlobeStatus
-    element: PreOwnership
+      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:GeneralSection/globe:CorporateStructure/globe:CE/globe:OwnershipChange
+    when: globe:PreGlobeStatus = 'GIR719'
+    absent: globe:PreOwnership
+    implementation_notes: >-
+      Targets the common OwnershipChange ancestor (not the PreOwnership the spec
+      cites) since the rule asserts that element's absence. PreGlobeStatus is
+      repeatable, so the guard's node-set `=` fires when any value is GIR719.
     rule: >-
       The PreOwnership must not be completed when the PreGlobeStatus has the value of
       GIR719

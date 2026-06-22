@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- PreGlobeStatus is repeatable: GIR719 appears second, so the existential
+     guard still fires and PreOwnership is correctly absent. -->
+<globe:GLOBE_OECD xmlns:globe="urn:oecd:ties:globe:v2">
+  <globe:GLOBEBody>
+    <globe:GeneralSection>
+      <globe:CorporateStructure>
+        <globe:CE>
+          <globe:OwnershipChange>
+            <globe:PreGlobeStatus>GIR701</globe:PreGlobeStatus>
+            <globe:PreGlobeStatus>GIR719</globe:PreGlobeStatus>
+          </globe:OwnershipChange>
+        </globe:CE>
+      </globe:CorporateStructure>
+    </globe:GeneralSection>
+  </globe:GLOBEBody>
+</globe:GLOBE_OECD>
