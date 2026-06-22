@@ -63,6 +63,28 @@ part of adding the operator — not before, and not left behind "just in case".
   `=`; a second key needs to ride as a local predicate on one side (see the
   SafeHarbour subgroup-TIN rules 70045/70047–70053).
 
+## Each rule stands on its own
+
+A rule must fully test what its OECD wording specifies *without depending on
+another rule being active* — administrations may enable or disable individual
+rules, and a disabled neighbour must never silently weaken what a rule enforces.
+Concretely, do not narrow an assertion on the assumption that a sibling rule
+rules out the unwanted case:
+
+* "Another CE has GIRxxx" is **not** "some CE has GIRxxx" — target the CE
+  carrying the trigger and check its *sibling* CEs
+  (`(preceding-sibling::globe:CE | following-sibling::globe:CE)/…`), so the
+  "different element" requirement is carried by the axes themselves, not by a
+  same-CE mutual-exclusion rule (see 70015/70019, which must reject a lone CE
+  holding both statuses even if 70014/70018 were off).
+
+This is distinct from *not re-checking* something a rule never claims to enforce:
+a value-only rule whose element is optional is vacuously satisfied when the
+element is absent, and that is correct — the presence requirement is a separate
+rule's job (see 70112/70113 vs 70111). The test is whether disabling the other
+rule would let this rule *pass a document its own wording forbids*; if so, the
+rule is too weak.
+
 ## `implementation_notes`
 
 `implementation_notes` documents the *implementation*, not the rule. The rule
