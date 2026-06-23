@@ -27,11 +27,41 @@ function formatOwnershipPercentage(rawValue) {
 
 function getIdentityElement(entityElement) {
   if (entityElement.localName === "UPE") {
-    const otherUpe = firstChild(entityElement, "OtherUPE");
-    return firstChild(otherUpe, "ID") || firstChild(entityElement, "ID");
+    const wrapper = firstChild(entityElement, "OtherUPE") || firstChild(entityElement, "ExcludedUPE");
+    return firstChild(wrapper, "ID") || firstChild(entityElement, "ID");
   }
 
   return firstChild(entityElement, "ID");
+}
+
+function getUpeData(upeElement, index) {
+  const identityElement = getIdentityElement(upeElement);
+  const name = textOfChild(identityElement, "Name") || `UPE ${index + 1}`;
+  const country = textOfChild(identityElement, "ResCountryCode");
+  const tin = textOfChild(identityElement, "TIN");
+  const status = childElements(identityElement, "GlobeStatus")
+    .map(node => node.textContent?.trim())
+    .filter(Boolean)
+    .join(", ");
+
+  return {
+    id: `upe-${index + 1}`,
+    kind: "upe",
+    name,
+    country,
+    tin,
+    status,
+    label: [name, country ? `(${country})` : "", tin || ""].filter(Boolean).join("\n"),
+    title: [
+      "Ultimate Parent Entity",
+      name,
+      country ? `Country: ${country}` : "",
+      tin ? `TIN: ${tin}` : "",
+      status ? `Status: ${status}` : "",
+    ]
+      .filter(Boolean)
+      .join("\n"),
+  };
 }
 
 function getEntityData(entityElement, index, options = {}) {
@@ -76,13 +106,17 @@ function extractCorporateStructureGraph(corporateStructureElement) {
   let placeholderNodeCount = 0;
   const upeTinSet = new Set();
 
-  for (const upeElement of upeElements) {
-    const upeIdentity = getIdentityElement(upeElement);
-    const upeTin = textOfChild(upeIdentity, "TIN");
-    if (upeTin && upeTin.toUpperCase() !== "NOTIN") {
-      upeTinSet.add(upeTin);
+  upeElements.forEach((upeElement, index) => {
+    const upeData = getUpeData(upeElement, index);
+    nodes.push({ data: upeData, classes: upeData.kind });
+
+    if (upeData.tin && upeData.tin.toUpperCase() !== "NOTIN") {
+      upeTinSet.add(upeData.tin);
+      if (!sourceIndexByTin.has(upeData.tin)) {
+        sourceIndexByTin.set(upeData.tin, upeData.id);
+      }
     }
-  }
+  });
 
   function ensurePlaceholderNode(ownerTin, ownershipType, percentage) {
     const placeholderId = `missing-owner-${placeholderNodeCount + 1}`;
@@ -114,6 +148,8 @@ function extractCorporateStructureGraph(corporateStructureElement) {
     return placeholderId;
   }
 
+  const ceNodeIds = [];
+
   entityElements.forEach((entityElement, index) => {
     const entityIdentity = getIdentityElement(entityElement);
     const entityTin = textOfChild(entityIdentity, "TIN");
@@ -121,6 +157,7 @@ function extractCorporateStructureGraph(corporateStructureElement) {
       hasMatchingUpe: !!entityTin && upeTinSet.has(entityTin),
     });
     nodes.push({ data: entityData, classes: entityData.kind });
+    ceNodeIds.push(entityData.id);
 
     if (entityData.tin && entityData.tin.toUpperCase() !== "NOTIN" && !sourceIndexByTin.has(entityData.tin)) {
       sourceIndexByTin.set(entityData.tin, entityData.id);
@@ -130,7 +167,7 @@ function extractCorporateStructureGraph(corporateStructureElement) {
   let edgeIndex = 0;
 
   entityElements.forEach((entityElement, targetIndex) => {
-    const targetId = nodes[targetIndex].data.id;
+    const targetId = ceNodeIds[targetIndex];
     const ownershipElements = childElements(entityElement, "Ownership").concat(childElements(entityElement, "PreOwnership"));
 
     ownershipElements.forEach(ownershipElement => {
@@ -386,6 +423,15 @@ class CorporateStructureGraph extends HTMLElement {
             "min-height": 36,
             width: "label",
             height: "label",
+          },
+        },
+        {
+          selector: "node.upe",
+          style: {
+            "background-color": "#fef3c7",
+            "border-color": "#d97706",
+            "border-width": 3,
+            "font-weight": "bold",
           },
         },
         {
