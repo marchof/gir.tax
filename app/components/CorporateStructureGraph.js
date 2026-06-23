@@ -1,7 +1,9 @@
 import cytoscape from "cytoscape";
 import cytoscapeSvg from "cytoscape-svg";
+import cytoscapeDagre from "cytoscape-dagre";
 
 cytoscape.use(cytoscapeSvg);
+cytoscape.use(cytoscapeDagre);
 
 function childElements(element, localName) {
   return Array.from(element?.children || []).filter(child => child.localName === localName);
@@ -100,9 +102,7 @@ function extractCorporateStructureGraph(corporateStructureElement) {
   const entityElements = childElements(corporateStructureElement, "CE");
   const nodes = [];
   const edges = [];
-  const roots = [];
   const sourceIndexByTin = new Map();
-  const incomingCounts = new Map();
   let placeholderNodeCount = 0;
   const upeTinSet = new Set();
 
@@ -118,7 +118,10 @@ function extractCorporateStructureGraph(corporateStructureElement) {
     }
   });
 
-  function ensurePlaceholderNode(ownerTin, ownershipType, percentage) {
+  // dagre breaks ordering ties by node insertion order, so a placeholder owner is
+  // inserted right next to the CE it owns. Appending placeholders at the end instead
+  // scatters them across the top rank and drags their CEs far from related nodes.
+  function ensurePlaceholderNode(targetId, ownerTin, ownershipType, percentage) {
     const placeholderId = `missing-owner-${placeholderNodeCount + 1}`;
     const ownershipDetails = [
       ownershipType ? `Type: ${ownershipType}` : "",
@@ -143,7 +146,13 @@ function extractCorporateStructureGraph(corporateStructureElement) {
       classes: "placeholder-owner",
     };
 
-    nodes.push(placeholderNode);
+    const targetPosition = nodes.findIndex(node => node.data.id === targetId);
+    if (targetPosition === -1) {
+      nodes.push(placeholderNode);
+    } else {
+      nodes.splice(targetPosition, 0, placeholderNode);
+    }
+
     placeholderNodeCount += 1;
     return placeholderId;
   }
@@ -178,7 +187,7 @@ function extractCorporateStructureGraph(corporateStructureElement) {
       const edgeLabel = [ownershipType, ownershipPercentageLabel].filter(Boolean).join("\n");
 
       const sourceId = ownerTin && ownerTin.toUpperCase() !== "NOTIN" ? sourceIndexByTin.get(ownerTin) : null;
-      const resolvedSourceId = sourceId || ensurePlaceholderNode(ownerTin, ownershipType, percentage);
+      const resolvedSourceId = sourceId || ensurePlaceholderNode(targetId, ownerTin, ownershipType, percentage);
 
       if (resolvedSourceId === targetId) {
         return;
@@ -202,19 +211,10 @@ function extractCorporateStructureGraph(corporateStructureElement) {
       });
 
       edgeIndex += 1;
-      incomingCounts.set(targetId, (incomingCounts.get(targetId) || 0) + 1);
     });
   });
 
-  if (roots.length === 0) {
-    for (const node of nodes) {
-      if (!incomingCounts.has(node.data.id)) {
-        roots.push(node.data.id);
-      }
-    }
-  }
-
-  return { nodes, edges, roots };
+  return { nodes, edges };
 }
 
 class CorporateStructureGraph extends HTMLElement {
@@ -392,7 +392,7 @@ class CorporateStructureGraph extends HTMLElement {
       return false;
     }
 
-    const { nodes, edges, roots } = extractCorporateStructureGraph(corporateStructureElement);
+    const { nodes, edges } = extractCorporateStructureGraph(corporateStructureElement);
     if (nodes.length === 0) {
       this._showEmpty("CorporateStructure is present, but no UPE or CE entries were found.");
       return false;
@@ -487,12 +487,17 @@ class CorporateStructureGraph extends HTMLElement {
         },
       ],
       layout: {
-        name: "breadthfirst",
-        directed: true,
-        roots,
+        name: "dagre",
+        rankDir: "TB",
+        nodeSep: 40,
+        rankSep: 80,
+        edgeSep: 12,
+        ranker: "network-simplex",
+        // Weight edges from unresolved ("Other Owner") placeholders heavily so dagre
+        // aligns each placeholder directly above the company it owns instead of letting
+        // these single-edge root nodes drift to the far ends of the top rank.
+        edgeWeight: edge => (edge.source().data("kind") === "missing-owner" ? 9 : 1),
         padding: 24,
-        spacingFactor: 1.35,
-        avoidOverlap: true,
         animate: false,
       },
     });
