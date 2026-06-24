@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<globe:GLOBE_OECD xmlns:globe="urn:oecd:ties:globe:v2">
+  <globe:GLOBEBody>
+    <globe:JurisdictionSection>
+      <globe:LowTaxJurisdiction>
+        <globe:UTPR>
+          <globe:UTPRCalculation>
+            <globe:TotalUTPRTopUpTax>1</globe:TotalUTPRTopUpTax>
+          </globe:UTPRCalculation>
+        </globe:UTPR>
+      </globe:LowTaxJurisdiction>
+    </globe:JurisdictionSection>
+  </globe:GLOBEBody>
+</globe:GLOBE_OECD>

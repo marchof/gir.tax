@@ -2127,10 +2127,13 @@ rules:
   - number: 70100
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:LowTaxJurisdiction/globe:UTPR/globe:UTPRCalculation
-      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:LowTaxJurisdiction/globe:UTPR/globe:UTPRCalculation/globe:TotalUTPRTopUpTax
-    references:
-      - GLOBEBody/UTPRAttribution
-    element: UTPRAttribution
+    when: globe:TotalUTPRTopUpTax > 0
+    present: ancestor::globe:GLOBEBody/globe:UTPRAttribution
+    implementation_notes: >-
+      Targets the UTPRCalculation (so the gating value is a child of the context) and
+      reaches the message-level UTPRAttribution via the GLOBEBody ancestor. Targeting
+      UTPRCalculation covers "is provided"; the TotalUTPRTopUpTax > 0 guard covers the
+      value condition.
     rule: >-
       When the UTPRCalculation is provided and the TotalUTPRTopUpTax element contains
       a value greater than 0 then the UTPRAttribution must be completed.
