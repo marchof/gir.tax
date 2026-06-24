@@ -1512,10 +1512,14 @@ rules:
 
   - number: 70060
     targets:
-      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:OverallComputation/globe:NetGlobeIncome/globe:IntShippingIncome
-    references:
-      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/NetGlobeIncome/Adjustments/AdjustmentItem
-    element: AdjustmentItem
+      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:OverallComputation/globe:NetGlobeIncome
+    when: globe:Adjustments/globe:AdjustmentItem = 'GIR2025'
+    present: globe:IntShippingIncome
+    implementation_notes: >-
+      Targets the common NetGlobeIncome ancestor (not the IntShippingIncome the spec
+      cites — you can't assert the presence of your own target) so the guard can read
+      the sibling AdjustmentItem code. AdjustmentItem is repeatable, so the node-set
+      `=` guard fires when any Adjustments carries GIR2025.
     rule: >-
       When the 'Adjustmentitem' element contains the value GIR2025 then the
       'IntShippingIncome' element must be completed

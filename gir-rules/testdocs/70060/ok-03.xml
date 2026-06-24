@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<globe:GLOBE_OECD xmlns:globe="urn:oecd:ties:globe:v2">
+  <globe:GLOBEBody>
+    <globe:JurisdictionSection>
+      <globe:GLoBETax>
+        <globe:ETR>
+          <globe:ETRStatus>
+            <globe:ETRComputation>
+              <globe:OverallComputation>
+                <globe:NetGlobeIncome>
+                  <globe:Total>0</globe:Total>
+                  <globe:Adjustments>
+                    <globe:Amount>0</globe:Amount>
+                    <globe:AdjustmentItem>GIR2001</globe:AdjustmentItem>
+                  </globe:Adjustments>
+                  <globe:Adjustments>
+                    <globe:Amount>0</globe:Amount>
+                    <globe:AdjustmentItem>GIR2025</globe:AdjustmentItem>
+                  </globe:Adjustments>
+                  <globe:IntShippingIncome>
+                    <globe:Total>0</globe:Total>
+                    <globe:TotalIntShipIncome>0</globe:TotalIntShipIncome>
+                    <globe:FiftyPercentCap>0</globe:FiftyPercentCap>
+                    <globe:TotalQualifiedAncIncome>0</globe:TotalQualifiedAncIncome>
+                  </globe:IntShippingIncome>
+                </globe:NetGlobeIncome>
+              </globe:OverallComputation>
+            </globe:ETRComputation>
+          </globe:ETRStatus>
+        </globe:ETR>
+      </globe:GLoBETax>
+    </globe:JurisdictionSection>
+  </globe:GLOBEBody>
+</globe:GLOBE_OECD>
