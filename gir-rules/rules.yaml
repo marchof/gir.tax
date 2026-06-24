@@ -1431,10 +1431,17 @@ rules:
 
   - number: 70054
     targets:
-      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:Election/*/globe:RevocationYear
-    references:
-      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/Election/*/Status
-    element: RevocationYear
+      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:Election/*
+    when:
+      isTrue: globe:Status
+    absent: globe:RevocationYear
+    implementation_notes: >-
+      Encoded as the contrapositive: target each Election child (not its own
+      RevocationYear, whose absence can't be asserted from itself), and when its
+      Status is TRUE the RevocationYear must be absent. The Status guard uses isTrue
+      so both boolean lexical forms ('true'/'1') are handled; Election children that
+      carry no Status (e.g. the plain-boolean elections) fail the guard and are
+      vacuously satisfied.
     rule: >-
       RevocationYear is only to be provided when the status is FALSE
     description: >-
@@ -1456,10 +1463,17 @@ rules:
 
   - number: 70056
     targets:
-      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:CEComputation/globe:Elections/*/globe:RevocationYear
-    references:
-      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/*/Status
-    element: RevocationYear
+      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:CEComputation/globe:Elections/*
+    when:
+      isTrue: globe:Status
+    absent: globe:RevocationYear
+    implementation_notes: >-
+      Encoded as the contrapositive: target each Elections child (not its own
+      RevocationYear, whose absence can't be asserted from itself), and when its
+      Status is TRUE the RevocationYear must be absent. The Status guard uses isTrue
+      so both boolean lexical forms ('true'/'1') are handled; Elections children that
+      carry no Status (e.g. AggregatedReporting, the plain-boolean elections) fail the
+      guard and are vacuously satisfied.
     rule: >-
       RevocationYear is only to be provided when the status is FALSE
     description: >-

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<globe:GLOBE_OECD xmlns:globe="urn:oecd:ties:globe:v2">
+  <globe:GLOBEBody>
+    <globe:JurisdictionSection>
+      <globe:GLoBETax>
+        <globe:ETR>
+          <globe:Election>
+            <globe:Art3.2.2>
+              <globe:Status>true</globe:Status>
+              <globe:ElectionYear>2026-01-01</globe:ElectionYear>
+              <globe:RevocationYear>2026-01-01</globe:RevocationYear>
+            </globe:Art3.2.2>
+          </globe:Election>
+        </globe:ETR>
+      </globe:GLoBETax>
+    </globe:JurisdictionSection>
+  </globe:GLOBEBody>
+</globe:GLOBE_OECD>
