@@ -8,7 +8,7 @@ See folder [`gir-rules/`](gir-rules/) for details about the current implementati
 
 ## Usage and Functionality
 
-Open a GIR XML file on the *File* tab by dropping it there or use the *Import* button. The file is then validated against the GIR XML schema and the GIR rule set. Currently the following views are available:
+Open a GIR XML file on the *File* tab by dropping it there or by using the *Import* button. The file is then validated against the GIR XML schema and the GIR rule set. Currently the following views are available:
 
 * **XML:** Shows the XML outline with additional documentation like definitions of the `GIRnnnn` enum constants.
 * **Corporate Structure:** Graphical representation of the corporate structure and ownerships.
@@ -21,7 +21,7 @@ You may test some example documents from the [`examples/`](examples/) folder.
 Local development requires the following standard tools:
 
 * [git](https://git-scm.com/install/)
-* [npm](https://nodejs.org/en/download)
+* [Node.js](https://nodejs.org/en/download)
 * [Python](https://www.python.org/downloads/) (for rule testing only)
 
 Also an IDE of your choice like [VS Code](https://code.visualstudio.com/docs/setup/setup-overview) is helpful to work on the project.
@@ -40,7 +40,30 @@ npm install
 npm run dev
 ```
 
-Now you can use the application under http://localhost:8080/
+Now you can use the application at http://localhost:8080/
+
+## Self-Hosting
+
+The application is a fully client-side static web app: all parsing, schema validation, rule checking, and rendering happen in the browser, so the data of an opened GIR file never leaves the user's machine. Hosting your own copy of the application keeps that guarantee under your control.
+
+Build the static bundle:
+
+```bash
+git clone https://github.com/marchof/gir.tax.git
+cd gir.tax
+npm install
+npm run build
+```
+
+This produces a self-contained `dist/` folder. Serve it with any static web server; no application runtime is required on the server. Make sure the web server returns the correct MIME type for every file type used by the application:
+
+| File ending | MIME type          |
+| ----------- | ------------------ |
+| `.html`     | `text/html`        |
+| `.js`       | `text/javascript`  |
+| `.mjs`      | `text/javascript`  |
+| `.wasm`     | `application/wasm` |
+| `.xsd`      | `application/xml`  |
 
 ## Authors
 
@@ -51,10 +74,9 @@ The project was created and is maintained by [@marchof](https://github.com/march
 The implementation is based on the following publications and includes the corresponding XML schema definitions.
 
 1. OECD (2025), GloBE Information Return (Pillar Two) XML Schema: User Guide for Tax Administrations, OECD Publishing, Paris, https://doi.org/10.1787/c594935a-en.
-1. OECD (2025), GloBE Information Return (Pillar Two) Status Message XML Schema: User Guide for Tax Administrations,
-OECD Publishing, Paris, https://doi.org/10.1787/449e3cc3-en.
+1. OECD (2025), GloBE Information Return (Pillar Two) Status Message XML Schema: User Guide for Tax Administrations, OECD Publishing, Paris, https://doi.org/10.1787/449e3cc3-en.
 
-This work is made available under the Creative Commons Attribution 4.0 International licence.
+This work is made available under the Creative Commons Attribution 4.0 International license.
 
 ## Copyright and License
 
