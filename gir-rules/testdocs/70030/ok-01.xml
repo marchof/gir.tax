@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- GIR802 (CE) owner: the Ownership/TIN matches another CE's ID/TIN. -->
+<globe:GLOBE_OECD xmlns:globe="urn:oecd:ties:globe:v2">
+  <globe:GLOBEBody>
+    <globe:GeneralSection>
+      <globe:CorporateStructure>
+        <globe:CE>
+          <globe:ID>
+            <globe:TIN>CEONE111</globe:TIN>
+          </globe:ID>
+        </globe:CE>
+        <globe:CE>
+          <globe:ID>
+            <globe:TIN>CETWO222</globe:TIN>
+          </globe:ID>
+          <globe:Ownership>
+            <globe:OwnershipType>GIR802</globe:OwnershipType>
+            <globe:TIN>CEONE111</globe:TIN>
+          </globe:Ownership>
+        </globe:CE>
+      </globe:CorporateStructure>
+    </globe:GeneralSection>
+  </globe:GLOBEBody>
+</globe:GLOBE_OECD>

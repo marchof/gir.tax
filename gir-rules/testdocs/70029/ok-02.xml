@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- GIR801 owner: both UPE forms are present; the Ownership/TIN matches the
+     OtherUPE/ID/TIN (the second candidate, not the first), exercising the
+     "match at least one of N" branch against a non-first candidate. -->
+<globe:GLOBE_OECD xmlns:globe="urn:oecd:ties:globe:v2">
+  <globe:GLOBEBody>
+    <globe:GeneralSection>
+      <globe:CorporateStructure>
+        <globe:UPE>
+          <globe:ExcludedUPE>
+            <globe:ID>
+              <globe:TIN>EXCLUPE222</globe:TIN>
+            </globe:ID>
+          </globe:ExcludedUPE>
+        </globe:UPE>
+        <globe:UPE>
+          <globe:OtherUPE>
+            <globe:ID>
+              <globe:TIN>OTHERUPE222</globe:TIN>
+            </globe:ID>
+          </globe:OtherUPE>
+        </globe:UPE>
+        <globe:CE>
+          <globe:Ownership>
+            <globe:OwnershipType>GIR801</globe:OwnershipType>
+            <globe:TIN>OTHERUPE222</globe:TIN>
+          </globe:Ownership>
+        </globe:CE>
+      </globe:CorporateStructure>
+    </globe:GeneralSection>
+  </globe:GLOBEBody>
+</globe:GLOBE_OECD>

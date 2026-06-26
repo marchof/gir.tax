@@ -910,11 +910,10 @@ rules:
   - number: 70029
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:GeneralSection/globe:CorporateStructure/globe:CE/globe:Ownership/globe:TIN
-    references:
-      - GLOBEBody/GeneralSection/CorporateStructure/CE/Ownership/OwnershipType
-      - GLOBEBody/GeneralSection/CorporateStructure/UPE/ExcludedUPE/ID/TIN
-      - GLOBEBody/GeneralSection/CorporateStructure/UPE/OtherUPE/ID/TIN
-    element: TIN
+    when: "../globe:OwnershipType = 'GIR801'"
+    in:
+      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:GeneralSection/globe:CorporateStructure/globe:UPE/globe:ExcludedUPE/globe:ID/globe:TIN
+      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:GeneralSection/globe:CorporateStructure/globe:UPE/globe:OtherUPE/globe:ID/globe:TIN
     rule: >-
       When the Ownership Type contains the value of GIR801, then the Ownership/TIN
       provided in the Ownership element must match at least one of the TINs that was
@@ -927,10 +926,11 @@ rules:
   - number: 70030
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:GeneralSection/globe:CorporateStructure/globe:CE/globe:Ownership/globe:TIN
-    references:
-      - GLOBEBody/GeneralSection/CorporateStructure/CE/Ownership/OwnershipType
-      - GLOBEBody/GeneralSection/CorporateStructure/CE/ID/TIN
-    element: TIN
+    when: >-
+      ../globe:OwnershipType = 'GIR802' or ../globe:OwnershipType = 'GIR803'
+      or ../globe:OwnershipType = 'GIR804'
+    in:
+      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:GeneralSection/globe:CorporateStructure/globe:CE/globe:ID/globe:TIN
     rule: >-
       When the Ownership Type contains the value of GIR802, GIR803 or GIR804, then the
       Ownership/TIN provided in the Ownership element must match to a TIN that was

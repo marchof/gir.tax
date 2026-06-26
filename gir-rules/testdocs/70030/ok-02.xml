@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- GIR803 (JV) owner: three CEs; the Ownership/TIN matches the middle CE's
+     ID/TIN (neither the only candidate nor the first in document order). -->
+<globe:GLOBE_OECD xmlns:globe="urn:oecd:ties:globe:v2">
+  <globe:GLOBEBody>
+    <globe:GeneralSection>
+      <globe:CorporateStructure>
+        <globe:CE>
+          <globe:ID>
+            <globe:TIN>JVAAA111</globe:TIN>
+          </globe:ID>
+        </globe:CE>
+        <globe:CE>
+          <globe:ID>
+            <globe:TIN>JVBBB222</globe:TIN>
+          </globe:ID>
+        </globe:CE>
+        <globe:CE>
+          <globe:ID>
+            <globe:TIN>JVCCC333</globe:TIN>
+          </globe:ID>
+          <globe:Ownership>
+            <globe:OwnershipType>GIR803</globe:OwnershipType>
+            <globe:TIN>JVBBB222</globe:TIN>
+          </globe:Ownership>
+        </globe:CE>
+      </globe:CorporateStructure>
+    </globe:GeneralSection>
+  </globe:GLOBEBody>
+</globe:GLOBE_OECD>

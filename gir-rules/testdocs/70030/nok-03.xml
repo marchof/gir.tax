@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- GIR804 owner but the Ownership/TIN matches no CE ID/TIN in the structure. -->
+<globe:GLOBE_OECD xmlns:globe="urn:oecd:ties:globe:v2">
+  <globe:GLOBEBody>
+    <globe:GeneralSection>
+      <globe:CorporateStructure>
+        <globe:CE>
+          <globe:ID>
+            <globe:TIN>REALCE333</globe:TIN>
+          </globe:ID>
+          <globe:Ownership>
+            <globe:OwnershipType>GIR804</globe:OwnershipType>
+            <globe:TIN>FAKE777</globe:TIN>
+          </globe:Ownership>
+        </globe:CE>
+      </globe:CorporateStructure>
+    </globe:GeneralSection>
+  </globe:GLOBEBody>
+</globe:GLOBE_OECD>

@@ -58,7 +58,7 @@
           </globe:ID>
           <globe:Ownership>
             <globe:OwnershipType>GIR801</globe:OwnershipType>
-            <globe:TIN issuedBy="AF" TypeOfTIN="GIR3001">globe:TIN</globe:TIN>
+            <globe:TIN issuedBy="AF" TypeOfTIN="GIR3001">DE123456789</globe:TIN>
             <globe:OwnershipPercentage>
               1
             </globe:OwnershipPercentage>

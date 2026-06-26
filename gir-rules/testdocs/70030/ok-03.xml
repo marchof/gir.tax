@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- GIR804 (JV Subsidiary) owner: the Ownership/TIN matches another CE's ID/TIN. -->
+<globe:GLOBE_OECD xmlns:globe="urn:oecd:ties:globe:v2">
+  <globe:GLOBEBody>
+    <globe:GeneralSection>
+      <globe:CorporateStructure>
+        <globe:CE>
+          <globe:ID>
+            <globe:TIN>SUBAAA111</globe:TIN>
+          </globe:ID>
+        </globe:CE>
+        <globe:CE>
+          <globe:ID>
+            <globe:TIN>SUBBBB222</globe:TIN>
+          </globe:ID>
+          <globe:Ownership>
+            <globe:OwnershipType>GIR804</globe:OwnershipType>
+            <globe:TIN>SUBAAA111</globe:TIN>
+          </globe:Ownership>
+        </globe:CE>
+      </globe:CorporateStructure>
+    </globe:GeneralSection>
+  </globe:GLOBEBody>
+</globe:GLOBE_OECD>

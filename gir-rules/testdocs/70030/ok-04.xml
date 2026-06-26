@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Guard false (OwnershipType = GIR801, which 70029 handles, not 70030): the rule
+     is vacuous, so an Ownership/TIN matching no CE ID/TIN must still pass. It would
+     start failing if the when: guard were dropped. -->
+<globe:GLOBE_OECD xmlns:globe="urn:oecd:ties:globe:v2">
+  <globe:GLOBEBody>
+    <globe:GeneralSection>
+      <globe:CorporateStructure>
+        <globe:CE>
+          <globe:ID>
+            <globe:TIN>SOMECE111</globe:TIN>
+          </globe:ID>
+          <globe:Ownership>
+            <globe:OwnershipType>GIR801</globe:OwnershipType>
+            <globe:TIN>NOMATCH000</globe:TIN>
+          </globe:Ownership>
+        </globe:CE>
+      </globe:CorporateStructure>
+    </globe:GeneralSection>
+  </globe:GLOBEBody>
+</globe:GLOBE_OECD>
