@@ -69,9 +69,23 @@
               <globe:ExceptionRule>
                 <globe:Art2.1.5>true</globe:Art2.1.5>
               </globe:ExceptionRule>
-              <globe:TIN issuedBy="AF" TypeOfTIN="GIR3001">globe:TIN</globe:TIN>
+              <globe:TIN issuedBy="AF" TypeOfTIN="GIR3001">AF222222222</globe:TIN>
             </globe:Exception>
           </globe:QIIR>
+        </globe:CE>
+        <globe:CE>
+          <globe:ID>
+            <globe:Name>Main Entity</globe:Name>
+            <globe:ResCountryCode>AF</globe:ResCountryCode>
+            <globe:TIN issuedBy="AF" TypeOfTIN="GIR3001">AF222222222</globe:TIN>
+            <globe:Rules>GIR201</globe:Rules>
+            <globe:GlobeStatus>GIR301</globe:GlobeStatus>
+          </globe:ID>
+          <globe:Ownership>
+            <globe:OwnershipType>GIR801</globe:OwnershipType>
+            <globe:TIN issuedBy="AF" TypeOfTIN="GIR3001">DE123456789</globe:TIN>
+            <globe:OwnershipPercentage>1</globe:OwnershipPercentage>
+          </globe:Ownership>
         </globe:CE>
       </globe:CorporateStructure>
       <globe:DocSpec>

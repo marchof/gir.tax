@@ -978,9 +978,15 @@ rules:
   - number: 70033
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:GeneralSection/globe:CorporateStructure/globe:CE/globe:QIIR/globe:Exception/globe:TIN
-    references:
-      - GLOBEBody/GeneralSection/CorporateStructure/CE/ID/TIN
-    element: TIN
+    in:
+      - ancestor::globe:CE[1]/preceding-sibling::globe:CE/globe:ID/globe:TIN
+      - ancestor::globe:CE[1]/following-sibling::globe:CE/globe:ID/globe:TIN
+    implementation_notes: >-
+      "Any other CE" is carried by the axes, not by a separate uniqueness rule:
+      the candidates are the ID/TINs of the owning CE's preceding/following
+      sibling CEs (ancestor::CE[1]/(preceding-sibling|following-sibling)::CE), so
+      a lone CE whose Exception/TIN equals its own ID/TIN is correctly rejected
+      because no sibling matches. Same self-exclusion pattern as 70015/70019.
     rule: >-
       The TIN provided must match with a TIN reported for any other CE in the
       CorporateStructure.
