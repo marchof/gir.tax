@@ -2430,8 +2430,11 @@ rules:
 
   - number: 70118
     targets:
-      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:CEComputation/globe:AdjustedCoveredTax/globe:Adjustments/globe:Amount
-    element: Amount
+      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:CEComputation/globe:AdjustedCoveredTax/globe:Adjustments
+    when: count(globe:Amount) = 2
+    allOf:
+      - present: globe:Amount[. < 0]
+      - present: globe:Amount[. > 0]
     rule: >-
       If two values are provided for the'Amount', then one value must be negative and
       the other value positive (i.e. both values of the integer cannot be positive or
@@ -2440,6 +2443,10 @@ rules:
       If two values are provided for the'Amount', then one value must be negative and
       the other value positive (i.e. both values of the integer cannot be positive or
       negative)
+    implementation_notes: >-
+      "One negative and one positive" is expressed as the presence of an Amount < 0
+      and the presence of an Amount > 0; combined with the count = 2 guard this forces
+      exactly one of each sign (and rejects a 0, which is neither).
 
   - number: 70119
     targets:
