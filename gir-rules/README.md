@@ -92,6 +92,7 @@ always check the target `.` against their candidate list.)
 | `present` | xpath (node-set) | the node-set is non-empty. |
 | `absent` | xpath (node-set) | the node-set is empty. |
 | `isTrue` | xpath | the value is an xsd:boolean true (`'true'` or `'1'`); `'false'`/`'0'`/missing are false. For GIR boolean flags, often an attribute (e.g. `@unknown`). |
+| `matches` | `{actual?, expected}` | `actual`'s string value matches the regular expression named by `expected` (see below). |
 | `distinct` | xpath (node-set) | all selected node values are unique. |
 | `allOf` | list of assertions | every nested assertion passes. |
 | `anyOf` | list of assertions | at least one nested assertion passes. |
@@ -228,6 +229,31 @@ distinct: //stf:CorrDocRefId
 For "unique per ETR", target each `…/ETR` and select the repeated child — the
 node-set is then naturally confined to that ETR.
 
+### `matches` and structured-reference formats
+
+Some GIR fields are composite references with a fixed layout (e.g. the GIR3003
+TIN `P2JJYYYYMMDDCCCXXX`, MessageRefId, DocRefId). `matches` checks `actual`'s
+string value against a regular expression. The operand stays plain XPath 1.0:
+`actual` (default `.`) selects the value, and `expected` is an XPath **string
+literal** carrying the pattern — quoted the same way as any other literal so the
+regex survives YAML:
+
+```yaml
+# 70007: GIR3003 TIN must be P2 + 2 letters + 8 digits + 3 letters + 3 digits
+when: "@TypeOfTIN = 'GIR3003'"
+matches:
+  expected: "'^P2[A-Z]{2}[0-9]{8}[A-Z]{3}[0-9]{3}$'"
+```
+
+The regex is applied in the host language — like `almostEquals`' tolerance or
+`distinct`'s uniqueness — so the operand layer keeps **no XPath-2.0 `matches()`
+dependency**, and each runtime port uses its own native regex engine. Keep
+patterns to an anchored, character-class, bounded-quantifier subset (`^`, `$`,
+`[A-Z]`, `{n}`) that ports cleanly across regex flavours, and **anchor with
+`^…$`** yourself — the operator does not add anchors. `matches` validates
+*structure only*; semantic constraints on the parts (a segment equalling a real
+jurisdiction code, cross-record uniqueness) belong in separate rules.
+
 ## Error messages
 
 When a rule fails, `RuleEvaluator.evaluate` returns a `Result` whose `message`
@@ -244,6 +270,7 @@ own message:
 | `present` | `Expected <path> to be present, but it is missing` |
 | `absent` | `Expected <element> to be absent, but it is present` (the element label, not the full path, so a union/predicate operand stays readable) |
 | `isTrue` | `Expected <element> to be true but was <actual>` |
+| `matches` | `Expected <element> to match the required format but was <actual>` |
 | `equals` / `notEquals` | `Expected <element> to equal/not to equal <expected> but was <actual>` |
 | `almostEquals` | `Expected <element> to be <expected> (within 1%) but was <actual>` |
 | `atMost` / `atLeast` / `lessThan` / `greaterThan` | `Expected <element> to be at most/at least/less than/greater than <expected> but was <actual>` |

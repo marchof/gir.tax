@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- A second well-formed reference with different segments (jurisdiction, date,
+     company ref and sequence) so the pattern isn't accidentally pinned to ok-01. -->
+<globe:GLOBE_OECD xmlns:globe="urn:oecd:ties:globe:v2">
+  <globe:GLOBEBody>
+    <globe:GeneralSection>
+      <globe:CorporateStructure>
+        <globe:CE>
+          <globe:ID>
+            <globe:TIN issuedBy="DE" TypeOfTIN="GIR3003">P2DE20240115XYZ099</globe:TIN>
+          </globe:ID>
+        </globe:CE>
+      </globe:CorporateStructure>
+    </globe:GeneralSection>
+  </globe:GLOBEBody>
+</globe:GLOBE_OECD>

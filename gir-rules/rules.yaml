@@ -525,7 +525,17 @@ rules:
   - number: 70007
     targets:
       - //globe:TIN
-    element: TIN
+    when: "@TypeOfTIN = 'GIR3003'"
+    matches:
+      expected: "'^P2[A-Z]{2}[0-9]{8}[A-Z]{3}[0-9]{3}$'"
+    implementation_notes: >-
+      Only the structural format is checked: P2 (constant), two letters (JJ
+      jurisdiction code), eight digits (YYYYMMDD), three letters (CCC company
+      reference) and three digits (XXX sequence). The letter groups assume the
+      uppercase ISO/reference convention. The semantic parts are out of scope
+      for a per-element format check: JJ is not correlated to the entity's
+      actual jurisdiction, XXX uniqueness across entities is a separate
+      cross-record concern, and the supersession case cannot be validated.
     rule: >-
       Where the TypeofTIN entered is GIR3003 a reference must be created in the format
       [P2JJYYYYMMDDCCCXXX where P2 is constant, JJ is the ISO Code of the jurisdiction

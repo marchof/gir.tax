@@ -60,6 +60,12 @@ part of adding the operator — not before, and not left behind "just in case".
 * For year/date arithmetic, use the `type`/`offset` fields on the comparison and
   `equals` operators rather than hand-rolling `translate()`/`substring()` — see
   [gir-rules/README.md](../gir-rules/README.md#ordering-comparisons-and-type--offset).
+* For a fixed-layout structured reference (composite TIN, MessageRefId,
+  DocRefId), use `matches` with an anchored regex rather than a chain of
+  `substring()`/`translate()` checks under `allOf` — see
+  [gir-rules/README.md](../gir-rules/README.md#matches-and-structured-reference-formats).
+  It checks structure only; correlating a segment to a real value, or its
+  uniqueness, stays a separate rule.
 * To correlate two sections that share no parent/child relationship (e.g. a
   `Summary` value gating a `JurisdictionSection` element), target the element that
   carries the *consequence*'s context and pin the *match* in `when:` via

@@ -15,12 +15,13 @@ the operator is applied here in Python so we get rounding tolerance and
 uniqueness without XPath-2.0 features.
 """
 
+import re
 from math import isnan
 
 ASSERTION_OPS = (
     "equals", "notEquals", "almostEquals", "in", "notIn",
     "atMost", "atLeast", "lessThan", "greaterThan",
-    "present", "absent", "isTrue", "distinct", "allOf", "anyOf",
+    "present", "absent", "isTrue", "matches", "distinct", "allOf", "anyOf",
 )
 
 # GIR boolean flags are encoded as xsd:boolean, so both lexical forms of true
@@ -127,6 +128,22 @@ class RuleEvaluator:
             if any(v in TRUE_VALUES for v in self._values(arg, ctx)):
                 return _PASS
             return Result(False, f"Expected {self._label(arg, ctx)} to be true but was {self._value_str(arg, ctx)}")
+
+        if op == "matches":
+            # The operand stays plain XPath: `actual` (default `.`) selects the
+            # value, `expected` is an XPath string literal carrying the regex.
+            # The regex is applied here in the host language (like almostEquals'
+            # tolerance), so the operand layer keeps no XPath-2.0 matches()
+            # dependency. The pattern supplies its own anchors (^…$).
+            actual_expr = arg.get("actual", ".")
+            pattern = next(iter(self._values(arg["expected"], ctx)), "")
+            value = next(iter(self._values(actual_expr, ctx)), "")
+            if re.search(pattern, value):
+                return _PASS
+            return Result(False, (
+                f"Expected {self._label(actual_expr, ctx)} to match the required "
+                f"format but was {self._value_str(actual_expr, ctx)}"
+            ))
 
         if op in ("equals", "notEquals"):
             want_equal = op == "equals"
