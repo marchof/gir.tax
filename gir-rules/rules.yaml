@@ -1966,10 +1966,13 @@ rules:
 
   - number: 70088
     targets:
-      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:OverallComputation/globe:AdditionalTopUpTax/globe:Art4.1.5
-    references:
-      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/NetGloboIncome/Total
-    element: Art4.1.5
+      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:OverallComputation/globe:AdditionalTopUpTax
+    when: ../globe:NetGlobeIncome/globe:Total < 0
+    present: globe:Art4.1.5
+    implementation_notes: >-
+      Targets AdditionalTopUpTax (not Art4.1.5 itself) so the consequence can
+      assert presence of Art4.1.5 when the sibling NetGlobeIncome/Total is
+      negative.
     rule: >-
       The Art4.1.5 element must be completed if the
       OverallComputation/NetGlobeIncome/Total is a negative value
