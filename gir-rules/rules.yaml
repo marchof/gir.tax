@@ -2195,9 +2195,20 @@ rules:
   - number: 70103
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:UTPRAttribution/globe:Attribution/globe:UTPRPercentage
-    references:
-      - GLOBEBody/UTPRAttribution/Attribution/UTPRTopUpTaxCarryForward
-    element: UTPRPercentage
+    allOf:
+      - when: ../globe:UTPRTopUpTaxCarryForward > 0
+        equals:
+          expected: 0
+      - when: ../globe:UTPRTopUpTaxCarryForward = 0 and . = 0
+        absent: /globe:GLOBE_OECD/globe:GLOBEBody/globe:UTPRAttribution/globe:Attribution/globe:UTPRPercentage[. != 0]
+    implementation_notes: >-
+      The OECD text bundles two checks that share the UTPRPercentage target but use
+      different guards, so they are combined with allOf, each branch carrying its own
+      when (a branch whose guard is false passes vacuously). Branch 1: when the
+      sibling UTPRTopUpTaxCarryForward > 0, the UTPRPercentage must be 0. Branch 2:
+      when carry-forward = 0 and this UTPRPercentage is itself 0, every UTPRAttribution
+      percentage in the message must also be 0 — i.e. no non-zero one is present —
+      encoding "a 0% is valid only when all jurisdictions are 0% that year".
     rule: >-
       The UTPRPercentage must be 0% when the UTPRTopUp TaxCarryForward is greater than
       0. If the UTPRTopUpTaxCarryForward is 0, then the UTPRPercentage can only be 0%

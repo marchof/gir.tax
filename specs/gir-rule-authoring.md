@@ -48,6 +48,12 @@ part of adding the operator — not before, and not left behind "just in case".
   *consequence* only. Don't fold the guard into the assertion.
 * Reach for `allOf`/`anyOf` only when a rule genuinely combines independent
   consequences; a single condition + single consequence is the norm.
+* When one OECD rule states two checks that share a target but apply under
+  different conditions, keep it as one rule entry and combine them with `allOf`,
+  giving each branch its own `when:` (a guard-false branch passes vacuously).
+  Prefer this over inventing a second, suffixed rule number — see the per-branch
+  `when` note in
+  [gir-rules/README.md](../gir-rules/README.md#per-branch-when-in-allof--anyof).
 * Use relative axes (`../`, `ancestor::`, `parent::`) to reach the sibling or
   ancestor data an operand needs, and `*` wildcards for "any election type"
   patterns (e.g. `globe:Election/*/globe:RevocationYear`).

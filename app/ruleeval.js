@@ -77,11 +77,7 @@ export class RuleEvaluator {
 
   // Evaluate a rule against a single target (context) node.
   evaluate(rule, ctx) {
-    const when = rule.when;
-    if (when !== undefined && when !== null && !this._guardHolds(when, ctx)) {
-      return PASS; // guard false -> vacuously satisfied
-    }
-    return this.evalAssertion(ruleAssertion(rule), ctx);
+    return this.evalAssertion(rule, ctx);
   }
 
   // A `when:` guard is either a raw XPath boolean (the common, compound case)
@@ -95,8 +91,18 @@ export class RuleEvaluator {
   }
 
   evalAssertion(node, ctx) {
-    const op = Object.keys(node)[0];
-    const arg = node[op];
+    // A `when:` guard may sit on any assertion node, not just the rule top
+    // level: nested children of allOf/anyOf can carry their own guard, so one
+    // rule can hold several checks with different conditions. A node is thus its
+    // operator key plus optional metadata (when, and on the rule itself
+    // number/rule/description/...); ruleAssertion picks the operator.
+    const when = node.when;
+    if (when !== undefined && when !== null && !this._guardHolds(when, ctx)) {
+      return PASS; // guard false -> vacuously satisfied
+    }
+    const assertion = ruleAssertion(node);
+    const op = Object.keys(assertion)[0];
+    const arg = assertion[op];
 
     if (op === "present") {
       if (this.xpath.boolean(arg, ctx)) {

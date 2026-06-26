@@ -66,7 +66,7 @@ and by the test runner.
 |---|---|---|
 | `number` | yes | The OECD rule number, used as the stable identifier everywhere (test folders, UI, etc.). |
 | `targets` | yes | One or more absolute XPath expressions selecting the element(s) the rule applies to. Each target node becomes the context (`.`) for the assertion. |
-| `when` | no | A guard; if it does not hold the rule is vacuously satisfied for that target. Normally a boolean XPath string (the common, compound case), but may instead be a single structured assertion whose truthiness is the guard (the message is discarded) — use that form only where an operator reads better than the XPath, e.g. `when: { isTrue: "@unknown" }`. |
+| `when` | no | A guard; if it does not hold the rule is vacuously satisfied for that target. Normally a boolean XPath string (the common, compound case), but may instead be a single structured assertion whose truthiness is the guard (the message is discarded) — use that form only where an operator reads better than the XPath, e.g. `when: { isTrue: "@unknown" }`. A `when` may sit on any assertion node, not just the rule top level: the nested branches of `allOf`/`anyOf` can each carry their own guard (see [Operators](#operators)). |
 | *operator* | no | Exactly one assertion operator key (see [Operators](#operators)) written at the rule top level. Its presence makes the rule active. |
 | `rule` | yes | The rule text, copied/paraphrased as closely as possible from the OECD specification. Never edited to match implementation details. |
 | `description` | yes | The explanatory/error message text from the OECD wording, copied as-is. |
@@ -109,6 +109,29 @@ notEquals:
 # no
 notEquals: { expected: "'OECD1'" }
 ```
+
+### Per-branch `when` in `allOf` / `anyOf`
+
+A `when:` guard is not restricted to the rule top level — each nested branch of
+`allOf`/`anyOf` may carry its own `when`, shaped exactly like a top-level rule
+body (a `when` plus one operator). A branch whose guard is false passes
+vacuously. This lets a single rule hold several checks that share a target but
+apply under different conditions, instead of forcing one OECD number across
+multiple rule entries:
+
+```yaml
+# 70103: a 0% UTPRPercentage rule with two condition-specific branches
+allOf:
+  - when: ../globe:UTPRTopUpTaxCarryForward > 0
+    equals:
+      expected: 0
+  - when: ../globe:UTPRTopUpTaxCarryForward = 0 and . = 0
+    absent: /globe:GLOBE_OECD/…/globe:UTPRPercentage[. != 0]
+```
+
+For `allOf` this reads as "for each branch whose guard holds, its assertion must
+pass". For `anyOf`, note that a vacuous (guard-false) branch makes the whole
+`anyOf` succeed — so only combine `anyOf` with `when` when that is what you mean.
 
 ### Literals vs. XPath in operands
 

@@ -92,10 +92,7 @@ class RuleEvaluator:
 
     def evaluate(self, rule, ctx):
         """Evaluate a rule against a single target (context) node."""
-        when = rule.get("when")
-        if when is not None and not self._guard_holds(when, ctx):
-            return _PASS  # guard false -> vacuously satisfied
-        return self.eval_assertion(rule_assertion(rule), ctx)
+        return self.eval_assertion(rule, ctx)
 
     def _guard_holds(self, when, ctx):
         """A `when:` guard is either a raw XPath boolean (the common, compound
@@ -106,7 +103,15 @@ class RuleEvaluator:
         return bool(self._xp(when, ctx))
 
     def eval_assertion(self, node, ctx):
-        (op, arg), = node.items()
+        # A `when:` guard may sit on any assertion node, not just the rule top
+        # level: nested children of allOf/anyOf can carry their own guard, so
+        # one rule can hold several checks with different conditions. A node is
+        # thus its operator key plus optional metadata (when, and on the rule
+        # itself number/rule/description/...); rule_assertion picks the operator.
+        when = node.get("when")
+        if when is not None and not self._guard_holds(when, ctx):
+            return _PASS  # guard false -> vacuously satisfied
+        (op, arg), = rule_assertion(node).items()
 
         if op == "present":
             if self._xp(arg, ctx):
