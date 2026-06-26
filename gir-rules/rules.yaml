@@ -1886,9 +1886,9 @@ rules:
   - number: 70084
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:OverallComputation/globe:AdjustedCoveredTax/globe:Adjustments/globe:Amount
-    references:
-      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/ExcessNegTaxExpense/GeneratedInRFY
-    element: GeneratedInRFY
+    when: ../globe:AdjustmentItem = 'GIR2719'
+    equals:
+      expected: ancestor::globe:OverallComputation/globe:ExcessNegTaxExpense/globe:GeneratedInRFY
     rule: >-
       If the Adjustmentitem element has the value of GIR2719, then the value reported
       in the 'amount' element should be the same as the integer reported in the
@@ -1903,10 +1903,14 @@ rules:
 
   - number: 70085
     targets:
-      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:OverallComputation/globe:AdjustedCoveredTax/globe:Adjustments/globe:AdjustmentItem
-    references:
-      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/ExcessNegTaxExpense/UtilizedInRFY
-    element: UtilizedInRFY
+      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:OverallComputation/globe:AdjustedCoveredTax/globe:Adjustments/globe:Amount
+    when: ../globe:AdjustmentItem = 'GIR2720'
+    equals:
+      expected: ancestor::globe:OverallComputation/globe:ExcessNegTaxExpense/globe:UtilizedInRFY
+    implementation_notes: >-
+      Targets the Adjustments/Amount (not the spec-cited AdjustmentItem) so the
+      checked value is the target `.` and the message names Amount; the guard reads
+      the sibling AdjustmentItem.
     rule: >-
       If the Adjustmentitem element has the value of GIR2720, then the value reported
       in the 'amount' element should be the same as the integer reported in the
