@@ -1048,11 +1048,21 @@ rules:
 
   - number: 70037
     targets:
+      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:Summary/globe:Jurisdiction/globe:Subgroup/globe:TIN
+    when: "../../globe:JurisdictionName = /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:Jurisdiction"
+    in:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:SubGroup/globe:TIN
-    references:
-      - GLOBEBody/Summary/Jurisdiction/Subgroup/TIN
-      - GLOBEBody/JurisdictionSection/Jurisdiction
-    element: Subgroup
+    implementation_notes: >-
+      Targets the Summary subgroup TIN (the trigger), not the JurisdictionSection
+      SubGroup/TIN the spec path cites, so the consequence "a matching
+      JurisdictionSection subgroup exists" is a membership check on one context.
+      The guard restricts the rule to a Summary jurisdiction that actually has a
+      JurisdictionSection (Summary/Jurisdiction/JurisdictionName =
+      JurisdictionSection/Jurisdiction, by existential node-set equality). The TIN
+      is matched against all JurisdictionSection ETR SubGroup TINs rather than only
+      the matching jurisdiction's; subgroup TINs are unique across jurisdictions,
+      so a value-only match pins the jurisdiction too (same assumption as 70045).
+      Note the spec's casing: Summary/Subgroup vs ETR/SubGroup.
     rule: >-
       Where a subgroup element is completed in the 'Summary', then Subgroup element in
       the 'JurisdictionSection' should also be completed. The TIN must match to the

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- The matching JurisdictionSection has several ETR SubGroup TINs; the Summary
+     subgroup TIN matches one that is neither the only candidate nor the first. -->
+<globe:GLOBE_OECD xmlns:globe="urn:oecd:ties:globe:v2">
+  <globe:GLOBEBody>
+    <globe:Summary>
+      <globe:Jurisdiction>
+        <globe:JurisdictionName>DE</globe:JurisdictionName>
+        <globe:Subgroup>
+          <globe:TIN>SUBDE_B</globe:TIN>
+        </globe:Subgroup>
+      </globe:Jurisdiction>
+    </globe:Summary>
+    <globe:JurisdictionSection>
+      <globe:Jurisdiction>DE</globe:Jurisdiction>
+      <globe:GLoBETax>
+        <globe:ETR>
+          <globe:SubGroup>
+            <globe:TIN>SUBDE_A</globe:TIN>
+          </globe:SubGroup>
+          <globe:SubGroup>
+            <globe:TIN>SUBDE_B</globe:TIN>
+          </globe:SubGroup>
+        </globe:ETR>
+      </globe:GLoBETax>
+    </globe:JurisdictionSection>
+  </globe:GLOBEBody>
+</globe:GLOBE_OECD>

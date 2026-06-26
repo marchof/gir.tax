@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- The JurisdictionSection for DE exists and has a subgroup, but with a different
+     TIN — the Summary subgroup has no corresponding JurisdictionSection subgroup. -->
+<globe:GLOBE_OECD xmlns:globe="urn:oecd:ties:globe:v2">
+  <globe:GLOBEBody>
+    <globe:Summary>
+      <globe:Jurisdiction>
+        <globe:JurisdictionName>DE</globe:JurisdictionName>
+        <globe:Subgroup>
+          <globe:TIN>SUBDE_MISSING</globe:TIN>
+        </globe:Subgroup>
+      </globe:Jurisdiction>
+    </globe:Summary>
+    <globe:JurisdictionSection>
+      <globe:Jurisdiction>DE</globe:Jurisdiction>
+      <globe:GLoBETax>
+        <globe:ETR>
+          <globe:SubGroup>
+            <globe:TIN>SUBDE_OTHER</globe:TIN>
+          </globe:SubGroup>
+        </globe:ETR>
+      </globe:GLoBETax>
+    </globe:JurisdictionSection>
+  </globe:GLOBEBody>
+</globe:GLOBE_OECD>

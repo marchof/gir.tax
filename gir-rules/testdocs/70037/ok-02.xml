@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Guard false: the Summary subgroup is for FR, but the only JurisdictionSection
+     is for IT, so no JurisdictionSection relates to this Summary's jurisdiction.
+     The rule is vacuous; the deliberately unmatched TIN would fail if the guard
+     were dropped. -->
+<globe:GLOBE_OECD xmlns:globe="urn:oecd:ties:globe:v2">
+  <globe:GLOBEBody>
+    <globe:Summary>
+      <globe:Jurisdiction>
+        <globe:JurisdictionName>FR</globe:JurisdictionName>
+        <globe:Subgroup>
+          <globe:TIN>SUBFR222</globe:TIN>
+        </globe:Subgroup>
+      </globe:Jurisdiction>
+    </globe:Summary>
+    <globe:JurisdictionSection>
+      <globe:Jurisdiction>IT</globe:Jurisdiction>
+      <globe:GLoBETax>
+        <globe:ETR>
+          <globe:SubGroup>
+            <globe:TIN>SUBIT999</globe:TIN>
+          </globe:SubGroup>
+        </globe:ETR>
+      </globe:GLoBETax>
+    </globe:JurisdictionSection>
+  </globe:GLOBEBody>
+</globe:GLOBE_OECD>
