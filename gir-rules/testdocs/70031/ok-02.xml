@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- A PE (GIR305): a GIR306 main entity exists both as a CE and as an OtherUPE;
+     the Ownership/TIN matches the OtherUPE main entity (the second candidate
+     source, not the first), exercising the "at least one of N" match. -->
+<globe:GLOBE_OECD xmlns:globe="urn:oecd:ties:globe:v2">
+  <globe:GLOBEBody>
+    <globe:GeneralSection>
+      <globe:CorporateStructure>
+        <globe:UPE>
+          <globe:OtherUPE>
+            <globe:ID>
+              <globe:TIN>MAINUPE222</globe:TIN>
+              <globe:GlobeStatus>GIR306</globe:GlobeStatus>
+            </globe:ID>
+          </globe:OtherUPE>
+        </globe:UPE>
+        <globe:CE>
+          <globe:ID>
+            <globe:TIN>PE200</globe:TIN>
+            <globe:GlobeStatus>GIR305</globe:GlobeStatus>
+          </globe:ID>
+          <globe:Ownership>
+            <globe:TIN>MAINUPE222</globe:TIN>
+          </globe:Ownership>
+        </globe:CE>
+        <globe:CE>
+          <globe:ID>
+            <globe:TIN>MAINCE222</globe:TIN>
+            <globe:GlobeStatus>GIR306</globe:GlobeStatus>
+          </globe:ID>
+        </globe:CE>
+      </globe:CorporateStructure>
+    </globe:GeneralSection>
+  </globe:GLOBEBody>
+</globe:GLOBE_OECD>

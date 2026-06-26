@@ -944,10 +944,17 @@ rules:
   - number: 70031
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:GeneralSection/globe:CorporateStructure/globe:CE/globe:Ownership/globe:TIN
-    references:
-      - GLOBEBody/GeneralSection/CorporateStructure/CE/ID/GlobeStatus
-      - GLOBEBody/GeneralSection/CorporateStructure/CE/ID/TIN
-    element: TIN
+    when: "ancestor::globe:CE[1]/globe:ID/globe:GlobeStatus = 'GIR305'"
+    in:
+      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:GeneralSection/globe:CorporateStructure/globe:CE/globe:ID[globe:GlobeStatus = 'GIR306']/globe:TIN
+      - /globe:GLOBE_OECD/globe:GLOBEBody/globe:GeneralSection/globe:CorporateStructure/globe:UPE/globe:OtherUPE/globe:ID[globe:GlobeStatus = 'GIR306']/globe:TIN
+    implementation_notes: >-
+      The guard scopes to the PE that owns this Ownership
+      (ancestor::CE[1]/ID/GlobeStatus = GIR305). The "different entity — the main
+      entity" requirement is carried by the GIR306 status predicate on the
+      candidate TINs, not by sibling-axis self-exclusion: the owning CE is GIR305,
+      so it can never appear in the GIR306-filtered candidate set. Candidates are
+      drawn from both a CE/ID and an OtherUPE/ID reporting GIR306.
     rule: >-
       When the Corporate Structure/CE/ID/GlobeStatus contains the value of GIR305,
       then the Ownership/TIN must be equal at least one TIN of the entity which

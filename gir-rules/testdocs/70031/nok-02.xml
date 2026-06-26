@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- A PE (GIR305) whose Ownership/TIN matches an entity by value, but that entity
+     is NOT a main entity (GlobeStatus GIR301, not GIR306). The match must fail:
+     the GIR306 status predicate excludes the decoy, leaving only the real main
+     entity (different TIN) as a candidate. Guards against dropping the predicate. -->
+<globe:GLOBE_OECD xmlns:globe="urn:oecd:ties:globe:v2">
+  <globe:GLOBEBody>
+    <globe:GeneralSection>
+      <globe:CorporateStructure>
+        <globe:CE>
+          <globe:ID>
+            <globe:TIN>PE500</globe:TIN>
+            <globe:GlobeStatus>GIR305</globe:GlobeStatus>
+          </globe:ID>
+          <globe:Ownership>
+            <globe:TIN>DECOY555</globe:TIN>
+          </globe:Ownership>
+        </globe:CE>
+        <globe:CE>
+          <globe:ID>
+            <globe:TIN>MAINREAL555</globe:TIN>
+            <globe:GlobeStatus>GIR306</globe:GlobeStatus>
+          </globe:ID>
+        </globe:CE>
+        <globe:CE>
+          <globe:ID>
+            <globe:TIN>DECOY555</globe:TIN>
+            <globe:GlobeStatus>GIR301</globe:GlobeStatus>
+          </globe:ID>
+        </globe:CE>
+      </globe:CorporateStructure>
+    </globe:GeneralSection>
+  </globe:GLOBEBody>
+</globe:GLOBE_OECD>

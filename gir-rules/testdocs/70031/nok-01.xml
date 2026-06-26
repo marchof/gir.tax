@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- A PE (GIR305) whose Ownership/TIN matches no GIR306 main entity in the
+     structure. -->
+<globe:GLOBE_OECD xmlns:globe="urn:oecd:ties:globe:v2">
+  <globe:GLOBEBody>
+    <globe:GeneralSection>
+      <globe:CorporateStructure>
+        <globe:CE>
+          <globe:ID>
+            <globe:TIN>PE400</globe:TIN>
+            <globe:GlobeStatus>GIR305</globe:GlobeStatus>
+          </globe:ID>
+          <globe:Ownership>
+            <globe:TIN>NOTMAIN999</globe:TIN>
+          </globe:Ownership>
+        </globe:CE>
+        <globe:CE>
+          <globe:ID>
+            <globe:TIN>MAIN444</globe:TIN>
+            <globe:GlobeStatus>GIR306</globe:GlobeStatus>
+          </globe:ID>
+        </globe:CE>
+      </globe:CorporateStructure>
+    </globe:GeneralSection>
+  </globe:GLOBEBody>
+</globe:GLOBE_OECD>
