@@ -17,7 +17,7 @@
       <globe:FilingCE>
         <globe:ResCountryCode>AF</globe:ResCountryCode>
         <globe:Name>Name</globe:Name>
-        <globe:TIN TypeOfTIN="GIR3004" unknown="true">NOTIN</globe:TIN>
+        <globe:TIN issuedBy="AF" TypeOfTIN="GIR3001">123456789</globe:TIN>
         <globe:Role>GIR401</globe:Role>
       </globe:FilingCE>
       <globe:AccountingInfo>
@@ -44,7 +44,7 @@
             <globe:ID>
               <globe:Name>globe:Name</globe:Name>
               <globe:ResCountryCode>AF</globe:ResCountryCode>
-              <globe:TIN TypeOfTIN="GIR3004" unknown="true">NOTIN</globe:TIN>
+              <globe:TIN issuedBy="AF" TypeOfTIN="GIR3001">123456789</globe:TIN>
               <globe:Rules>GIR201</globe:Rules>
               <globe:GlobeStatus>GIR301</globe:GlobeStatus>
             </globe:ID>

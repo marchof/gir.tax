@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<globe:GLOBE_OECD xmlns:globe="urn:oecd:ties:globe:v2">
+  <globe:GLOBEBody>
+    <globe:GeneralSection>
+      <globe:CorporateStructure>
+        <globe:UPE>
+          <globe:ExcludedUPE>
+            <globe:ExcludedUPEStatus>GIR601</globe:ExcludedUPEStatus>
+            <globe:ID>
+              <globe:TIN TypeOfTIN="GIR3004" unknown="true">NOTIN</globe:TIN>
+              <globe:GlobeStatus>GIR301</globe:GlobeStatus>
+            </globe:ID>
+          </globe:ExcludedUPE>
+        </globe:UPE>
+      </globe:CorporateStructure>
+    </globe:GeneralSection>
+  </globe:GLOBEBody>
+</globe:GLOBE_OECD>

@@ -496,13 +496,17 @@ rules:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:GeneralSection/globe:CorporateStructure/globe:CE/globe:ID/globe:TIN
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:GeneralSection/globe:CorporateStructure/globe:CE/globe:QIIR/globe:Exception/globe:TIN
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:CEComputation/globe:Elections/globe:AggregatedReporting/globe:TaxConsolGroupTIN
-    references:
-      - GeneralSection/CorporateStructure/UPE/ExcludedUPE/ID/TIN
-      - GeneralSection/CorporateStructure/UPE/OtherUPE/ID/TIN
-      - GeneralSection/CorporateStructure/CE/ID/TIN (except when GloBEStatus contains the value of GIR316 or GIR318)
-      - GeneralSection/CorporateStructure/CE/QIIR/Exception/TIN
-      - JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/AggregatedReporting/TaxConsolGroupTIN
-    element: TypeofTIN
+    when: "not(../../self::globe:CE and (../globe:GlobeStatus = 'GIR316' or ../globe:GlobeStatus = 'GIR318'))"
+    allOf:
+      - notEquals:
+          actual: "@TypeOfTIN"
+          expected: "'GIR3004'"
+      - absent: "@unknown[. = 'true' or . = '1']"
+    implementation_notes: >-
+      The GloBEStatus GIR316/GIR318 exception applies only to the CE/ID/TIN
+      target, so the guard restricts it to a TIN whose grandparent is a CE
+      (../../self::globe:CE). The unknown-flag check uses a value predicate so
+      both xsd:boolean lexical forms ('true'/'1') count as flagged.
     rule: >-
       The following TIN elements must not be completed using TypeofTIN GIR3004 and
       must not be flagged Unknown:
