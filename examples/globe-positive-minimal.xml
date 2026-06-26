@@ -54,13 +54,13 @@
         	<globe:ID>
         		<globe:Name>globe:Name</globe:Name>
         		<globe:ResCountryCode>AF</globe:ResCountryCode>
-        		<globe:TIN>globe:TIN</globe:TIN>
+        		<globe:TIN issuedBy="AF" TypeOfTIN="GIR3001">globe:TIN</globe:TIN>
         		<globe:Rules>GIR201</globe:Rules>
         		<globe:GlobeStatus>GIR301</globe:GlobeStatus>
         	</globe:ID>
         	<globe:Ownership>
         		<globe:OwnershipType>GIR801</globe:OwnershipType>
-        		<globe:TIN>globe:TIN</globe:TIN>
+        		<globe:TIN issuedBy="AF" TypeOfTIN="GIR3001">globe:TIN</globe:TIN>
         		<globe:OwnershipPercentage>
         			1
         		</globe:OwnershipPercentage>

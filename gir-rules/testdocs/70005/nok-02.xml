@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<globe:GLOBE_OECD xmlns:globe="urn:oecd:ties:globe:v2">
+  <globe:GLOBEBody>
+    <globe:FilingInfo>
+      <globe:FilingCE>
+        <globe:TIN issuedBy="AF">123456789</globe:TIN>
+      </globe:FilingCE>
+    </globe:FilingInfo>
+  </globe:GLOBEBody>
+</globe:GLOBE_OECD>

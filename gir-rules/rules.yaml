@@ -478,6 +478,10 @@ rules:
   - number: 70005
     targets:
       - //globe:TIN
+    allOf:
+      - present: "@TypeOfTIN"
+      - when: "not(@TypeOfTIN = 'GIR3003' or @TypeOfTIN = 'GIR3004')"
+        present: "@issuedBy"
     rule: >-
       Attributes issuedBy and TypeofTIN must always be present, except that issued By
       is not required when TypeOfTIN is GIR3003 or GIR3004.

@@ -54,7 +54,7 @@
         	<globe:ID>
         		<globe:Name>globe:Name</globe:Name>
         		<globe:ResCountryCode>AF</globe:ResCountryCode>
-        		<globe:TIN>globe:TIN</globe:TIN>
+        		<globe:TIN issuedBy="AF" TypeOfTIN="GIR3001">globe:TIN</globe:TIN>
         		<globe:Rules>GIR201</globe:Rules>
         		<globe:GlobeStatus>GIR301</globe:GlobeStatus>
         	</globe:ID>
@@ -63,13 +63,13 @@
             <globe:PreGlobeStatus>GIR701</globe:PreGlobeStatus>
             <globe:PreOwnership>
               <globe:OwnershipType>GIR801</globe:OwnershipType>
-              <globe:TIN>globe:TIN</globe:TIN>
+              <globe:TIN issuedBy="AF" TypeOfTIN="GIR3001">globe:TIN</globe:TIN>
               <globe:PreOwnershipPercentage>0</globe:PreOwnershipPercentage>
             </globe:PreOwnership>
           </globe:OwnershipChange>
         	<globe:Ownership>
         		<globe:OwnershipType>GIR801</globe:OwnershipType>
-        		<globe:TIN>globe:TIN</globe:TIN>
+        		<globe:TIN issuedBy="AF" TypeOfTIN="GIR3001">globe:TIN</globe:TIN>
         		<globe:OwnershipPercentage>
         			1
         		</globe:OwnershipPercentage>
@@ -80,7 +80,7 @@
               <globe:ExceptionRule>
                 <globe:Art2.1.3>true</globe:Art2.1.3>
               </globe:ExceptionRule>
-              <globe:TIN>globe:TIN</globe:TIN>
+              <globe:TIN issuedBy="AF" TypeOfTIN="GIR3001">globe:TIN</globe:TIN>
             </globe:Exception>
           </globe:QIIR>
         </globe:CE>
@@ -95,7 +95,7 @@
       <globe:Jurisdiction>
         <globe:JurisdictionName>AF</globe:JurisdictionName>
         <globe:Subgroup>
-          <globe:TIN>globe:TIN</globe:TIN>
+          <globe:TIN issuedBy="AF" TypeOfTIN="GIR3001">globe:TIN</globe:TIN>
           <globe:TypeofSubGroup>GIR1101</globe:TypeofSubGroup>
         </globe:Subgroup>
       </globe:Jurisdiction>
@@ -124,7 +124,7 @@
       <globe:GLoBETax>
         <globe:ETR>
           <globe:SubGroup>
-            <globe:TIN>globe:TIN</globe:TIN>
+            <globe:TIN issuedBy="AF" TypeOfTIN="GIR3001">globe:TIN</globe:TIN>
             <globe:TypeofSubGroup>GIR1607</globe:TypeofSubGroup>
           </globe:SubGroup>
           <globe:ETRStatus>
@@ -226,7 +226,7 @@
                     </globe:Adjustment>
                   </globe:DeferTaxAdjustAmt>
                 </globe:AdjustedCoveredTax>
-                <globe:TIN>globe:TIN</globe:TIN>
+                <globe:TIN issuedBy="AF" TypeOfTIN="GIR3001">globe:TIN</globe:TIN>
                 <globe:Elections>
                   <globe:Art1.5.3>
                     <globe:Status>false</globe:Status>
@@ -429,7 +429,7 @@
                 <globe:ID>
                   <globe:Name>globe:Name</globe:Name>
                   <globe:ResCountryCode>AF</globe:ResCountryCode>
-                  <globe:TIN>globe:TIN</globe:TIN>
+                  <globe:TIN issuedBy="AF" TypeOfTIN="GIR3001">globe:TIN</globe:TIN>
                   <globe:Rules>GIR201</globe:Rules>
                   <globe:GlobeStatus>GIR301</globe:GlobeStatus>
                 </globe:ID>
