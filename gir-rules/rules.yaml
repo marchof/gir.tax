@@ -1526,10 +1526,9 @@ rules:
   - number: 70057
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:CEComputation/globe:TIN
-    references:
-      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/AggregatedReporting
-      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/AggregatedReporting/TaxConsolGroupTIN
-    element: TIN
+    when: "../globe:Elections/globe:AggregatedReporting"
+    equals:
+      expected: ../globe:Elections/globe:AggregatedReporting/globe:TaxConsolGroupTIN
     rule: >-
       If the Aggregated Reporting element is completed, then the CEComputations TIN
       should match the TaxConsol Group TIN.
