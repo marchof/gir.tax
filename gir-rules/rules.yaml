@@ -6,6 +6,12 @@ xmlnamespaces:
 rules:
 
   - number: 60001
+    disabled: true
+    implementation_notes: >-
+      Not yet implemented: the rule engine does not yet support this check. It
+      would need to confirm that the parts of the MessageRefId (the sending and
+      receiving jurisdictions and the reporting period) match the values actually
+      used in the message, not just the overall format.
     targets:
       - /globe:GLOBE_OECD/globe:MessageSpec/globe:MessageRefId
     element: MessageRefld
@@ -19,6 +25,12 @@ rules:
       the file.
 
   - number: 60002
+    disabled: true
+    implementation_notes: >-
+      Not yet implemented: the rule engine does not yet support this check.
+      Detecting a MessageRefId that was already received in an earlier file
+      requires information from previous submissions, which is not available when
+      validating a single document.
     targets:
       - /globe:GLOBE_OECD/globe:MessageSpec/globe:MessageRefId
     element: MessageRefld
@@ -30,6 +42,11 @@ rules:
       containing all blanks), and resubmit the file.
 
   - number: 60003
+    disabled: true
+    implementation_notes: >-
+      Not yet implemented: the rule engine does not yet support this check. It
+      needs to know the current year (today's date), which is not part of the
+      filing.
     targets:
       - /globe:GLOBE_OECD/globe:MessageSpec/globe:ReportingPeriod
     element: ReportingPeriod
@@ -56,6 +73,12 @@ rules:
       element of the message.
 
   - number: 60005
+    disabled: true
+    implementation_notes: >-
+      Not yet implemented: the rule engine does not yet support this check. A
+      correction (OECD2/OECD3) refers back to a record in an earlier submission,
+      and confirming it concerns the same sub-section requires that earlier
+      record, which is not part of the current document.
     targets:
       - //stf:DocTypeIndic
     element: DocTypeIndic
@@ -80,6 +103,12 @@ rules:
       root and `distinct` collects every CorrDocRefId in it.
 
   - number: 60007
+    disabled: true
+    implementation_notes: >-
+      Not yet implemented: the rule engine does not yet support this check.
+      Detecting a DocRefId already used for another record requires information
+      from other submissions, which is not available when validating a single
+      document.
     targets:
       - //stf:DocRefId
     element: DocRefId
@@ -91,6 +120,11 @@ rules:
       XML Schema User Guide and is 'unique in time and space'.
 
   - number: 60008
+    disabled: true
+    implementation_notes: >-
+      Not yet implemented: the rule engine does not yet support this check.
+      Resolving a CorrDocRefId against the records already received requires
+      information from previous submissions.
     targets:
       - //stf:CorrDocRefId
     element: CorrDocRefld
@@ -102,6 +136,11 @@ rules:
       the DocRefld of the element which is subject to a correction
 
   - number: 60009
+    disabled: true
+    implementation_notes: >-
+      Not yet implemented: the rule engine does not yet support this check.
+      Confirming that a CorrDocRefId points to the most recent, still-valid
+      version of a record requires the history of previous submissions.
     targets:
       - //stf:CorrDocRefId
     element: CorrDocRefld
@@ -131,6 +170,12 @@ rules:
       records.
 
   - number: 60011
+    disabled: true
+    implementation_notes: >-
+      Not yet implemented: the rule engine does not yet support this check. It
+      would need to confirm that the parts of the DocRefId (the sending
+      jurisdiction and the reporting year) match the values actually used, not
+      just the overall format.
     targets:
       - //stf:DocRefId
     element: DocRefld
@@ -176,6 +221,11 @@ rules:
       - ok-05.xml
 
   - number: 60014
+    disabled: true
+    implementation_notes: >-
+      Not yet implemented: the rule engine does not yet support this check. It
+      requires the DocRefId of the latest version of the record from earlier
+      submissions, which is not part of the current document.
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:FilingInfo/globe:DocSpec/stf:DocRefId
     element: DocRefld
@@ -465,6 +515,12 @@ rules:
       IssuedBy must not be provided.
 
   - number: 70004
+    disabled: true
+    implementation_notes: >-
+      Not yet implemented: the rule engine does not yet support this check.
+      Confirming that a TIN is valid for its jurisdiction requires each
+      jurisdiction's own tax-number rules, which are reference data outside the
+      filing.
     targets:
       - //globe:TIN
     element: issuedBy
@@ -629,6 +685,12 @@ rules:
       is located for GloBE purposes.
 
   - number: 70012
+    disabled: true
+    implementation_notes: >-
+      Not yet implemented: the rule engine does not yet support this check. It
+      would need to group all entities resident in the same jurisdiction and
+      compare their full set of Rules values (allowing the GIR204 exception), a
+      comparison across entities the engine cannot yet express.
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:GeneralSection/globe:CorporateStructure/globe:UPE/globe:ExcludedUPE/globe:ID/globe:Rules
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:GeneralSection/globe:CorporateStructure/globe:UPE/globe:OtherUPE/globe:ID/globe:Rules
@@ -1033,6 +1095,12 @@ rules:
       another POPE which is required to apply the QIIR
 
   - number: 70036
+    disabled: true
+    implementation_notes: >-
+      Not yet implemented: the rule engine does not yet support this check. It
+      would need to count the Summary sections provided for a jurisdiction and
+      compare that to the number of subgroups, a count across the whole filing
+      the engine cannot yet express.
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:Summary/globe:Jurisdiction/globe:Subgroup
     rule: >-

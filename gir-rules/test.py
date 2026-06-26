@@ -72,10 +72,25 @@ class TestRuleSyntax(unittest.TestCase):
             f"Rule {number} has multiple assertion operators: {operators}",
         )
 
+    @parameterized.expand([(rule["number"], rule) for rule in RULES["rules"]])
+    def test_active_rule_has_an_operator(self, number, rule):
+        # `disabled: true` is the single switch that excludes a rule. Any rule
+        # that is not disabled must carry exactly one operator so it can be
+        # evaluated and code-generated; a rule that cannot be a local per-element
+        # check must be marked `disabled: true` (with a user-facing
+        # implementation_notes) instead of being left operator-less.
+        if rule_is_active(rule):
+            operators = [op for op in ASSERTION_OPS if op in rule]
+            self.assertEqual(
+                len(operators), 1,
+                f"Active rule {number} must carry exactly one operator, or be "
+                f"marked disabled: true; found {operators}",
+            )
+
 
 class TestRules(unittest.TestCase):
 
-    @parameterized.expand([ (rule["number"], target) for rule in RULES["rules"] for target in rule["targets"] ])
+    @parameterized.expand([ (rule["number"], target) for rule in RULES["rules"] if rule_is_active(rule) for target in rule["targets"] ])
     def test_target_path_does_exist(self, number, target):
         for doc in COMPLETE_DOCS:
             if doc.xpath(target, namespaces=NAMESPACES):
@@ -85,7 +100,7 @@ class TestRules(unittest.TestCase):
     @parameterized.expand([ (rule["number"], rule) for rule in RULES["rules"] ])
     def test_rules_on_complete_docs_and_examples(self, number, rule):
         if not rule_is_active(rule):
-            self.skipTest(f"Rule {number} has no test defined")
+            self.skipTest(f"Rule {number} is disabled")
         for target in rule["targets"]:
             for doc in COMPLETE_DOCS + EXAMPLES_DOCS:
                 for element in doc.xpath(target, namespaces=NAMESPACES):

@@ -51,9 +51,17 @@ export function ruleAssertion(rule) {
   return null;
 }
 
-// True if the rule has an executable check.
+// True if the rule is explicitly turned off via `disabled: true`. Disabled rules
+// are excluded from evaluation, the tests, and code generation.
+export function ruleIsDisabled(rule) {
+  return Boolean(rule.disabled);
+}
+
+// True if the rule is enforced (and code-generated): any rule not marked
+// `disabled`. Every active rule carries exactly one operator (enforced at build
+// time by the rules.yaml tests), so ruleAssertion is non-null for an active rule.
 export function ruleIsActive(rule) {
-  return ruleAssertion(rule) !== null;
+  return !ruleIsDisabled(rule);
 }
 
 // Outcome of evaluating an assertion against one target node. On failure,

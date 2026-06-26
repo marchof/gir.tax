@@ -56,9 +56,17 @@ def rule_assertion(rule):
     return None
 
 
+def rule_is_disabled(rule):
+    """True if the rule is explicitly turned off via ``disabled: true``. Disabled
+    rules are excluded from evaluation, the tests, and code generation."""
+    return bool(rule.get("disabled"))
+
+
 def rule_is_active(rule):
-    """True if the rule has an executable check."""
-    return rule_assertion(rule) is not None
+    """True if the rule is enforced (and code-generated): any rule not marked
+    ``disabled``. Every active rule carries exactly one operator (enforced at
+    build time by the rules.yaml tests), so ``rule_assertion`` is non-None here."""
+    return not rule_is_disabled(rule)
 
 
 class Result:

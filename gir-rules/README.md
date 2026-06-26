@@ -36,12 +36,12 @@ The reference interpreter is [rule_eval.py](rule_eval.py) (`RuleEvaluator`,
 plus `rule_is_active`) — a dependency-free module reused both by the tests and
 in production. [test.py](test.py) only drives it over the fixtures.
 
-A rule is **active** (automatically enforced) once it carries an operator key.
-Many rules in [rules.yaml](rules.yaml) only carry `rule`/`description` text and
-no operator yet — these describe logic that is not (or cannot be) expressed as a
-local per-element check (e.g. cross-record arithmetic, cross-message checks,
-matching against historical data). They are skipped by the logic tests but
-still contribute to the target-path existence check.
+A rule is **active** (enforced) unless it is marked `disabled: true`, and every
+active rule carries exactly one operator. A rule whose logic cannot be expressed
+as a local per-element check — one that needs state from other messages or
+earlier filings, external data, or a comparison spanning the whole document — is
+instead marked `disabled: true` and carries an `implementation_notes` that
+explains, in plain filer terms, why it is not enforced.
 
 ## Rule shape
 
@@ -67,10 +67,11 @@ and by the test runner.
 | `number` | yes | The OECD rule number, used as the stable identifier everywhere (test folders, UI, etc.). |
 | `targets` | yes | One or more absolute XPath expressions selecting the element(s) the rule applies to. Each target node becomes the context (`.`) for the assertion. |
 | `when` | no | A guard; if it does not hold the rule is vacuously satisfied for that target. Normally a boolean XPath string (the common, compound case), but may instead be a single structured assertion whose truthiness is the guard (the message is discarded) — use that form only where an operator reads better than the XPath, e.g. `when: { isTrue: "@unknown" }`. A `when` may sit on any assertion node, not just the rule top level: the nested branches of `allOf`/`anyOf` can each carry their own guard (see [Operators](#operators)). |
-| *operator* | no | Exactly one assertion operator key (see [Operators](#operators)) written at the rule top level. Its presence makes the rule active. |
+| *operator* | no | Exactly one assertion operator key (see [Operators](#operators)) written at the rule top level. Required on every active (non-`disabled`) rule; `disabled` rules carry none. |
 | `rule` | yes | The rule text, copied/paraphrased as closely as possible from the OECD specification. Never edited to match implementation details. |
 | `description` | yes | The explanatory/error message text from the OECD wording, copied as-is. |
-| `implementation_notes` | no | Notes about the *implementation only* — never a restatement of the rule. |
+| `implementation_notes` | no | Notes about the *implementation only* — never a restatement of the rule. On a `disabled` rule, this instead records why the rule was left unimplemented. |
+| `disabled` | no | `true` marks a rule as **not enforced** — used when its logic cannot be expressed as a local per-element check (it needs state from other messages or earlier filings, external data, or a comparison spanning the whole document). A disabled rule carries no operator and is paired with a user-facing `implementation_notes` giving the reason. |
 | `element` | no | The schema element name the rule is conceptually about. Transitional scaffolding present only while a rule has no operator. |
 | `references` | no | Dotted, schema-relative paths to other elements the rule's logic depends on. Transitional scaffolding present only while a rule has no operator. |
 | `target_does_not_exist_in_test_files` | no | List of fixture file names where none of the `targets` are expected to match, to suppress the "no elements matched" assertion for tests of an absence scenario. |
@@ -305,7 +306,7 @@ rule/target/file combination shows up as its own test case.
    (`schemas/gir/globexml_v1.0.xsd`) so the fixtures themselves stay
    schema-valid, and (b) prove that every rule's `targets` XPath matches at
    least one node somewhere in the corpus (catches typos/renames in target
-   paths even for rules with no operator).
+   paths; active rules only — disabled rules are not checked).
 3. **Rule-specific fragments** — `testdocs/<number>/ok-<nn>.xml` and
    `testdocs/<number>/nok-<nn>.xml`, one folder per active rule number. These
    are the primary correctness tests for the rule's logic. To stay selective,
@@ -322,8 +323,11 @@ The suite's checks:
   references (no typos or invented elements; not full XSD validation).
 * `TestRuleSyntax.test_rule_has_at_most_one_operator` — a rule with two operator
   keys would have one check silently dropped, so it is rejected at build time.
-* `TestRules.test_target_path_does_exist` — for every rule, asserts at least one
-  `complete-*.xml` document has a node matching one of its `targets`.
+* `TestRuleSyntax.test_active_rule_has_an_operator` — every active (non-`disabled`)
+  rule must carry exactly one operator, so the only way to skip a rule is to mark
+  it `disabled: true`; an operator-less, non-disabled rule fails the build.
+* `TestRules.test_target_path_does_exist` — for every active rule, asserts at
+  least one `complete-*.xml` document has a node matching one of its `targets`.
 * `TestRules.test_rules_on_complete_docs_and_examples` — for active rules,
   evaluates the assertion against every matching node in the complete + example
   documents and asserts it passes (these are all valid filings).

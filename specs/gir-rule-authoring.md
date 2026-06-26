@@ -229,5 +229,9 @@ check.
    absence scenario), add the filename to `target_does_not_exist_in_test_files`
    instead of forcing an artificial target hit.
 5. If the rule cannot be expressed as a simple per-element check (it needs
-   cross-message state, history, or heavy cross-record correlation), leave it
-   without an operator rather than half-implementing it.
+   cross-message state, history, external data, or grouping/keyed counts), mark
+   it `disabled: true` with a user-facing `implementation_notes` explaining why
+   (in filer terms), rather than half-implementing it. `disabled: true` is the
+   single switch that excludes a rule from the tests and code generation; a
+   non-disabled rule **must** carry an operator, so it is rejected at build time
+   otherwise — a rule is either implemented or explicitly disabled.
