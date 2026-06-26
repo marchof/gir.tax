@@ -1540,9 +1540,8 @@ rules:
   - number: 70058
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:CEComputation/globe:Elections/globe:Art7.6/globe:InvestmentEntityTIN
-    references:
-      - GLOBEBody/JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/TIN
-    element: InvestmentEntityTIN
+    notEquals:
+      expected: ancestor::globe:CEComputation[1]/globe:TIN
     rule: >-
       The InvestmentEntityTIN must not match the CEComputations TIN
     description: >-
