@@ -118,6 +118,22 @@ reading the operands, namely:
 
 If a note would just re-describe what the rule requires, leave it out.
 
+### A rule definition is self-contained
+
+`rules.yaml` is the source of truth that travels on its own — it is consumed to
+generate executors for other runtimes and rendered, rule by rule, onto the
+public rules page with nothing else from this repository attached. So a rule
+entry (its `implementation_notes` included) must **not reference any other
+document in this repository** — no spec filenames, READMEs, source files, or
+paths like `specs/…md`. A reader with only the rule in front of them must be able
+to understand it; anything a note needs to say must be said inline.
+
+This bars only *repository document* references, not the cross-references the
+format relies on: citing another **rule by number** (e.g. "same self-exclusion
+pattern as 70015/70019") is encouraged, and the OECD `rule`/`description` text
+keeps the spec's own internal citations (e.g. "see note 3.2.4.1.c of the GIR")
+verbatim because those name the external GIR guide, not a file in this repo.
+
 ## Test fixtures
 
 Each active rule is backed by a folder `testdocs/<number>/` of `ok-NN.xml`

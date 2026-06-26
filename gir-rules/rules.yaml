@@ -955,7 +955,7 @@ rules:
       This specification defines 3 conditions on three different elements which does not quite fit
       in the standard format of the validation rules. Therefore we combined the 3 target path
       into a single one which selects the common parent element.
-      
+
   - number: 70028
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:GeneralSection/globe:CorporateStructure/globe:CE/globe:Ownership/globe:OwnershipPercentage
@@ -1309,7 +1309,7 @@ rules:
       Summary with a Subgroup matches by TIN against this ETR's own SubGroup/TIN
       (Summary/Jurisdiction/Subgroup/TIN = ETR/SubGroup/TIN). Comparing the TIN against
       this specific ETR pins the jurisdiction too, assuming subgroup TINs are unique
-      across jurisdictions. See specs/cross-section-correlation-design.md.
+      across jurisdictions.
     rule: >-
       When the SafeHarbour element has the input of GIR1203, GIR1204 or GIR1205 for a
       jurisdiction (or for a subgroup), then the TransitionalCbCRSafeHarbour element
@@ -1609,7 +1609,7 @@ rules:
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:CEComputation/globe:Elections/globe:Art7.6/globe:InvestmentEntityTIN
     notEquals:
-      expected: ancestor::globe:CEComputation[1]/globe:TIN
+      expected: ancestor::globe:CEComputation/globe:TIN
     rule: >-
       The InvestmentEntityTIN must not match the CEComputations TIN
     description: >-
@@ -2272,10 +2272,7 @@ rules:
   - number: 70101
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:UTPRAttribution/globe:Attribution
-    when:
-      notEquals:
-        actual: globe:UTPRTopUpTaxCarryForward
-        expected: 0
+    when: globe:UTPRTopUpTaxCarryForward != 0
     present: globe:Employees
     rule: >-
       The Employees must be completed unless the UTPRTopUpTaxCarryForward contains the
@@ -2287,10 +2284,7 @@ rules:
   - number: 70102
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:UTPRAttribution/globe:Attribution
-    when:
-      notEquals:
-        actual: globe:UTPRTopUpTaxCarryForward
-        expected: 0
+    when: globe:UTPRTopUpTaxCarryForward != 0
     present: globe:TangibleAssetValue
     rule: >-
       The TangibleAssetValue must be completed unless the UTPRTopUpTaxCarryForward
@@ -2454,7 +2448,7 @@ rules:
       satisfied, so this rule purely guards against the GIR2805 value.
 
   - number: 70113
-    targets: 
+    targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:JurisdictionSection/globe:GLoBETax/globe:ETR/globe:ETRStatus/globe:ETRComputation/globe:CEComputation/globe:AdjustedFANIL/globe:Adjustment/globe:UPEAdjustments
     when: globe:Basis = 'GIR1909'
     notEquals:
