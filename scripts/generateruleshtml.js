@@ -1,7 +1,7 @@
 import { mkdir, readFile, readdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { parse, stringify } from "yaml";
-import { ASSERTION_OPS, ruleIsActive } from "../app/ruleeval.js";
+import { ASSERTION_OPS, ruleIsDisabled } from "../app/ruleeval.js";
 import { CSS_TOKENS } from "./styleTokens.js";
 
 const repoRootDir = ".";
@@ -78,7 +78,10 @@ const renderImplementation = (rule) => {
   if ("when" in rule) {
     assertion.when = rule.when;
   }
-  assertion[operator] = rule[operator];
+  // Disabled rules carry no assertion operator; show just the targets.
+  if (operator) {
+    assertion[operator] = rule[operator];
+  }
   return escapeHtml(stringify(assertion).trimEnd());
 };
 
@@ -89,11 +92,16 @@ const renderRuleCard = (rule, testFiles, commitId) => {
   const implementationNotes = rule.implementation_notes
     ? `<p class="impl-notes">${escapeHtml(rule.implementation_notes)}</p>`
     : "";
+  const disabled = ruleIsDisabled(rule);
+  const disabledTag = disabled
+    ? `<span class="rule-tag rule-tag--disabled">Disabled</span>`
+    : "";
 
   return `
-    <article class="rule-card" id="rule-${number}">
+    <article class="rule-card${disabled ? " rule-card--disabled" : ""}" id="rule-${number}">
       <div class="rule-header">
         <span class="rule-badge">Rule ${number}</span>
+        ${disabledTag}
       </div>
       <h2 class="rule-title">${shortRule}</h2>
       <p class="rule-description">${description}</p>
@@ -116,12 +124,14 @@ const generateRulesHtml = async () => {
   const rulesRaw = await readFile(rulesFile, "utf8");
   const rulesData = parse(rulesRaw);
 
-  const implementedRules = (rulesData.rules || [])
-    .filter(ruleIsActive)
+  const allRules = (rulesData.rules || [])
+    .slice()
     .sort((a, b) => Number(a.number) - Number(b.number));
+  const disabledCount = allRules.filter(ruleIsDisabled).length;
+  const enabledCount = allRules.length - disabledCount;
 
   const testFilesByRule = new Map();
-  await Promise.all(implementedRules.map(async (rule) => {
+  await Promise.all(allRules.map(async (rule) => {
     const ruleId = String(rule.number);
     const ruleTestsDir = path.join(testDocsBaseDir, ruleId);
 
@@ -141,7 +151,7 @@ const generateRulesHtml = async () => {
     }
   }));
 
-  const ruleCards = implementedRules
+  const ruleCards = allRules
     .map((rule) => renderRuleCard(rule, testFilesByRule.get(String(rule.number)) || [], commitId))
     .join("\n");
 
@@ -150,7 +160,7 @@ const generateRulesHtml = async () => {
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Implemented GIR Rules</title>
+  <title>GIR Rules</title>
   <style>
     :root {
       ${CSS_TOKENS}
@@ -269,6 +279,12 @@ const generateRulesHtml = async () => {
       gap: 0.65rem;
     }
 
+    .rule-header {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
     .rule-badge {
       display: inline-flex;
       align-items: center;
@@ -281,6 +297,29 @@ const generateRulesHtml = async () => {
       font-weight: 700;
       letter-spacing: 0.02em;
       width: fit-content;
+    }
+
+    .rule-tag {
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      padding: 0.15rem 0.55rem;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      width: fit-content;
+    }
+
+    .rule-tag--disabled {
+      border: 1px solid #d9b0b0;
+      background: #fbeaea;
+      color: #8a2b2b;
+    }
+
+    .rule-card--disabled {
+      background: var(--color-surface-muted);
+      border-style: dashed;
     }
 
     .rule-title {
@@ -409,11 +448,19 @@ const generateRulesHtml = async () => {
         <div class="frame-title">OECD GIR File Viewer</div>
       </div>
       <div class="panel">
-        <h1>Implemented GIR Rules</h1>
+        <h1>GIR Rules</h1>
         <section class="summary-grid">
           <div class="summary-item">
             <div class="summary-label">Number of Rules</div>
-            <div class="summary-value">${implementedRules.length}</div>
+            <div class="summary-value">${allRules.length}</div>
+          </div>
+          <div class="summary-item">
+            <div class="summary-label">Enabled Rules</div>
+            <div class="summary-value">${enabledCount}</div>
+          </div>
+          <div class="summary-item">
+            <div class="summary-label">Disabled Rules</div>
+            <div class="summary-value">${disabledCount}</div>
           </div>
           <div class="summary-item">
             <div class="summary-label">Commit Date and Time</div>
