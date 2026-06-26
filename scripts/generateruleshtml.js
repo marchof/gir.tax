@@ -98,9 +98,9 @@ const renderRuleCard = (rule, testFiles, commitId) => {
     : "";
 
   return `
-    <article class="rule-card${disabled ? " rule-card--disabled" : ""}" id="rule-${number}">
+    <article class="rule-card${disabled ? " rule-card--disabled" : ""}" id="${number}">
       <div class="rule-header">
-        <span class="rule-badge">Rule ${number}</span>
+        <a class="rule-badge" href="#${number}">Rule ${number}</a>
         ${disabledTag}
       </div>
       <h2 class="rule-title">${shortRule}</h2>
@@ -277,6 +277,12 @@ const generateRulesHtml = async () => {
       display: flex;
       flex-direction: column;
       gap: 0.65rem;
+      scroll-margin-top: 1rem;
+    }
+
+    .rule-card:target {
+      border-color: var(--color-accent);
+      box-shadow: 0 0 0 2px var(--color-accent-soft);
     }
 
     .rule-header {
@@ -297,6 +303,11 @@ const generateRulesHtml = async () => {
       font-weight: 700;
       letter-spacing: 0.02em;
       width: fit-content;
+      text-decoration: none;
+    }
+
+    .rule-badge:hover {
+      text-decoration: underline;
     }
 
     .rule-tag {
