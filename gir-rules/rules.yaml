@@ -14,15 +14,15 @@ rules:
       used in the message, not just the overall format.
     targets:
       - /globe:GLOBE_OECD/globe:MessageSpec/globe:MessageRefId
-    element: MessageRefld
+    element: MessageRefId
     rule: >-
-      The MessageRefld must be in the correct format: [CountryCode of the sending
-      jurisdiction] [Reporting Period] [CountryCode of the receiving jurisdiction]
-      [UniqueID]
+      The MessageRefId must be in the correct format: [CountryCode of the
+      sending jurisdiction] [ReportingPeriod] [CountryCode of the receiving
+      jurisdiction] [UniqueID]
     description: >-
-      The structure of the MessageRefld is not in the correct format. Please ensure
-      the MessageRefld follows structure defined in the GIR User Guide, and resubmit
-      the file.
+      The structure of the MessageRefId is not in the correct format. Please
+      ensure the MessageRefID follows structure defined in the GIR User Guide,
+      and resubmit the file.
 
   - number: 60002
     disabled: true
@@ -33,12 +33,12 @@ rules:
       validating a single document.
     targets:
       - /globe:GLOBE_OECD/globe:MessageSpec/globe:MessageRefId
-    element: MessageRefld
+    element: MessageRefId
     rule: >-
-      The GIR Message Header has a duplicate MessageRefld value that was received on
-      a previous file.
+      The GIR Message Header has a duplicate MessageRefID value that was
+      received on a previous file.
     description: >-
-      Please replace the MessageRefld field value with a new unique value (not
+      Please replace the MessageRefID field value with a new unique value (not
       containing all blanks), and resubmit the file.
 
   - number: 60003
@@ -53,7 +53,7 @@ rules:
     rule: >-
       The ReportingPeriod YYYY value must be less than or equal to current year
     description: >-
-      ReportingPeriod year must be less than or equal to current year.
+      Reporting period year must be less than or equal to current year.
 
   - number: 60004
     targets:
@@ -85,7 +85,7 @@ rules:
     rule: >-
       When DocTypeIndic is OECD2 or OECD3, the record must concern the same sub
       section (FilingInfo, General section, Summary, JuridictionSection or
-      UTPRAttribution) as the CorrDocRefld.
+      UTPRAttribution) as the CorrDocRefId.
     description: >-
       The correction or deletion refers to a record of an other sub section.
 
@@ -94,7 +94,8 @@ rules:
       - /globe:GLOBE_OECD
     distinct: //stf:CorrDocRefId
     rule: >-
-      The same DocReflD cannot be corrected or deleted twice in the same message.
+      The same DocRefID cannot be corrected or deleted twice in the same
+      message.
     description: >-
       The same DocRefID cannot be corrected or deleted twice in the same message,
       therefore each CorrDocRefID must be unique within the same message.
@@ -127,13 +128,14 @@ rules:
       information from previous submissions.
     targets:
       - //stf:CorrDocRefId
-    element: CorrDocRefld
+    element: CorrDocRefId
     rule: >-
-      The CorrDocRefid refers to an unknown record.
+      The CorrDocRefId refers to an unknown record.
     description: >-
-      The CorrDocRefld provided does not match to an existing record of a DocRefld,
-      please relodge the file and ensure that the CorrDocRefld is an exact match to
-      the DocRefld of the element which is subject to a correction
+      The CorrDocRefId provided does not match to an existing record of a
+      DocRefId, please relodge the file and ensure that the CorrDocRefId is an
+      exact match to the DocRefId of the element which is subject to a
+      correction
 
   - number: 60009
     disabled: true
@@ -143,7 +145,7 @@ rules:
       version of a record requires the history of previous submissions.
     targets:
       - //stf:CorrDocRefId
-    element: CorrDocRefld
+    element: CorrDocRefId
     rule: >-
       The CorrDocRefID must relate to the latest instance of the DocRefID. The
       CorrDocRefID cannot reference an invalidated or outdated version of the DocRefID
@@ -162,12 +164,12 @@ rules:
       ancestor::globe:GLOBEBody/*[self::globe:GeneralSection or self::globe:Summary
       or self::globe:JurisdictionSection or self::globe:UTPRAttribution]/globe:DocSpec/stf:DocTypeIndic[. != 'OECD3']
     rule: >-
-      The FilingInfo cannot be deleted without deleting all related General Section,
-      Summary, JurisdictionSection and UTPRAttribution records
+      The FilingInfo cannot be deleted without deleting all related
+      GeneralSection, Summary, JurisdictionSection and UTPRAttribution records
     description: >-
-      To delete the FilingInfo please ensure that a deletion request has been sent for
-      all associated General Section, Summary, JurisdictionSection and UTPRAttribution
-      records.
+      To delete the FilingInfo please ensure that a deletion request has been
+      sent for all associated GeneralSection, Summary, JurisdictionSection and
+      UTPRAttribution records.
 
   - number: 60011
     disabled: true
@@ -178,12 +180,12 @@ rules:
       just the overall format.
     targets:
       - //stf:DocRefId
-    element: DocRefld
+    element: DocRefId
     rule: >-
-      The DocRefld must be in the correct format: [CountryCode of the sending
+      The DocRefId must be in the correct format: [CountryCode of the sending
       jurisdiction] [ReportingYear][UniqueID]
     description: >-
-      The structure of the DocRefld is not in the correct format.
+      The structure of the DocRefId is not in the correct format.
 
   - number: 60012
     targets:
@@ -191,10 +193,11 @@ rules:
     when: stf:DocTypeIndic = 'OECD0' or stf:DocTypeIndic = 'OECD1'
     absent: stf:CorrDocRefId
     rule: >-
-      When DocTypeIndic is OECD1 or OECD0, the CorrDocRefld field must be omitted.
+      When DocTypeIndic is OECD1 or OECD0, the CorrDocRefId field must be
+      omitted.
     description: >-
-      When an element has DocTypeIndic of OECD1 or OECD0, which indicates that a new
-      lodgment or a resend is being made, the CorrDocRefld field must not be
+      When an element has DocTypeIndic of OECD1 or OECD0, which indicates that a
+      new lodgment or a resend is being made, the CorrDocRefId field must not be
       completed.
     implementation_notes: >-
       Targets the DocSpec (the CorrDocRefId's parent) rather than the CorrDocRefId
@@ -228,10 +231,11 @@ rules:
       submissions, which is not part of the current document.
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:FilingInfo/globe:DocSpec/stf:DocRefId
-    element: DocRefld
+    element: DocRefId
     rule: >-
-      When the DocTypeIndic is OECD0 for the FilingInfo, The DocRefID must be the same
-      as the DocReflD that was used for the latest version of the FilingInfo
+      When the DocTypeIndic is OECD0 for the FilingInfo, The DocRefID must be
+      the same as the DocRefID that was used for the latest version of the
+      FilingInfo
     description: >-
       An unknown or invalid DocRefID was specified for the Resend option (OECD0).
 
@@ -241,10 +245,10 @@ rules:
     when: stf:DocTypeIndic = 'OECD2' or stf:DocTypeIndic = 'OECD3'
     present: stf:CorrDocRefId
     rule: >-
-      The corrected element does not specify any CorrDocRefld (OECD2/3 without
-      CorrDocRefld data).
+      The corrected element does not specify any CorrDocRefId (OECD2/3 without
+      CorrDocRefId data).
     description: >-
-      When DocTypeIndic is "OECD2" or "OECD3", CorrDocRefld must be provided.
+      When DocTypeIndic is "OECD2" or "OECD3", CorrDocRefId must be provided.
 
   - number: 60016
     targets:
@@ -257,8 +261,8 @@ rules:
       If the value of FilingInfo DoctypeIndic element is OECD0, if General Section is
       provided, the value of General Section DocTypeIndic element must not be OECD1.
     description: >-
-      A new General Section can't be filed if one already exists. Please process with
-      a correction or deletion if the General Section has to be modified.
+      A new General Section can’t be filed if one already exists. Please process
+      with a correction or deletion if the General Section has to be modified.
     target_does_not_exist_in_test_files:
       - ok-01.xml
 
@@ -269,10 +273,10 @@ rules:
       globe:FilingInfo/globe:DocSpec/stf:DocTypeIndic = 'OECD1'
     present: globe:GeneralSection
     rule: >-
-      If the value of FilingInfo DoctypeIndic element is OECD1, the General Section
-      must be provided.
+      If the value of FilingInfo DoctypeIndic element is OECD1, the
+      GeneralSection must be provided.
     description: >-
-      Each new GIR filing must contain a General Section.
+      Each new GIR filing must contain a GeneralSection.
 
   - number: 60018
     targets:
@@ -365,9 +369,9 @@ rules:
     equals:
       expected: /globe:GLOBE_OECD/globe:MessageSpec/globe:TransmittingCountry
     rule: >-
-      The ResCountryCode of the FilingCE must match to the Transmitting Country
+      The ResCountryCode of the FilingCE must match to the TransmittingCountry
     description: >-
-      The ResCountryCode of the FilingCE must match to the Transmitting Country
+      The ResCountryCode of the FilingCE must match to the TransmittingCountry
 
   - number: 60024
     targets:
@@ -399,13 +403,14 @@ rules:
       (this also avoids the divide-by-zero); a missing AdjustedCoveredTax/Total is
       summed to 0 per the rule.
     rule: >-
-      The ETRRate must be equal to the integer value reported at the AdjustedCovered
-      Tax/Total element DIVIDED by the integer reported at the NetGlobeIncome/Total
-      element. This rule does not apply if the NetGlobeIncome in the jurisdiction is
-      zero (or negative). If AdjustedCovered Tax/Total element is not provided, then
-      value assumed to be 0.
+      The ETRRate must be equal to the integer value reported at the
+      AdjustedCoveredTax/Total element DIVIDED by the integer reported at the
+      NetGlobeIncome/Total element. This rule does not apply if the
+      NetGloBEIncome in the jurisdiction is zero (or negative). If
+      AdjustedCoveredTax/Total element is not provided, then value assumed to be
+      0.
     description: >-
-      The ETRRate must equal AdjustedCovered Tax/Total (Divided by)
+      The ETRRate must equal AdjustedCoveredTax/Total (Divided by)
       NetGlobeIncome/Total
 
   - number: 60026
@@ -420,14 +425,14 @@ rules:
     implementation_notes: >-
       Every operand is summed so a missing element counts as 0 per the rule.
     rule: >-
-      TopUpTax must equal the following calculation: (TopUp TaxPercentage * Excess
-      Profits) + (NONArt.4.1.5/Additional TopUpTax + Art4.1.5AdditionalTopUpTax/) -
-      QDMTT/Amount. If any elements are not provided, these should be treated as a 0
-      value.
+      TopUpTax must equal the following calculation: (TopUpTaxPercentage *
+      ExcessProfits) + (NONArt.4.1.5/AdditionalTopUpTax +
+      Art4.1.5/AdditionalTopUpTax) - QDMTT/Amount. If any elements are not
+      provided, these should be treated as a 0 value.
     description: >-
-      Note that Additional TopUpTax is an optional field and as such, if no Additional
-      TopUpTax element is provided, the calculation should then be read as:
-      (TopUpTaxPercentage * Excess Profits) + 0 - QDMTT/Amount
+      Note that AdditionalTopUpTax is an optional field and as such, if no
+      AdditionalTopUpTax element is provided, the calculation should then be
+      read as: (TopUpTaxPercentage * ExcessProfits) + 0 - QDMTT/Amount
 
   - number: 60027
     targets:
@@ -435,8 +440,8 @@ rules:
     almostEquals:
       expected: ../globe:TopUpTaxShare - sum(../globe:IIROffSet)
     rule: >-
-      The IIR/ParentEntity/TopUp Tax integer must equal the following calculation:
-      IIR/ParentEntity/TopUpTaxShare - IIROffSet
+      The IIR/ParentEntity/TopUpTax integer must equal the following
+      calculation: IIR/ParentEntity/TopUpTaxShare - IIROffSet
     description: >-
       The IIR/ParentEntity/TopUpTax integer must equal the following calculation:
       TopUpTaxShare - IIROffSet
@@ -454,13 +459,12 @@ rules:
       all MainEntityPEandFTE/Additions elements) - (sum of all
       MainEntityPEandFTE/Reductions elements)
     description: >-
-      The Total must equal the following calculation: FANIL/FANIL + (sum of all Main
-      EntityPEandFTE/Additions elements) - (sum of all MainEntityPEandFTE/Reductions
-      elements) Adjusted
+      The Total must equal the following calculation: AdjustedFANIL/FANIL + (sum
+      of all MainEntityPEandFTE/Additions elements) - (sum of all
+      MainEntityPEandFTE/Reductions elements)
     implementation_notes: >-
       As the Reductions elements are supposed to be negative we assume that the SUM
       of all Additions and Reduction elements has to be calculated.
-
 
   - number: 70001
     targets:
@@ -567,16 +571,14 @@ rules:
       The following TIN elements must not be completed using TypeofTIN GIR3004 and
       must not be flagged Unknown:
     description: >-
-      The following TIN elements must not be completed using TypeofTIN GIR3004 and
-      must not be flagged Unknown:
-      General Section/Corporate Structure/UPE/ExcludedUPE/ID/TIN
-      General Section/Corporate Structure/UPE/OtherUPE/ID/TIN
-      General Section/CorporateStructure/CE/ID/TIN (except when GloBEStatus contains
-      the value of GIR316 or GIR318)
-      General Section/CorporateStructure/CE/QIIR/Exception/TIN
-      Jurisdiction
-      Section/GLOBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/Aggregated
-      Reporting/TaxConsolGroup TIN
+      The following TIN elements must not be completed using TypeofTIN GIR3004
+      and must not be flagged Unknown:
+      GeneralSection/CorporateStructure/UPE/ExcludedUPE/ID/TIN
+      GeneralSection/CorporateStructure/UPE/OtherUPE/ID/TIN
+      GeneralSection/CorporateStructure/CE/ID/TIN (except when GloBEStatus
+      contains the value of GIR316 or GIR318)
+      GeneralSection/CorporateStructure/CE/QIIR/Exception/TIN
+      JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/AggregatedReporting/TaxConsolGroupTIN
 
   - number: 70007
     targets:
@@ -619,15 +621,15 @@ rules:
       - ancestor::globe:GLOBEBody/globe:GeneralSection/globe:CorporateStructure/globe:UPE/globe:OtherUPE/globe:ID/globe:ResCountryCode
       - ancestor::globe:GLOBEBody/globe:JurisdictionSection/globe:JurWithTaxingRights/globe:JurisdictionName
     rule: >-
-      The Jurisdiction reported in the RecJurCode must be the UPE jurisdiction or one
-      of the Jurisdictions reported in the JurisdictionName element of the repeatable
-      JurWith TaxingRights element indicating the names of the jurisdictions that have
-      taxing rights in respect of the jurisdiction for which the Jurisdictional
-      Section is being prepared.
+      The Jurisdiction reported in the RecJurCode must be the UPE jurisdiction
+      or one of the Jurisdictions reported in the JurisdictionName element of
+      the repeatable JurWithTaxingRights element indicating the names of the
+      jurisdictions that have taxing rights in respect of the jurisdiction for
+      which the Jurisdictional Section is being prepared.
     description: >-
-      The Jurisdiction reported in the RecJurCode must be the UPE jurisdiction or one
-      of the jurisdictions reported in the JurisdictionName element of the repeatable
-      JurWith TaxingRights element.
+      The Jurisdiction reported in the RecJurCode must be the UPE jurisdiction
+      or one of the jurisdictions reported in the JurisdictionName element of
+      the repeatable JurWithTaxingRights element.
     implementation_notes: >-
       The UPE jurisdiction is the ResCountryCode of whichever UPE form is present
       (ExcludedUPE or OtherUPE ID). The JurisdictionName is matched against any
@@ -650,7 +652,7 @@ rules:
       - "'GIR317'"
       - "'GIR318'"
     rule: >-
-      The UPE GlobeStatus should not accept the following values: GIR305,
+      The UPE GloBEStatus should not accept the following values: GIR305,
       GIR307, GIR308, GIR309, GIR312, GIR313, GIR314, GIR315, GIR317, GIR318
     description: >-
       An Invalid GloBE Status of the UPE was provided. Please ensure that the
@@ -701,12 +703,13 @@ rules:
       Jurisdiction (same ResCountryCode) must have same Rules, unless the Rules
       element contains the Value GIR204 (QDMTT).
     description: >-
-      The 'rules' should be completed in accordance with GIR Note 1.3.2.1.3. Where the
-      rules apply to all entities with residence in the same jurisdiction, the Rules
-      Value should be the same. The rules value might be different where the QDMTT in
-      that jurisdiction treats certain entities differently (e.g. where the QDMTT does
-      not apply to investment entities, meaning that where GloBEStatus = GIR310, the
-      rules value of GIR204 might not be an exact match.
+      The ‘rules’ should be completed in accordance with GIR Note 1.3.2.1.3.
+      Where the rules apply to all entities with residence in the same
+      jurisdiction, the Rules Value should be the same. The rules value might be
+      different where the QDMTT in that jurisdiction treats certain entities
+      differently (e.g. where the QDMTT does not apply to investment entities,
+      meaning that where GloBEStatus = GIR310, the rules value of GIR204 might
+      not be an exact match.
 
   - number: 70013
     targets:
@@ -714,8 +717,8 @@ rules:
     when: . = 'GIR313'
     absent: ../globe:GlobeStatus[. = 'GIR314']
     rule: >-
-      When the GlobeStatus contains the value of GIR313, the value of GIR314 must not
-      also be reported for the same CE
+      When the GloBEStatus contains the value of GIR313, the value of GIR314
+      must not also be reported for the same CE
     description: >-
       A CE element has been completed with a GloBE Status which indicates that an
       entity is both a JV and a JV Subsidiary, please ensure that the GloBEStatus of
@@ -727,12 +730,13 @@ rules:
     when: . = 'GIR307'
     absent: ../globe:GlobeStatus[. = 'GIR308']
     rule: >-
-      When the GlobeStatus contains the value of GIR307, the value of GIR308 must not
-      also be reported for the same CE
+      When the GloBEStatus contains the value of GIR307, the value of GIR308
+      must not also be reported for the same CE
     description: >-
-      A CE has been identified as having the Globe Status of both a Minority-Owned
-      Parent Entity and a Minority-Owned Subsidiary, please ensure that the
-      GlobeStatus of the same CE does not contain GIR307 and GIR308
+      A CE has been identified as having the GloBE Status of both a
+      Minority-Owned Parent Entity and a Minority-Owned Subsidiary, please
+      ensure that the GloBEStatus of the same CE does not contain GIR307 and
+      GIR308
 
   - number: 70015
     targets:
@@ -743,14 +747,14 @@ rules:
       Targets each CE carrying GIR308 and looks for GIR307 on its sibling CEs.
       The sibling axes exclude the target itself, so "another CE" is enforced.
     rule: >-
-      When the GlobeStatus contains the value of GIR308, then there must be another CE
-      in the corporate structure which contains the value of GIR307 (i.e. when
-      CE/ID/GlobeStatus = GIR308, must also be a separate CE element which contains
-      CE/ID/GlobeStatus=GIR307)
+      When the GloBEStatus contains the value of GIR308, then there must be
+      another CE in the corporate structure which contains the value of GIR307
+      (i.e. when CE/ID/GloBEStatus = GIR308, must also be a separate CE element
+      which contains CE/ID/GloBEStatus=GIR307)
     description: >-
-      A Minority-Owned Subsidiary has been identified in the Corporate Structue and
-      there is no other CE reported in the corporate Structure which is a
-      Minority-Owned Parent Entity.
+      A Minority-Owned Subsidiary has been identified in the Corporate Structue
+      and there is no other CE reported in the corporate Structure which is a
+      Minority-Owned ParentEntity.
 
   - number: 70016
     targets:
@@ -758,12 +762,12 @@ rules:
     when: . = 'GIR307'
     present: ../globe:GlobeStatus[. = 'GIR309']
     rule: >-
-      When the GlobeStatus contains the value of GIR307, the value of GIR309 should
-      also be reported in the GlobeStatus
+      When the GloBEStatus contains the value of GIR307, the value of GIR309
+      should also be reported in the GloBEStatus
     description: >-
-      A Minority-Owned Parent Entity must also be a Minority-Owned Constituent Entity,
-      as a result when the value of GIR307 is selected for the GlobeStatus then the
-      value of GIR309 must also be provided.
+      A Minority-Owned Parent Entity must also be a Minority-Owned Constituent
+      Entity, as a result when the value of GIR307 is selected for the
+      GloBEStatus then the value of GIR309 must also be provided.
 
   - number: 70017
     targets:
@@ -771,12 +775,12 @@ rules:
     when: . = 'GIR308'
     present: ../globe:GlobeStatus[. = 'GIR309']
     rule: >-
-      When the GlobeStatus contains the value of GIR308, the value of GIR309 should
-      also be reported in the GlobeStatus
+      When the GloBEStatus contains the value of GIR308, the value of GIR309
+      should also be reported in the GloBEStatus
     description: >-
-      A Minority-Owned Subsidiary must also be a Minority-Owned Constituent Entity, as
-      a result when GIR308 is selected for the GlobeStatus then the value of GIR309
-      must also be selected
+      A Minority-Owned Subsidiary must also be a Minority-Owned Constituent
+      Entity, as a result when GIR308 is selected for the GloBEStatus then the
+      value of GIR309 must also be selected
 
   - number: 70018
     targets:
@@ -784,11 +788,11 @@ rules:
     when: . = 'GIR305'
     absent: ../globe:GlobeStatus[. = 'GIR306']
     rule: >-
-      When the GlobeStatus contains the value of GIR305, the value of GIR306 must not
-      also be reported for the same CE
+      When the GloBEStatus contains the value of GIR305, the value of GIR306
+      must not also be reported for the same CE
     description: >-
-      A CE has been identified as having the GlobeStatus of both a Permanent
-      Establishment and a Main entity, whereas the same CE cannot have the Globe
+      A CE has been identified as having the GloBEStatus of both a Permanent
+      Establishment and a Main entity, whereas the same CE cannot have the GloBE
       Status of PE and ME.
 
   - number: 70019
@@ -801,10 +805,10 @@ rules:
       looks for GIR306 on its sibling CEs. The sibling axes exclude the target
       itself, so the rule enforces "another CE".
     rule: >-
-      When the GlobeStatus contains the value of GIR305, then there must be another CE
-      which contains the GlobeStatus of GIR306 (i.e. when CE/ID/GlobeStatus = GIR305,
-      there must also be a separate CE element which contains CE/ID/GlobeStatus =
-      GIR306)
+      When the GloBEStatus contains the value of GIR305, then there must be
+      another CE which contains the GloBEStatus of GIR306 (i.e. when
+      CE/ID/GloBEStatus = GIR305, there must also be a separate CE element which
+      contains CE/ID/GloBEStatus = GIR306)
     description: >-
       A permanent establishment has been reported in the Corporate Structure of the
       GIR, and no main entity has been reported.
@@ -818,15 +822,15 @@ rules:
       The schema allows unbounded GlobeStatus; once one carries GIR316/GIR318,
       asserting no second occurrence enforces the "no other value" restriction.
     rule: >-
-      If the GlobeStatus contains the value of GIR316 or GIR318, then there should be
-      no other value in the GlobeStatus (if GlobeStatus = GIR316 - GlobeStatus can
-      only contain the value of GIR316 and if GlobeStatus = GIR318 - GlobeStatus can
-      only contain the value of GIR318)
+      If the GloBEStatus contains the value of GIR316 or GIR318, then there
+      should be no other value in the GloBEStatus (if GloBEStatus = GIR316 -
+      GloBEStatus can only contain the value of GIR316 and if GloBEStatus =
+      GIR318 - GloBEStatus can only contain the value of GIR318)
     description: >-
-      A NonGroup -member or excluded entity was reported in the GlobeStatus and at
-      least one additional GlobeStatus was reported. When the CE element has the
-      GlobeStatus of GIR316 or GIR318, it can only contain the single value in the
-      GlobeStatus (i.e. only GIR316 or only GIR318)
+      A Non-Group member or excluded entity was reported in the GloBEStatus and
+      at least one additional GloBEStatus was reported. When the CE element has
+      the GloBEStatus of GIR316 or GIR318, it can only contain the single value
+      in the GloBEStatus (i.e. only GIR316 or only GIR318)
 
   - number: 70021
     targets:
@@ -839,16 +843,16 @@ rules:
       that the OwnershipChange belongs to the same CE, which the nesting already
       guarantees, so a presence check on the CE's own OwnershipChange suffices.
     rule: >-
-      The GlobeStatus element cannot contain the value of GIR316 or GIR318, unless
-      there is a completed OwnershipChange for the CE element (i.e., when Corporate
-      Structure/CE/ID/TIN matches to Corporate
-      Structure/CE/OwnershipChange/PreOwnership/TIN).
+      The GloBEStatus element cannot contain the value of GIR316 or GIR318,
+      unless there is a completed OwnershipChange for the CE element (i.e., when
+      CorporateStructure/CE/ID/TIN matches to
+      CorporateStructure/CE/OwnershipChange/PreOwnership/TIN).
     description: >-
-      The GlobeStatus of a CE can only contain the value of 'Excluded Entity' or
-      'NonGroup-Member' when there has been a change in the GlobeStatus of the
-      reported CE. Therefore, there must be a completed OwnershipChange element which
-      indicates the GlobeStatus before the entity became an Excluded Entity or a
-      'Non-Group Member'
+      The GloBE Status of a CE can only contain the value of 'Excluded Entity'
+      or 'Non-Group Member' when there has been a change in the GloBE Status of
+      the reported CE. Therefore, there must be a completed OwnerhshipChange
+      element which indicates the GloBE Status before the entity became an
+      Excluded Entity or a 'Non-Group Member'
 
   - number: 70022
     targets:
@@ -909,13 +913,13 @@ rules:
           actual: "@TypeOfTIN"
           expected: "'GIR3004'"
     rule: >-
-      When the Ownership Type contains the value of GIR805 or GIR806, then the
-      TypeOfTIN must contain the value GIR3004 and the TIN must contain the text,
-      'NOTIN'
+      When the OwnershipType contains the value of GIR805 or GIR806, then the
+      TypeOfTIN must contain the value GIR3004 and the TIN must contain the
+      text, 'NOTIN'
     description: >-
-      When the Ownership Type indicates that the ownership interests are held in the
-      aggregate by Non-Group Members or Excluded Entities, the TIN should not reported
-      and as such the TypeOfTIN must be GIR3004.
+      When the OwnershipType indicates that the ownership interests are held in
+      the aggregate by Non-Group Members or Excluded Entities, the TIN should
+      not reported and as such the TypeOfTIN must be GIR3004.
 
   - number: 70026
     targets:
@@ -924,8 +928,8 @@ rules:
     equals:
       expected: 1
     rule: >-
-      When the GloBEStatus contains the value of GIR305, then the Ownership Percentage
-      must equal 100%
+      When the GloBEStatus contains the value of GIR305, then the
+      OwnershipPercentage must equal 100%
     description: >-
       The ownership percentage of a PE must equal 100%
 
@@ -948,7 +952,7 @@ rules:
       should have the value of 0%, the TIN value should be NOTIN and OwnershipType
       should be GIR806.
     description: >-
-      When the GloBEStatus is a 'NonGroup-Member' as a result of completion of the
+      When the GloBEStatus is a 'Non-Group Member' as a result of completion of the
       OwnershipChange element, then Ownershipercentage as reported in the
       OwnershipElement should be 0%
     implementation_notes: >-
@@ -966,7 +970,7 @@ rules:
       Unless the GloBEStatus contains the value of GIR318, then the
       OwnershipPercentage must not be 0%
     description: >-
-      The Ownership Percentage should not be 0% unless the reported ownership
+      The OwnershipPercentage should not be 0% unless the reported ownership
       percentage is in respect of a Non-Group Member.
 
   - number: 70029
@@ -977,9 +981,10 @@ rules:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:GeneralSection/globe:CorporateStructure/globe:UPE/globe:ExcludedUPE/globe:ID/globe:TIN
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:GeneralSection/globe:CorporateStructure/globe:UPE/globe:OtherUPE/globe:ID/globe:TIN
     rule: >-
-      When the Ownership Type contains the value of GIR801, then the Ownership/TIN
-      provided in the Ownership element must match at least one of the TINs that was
-      reported in either the OtherUPE/ID/TIN or ExcludedUPE/ID/TIN
+      When the OwnershipType contains the value of GIR801, then the
+      Ownership/TIN provided in the Ownership element must match at least one of
+      the TINs that was reported in either the OtherUPE/ID/TIN or
+      ExcludedUPE/ID/TIN
     description: >-
       The ownership type was identified as being the UPE, the TIN of the UPE provided
       at label 1.3.2.1.9 does match the TIN reported at 1.3.1.4. Please ensure that
@@ -994,9 +999,9 @@ rules:
     in:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:GeneralSection/globe:CorporateStructure/globe:CE/globe:ID/globe:TIN
     rule: >-
-      When the Ownership Type contains the value of GIR802, GIR803 or GIR804, then the
-      Ownership/TIN provided in the Ownership element must match to a TIN that was
-      reported in the CE element via the ID/TIN.
+      When the OwnershipType contains the value of GIR802, GIR803 or GIR804,
+      then the Ownership/TIN provided in the Ownership element must match to a
+      TIN that was reported in the CE element via the ID/TIN.
     description: >-
       The ownership type was identified as being a CE, JV or JV Subsidiary, the TIN
       provided at label 1.3.2.1.9 does not match to a TIN reported in the corporate
@@ -1018,10 +1023,11 @@ rules:
       so it can never appear in the GIR306-filtered candidate set. Candidates are
       drawn from both a CE/ID and an OtherUPE/ID reporting GIR306.
     rule: >-
-      When the Corporate Structure/CE/ID/GlobeStatus contains the value of GIR305,
-      then the Ownership/TIN must be equal at least one TIN of the entity which
-      reported the GlobeStatus of GIR306 either in Corporate
-      Structure/CE/ID/GlobeStatus, or CorporateStructure/UPE/OtherUPE/ID/GlobeStatus.
+      When the CorporateStructure/CE/ID/GloBEStatus contains the value of
+      GIR305, then the Ownership/TIN must be equal at least one TIN of the
+      entity which reported the GloBEStatus of GIR306 either in
+      CorporateStructure/CE/ID/GloBEStatus, or
+      CorporateStructure/UPE/OtherUPE/ID/GlobeStatus.
     description: >-
       The ownership TIN of a CE identified as being a PE is not held by a CE which is
       a main entity
@@ -1068,9 +1074,9 @@ rules:
       POPE-IPE carries the bare enum value 'GIR902' (the spec's 'GIR902-IPE'
       label appends the #9 enumeration's "IPE" description).
     rule: >-
-      If the POPE-IPE element has the value of 'GIR902-IPE' and the Exception element
-      is completed because an exception applies, the Art.2.1.3 element must have the
-      status of TRUE
+      If the POPE-IPE element has the value of “GIR902–IPE" and the Exception
+      element is completed because an exception applies, the Art.2.1.3 element
+      must have the status of TRUE
     description: >-
       The exception under article 2.1.3 should be selected in relation to identifying
       another IPE which is required to apply the QIIR
@@ -1087,9 +1093,9 @@ rules:
       POPE-IPE carries the bare enum value 'GIR901' (the spec's 'GIR901-POPE'
       label appends the #9 enumeration's "POPE" description).
     rule: >-
-      If the POPE-IPE element has the value of 'GIR901-POPE' and the Exception element
-      is completed because an exception applies, the Art.2.1.5 element must have the
-      status of TRUE
+      If the POPE-IPE element has the value of “GIR901–POPE" and the Exception
+      element is completed because an exception applies, the Art.2.1.5 element
+      must have the status of TRUE
     description: >-
       The exception under article 2.1.5 should be selected in relation to identifying
       another POPE which is required to apply the QIIR
@@ -1132,11 +1138,12 @@ rules:
       so a value-only match pins the jurisdiction too (same assumption as 70045).
       Note the spec's casing: Summary/Subgroup vs ETR/SubGroup.
     rule: >-
-      Where a subgroup element is completed in the 'Summary', then Subgroup element in
-      the 'JurisdictionSection' should also be completed. The TIN must match to the
-      corresponding TIN in the JurisdictionSection /GLOBETax/ETR/SubGroup. Rule only
-      applicable where a JurisdictionSection which relates to the same 'Jurisdiction'
-      of the Summary is provided (i.e., where Summary/Jurisdiction/JurisdictionName =
+      Where a subgroup element is completed in the 'Summary', then Subgroup
+      element in the 'JurisdictionSection' should also be completed. The TIN
+      must match to the corresponding TIN in the
+      JurisdictionSection/GLoBETax/ETR/SubGroup. Rule only applicable where a
+      JurisdictionSection which relates to the same 'Jurisdiction' of the
+      Summary is provided (i.e., where Summary/Jurisdiction/JurisdictionName =
       JurisdictionSection/Jurisdiction).
     description: >-
       The summary section for a jurisdiction indicates that there is a subgroup with a
@@ -1163,8 +1170,9 @@ rules:
       non-triggering; the cut-off date itself is not "later", so the compare is strict).
       The forbidden inputs are checked with notIn against the target SafeHarbour value.
     rule: >-
-      When the Reporting Period or Period End Date is later than 30/06/2028, then the
-      SafeHarbour element cannot have the input of GIR1203, GIR1204 or GIR1205.
+      When the ReportingPeriod or Period End Date is later than 30/06/2028, then
+      the SafeHarbour element cannot have the input of GIR1203, GIR1204 or
+      GIR1205.
     description: >-
       The Transitional CbCR Safe Harbour has been selected for a reporting fiscal year
       that is beyond the transitional period
@@ -1185,8 +1193,8 @@ rules:
       against 20261231 (strict, so the cut-off date itself is allowed). A single
       forbidden input reads better as notEquals than a one-element notIn.
     rule: >-
-      When the Reporting Period or Period End Date is later than 31/12/2026, then the
-      SafeHarbour element cannot have the input of GIR1206
+      When the ReportingPeriod or Period End Date is later than 31/12/2026, then
+      the SafeHarbour element cannot have the input of GIR1206
     description: >-
       The Transitional UTPR Safe Harbour has been selected for a reporting fiscal year
       that is beyond the transitional period.
@@ -1207,9 +1215,9 @@ rules:
       one UPE jurisdiction satisfies it.
     rule: >-
       The SafeHarbour element can only have the input of GIR1206 in the UPE
-      jurisdiction. (i.e., Summary/Jurisdiction/JurisdictionName must be equal to the
-      ResCountryCode reported in the UPE ID, so equal to Corporate
-      Structure/UPE/OtherUPE/ID/ResCountryCode)
+      jurisdiction. (i.e., Summary/Jurisdiction/JurisdictionName must be equal
+      to the ResCountryCode reported in the UPE ID, so equal to
+      CorporateStructure/UPE/OtherUPE/ID/ResCountryCode)
     description: >-
       The Transitional UTPR Safe Harbour has been applied in a jurisdiction which is
       not the UPE Jurisdiction
@@ -1232,7 +1240,7 @@ rules:
       notIn forbids those three inputs on the target SafeHarbour value.
     rule: >-
       When the FilingInfo CFSofUPE has the input of GIR502 or GIR504, then SafeHarbour
-      element cannot have the input of GIR1207, GIR1208 , or GIR1209.
+      element cannot have the input of GIR1207, GIR1208 or GIR1209.
     description: >-
       The Non-material Constituent Entity (NMCE) Simplified Calculations can only be
       completed where the UPE prepares Consolidated Financial Statements as defined by
@@ -1311,13 +1319,14 @@ rules:
       this specific ETR pins the jurisdiction too, assuming subgroup TINs are unique
       across jurisdictions.
     rule: >-
-      When the SafeHarbour element has the input of GIR1203, GIR1204 or GIR1205 for a
-      jurisdiction (or for a subgroup), then the TransitionalCbCRSafeHarbour element
-      for that jurisdiction (or for that subgroup) must be completed (i.e., where the
-      Summary/Jurisdiction/JurisdictionName = Jurisdiction Section/Jurisdiction, or if
-      Summary/Jurisdiction/Subgroup is completed, then also match where
-      Summary/Jurisdiction/Subgroup/TIN = Jurisdiction
-      Section/GLoBETax/ETR/SubGroup/TIN)
+      When the SafeHarbour element has the input of GIR1203, GIR1204 or GIR1205
+      for a jurisdiction (or for a subgroup), then the
+      TransitionalCbCRSafeHarbour element for that jurisdiction (or for that
+      subgroup) must be completed (i.e., where the
+      Summary/Jurisdiction/JurisdictionName = JurisdictionSection/Jurisdiction,
+      or if Summary/Jurisdiction/Subgroup is completed, then also match where
+      Summary/Jurisdiction/Subgroup/TIN =
+      JurisdictionSection/GLoBETax/ETR/SubGroup/TIN)
     description: >-
       A Transitional CbCR Safe Harbour has been selected in the summary section of the
       GIR, but no corresponding TransitionalCbCR element with the relevant CbCR
@@ -1330,11 +1339,11 @@ rules:
     present: globe:SubGroup/globe:TypeofSubGroup[. = 'GIR1607' or . = 'GIR1608']
     rule: >-
       When the TransitionalCbCRSafeHarbour is completed for a jurisdiction, then
-      SubGroup element of the ETR must be completed, the TypeofSubGroup must contain
-      either GIR1607 or GIR1608.
+      Subgroup element of the ETR must be completed, the TypeofSubGroup must
+      contain either GIR1607 or GIR1608.
     description: >-
-      The TypeofSubGroup element must be completed and it cannot contain a value other
-      than GIR1607 or GIR1608.
+      The TypeofSubgroup element must be completed and it cannot contain a value
+      other than GIR1607 or GIR1608.
 
   - number: 70047
     targets:
@@ -1353,12 +1362,13 @@ rules:
       match described in rule 70045 (jurisdiction for non-subgroup Summaries, SubGroup/
       TIN for subgroup Summaries), keyed on the GIR1203 input.
     rule: >-
-      When the SafeHarbour element has the input of GIR1203 for a jurisdiction (or for
-      a subgroup), then the revenue element must be completed for that jurisdiction
-      (or for that subgroup) (i.e., where the Summary/Jurisdiction/JurisdictionName =
-      JurisdictionSection/Jurisdiction, or if Summary/Jurisdiction/Subgroup is
-      completed, then also match where Summary/Jurisdiction/Subgroup/TIN =
-      JurisdictionSection/GLOBETax/ETR/SubGroup/TIN)
+      When the SafeHarbour element has the input of GIR1203 for a jurisdiction
+      (or for a subgroup), then the revenue element must be completed for that
+      jurisdiction (or for that subgroup) (i.e., where the
+      Summary/Jurisdiction/JurisdictionName = JurisdictionSection/Jurisdiction,
+      or if Summary/Jurisdiction/Subgroup is completed, then also match where
+      Summary/Jurisdiction/Subgroup/TIN =
+      JurisdictionSection/GLoBETax/ETR/SubGroup/TIN)
     description: >-
       As the Deminimis CbCR safe harbour has been completed, the Revenue element for
       the tested jurisdiction must also be provided
@@ -1380,12 +1390,13 @@ rules:
       match described in rule 70045 (jurisdiction for non-subgroup Summaries, SubGroup/
       TIN for subgroup Summaries), keyed on the GIR1204 input.
     rule: >-
-      When the SafeHarbour element has the input of GIR1204 for a jurisdiction (or for
-      a subgroup), then the IncomeTax element must be completed for that jurisdiction
-      (or for that subgroup) (i.e., where the Summary/Jurisdiction/JurisdictionName =
-      JurisdictionSection/Jurisdiction, or if Summary/Jurisdiction/Subgroup is
-      completed, then also match where Summary/Jurisdiction/Subgroup/TIN =
-      JurisdictionSection/GLOBETax/ETR/SubGroup/TIN)
+      When the SafeHarbour element has the input of GIR1204 for a jurisdiction
+      (or for a subgroup), then the IncomeTax element must be completed for that
+      jurisdiction (or for that subgroup) (i.e., where the
+      Summary/Jurisdiction/JurisdictionName = JurisdictionSection/Jurisdiction,
+      or if Summary/Jurisdiction/Subgroup is completed, then also match where
+      Summary/Jurisdiction/Subgroup/TIN =
+      JurisdictionSection/GLoBETax/ETR/SubGroup/TIN)
     description: >-
       As the Simplified ETR Test has been selected for the Tested Jurisdiction, the
       IncomeTax element must also be provided.
@@ -1407,13 +1418,13 @@ rules:
       match described in rule 70045 (jurisdiction for non-subgroup Summaries, SubGroup/
       TIN for subgroup Summaries), keyed on the GIR1206 input.
     rule: >-
-      When the SafeHarbour element has the input of GIR1206 for a jurisdiction (or for
-      a subgroup), then the UTPRSafeHarbour element must be completed for that
-      jurisdiction (or for that subgroup). (i.e., where the
-      Summary/Jurisdiction/JurisdictionName = JurisdictionSection/Jurisdiction, or if
-      Summary/Jurisdiction/Subgroup is completed, then also match where
+      When the SafeHarbour element has the input of GIR1206 for a jurisdiction
+      (or for a subgroup), then the UTPRSafeHarbour element must be completed
+      for that jurisdiction (or for that subgroup). (i.e., where the
+      Summary/Jurisdiction/JurisdictionName = JurisdictionSection/Jurisdiction,
+      or if Summary/Jurisdiction/Subgroup is completed, then also match where
       Summary/Jurisdiction/Subgroup/TIN =
-      JurisdictionSection/GLOBETax/ETR/SubGroup/TIN)
+      JurisdictionSection/GLoBETax/ETR/SubGroup/TIN)
     description: >-
       The UTPR safe harbour has been selected for a jurisdiction, therefore the
       UTPRSafeHarbour element must be completed and the CIT rate provided.
@@ -1437,12 +1448,12 @@ rules:
       match described in rule 70045 (jurisdiction for non-subgroup Summaries, SubGroup/
       TIN for subgroup Summaries), keyed on the GIR1207, GIR1208 or GIR1209 input.
     rule: >-
-      When the SafeHarbour element has the input of GIR1207, GIR1208 or GIR1209 for a
-      jurisdiction (or for a subgroup), then the Non-MaterialCE element must be
-      completed for that jurisdiction (or for that subgroup) (i.e., where the
-      Summary/Jurisdiction/JurisdictionName = Jurisdiction Section/Jurisdiction, or if
-      Summary/Jurisdiction/Subgroup is completed, then also match where
-      Summary/Jurisdiction/Subgroup/TIN =
+      When the SafeHarbour element has the input of GIR1207, GIR1208 or GIR1209
+      for a jurisdiction (or for a subgroup), then the Non-MaterialCE element
+      must be completed for that jurisdiction (or for that subgroup) (i.e.,
+      where the Summary/Jurisdiction/JurisdictionName =
+      JurisdictionSection/Jurisdiction, or if Summary/Jurisdiction/Subgroup is
+      completed, then also match where Summary/Jurisdiction/Subgroup/TIN =
       JurisdictionSection/GLoBETax/ETR/SubGroup/TIN)
     description: >-
       When the SafeHarbour element has the input of GIR1207, GIR1208 or GIR1209 for a
@@ -1466,13 +1477,13 @@ rules:
       match described in rule 70045 (jurisdiction for non-subgroup Summaries, SubGroup/
       TIN for subgroup Summaries), keyed on the GIR1208 input.
     rule: >-
-      When the SafeHarbour element has the input of GIR1208 for a jurisdiction (or for
-      a subgroup), then the Aggregate Simplified element must be completed for that
-      jurisdiction (or for that subgroup) (i.e., where the
-      Summary/Jurisdiction/JurisdictionName = JurisdictionSection/Jurisdiction, or if
-      Summary/Jurisdiction/Subgroup is completed, then also match where
+      When the SafeHarbour element has the input of GIR1208 for a jurisdiction
+      (or for a subgroup), then the AggregateSimplified element must be
+      completed for that jurisdiction (or for that subgroup) (i.e., where the
+      Summary/Jurisdiction/JurisdictionName = JurisdictionSection/Jurisdiction,
+      or if Summary/Jurisdiction/Subgroup is completed, then also match where
       Summary/Jurisdiction/Subgroup/TIN =
-      JurisdictionSection/GLOBETax/ETR/SubGroup/TIN)
+      JurisdictionSection/GLoBETax/ETR/SubGroup/TIN)
     description: >-
       When the SafeHarbour element has the input of GIR1208 for a jurisdiction (or for
       a subgroup), then the AggregateSimplified element must be completed for that
@@ -1495,16 +1506,16 @@ rules:
       match described in rule 70045 (jurisdiction for non-subgroup Summaries, SubGroup/
       TIN for subgroup Summaries), keyed on the GIR1209 input.
     rule: >-
-      When the SafeHarbour element has the input of GIR1209 for a jurisdiction (or for
-      a subgroup), then the Substance Exclusion element must be completed for that
-      jurisdiction (or for that subgroup) (i.e., where the
-      Summary/Jurisdiction/JurisdictionName = JurisdictionSection/Jurisdiction, or if
-      Summary/Jurisdiction/Subgroup is completed, then also match where
+      When the SafeHarbour element has the input of GIR1209 for a jurisdiction
+      (or for a subgroup), then the SubstanceExclusion element must be completed
+      for that jurisdiction (or for that subgroup) (i.e., where the
+      Summary/Jurisdiction/JurisdictionName = JurisdictionSection/Jurisdiction,
+      or if Summary/Jurisdiction/Subgroup is completed, then also match where
       Summary/Jurisdiction/Subgroup/TIN =
-      JurisdictionSection/GLOBETax/ETR/SubGroup/TIN)
+      JurisdictionSection/GLoBETax/ETR/SubGroup/TIN)
     description: >-
-      The Routine Profit Test for NMCEs requires the Substance Exclusion element to be
-      completed
+      The Routine Profit Test for NMCEs requires the SubstanceExclusion element
+      to be completed
 
   - number: 70053
     targets:
@@ -1527,12 +1538,13 @@ rules:
       TransitionalCbCRSafeHarbour/Profit to be positive (a Profit of 0 or negative
       leaves the rule vacuous).
     rule: >-
-      When the SafeHarbour element has the input of GIR1205 for a jurisdiction (or for
-      a subgroup) then the Substance Exclusion element must be completed for that
-      jurisdiction (or for a subgroup). Unless the Profit element is either 0 or a
-      negative value (i.e., where the Summary/Jurisdiction/JurisdictionName =
-      JurisdictionSection/Jurisdiction, or if Summary/Jurisdiction/Subgroup is
-      completed, then also match where Summary/Jurisdiction/Subgroup/TIN =
+      When the SafeHarbour element has the input of GIR1205 for a jurisdiction
+      (or for a subgroup) then the SubstanceExclusion element must be completed
+      for that jurisdiction (or for a subgroup). Unless the Profit element is
+      either 0 or a negative value (i.e., where the
+      Summary/Jurisdiction/JurisdictionName = JurisdictionSection/Jurisdiction,
+      or if Summary/Jurisdiction/Subgroup is completed, then also match where
+      Summary/Jurisdiction/Subgroup/TIN =
       JurisdictionSection/GLOBETax/ETR/SubGroup/TIN)
     description: >-
       The Routine Profits Test for the Transitional CbCR safe harbour must be
@@ -1568,7 +1580,7 @@ rules:
       The OutstandingBalance should be equal to the following calculation:
       QualOwnerIntentBalance + Additions - Reductions
     description: >-
-      The OutstandingBalance amount does not equal the provided figures.
+      The OutStandingBalance amount does not equal the provided figures.
 
   - number: 70056
     targets:
@@ -1586,10 +1598,10 @@ rules:
     rule: >-
       RevocationYear is only to be provided when the status is FALSE
     description: >-
-      Revocation Year is only to be provided when the status is FALSE. When the Status
-      is TRUE, the election has been made and has not been revoked. When the Status is
-      FALSE, this indicates that the election has been revoked, as such the Revocation
-      Year is only to be provided when the status is FALSE.
+      RevocationYear is only to be provided when the status is FALSE. When the
+      Status is TRUE, the election has been made and has not been revoked. When
+      the Status is FALSE, this indicates that the election has been revoked, as
+      such the RevocationYear is only to be provided when the status is FALSE.
 
   - number: 70057
     targets:
@@ -1598,8 +1610,8 @@ rules:
     equals:
       expected: ../globe:Elections/globe:AggregatedReporting/globe:TaxConsolGroupTIN
     rule: >-
-      If the Aggregated Reporting element is completed, then the CEComputations TIN
-      should match the TaxConsol Group TIN.
+      If the AggregatedReporting element is completed, then the CEComputations
+      TIN should match the TaxConsol Group TIN.
     description: >-
       The TIN provided for the CE Computations must match to a TIN of the tax
       consolidated group used for purposes of Covered Taxes in the jurisdiction, if
@@ -1615,7 +1627,7 @@ rules:
     description: >-
       The CE who is making the election under article 7.6 must be different from the
       investment entity who the election is made in respect of (i.e. label 3.2.4.5.1
-      of the GIR must be different from 3.2.4.5.2).
+      of the GIR must be different from 3.2.4.5.2.)
 
   - number: 70059
     targets:
@@ -1642,7 +1654,7 @@ rules:
       the sibling AdjustmentItem code. AdjustmentItem is repeatable, so the node-set
       `=` guard fires when any Adjustments carries GIR2025.
     rule: >-
-      When the 'Adjustmentitem' element contains the value GIR2025 then the
+      When the 'AdjustmentItem' element contains the value GIR2025 then the
       'IntShippingIncome' element must be completed
     description: >-
       An adjustment under article 3.3 has been made without completing the relevant
@@ -1661,11 +1673,13 @@ rules:
           actual: globe:Amount
           expected: 0
     rule: >-
-      When the 'Art4.6.1' election has the value of TRUE, the AdjustmentItem for the
-      AdjustedCovered Tax must contain GIR2711 and the 'amount' must be a negative
+      When the 'Art4.6.1' election has the value of TRUE, the AdjustmentItem for
+      the AdjustedCoveredTax must contain GIR2711 and the 'amount' must be a
+      negative
     description: >-
-      When the 'Art4.6.1' election has the value of TRUE, the AdjustmentItem for the
-      AdjustedCovered Tax must contain GIR2711 and the 'amount' must be a negative
+      When the 'Art4.6.1' election has the value of TRUE, the AdjustmentItem for
+      the AdjustedCoveredTax must contain GIR2711 and the 'amount' must be a
+      negative
 
   - number: 70062
     targets:
@@ -1674,8 +1688,8 @@ rules:
     atLeast:
       expected: 0
     rule: >-
-      If the Adjustmentitem element has the value of GIR2720, then the total of the
-      AdjustedCovered Tax for the jurisdiction cannot be a negative.
+      If the AdjustmentItem element has the value of GIR2720, then the total of
+      the AdjustedCoveredTax for the jurisdiction cannot be a negative.
     description: >-
       The Excess Negative Tax Expense cannot reduce the AdjustedCoveredTaxes for a
       jurisdiction below 0
@@ -1701,12 +1715,12 @@ rules:
       expected: sum(../globe:AmountAttributed/globe:Amount)
     rule: >-
       The PostFilingAdjust/ DeferTaxAsset / Total should equal to the following
-      calculation: sum of all 'PostFilingAdjust / DeferTaxAsset / AmountAttributed /
-      Amount'
+      calculation: sum of all ‘PostFilingAdjust / DeferTaxAsset /
+      AmountAttributed / Amount’
     description: >-
       The PostFilingAdjust / DeferTaxAsset / Total should equal to the following
-      calculation: sum of all 'PostFilingAdjust / DeferTaxAsset / AmountAttributed /
-      Amount
+      calculation: sum of all ‘PostFilingAdjust / DeferTaxAsset /
+      AmountAttributed / Amount’
 
   - number: 70065
     targets:
@@ -1714,13 +1728,13 @@ rules:
     almostEquals:
       expected: sum(../globe:AmountAttributed/globe:Amount)
     rule: >-
-      The PostFilingAdjust / Covered TaxRefund / Total should equal to the following
-      calculation: Sum of all 'PostFilingAdjust/ Covered TaxRefund / AmountAttributed
-      / Amount
+      The PostFilingAdjust / CoveredTaxRefund / Total should equal to the
+      following calculation: Sum of all ‘PostFilingAdjust/ CoveredTaxRefund /
+      AmountAttributed / Amount’
     description: >-
-      The PostFilingAdjust / Covered TaxRefund / Total should equal to the following
-      calculation: Sum of all 'PostFilingAdjust/ Covered TaxRefund / AmountAttributed
-      / Amount
+      The PostFilingAdjust / CoveredTaxRefund / Total should equal to the
+      following calculation: Sum of all ‘PostFilingAdjust/ CoveredTaxRefund /
+      AmountAttributed / Amount’
 
   - number: 70066
     targets:
@@ -1880,7 +1894,7 @@ rules:
       The TransBlendCFC total should equal the following calculation: Sum of all
       'AggAllocTax'
     description: >-
-      The TransBlend CFC total should equal the following calculation: Sum of all
+      The TransBlendCFC total should equal the following calculation: Sum of all
       'AggAllocTax'
 
   - number: 70077
@@ -1967,11 +1981,11 @@ rules:
           expected: 0
     rule: >-
       When the DeferredTaxAssets element is provided, then one of
-      DeferredTaxAssetStart or DeferredTaxAssetRecast must contain the value of '0'
+      DeferredTaxAssetStart or DeferredTaxAssetRecast must contain the value of
+      ‘0’
     description: >-
       To calculate the Deferred tax assets taken into account for GloBE purposes,
-      ensure that either the DeferredTaxAsset at the start of the year or the
-      DeferredTaxAsset recast at the minimum rate is used, both values cannot be
+      ensure that either the DeferredTaxAsset at the start of the year or the DefferedTaxAsset recast at the minimum rate is used, both values cannot be
       used. Therefore, ensure that when calculating the DeferredTaxAsset/total
       element, that one of DeferredTaxAssetStart or DeferredTaxAssetRecast contains
       the value of 0
@@ -1984,11 +1998,11 @@ rules:
         ../globe:PriorYearBalance +
         ../globe:GeneratedInRFY - ../globe:UtilizedInRFY
     rule: >-
-      The Remaining value should equal the following calculation: Prior YearBalance +
-      GeneratedInRFY - UtilizedInRFY
+      The Remaining value should equal the following calculation:
+      PriorYearBalance + GeneratedInRFY - UtilizedInRFY
     description: >-
-      The Remaining value should equal the following calculation: Prior YearBalance +
-      GeneratedInRFY - UtilizedInRFY
+      The Remaining value should equal the following calculation:
+      PriorYearBalance + GeneratedInRFY - UtilizedInRFY
 
   - number: 70084
     targets:
@@ -1997,9 +2011,9 @@ rules:
     equals:
       expected: ancestor::globe:OverallComputation/globe:ExcessNegTaxExpense/globe:GeneratedInRFY
     rule: >-
-      If the Adjustmentitem element has the value of GIR2719, then the value reported
-      in the 'amount' element should be the same as the integer reported in the
-      GeneratedInRFY element
+      If the AdjustmentItem element has the value of GIR2719, then the value
+      reported in the 'amount' element should be the same as the integer
+      reported in the GeneratedInRFY element
     description: >-
       In the 'Adjusted Covered Tax' element, a lodger can select from a list of
       possible adjustments, and must report the following 'Name of adjustment
@@ -2019,9 +2033,9 @@ rules:
       checked value is the target `.` and the message names Amount; the guard reads
       the sibling AdjustmentItem.
     rule: >-
-      If the Adjustmentitem element has the value of GIR2720, then the value reported
-      in the 'amount' element should be the same as the integer reported in the
-      UtilizedInRFY element
+      If the AdjustmentItem element has the value of GIR2720, then the value
+      reported in the 'amount' element should be the same as the integer
+      reported in the UtilizedInRFY element
     description: >-
       If the AdjustedItem element has the value of GIR2720, then the value reported in
       the 'amount' element should be the same as the integer reported in the
@@ -2139,14 +2153,14 @@ rules:
       negative.
     rule: >-
       The AdditionalTopUpTax integer is equal to the following calculation:
-      ExpectedAdjustedCoveredTax - AdjustedCoveredTax. If the
-      ExpectedAdjustedCoveredTax - AdjustedCoveredTax results in a number less than
-      0, then AdditionalTopUpTax must equal to 0.
+      ExpectedAdjustedCoveredTax – AdjustedCoveredTax. If the
+      ExpectedAdjustedCoveredTax - AdjustedCoveredTax results in a number less
+      than 0, then AdditionalTopUpTax must equal to 0.
     description: >-
       The AdditionalTopUpTax integer is equal to the following calculation:
-      ExpectedAdjustedCoveredTax - AdjustedCoveredTax. If the
-      ExpectedAdjustedCoveredTax - AdjustedCoveredTax results in a number less than
-      0, then AdditionalTopUpTax must equal to 0.
+      ExpectedAdjustedCoveredTax – AdjustedCoveredTax. If the
+      ExpectedAdjustedCoveredTax - AdjustedCoveredTax results in a number less
+      than 0, then AdditionalTopUpTax must equal to 0.
 
   - number: 70093
     targets:
@@ -2198,7 +2212,7 @@ rules:
     almostEquals:
       expected: ../globe:Recalculated/globe:TopUpTax - ../globe:Previous/globe:TopUpTax
     rule: >-
-      Additional TopUpTax is calculated as follows: Recalculated/TopUpTax -
+      AdditionalTopUpTax is calculated as follows: Recalculated/TopUpTax -
       Previous/TopUpTax
     description: >-
       AdditionalTopUpTax is calculated as follows: Recalculated/TopUpTax -
@@ -2216,11 +2230,11 @@ rules:
       Guarded on a non-zero NetGlobeIncome since the ratio is otherwise undefined
       (divide-by-zero); OtherOwnershipAllocation is summed so a missing value is 0.
     rule: >-
-      The InclusionRatio must equal the following calculation: (NetGlobeIncome - Other
-      OwnershipAllocation) DIVIDED by NetGlobeIncome
+      The InclusionRatio must equal the following calculation: (NetGlobeIncome -
+      OtherOwnershipAllocation) DIVIDED by NetGlobeIncome
     description: >-
-      The InclusionRatio must equal the following calculation: (NetGlobelncome - Other
-      OwnershipAllocation) DIVIDED by NetGlobelncome
+      The InclusionRatio must equal the following calculation: (NetGlobeIncome -
+      OtherOwnershipAllocation) DIVIDED by NetGlobeIncome
 
   - number: 70098
     targets:
@@ -2244,13 +2258,13 @@ rules:
       A whole-message aggregate (sum across all jurisdictions), so the target is
       the GLOBEBody to give the two sums a single context.
     rule: >-
-      The sum of 'UTPRTopUp TaxAttributed' should be equal to the sum of
-      TotalUTPRTopUpTax amount in the JurisdictionSection element in respect to all
-      jurisdictions.
+      The sum of 'UTPRTopUpTaxAttributed' should be equal to the sum of
+      TotalUTPRTopUpTax amount in the JurisdictionSection element in respect to
+      all jurisdictions.
     description: >-
-      The sum of 'UTPRTopUp TaxAttributed" should be equal to the sum of
-      TotalUTPRTopUpTax amount in the JurisdictionSection element in respect to all
-      jurisdictions.
+      The sum of 'UTPRTopUpTaxAttributed' should be equal to the sum of
+      TotalUTPRTopUpTax amount in the JurisdictionSection element in respect to
+      all jurisdictions.
 
   - number: 70100
     targets:
@@ -2311,10 +2325,10 @@ rules:
       percentage in the message must also be 0 — i.e. no non-zero one is present —
       encoding "a 0% is valid only when all jurisdictions are 0% that year".
     rule: >-
-      The UTPRPercentage must be 0% when the UTPRTopUp TaxCarryForward is greater than
-      0. If the UTPRTopUpTaxCarryForward is 0, then the UTPRPercentage can only be 0%
-      when all UTPR jurisdictions have a UTPR Percentage of 0 in the Reporting Fiscal
-      Year.
+      The UTPRPercentage must be 0% when the UTPRTopUpTaxCarryForward is greater
+      than 0. If the UTPRTopUpTaxCarryForward is 0, then the UTPRPercentage can
+      only be 0% when all UTPR jurisdictions have a UTPR Percentage of 0 in the
+      Reporting Fiscal Year.
     description: >-
       The UTPRPercentage must be 0% when the UTPRTopUpTaxCarryForward is greater than
       0. If the UTPRTopUpTaxCarryForward is 0, then the UTPRPercentage can only be 0%
@@ -2352,9 +2366,9 @@ rules:
     notEquals:
       expected: ancestor::globe:CEComputation/globe:TIN
     rule: >-
-      The Other TIN must not be the same as the CEComputations/TIN.
+      The OtherTIN must not be the same as the CEComputations/TIN.
     description: >-
-      The Other TIN must not be the same as the CEComputations/TIN.
+      The OtherTIN must not be the same as the CEComputations/TIN.
 
   - number: 70107
     targets:
@@ -2367,14 +2381,13 @@ rules:
       Where the Exception element is TRUE, then the CrossBorderAdjustements must not
       be provided for that CEComputation section.
     description: >-
-      When the UPE is wholly owned by holders of Ownership Interests in respect of
-      which Article 7.1 applies, and the Filing Constituent Entity reported
-      "exception, wholly-owned" in column 3.2.4.1.d.5, the Filing Constituent Entity
-      shall not complete Table 3.2.4.1.c with respect to the UPE (and with respect to
-      Tax Transparent Entities wholly owned by the UPE through a Tax Transparent
-      Structure and located in the UPE jurisdiction to which Article 3.5.1(b)
-      applies).
-      (see note 3.2.4.1.c of the GIR)
+      When the UPE is wholly owned by holders of Ownership Interests in respect
+      of which Article 7.1 applies, and the Filing Constituent Entity reported
+      “exception, wholly-owned” in column 3.2.4.1.d.5, the Filing Constituent
+      Entity shall not complete Table 3.2.4.1.c with respect to the UPE (and
+      with respect to Tax Transparent Entities wholly owned by the UPE through a
+      Tax Transparent Structure and located in the UPE jurisdiction to which
+      Article 3.5.1(b) applies). (see note 3.2.4.1.c of the GIR)
     implementation_notes: >-
       The path in the specification wrongly contains the Total element.
 
@@ -2388,10 +2401,12 @@ rules:
       - present: globe:IdentificationOfOwners/globe:EntityOwner/globe:TaxRate
     rule: >-
       When the 'Basis' is GIR1901, GIR1902, GIR1905, GIR1906 then the
-      'EntityOwner/TaxRate' element or 'IndOwners/TaxRate' element must be completed
+      'EntityOwner/TaxRate' element or ‘IndOwners/TaxRate’ element must be
+      completed
     description: >-
       When the 'Basis' is GIR1901, GIR1902, GIR1905, GIR1906 then the
-      'EntityOwner/TaxRate' element or 'IndOwners/TaxRate' element must be completed
+      'EntityOwner/TaxRate' element or ‘IndOwners/TaxRate’ element must be
+      completed
 
   - number: 70109
     targets:
@@ -2493,8 +2508,8 @@ rules:
       globe:NetGlobeIncome/globe:Adjustments/globe:AdjustmentItem = 'GIR2023'
     present: globe:AdjustedFANIL/globe:Adjustment/globe:UPEAdjustments
     rule: >-
-      When the 'Adjustmentitem' element contains the value GIR2022 and/or GIR2023 then
-      the 'UPEAdjustments' element must be completed
+      When the 'AdjustmentItem' element contains the value GIR2022 and/or
+      GIR2023 then the 'UPEAdjustments' element must be completed
     description: >-
       An adjustment under article 7.1 or 7.2 can only be selected when the table at
       3.2.4.1.d has been completed.
@@ -2521,8 +2536,8 @@ rules:
     when: globe:NetGlobeIncome/globe:Adjustments/globe:AdjustmentItem = 'GIR2024'
     present: globe:Elections/globe:Art7.6
     rule: >-
-      When the 'Adjustmentitem' element contains the value GIR2024 then the 'Art7.6'
-      element must be completed
+      When the 'AdjustmentItem' element contains the value GIR2024 then the
+      'Art7.6' element must be completed
     description: >-
       An adjustment under article 7.6 has been made without completing the relevant
       table at 3.2.4.5.
@@ -2574,9 +2589,9 @@ rules:
         sum(../globe:Adjustment/globe:Recast/globe:Higher) +
         sum(../globe:Adjustment/globe:Recast/globe:Lower)
     rule: >-
-      The Total element shall equal the following calculation: Defer TaxExpense + Sum
-      of all values reported in Adjustments/Amount + Recast/Higher + Recast/Lower (if
-      any element is not provided, it is treated as a 0 value)
+      The Total element shall equal the following calculation: DeferTaxExpense +
+      Sum of all values reported in Adjustments/Amount + Recast/Higher +
+      Recast/Lower (if any element is not provided, it is treated as a 0 value)
     description: >-
       The Total element shall equal the following calculation: DeferTaxExpense + Sum
       of all values reported in Adjustments/Amount + Recast/Higher + Recast/Lower (if
@@ -2593,11 +2608,11 @@ rules:
       all of its CEComputations, per the literal "per ETR" wording); the operand
       selects the AdjustmentItem at this location.
     rule: >-
-      Each code for this Adjustmentltem element cannot be used more than once per ETR
-      element in the Jurisdiction Section.
+      Each code for this AdjustmentItem element cannot be used more than once
+      per ETR element in the Jurisdiction Section.
     description: >-
-      Each code for this Adjustmentltem element cannot be used more than once per ETR
-      element in the Jurisdiction Section.
+      Each code for this AdjustmentItem element cannot be used more than once
+      per ETR element in the Jurisdiction Section.
 
   - number: 70122
     targets:
