@@ -1,0 +1,610 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Diese Beispieldatei enthält neben den Angaben der Lieferungsinhalten Annotationen, welche für das Gesamtverständnis aufgenommen wurden. Hinweise zu einzelnen Datenelementen oder den etwaigen Befüllungsmöglichkeiten können Sie dem GIR-KHB entnehmen.
+Der folgende DIP-Header ist ein Beispiel wie der Header erstellt werden kann. Genaueres zur Erstellung eines DIP-Headers entnehmen Sie bitte dem DIP-Kommunikationshandbuch auf der Homepage des BZSt.-->
+
+<!-- Modification by gir.tax: remove German DIP envelope 
+<dip:dip xmlns:dip="http://itzbund.de/ozg/bzst/post/dip/v1/" version="1.0">
+	<dip:header environment="TEST">
+		<dip:consignment>
+			<dip:customerIdentifier>
+				<dip:identityProvider>BZST-CERT</dip:identityProvider>
+				<dip:identifier>BZ123456789</dip:identifier>
+			</dip:customerIdentifier>
+			<dip:creationTime>2025-12-09T16:00:00</dip:creationTime>
+			<dip:transferticketId>339c2453-89d9-4ee2-a6c0-ee83fcb9df83</dip:transferticketId>
+		</dip:consignment>
+		<dip:application code="PILLAR_II"/>
+	</dip:header>
+	<dip:body>
+		<dip:consignmentItem>
+			<dip:data>
+-->
+			<!-- Der auf den Mindeststeuerbericht entfallene Teil der XML wird als Anhang dem data-Block der DIP-Datei angehangen-->
+				<globe:GLOBE_OECD xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:globe="urn:oecd:ties:globe:v2" xmlns:stf="urn:oecd:ties:globestf:v5" version="1.0" xsi:schemaLocation="urn:oecd:ties:globe:v2 file:///P:/Pillar2/TestdateiGIR/GLOBEXML_v1.0.xsd">
+					<!-- Die MessageSpec enthält die Lieferung betreffende Informationen-->
+					<globe:MessageSpec>
+						<globe:SendingEntityIN>5123025331220</globe:SendingEntityIN>
+						<globe:TransmittingCountry>DE</globe:TransmittingCountry>
+						<globe:ReceivingCountry>DE</globe:ReceivingCountry>
+						<globe:MessageType>GIR</globe:MessageType>
+						<globe:MessageRefId>DE2024DE-1853c193-5113-4ea7-936a-cd63bac69984</globe:MessageRefId>
+						<!-- Die MessageRefId ist eine Unique ID und mit jeder Lieferung erneut neu zu vergeben. Diese exemplarisch vergebene ID kann nicht verwendet werden und dient lediglich der Veranschauung.-->
+						<globe:MessageTypeIndic>GIR101</globe:MessageTypeIndic>
+						<globe:ReportingPeriod>2024-12-31</globe:ReportingPeriod>
+						<globe:Timestamp>2025-08-15T09:30:47Z</globe:Timestamp>
+					</globe:MessageSpec>
+					<globe:GLOBEBody>
+						<!-- In der FilingInfo werden Daten der Berichtspflichtigen Einheit inklusive den entsprechenden Mindeststeuerbericht betreffende Meta-Informationen wie zB das zugrundeliegende Meldejahr angegeben.-->
+						<globe:FilingInfo>
+							<globe:FilingCE>
+								<globe:ResCountryCode>DE</globe:ResCountryCode>
+								<globe:Name>M-A Holding AG</globe:Name>
+								<globe:TIN issuedBy="DE" unknown="0" TypeOfTIN="GIR3001">5123025331220</globe:TIN>
+								<globe:Role>GIR401</globe:Role>
+							</globe:FilingCE>
+							<globe:AccountingInfo>
+								<globe:CFSofUPE>GIR501</globe:CFSofUPE>
+								<globe:FAS>IFRS</globe:FAS>
+								<globe:Currency>EUR</globe:Currency>
+							</globe:AccountingInfo>
+							<globe:Period>
+								<globe:Start>2024-01-01</globe:Start>
+								<globe:End>2024-12-31</globe:End>
+							</globe:Period>
+							<globe:NameMNE>M-A Global</globe:NameMNE>
+							<!-- Jeder Abschnitt eines GIR wird durch eine DocSpec eindeutig identifizierbar gemacht. Die öffnende Zeile entfällt auf das GLOBEXML und soll daher den gleichen Namespace enthalten wie hier die FilingInfo (hier globe:). Die in der DocSpec gelieferten Inhalte sollen wiederrum einen eigenen Namespace enthalten (hier stf:).-->
+							<globe:DocSpec>
+								<stf:DocTypeIndic>OECD1</stf:DocTypeIndic>
+								<stf:DocRefId>DE2024-299891ab-ffd0-4a1c-ade1-dfdb4cfb2711</stf:DocRefId>
+								<!-- Die DocRefId ist eine Unique ID und mit jeder Lieferung erneut neu zu vergeben. Diese exemplarisch vergebene ID kann nicht verwendet werden und dient lediglich der Veranschauung.-->
+							</globe:DocSpec>
+						</globe:FilingInfo>
+						<!-- In der GeneralSection werden das MNU und dessen Aufbau betreffende Informationen aufgenommen.-->
+						<globe:GeneralSection>
+						<!-- Die in dieser Testdatei aufgenommenen Staaten dienen lediglich der Veranschauung der Aufbaumöglichkeiten eines GIR. Hierbei wurde nicht berücksichtigt, ob die entsprechenden Eintragungen fachlich zutreffend sind.-->
+							<globe:RecJurCode>DE</globe:RecJurCode>
+							<globe:RecJurCode>FR</globe:RecJurCode>
+							<globe:RecJurCode>NL</globe:RecJurCode>
+							<globe:RecJurCode>AT</globe:RecJurCode>
+							<globe:CorporateStructure>
+								<globe:UPE>
+									<globe:OtherUPE>
+										<globe:ID>
+											<globe:Name>M-A Holding AG</globe:Name>
+											<globe:ResCountryCode>DE</globe:ResCountryCode>
+											<globe:TIN issuedBy="DE" unknown="0" TypeOfTIN="GIR3001">5123025331220</globe:TIN>
+											<globe:Rules>GIR202</globe:Rules>
+											<globe:Rules>GIR203</globe:Rules>
+											<globe:Rules>GIR204</globe:Rules>
+											<globe:GlobeStatus>GIR301</globe:GlobeStatus>
+										</globe:ID>
+									</globe:OtherUPE>
+								</globe:UPE>
+								<globe:CE>
+									<globe:ID>
+										<globe:Name>DE CE1</globe:Name>
+										<globe:ResCountryCode>DE</globe:ResCountryCode>
+										<globe:TIN issuedBy="DE" unknown="0" TypeOfTIN="GIR3001">5123025335169</globe:TIN>
+										<globe:Rules>GIR202</globe:Rules>
+										<globe:Rules>GIR203</globe:Rules>
+										<globe:Rules>GIR204</globe:Rules>
+										<globe:GlobeStatus>GIR301</globe:GlobeStatus>
+									</globe:ID>
+									<globe:Ownership>
+										<globe:OwnershipType>GIR801</globe:OwnershipType>
+										<globe:TIN issuedBy="DE" unknown="0" TypeOfTIN="GIR3001">5123025331220</globe:TIN>
+										<globe:OwnershipPercentage>1</globe:OwnershipPercentage>
+									</globe:Ownership>
+								</globe:CE>
+								<globe:CE>
+									<globe:ID>
+										<globe:Name>FR CE1</globe:Name>
+										<globe:ResCountryCode>FR</globe:ResCountryCode>
+										<globe:TIN issuedBy="FR" unknown="0" TypeOfTIN="GIR3001">FR StNr 1</globe:TIN>
+										<globe:Rules>GIR202</globe:Rules>
+										<globe:Rules>GIR203</globe:Rules>
+										<globe:Rules>GIR204</globe:Rules>
+										<globe:GlobeStatus>GIR301</globe:GlobeStatus>
+									</globe:ID>
+									<globe:Ownership>
+										<globe:OwnershipType>GIR801</globe:OwnershipType>
+										<globe:TIN issuedBy="DE" unknown="0" TypeOfTIN="GIR3001">5123025331220</globe:TIN>
+										<globe:OwnershipPercentage>1</globe:OwnershipPercentage>
+									</globe:Ownership>
+								</globe:CE>
+								<globe:CE>
+									<globe:ID>
+										<globe:Name>NL CE1</globe:Name>
+										<globe:ResCountryCode>NL</globe:ResCountryCode>
+										<globe:TIN issuedBy="NL" unknown="0" TypeOfTIN="GIR3001">NL StNr 1</globe:TIN>
+										<globe:Rules>GIR202</globe:Rules>
+										<globe:Rules>GIR203</globe:Rules>
+										<globe:GlobeStatus>GIR301</globe:GlobeStatus>
+									</globe:ID>
+									<globe:Ownership>
+										<globe:OwnershipType>GIR801</globe:OwnershipType>
+										<globe:TIN issuedBy="DE" unknown="0" TypeOfTIN="GIR3001">5123025331220</globe:TIN>
+										<globe:OwnershipPercentage>1</globe:OwnershipPercentage>
+									</globe:Ownership>
+								</globe:CE>
+								<globe:CE>
+									<globe:ID>
+										<globe:Name>AT CE1</globe:Name>
+										<globe:ResCountryCode>AT</globe:ResCountryCode>
+										<globe:TIN issuedBy="AT" unknown="0" TypeOfTIN="GIR3001">AT StNr 1</globe:TIN>
+										<globe:Rules>GIR202</globe:Rules>
+										<globe:Rules>GIR203</globe:Rules>
+										<globe:GlobeStatus>GIR301</globe:GlobeStatus>
+									</globe:ID>
+									<globe:Ownership>
+										<globe:OwnershipType>GIR801</globe:OwnershipType>
+										<globe:TIN issuedBy="DE" unknown="0" TypeOfTIN="GIR3001">5123025331220</globe:TIN>
+										<globe:OwnershipPercentage>1</globe:OwnershipPercentage>
+									</globe:Ownership>
+								</globe:CE>
+							</globe:CorporateStructure>
+							<!-- Jeder Abschnitt eines GIR wird durch eine DocSpec eindeutig identifizierbar gemacht. Die öffnende Zeile entfällt auf das GLOBEXML und soll daher den gleichen Namespace enthalten wie hier die GeneralSection. Die in der DocSpec gelieferten Inhalte sollen wiederrum einen eigenen Namespace enthalten.-->
+							<globe:DocSpec>
+								<stf:DocTypeIndic>OECD1</stf:DocTypeIndic>
+								<stf:DocRefId>DE2024-51c194ec-b738-4983-a355-71946514ac44</stf:DocRefId>
+								<!-- Die DocRefId ist eine Unique ID und mit jeder Lieferung erneut neu zu vergeben. Diese exemplarisch vergebene ID kann nicht verwendet werden und dient lediglich der Veranschauung.-->
+							</globe:DocSpec>
+						</globe:GeneralSection>
+						<!-- In der Summary werden allgemeine staatenbezogene Informationen aufgenommen.-->
+						<globe:Summary>
+							<!-- Die in dieser Testdatei aufgenommenen Staaten dienen lediglich der Veranschauung der Aufbaumöglichkeiten eines GIR. Hierbei wurde nicht berücksichtigt, ob die entsprechenden Eintragungen fachlich zutreffend sind.-->
+							<globe:RecJurCode>DE</globe:RecJurCode>
+							<globe:RecJurCode>FR</globe:RecJurCode>
+							<globe:RecJurCode>NL</globe:RecJurCode>
+							<globe:RecJurCode>AT</globe:RecJurCode>
+							<globe:Jurisdiction>
+								<globe:JurisdictionName>DE</globe:JurisdictionName>
+							</globe:Jurisdiction>
+							<globe:JurWithTaxingRights>
+								<globe:JurisdictionName>DE</globe:JurisdictionName>
+							</globe:JurWithTaxingRights>
+							<globe:ETRRange>GIR1313</globe:ETRRange>
+							<globe:SBIE>
+								<globe:NotApplicable>1</globe:NotApplicable>
+								<globe:NoTut>0</globe:NoTut>
+							</globe:SBIE>
+							<globe:QDMTTut>GIR1401</globe:QDMTTut>
+							<globe:GLoBETut>GIR1502</globe:GLoBETut>
+							<!-- Jeder Abschnitt eines GIR wird durch eine DocSpec eindeutig identifizierbar gemacht. Die öffnende Zeile entfällt auf das GLOBEXML und soll daher den gleichen Namespace enthalten wie hier die Summary. Die in der DocSpec gelieferten Inhalte sollen wiederrum einen eigenen Namespace enthalten.-->
+							<globe:DocSpec>
+								<stf:DocTypeIndic>OECD1</stf:DocTypeIndic>
+								<stf:DocRefId>DE2024-547ffefd-b17e-44d4-ac16-7e95698e0eb8</stf:DocRefId>
+								<!-- Die DocRefId ist eine Unique ID und mit jeder Lieferung erneut neu zu vergeben. Diese exemplarisch vergebene ID kann nicht verwendet werden und dient lediglich der Veranschauung.-->
+							</globe:DocSpec>
+						</globe:Summary>
+						<!-- In der Summary werden allgemeine staatenbezogene Informationen aufgenommen.-->
+						<globe:Summary>
+						<!-- Die in dieser Testdatei aufgenommenen Staaten dienen lediglich der Veranschauung der Aufbaumöglichkeiten eines GIR. Hierbei wurde nicht berücksichtigt, ob die entsprechenden Eintragungen fachlich zutreffend sind.-->
+							<globe:RecJurCode>DE</globe:RecJurCode>
+							<globe:RecJurCode>FR</globe:RecJurCode>
+							<globe:RecJurCode>NL</globe:RecJurCode>
+							<globe:RecJurCode>AT</globe:RecJurCode>
+							<globe:Jurisdiction>
+								<globe:JurisdictionName>FR</globe:JurisdictionName>
+							</globe:Jurisdiction>
+							<globe:JurWithTaxingRights>
+								<globe:JurisdictionName>FR</globe:JurisdictionName>
+							</globe:JurWithTaxingRights>
+							<globe:ETRRange>GIR1311</globe:ETRRange>
+							<globe:SBIE>
+								<globe:NotApplicable>1</globe:NotApplicable>
+								<globe:NoTut>0</globe:NoTut>
+							</globe:SBIE>
+							<globe:QDMTTut>GIR1401</globe:QDMTTut>
+							<globe:GLoBETut>GIR1501</globe:GLoBETut>
+							<!-- Jeder Abschnitt eines GIR wird durch eine DocSpec eindeutig identifizierbar gemacht. Die öffnende Zeile entfällt auf das GLOBEXML und soll daher den gleichen Namespace enthalten wie hier die Summary. Die in der DocSpec gelieferten Inhalte sollen wiederrum einen eigenen Namespace enthalten.-->
+							<globe:DocSpec>
+								<stf:DocTypeIndic>OECD1</stf:DocTypeIndic>
+								<stf:DocRefId>DE2024-defe7b89-beec-45f3-bba5-9543307681d0</stf:DocRefId>
+								<!-- Die DocRefId ist eine Unique ID und mit jeder Lieferung erneut neu zu vergeben. Diese exemplarisch vergebene ID kann nicht verwendet werden und dient lediglich der Veranschauung.-->
+							</globe:DocSpec>
+						</globe:Summary>
+						<!-- In der Summary werden allgemeine staatenbezogene Informationen aufgenommen.-->
+						<globe:Summary>
+						<!-- Die in dieser Testdatei aufgenommenen Staaten dienen lediglich der Veranschauung der Aufbaumöglichkeiten eines GIR. Hierbei wurde nicht berücksichtigt, ob die entsprechenden Eintragungen fachlich zutreffend sind.-->
+							<globe:RecJurCode>DE</globe:RecJurCode>
+							<globe:RecJurCode>FR</globe:RecJurCode>
+							<globe:RecJurCode>NL</globe:RecJurCode>
+							<globe:RecJurCode>AT</globe:RecJurCode>
+							<globe:Jurisdiction>
+								<globe:JurisdictionName>NL</globe:JurisdictionName>
+							</globe:Jurisdiction>
+							<globe:JurWithTaxingRights>
+								<globe:JurisdictionName>NL</globe:JurisdictionName>
+							</globe:JurWithTaxingRights>
+							<globe:JurWithTaxingRights>
+								<globe:JurisdictionName>DE</globe:JurisdictionName>
+							</globe:JurWithTaxingRights>
+							<globe:ETRRange>GIR1303</globe:ETRRange>
+							<globe:SBIE>
+								<globe:NotApplicable>1</globe:NotApplicable>
+								<globe:NoTut>0</globe:NoTut>
+							</globe:SBIE>
+							<globe:QDMTTut>GIR1401</globe:QDMTTut>
+							<globe:GLoBETut>GIR1501</globe:GLoBETut>
+							<!-- Jeder Abschnitt eines GIR wird durch eine DocSpec eindeutig identifizierbar gemacht. Die öffnende Zeile entfällt auf das GLOBEXML und soll daher den gleichen Namespace enthalten wie hier die Summary. Die in der DocSpec gelieferten Inhalte sollen wiederrum einen eigenen Namespace enthalten.-->
+							<globe:DocSpec>
+								<stf:DocTypeIndic>OECD1</stf:DocTypeIndic>
+								<stf:DocRefId>DE2024-c4a1a99b-5a9d-4536-8501-d7c4a490ade7</stf:DocRefId>
+								<!-- Die DocRefId ist eine Unique ID und mit jeder Lieferung erneut neu zu vergeben. Diese exemplarisch vergebene ID kann nicht verwendet werden und dient lediglich der Veranschauung.-->
+							</globe:DocSpec>
+						</globe:Summary>
+						<!-- In der Summary werden allgemeine staatenbezogene Informationen aufgenommen.-->
+						<globe:Summary>
+						<!-- Die in dieser Testdatei aufgenommenen Staaten dienen lediglich der Veranschauung der Aufbaumöglichkeiten eines GIR. Hierbei wurde nicht berücksichtigt, ob die entsprechenden Eintragungen fachlich zutreffend sind.-->
+							<globe:RecJurCode>DE</globe:RecJurCode>
+							<globe:RecJurCode>FR</globe:RecJurCode>
+							<globe:RecJurCode>NL</globe:RecJurCode>
+							<globe:RecJurCode>AT</globe:RecJurCode>
+							<globe:Jurisdiction>
+								<globe:JurisdictionName>AT</globe:JurisdictionName>
+							</globe:Jurisdiction>
+							<globe:JurWithTaxingRights>
+								<globe:JurisdictionName>AT</globe:JurisdictionName>
+							</globe:JurWithTaxingRights>
+							<globe:JurWithTaxingRights>
+								<globe:JurisdictionName>DE</globe:JurisdictionName>
+							</globe:JurWithTaxingRights>
+							<globe:ETRRange>GIR1305</globe:ETRRange>
+							<globe:SBIE>
+								<globe:NotApplicable>1</globe:NotApplicable>
+								<globe:NoTut>0</globe:NoTut>
+							</globe:SBIE>
+							<globe:QDMTTut>GIR1401</globe:QDMTTut>
+							<globe:GLoBETut>GIR1501</globe:GLoBETut>
+							<!-- Jeder Abschnitt eines GIR wird durch eine DocSpec eindeutig identifizierbar gemacht. Die öffnende Zeile entfällt auf das GLOBEXML und soll daher den gleichen Namespace enthalten wie hier die Summary. Die in der DocSpec gelieferten Inhalte sollen wiederrum einen eigenen Namespace enthalten.-->
+							<globe:DocSpec>
+								<stf:DocTypeIndic>OECD1</stf:DocTypeIndic>
+								<stf:DocRefId>DE2024-d74d5107-8fb6-4f96-aae9-1226fdddd3cb</stf:DocRefId>
+								<!-- Die DocRefId ist eine Unique ID und mit jeder Lieferung erneut neu zu vergeben. Diese exemplarisch vergebene ID kann nicht verwendet werden und dient lediglich der Veranschauung.-->
+							</globe:DocSpec>
+						</globe:Summary>
+						<!-- In der JurisdictionSection werden konkrete staatenbezogene Informationen wie zB die GlobeBerechnung aufgenommen.-->
+						<globe:JurisdictionSection>
+						<!-- Die in dieser Testdatei aufgenommenen Staaten dienen lediglich der Veranschauung der Aufbaumöglichkeiten eines GIR. Hierbei wurde nicht berücksichtigt, ob die entsprechenden Eintragungen fachlich zutreffend sind.-->
+							<globe:RecJurCode>DE</globe:RecJurCode>
+							<globe:Jurisdiction>DE</globe:Jurisdiction>
+							<globe:JurWithTaxingRights>
+								<globe:JurisdictionName>DE</globe:JurisdictionName>
+							</globe:JurWithTaxingRights>
+							<globe:LocalCurrency>EUR</globe:LocalCurrency>
+							<globe:GLoBETax>
+								<globe:ETR>
+									<globe:ETRStatus>
+										<globe:ETRComputation>
+											<globe:CEComputation>
+												<globe:AdjustedFANIL>
+													<globe:Total>0</globe:Total>
+													<globe:FANIL>0</globe:FANIL>
+												</globe:AdjustedFANIL>
+												<globe:NetGlobeIncome>
+													<globe:Total>0</globe:Total>
+												</globe:NetGlobeIncome>
+												<globe:AdjustedIncomeTax>
+													<globe:Total>0</globe:Total>
+													<globe:IncomeTax>0</globe:IncomeTax>
+												</globe:AdjustedIncomeTax>
+												<globe:AdjustedCoveredTax>
+													<globe:Total>0</globe:Total>
+													<globe:DeferTaxAdjustAmt>
+														<globe:Total>0</globe:Total>
+														<globe:DeferTaxExpense>0</globe:DeferTaxExpense>
+													</globe:DeferTaxAdjustAmt>
+												</globe:AdjustedCoveredTax>
+												<globe:TIN issuedBy="DE" unknown="0" TypeOfTIN="GIR3001">5123025331220</globe:TIN>
+											</globe:CEComputation>
+											<globe:CEComputation>
+												<globe:AdjustedFANIL>
+													<globe:Total>50000</globe:Total>
+													<globe:FANIL>50000</globe:FANIL>
+												</globe:AdjustedFANIL>
+												<globe:NetGlobeIncome>
+													<globe:Total>50000</globe:Total>
+												</globe:NetGlobeIncome>
+												<globe:AdjustedIncomeTax>
+													<globe:Total>15000</globe:Total>
+													<globe:IncomeTax>15000</globe:IncomeTax>
+												</globe:AdjustedIncomeTax>
+												<globe:AdjustedCoveredTax>
+													<globe:Total>15000</globe:Total>
+													<globe:DeferTaxAdjustAmt>
+														<globe:Total>0</globe:Total>
+														<globe:DeferTaxExpense>0</globe:DeferTaxExpense>
+													</globe:DeferTaxAdjustAmt>
+												</globe:AdjustedCoveredTax>
+												<globe:TIN issuedBy="DE" unknown="0" TypeOfTIN="GIR3001">5123025335169</globe:TIN>
+											</globe:CEComputation>
+											<globe:OverallComputation>
+												<globe:FANIL>50000</globe:FANIL>
+												<globe:AdjustedFANIL>50000</globe:AdjustedFANIL>
+												<globe:NetGlobeIncome>
+													<globe:Total>50000</globe:Total>
+												</globe:NetGlobeIncome>
+												<globe:IncomeTaxExpense>15000</globe:IncomeTaxExpense>
+												<globe:ETRRate>0.3</globe:ETRRate>
+												<globe:TopUpTaxPercentage>0</globe:TopUpTaxPercentage>
+												<globe:AdjustedCoveredTax>
+													<globe:Total>15000</globe:Total>
+													<globe:AggregrateCurrentTax>15000</globe:AggregrateCurrentTax>
+												</globe:AdjustedCoveredTax>
+												<globe:ExcessProfits>50000</globe:ExcessProfits>
+												<globe:TopUpTax>0</globe:TopUpTax>
+												<globe:ExcessNegTaxExpense>
+													<globe:PriorYearBalance>0</globe:PriorYearBalance>
+													<globe:GeneratedInRFY>0</globe:GeneratedInRFY>
+													<globe:UtilizedInRFY>0</globe:UtilizedInRFY>
+													<globe:Remaining>0</globe:Remaining>
+												</globe:ExcessNegTaxExpense>
+											</globe:OverallComputation>
+										</globe:ETRComputation>
+									</globe:ETRStatus>
+								</globe:ETR>
+							</globe:GLoBETax>
+							<!-- Jeder Abschnitt eines GIR wird durch eine DocSpec eindeutig identifizierbar gemacht. Die öffnende Zeile entfällt auf das GLOBEXML und soll daher den gleichen Namespace enthalten wie hier die JurisdictionSection. Die in der DocSpec gelieferten Inhalte sollen wiederrum einen eigenen Namespace enthalten.-->
+							<globe:DocSpec>
+								<stf:DocTypeIndic>OECD1</stf:DocTypeIndic>
+								<stf:DocRefId>DE2024-4b9728ee-2ad3-48b2-9052-39c2bc0be556</stf:DocRefId>
+								<!-- Die DocRefId ist eine Unique ID und mit jeder Lieferung erneut neu zu vergeben. Diese exemplarisch vergebene ID kann nicht verwendet werden und dient lediglich der Veranschauung.-->
+							</globe:DocSpec>
+						</globe:JurisdictionSection>
+						<!-- In der JurisdictionSection werden konkrete staatenbezogene Informationen wie zB die GlobeBerechnung aufgenommen.-->
+						<globe:JurisdictionSection>
+						<!-- Die in dieser Testdatei aufgenommenen Staaten dienen lediglich der Veranschauung der Aufbaumöglichkeiten eines GIR. Hierbei wurde nicht berücksichtigt, ob die entsprechenden Eintragungen fachlich zutreffend sind.-->
+							<globe:RecJurCode>FR</globe:RecJurCode>
+							<globe:RecJurCode>DE</globe:RecJurCode>
+							<globe:Jurisdiction>FR</globe:Jurisdiction>
+							<globe:JurWithTaxingRights>
+								<globe:JurisdictionName>FR</globe:JurisdictionName>
+							</globe:JurWithTaxingRights>
+							<globe:LocalCurrency>EUR</globe:LocalCurrency>
+							<globe:GLoBETax>
+								<globe:ETR>
+									<globe:ETRStatus>
+										<globe:ETRComputation>
+											<globe:CEComputation>
+												<globe:AdjustedFANIL>
+													<globe:Total>10000</globe:Total>
+													<globe:FANIL>10000</globe:FANIL>
+												</globe:AdjustedFANIL>
+												<globe:NetGlobeIncome>
+													<globe:Total>10000</globe:Total>
+												</globe:NetGlobeIncome>
+												<globe:AdjustedIncomeTax>
+													<globe:Total>2500</globe:Total>
+													<globe:IncomeTax>2500</globe:IncomeTax>
+												</globe:AdjustedIncomeTax>
+												<globe:AdjustedCoveredTax>
+													<globe:Total>2500</globe:Total>
+													<globe:DeferTaxAdjustAmt>
+														<globe:Total>0</globe:Total>
+														<globe:DeferTaxExpense>0</globe:DeferTaxExpense>
+													</globe:DeferTaxAdjustAmt>
+												</globe:AdjustedCoveredTax>
+												<globe:TIN issuedBy="FR" unknown="0" TypeOfTIN="GIR3001">FR StNr 1</globe:TIN>
+											</globe:CEComputation>
+											<globe:OverallComputation>
+												<globe:FANIL>10000</globe:FANIL>
+												<globe:AdjustedFANIL>10000</globe:AdjustedFANIL>
+												<globe:NetGlobeIncome>
+													<globe:Total>10000</globe:Total>
+												</globe:NetGlobeIncome>
+												<globe:IncomeTaxExpense>2500</globe:IncomeTaxExpense>
+												<globe:ETRRate>0.25</globe:ETRRate>
+												<globe:TopUpTaxPercentage>0</globe:TopUpTaxPercentage>
+												<globe:AdjustedCoveredTax>
+													<globe:Total>2500</globe:Total>
+													<globe:AggregrateCurrentTax>2500</globe:AggregrateCurrentTax>
+												</globe:AdjustedCoveredTax>
+												<globe:ExcessProfits>10000</globe:ExcessProfits>
+												<globe:TopUpTax>0</globe:TopUpTax>
+												<globe:ExcessNegTaxExpense>
+													<globe:PriorYearBalance>0</globe:PriorYearBalance>
+													<globe:GeneratedInRFY>0</globe:GeneratedInRFY>
+													<globe:UtilizedInRFY>0</globe:UtilizedInRFY>
+													<globe:Remaining>0</globe:Remaining>
+												</globe:ExcessNegTaxExpense>
+											</globe:OverallComputation>
+										</globe:ETRComputation>
+									</globe:ETRStatus>
+								</globe:ETR>
+							</globe:GLoBETax>
+							<!-- Jeder Abschnitt eines GIR wird durch eine DocSpec eindeutig identifizierbar gemacht. Die öffnende Zeile entfällt auf das GLOBEXML und soll daher den gleichen Namespace enthalten wie hier die JurisdictionSection. Die in der DocSpec gelieferten Inhalte sollen wiederrum einen eigenen Namespace enthalten.-->
+							<globe:DocSpec>
+								<stf:DocTypeIndic>OECD1</stf:DocTypeIndic>
+								<stf:DocRefId>DE2024-f99e3111-d486-4d11-acbc-e7654510edbf</stf:DocRefId>
+								<!-- Die DocRefId ist eine Unique ID und mit jeder Lieferung erneut neu zu vergeben. Diese exemplarisch vergebene ID kann nicht verwendet werden und dient lediglich der Veranschauung.-->
+							</globe:DocSpec>
+						</globe:JurisdictionSection>
+						<!-- In der JurisdictionSection werden konkrete staatenbezogene Informationen wie zB die GlobeBerechnung aufgenommen.-->
+						<globe:JurisdictionSection>
+						<!-- Die in dieser Testdatei aufgenommenen Staaten dienen lediglich der Veranschauung der Aufbaumöglichkeiten eines GIR. Hierbei wurde nicht berücksichtigt, ob die entsprechenden Eintragungen fachlich zutreffend sind.-->
+							<globe:RecJurCode>NL</globe:RecJurCode>
+							<globe:RecJurCode>DE</globe:RecJurCode>
+							<globe:Jurisdiction>NL</globe:Jurisdiction>
+							<globe:JurWithTaxingRights>
+								<globe:JurisdictionName>NL</globe:JurisdictionName>
+							</globe:JurWithTaxingRights>
+							<globe:JurWithTaxingRights>
+								<globe:JurisdictionName>DE</globe:JurisdictionName>
+							</globe:JurWithTaxingRights>
+							<globe:LocalCurrency>EUR</globe:LocalCurrency>
+							<globe:GLoBETax>
+								<globe:ETR>
+									<globe:ETRStatus>
+										<globe:ETRComputation>
+											<globe:CEComputation>
+												<globe:AdjustedFANIL>
+													<globe:Total>10000</globe:Total>
+													<globe:FANIL>10000</globe:FANIL>
+												</globe:AdjustedFANIL>
+												<globe:NetGlobeIncome>
+													<globe:Total>10000</globe:Total>
+												</globe:NetGlobeIncome>
+												<globe:AdjustedIncomeTax>
+													<globe:Total>500</globe:Total>
+													<globe:IncomeTax>500</globe:IncomeTax>
+												</globe:AdjustedIncomeTax>
+												<globe:AdjustedCoveredTax>
+													<globe:Total>500</globe:Total>
+													<globe:DeferTaxAdjustAmt>
+														<globe:Total>0</globe:Total>
+														<globe:DeferTaxExpense>0</globe:DeferTaxExpense>
+													</globe:DeferTaxAdjustAmt>
+												</globe:AdjustedCoveredTax>
+												<globe:TIN issuedBy="NL" unknown="0" TypeOfTIN="GIR3001">NL StNr 1</globe:TIN>
+											</globe:CEComputation>
+											<globe:OverallComputation>
+												<globe:FANIL>10000</globe:FANIL>
+												<globe:AdjustedFANIL>10000</globe:AdjustedFANIL>
+												<globe:NetGlobeIncome>
+													<globe:Total>10000</globe:Total>
+												</globe:NetGlobeIncome>
+												<globe:IncomeTaxExpense>500</globe:IncomeTaxExpense>
+												<globe:ETRRate>0.05</globe:ETRRate>
+												<globe:TopUpTaxPercentage>0.1</globe:TopUpTaxPercentage>
+												<globe:AdjustedCoveredTax>
+													<globe:Total>500</globe:Total>
+													<globe:AggregrateCurrentTax>500</globe:AggregrateCurrentTax>
+												</globe:AdjustedCoveredTax>
+												<globe:ExcessProfits>10000</globe:ExcessProfits>
+												<globe:TopUpTax>1000</globe:TopUpTax>
+												<globe:ExcessNegTaxExpense>
+													<globe:PriorYearBalance>0</globe:PriorYearBalance>
+													<globe:GeneratedInRFY>0</globe:GeneratedInRFY>
+													<globe:UtilizedInRFY>0</globe:UtilizedInRFY>
+													<globe:Remaining>0</globe:Remaining>
+												</globe:ExcessNegTaxExpense>
+											</globe:OverallComputation>
+										</globe:ETRComputation>
+									</globe:ETRStatus>
+								</globe:ETR>
+							</globe:GLoBETax>
+							<globe:LowTaxJurisdiction>
+								<globe:TopUpTaxAmount>1000</globe:TopUpTaxAmount>
+								<globe:LTCE>
+									<globe:TIN issuedBy="NL" unknown="0" TypeOfTIN="GIR3001">NL StNr 1</globe:TIN>
+									<globe:IIR>
+										<globe:NetGlobeIncome>10000</globe:NetGlobeIncome>
+										<globe:TopUpTax>1000</globe:TopUpTax>
+										<globe:ParentEntity>
+											<globe:TIN issuedBy="DE" unknown="0" TypeOfTIN="GIR3001">5123025331220</globe:TIN>
+											<globe:ResCountryCode>DE</globe:ResCountryCode>
+											<globe:OtherOwnershipAllocation>0</globe:OtherOwnershipAllocation>
+											<globe:InclusionRatio>1</globe:InclusionRatio>
+											<globe:TopUpTaxShare>1000</globe:TopUpTaxShare>
+											<globe:IIROffSet>0</globe:IIROffSet>
+											<globe:TopUpTax>1000</globe:TopUpTax>
+										</globe:ParentEntity>
+									</globe:IIR>
+								</globe:LTCE>
+							</globe:LowTaxJurisdiction>
+							<!-- Jeder Abschnitt eines GIR wird durch eine DocSpec eindeutig identifizierbar gemacht. Die öffnende Zeile entfällt auf das GLOBEXML und soll daher den gleichen Namespace enthalten wie hier die JurisdictionSection. Die in der DocSpec gelieferten Inhalte sollen wiederrum einen eigenen Namespace enthalten.-->
+							<globe:DocSpec>
+								<stf:DocTypeIndic>OECD1</stf:DocTypeIndic>
+								<stf:DocRefId>DE2024-b2773b46-1fc5-433f-ba60-3cf1fe7bcec2</stf:DocRefId>
+								<!-- Die DocRefId ist eine Unique ID und mit jeder Lieferung erneut neu zu vergeben. Diese exemplarisch vergebene ID kann nicht verwendet werden und dient lediglich der Veranschauung.-->
+							</globe:DocSpec>
+						</globe:JurisdictionSection>
+						<!-- In der JurisdictionSection werden konkrete staatenbezogene Informationen wie zB die GlobeBerechnung aufgenommen.-->
+						<globe:JurisdictionSection>
+						<!-- Die in dieser Testdatei aufgenommenen Staaten dienen lediglich der Veranschauung der Aufbaumöglichkeiten eines GIR. Hierbei wurde nicht berücksichtigt, ob die entsprechenden Eintragungen fachlich zutreffend sind.-->
+							<globe:RecJurCode>AT</globe:RecJurCode>
+							<globe:RecJurCode>DE</globe:RecJurCode>
+							<globe:Jurisdiction>AT</globe:Jurisdiction>
+							<globe:JurWithTaxingRights>
+								<globe:JurisdictionName>AT</globe:JurisdictionName>
+							</globe:JurWithTaxingRights>
+							<globe:JurWithTaxingRights>
+								<globe:JurisdictionName>DE</globe:JurisdictionName>
+							</globe:JurWithTaxingRights>
+							<globe:LocalCurrency>EUR</globe:LocalCurrency>
+							<globe:GLoBETax>
+								<globe:ETR>
+									<globe:ETRStatus>
+										<globe:ETRComputation>
+											<globe:CEComputation>
+												<globe:AdjustedFANIL>
+													<globe:Total>20000</globe:Total>
+													<globe:FANIL>20000</globe:FANIL>
+												</globe:AdjustedFANIL>
+												<globe:NetGlobeIncome>
+													<globe:Total>20000</globe:Total>
+												</globe:NetGlobeIncome>
+												<globe:AdjustedIncomeTax>
+													<globe:Total>2000</globe:Total>
+													<globe:IncomeTax>2000</globe:IncomeTax>
+												</globe:AdjustedIncomeTax>
+												<globe:AdjustedCoveredTax>
+													<globe:Total>2000</globe:Total>
+													<globe:DeferTaxAdjustAmt>
+														<globe:Total>0</globe:Total>
+														<globe:DeferTaxExpense>0</globe:DeferTaxExpense>
+													</globe:DeferTaxAdjustAmt>
+												</globe:AdjustedCoveredTax>
+												<globe:TIN issuedBy="AT" unknown="0" TypeOfTIN="GIR3001">AT StNr 1</globe:TIN>
+											</globe:CEComputation>
+											<globe:OverallComputation>
+												<globe:FANIL>20000</globe:FANIL>
+												<globe:AdjustedFANIL>20000</globe:AdjustedFANIL>
+												<globe:NetGlobeIncome>
+													<globe:Total>20000</globe:Total>
+												</globe:NetGlobeIncome>
+												<globe:IncomeTaxExpense>2000</globe:IncomeTaxExpense>
+												<globe:ETRRate>0.1</globe:ETRRate>
+												<globe:TopUpTaxPercentage>0.05</globe:TopUpTaxPercentage>
+												<globe:AdjustedCoveredTax>
+													<globe:Total>2000</globe:Total>
+													<globe:AggregrateCurrentTax>2000</globe:AggregrateCurrentTax>
+												</globe:AdjustedCoveredTax>
+												<globe:ExcessProfits>20000</globe:ExcessProfits>
+												<globe:TopUpTax>1000</globe:TopUpTax>
+												<globe:ExcessNegTaxExpense>
+													<globe:PriorYearBalance>0</globe:PriorYearBalance>
+													<globe:GeneratedInRFY>0</globe:GeneratedInRFY>
+													<globe:UtilizedInRFY>0</globe:UtilizedInRFY>
+													<globe:Remaining>0</globe:Remaining>
+												</globe:ExcessNegTaxExpense>
+											</globe:OverallComputation>
+										</globe:ETRComputation>
+									</globe:ETRStatus>
+								</globe:ETR>
+							</globe:GLoBETax>
+							<globe:LowTaxJurisdiction>
+								<globe:TopUpTaxAmount>1000</globe:TopUpTaxAmount>
+								<globe:LTCE>
+									<globe:TIN issuedBy="AT" unknown="0" TypeOfTIN="GIR3001">AT StNr 1</globe:TIN>
+									<globe:IIR>
+										<globe:NetGlobeIncome>20000</globe:NetGlobeIncome>
+										<globe:TopUpTax>1000</globe:TopUpTax>
+										<globe:ParentEntity>
+											<globe:TIN issuedBy="DE" unknown="0" TypeOfTIN="GIR3001">5123025331220</globe:TIN>
+											<globe:ResCountryCode>DE</globe:ResCountryCode>
+											<globe:OtherOwnershipAllocation>0</globe:OtherOwnershipAllocation>
+											<globe:InclusionRatio>1</globe:InclusionRatio>
+											<globe:TopUpTaxShare>1000</globe:TopUpTaxShare>
+											<globe:IIROffSet>0</globe:IIROffSet>
+											<globe:TopUpTax>1000</globe:TopUpTax>
+										</globe:ParentEntity>
+									</globe:IIR>
+								</globe:LTCE>
+							</globe:LowTaxJurisdiction>
+							<!-- Jeder Abschnitt eines GIR wird durch eine DocSpec eindeutig identifizierbar gemacht. Die öffnende Zeile entfällt auf das GLOBEXML und soll daher den gleichen Namespace enthalten wie hier die JurisdictionSection. Die in der DocSpec gelieferten Inhalte sollen wiederrum einen eigenen Namespace enthalten.-->
+							<globe:DocSpec>
+								<stf:DocTypeIndic>OECD1</stf:DocTypeIndic>
+								<stf:DocRefId>DE2024-cf9fbe02-424b-444a-8bca-45cb594d5d0c</stf:DocRefId>
+								<!-- Die DocRefId ist eine Unique ID und mit jeder Lieferung erneut neu zu vergeben. Diese exemplarisch vergebene ID kann nicht verwendet werden und dient lediglich der Veranschauung.-->
+							</globe:DocSpec>
+						</globe:JurisdictionSection>
+					</globe:GLOBEBody>
+				</globe:GLOBE_OECD>
+<!-- Modification by gir.tax: remove German DIP envelope 
+			</dip:data>
+		</dip:consignmentItem>
+	</dip:body>
+</dip:dip>
+-->

@@ -6,6 +6,8 @@ The latest version is deployed at [https://gir.tax/](https://gir.tax/).
 
 See folder [`gir-rules/`](gir-rules/) for details about the current implementation approach and status of document validation rules.
 
+In the folder [`examples/`](examples/) you can find example XML GIR documents.
+
 ## Usage and Functionality
 
 Open a GIR XML file on the *File* tab by dropping it there or by using the *Import* button. The file is then validated against the GIR XML schema and the GIR rule set. Currently the following views are available:
