@@ -35,26 +35,39 @@ class FileDrop extends HTMLElement {
           pointer-events: none;
         }
 
+        .examples {
+            margin-top: 14px;
+        }
+
         .warning {
             font-size: 0.8rem;
             margin-top: 20px;
             color: rgba(28, 43, 63, 0.55);
+            pointer-events: none;
         }
 
         ::slotted(*) {
           pointer-events: none;
+        }
+
+        /* Supplementary slotted content (e.g. example links) stays interactive. */
+        ::slotted([slot="examples"]) {
+          pointer-events: auto;
         }
       </style>
 
       <div class="drop-zone" part="drop-zone" role="button" aria-label="File drop area">
         <div class="label">
                     <slot></slot>
-                    <div class="warning">
-                        This tool is designed to process your data locally and does not
-                        intentionally upload file contents. No guarantees are provided
-                        about security. Please use at your own risk or deploy your own
-                        local version.
-                    </div>
+                </div>
+                <div class="examples">
+                    <slot name="examples"></slot>
+                </div>
+                <div class="warning">
+                    This tool is designed to process your data locally and does not
+                    intentionally upload file contents. No guarantees are provided
+                    about security. Please use at your own risk or deploy your own
+                    local version.
                 </div>
       </div>
     `;

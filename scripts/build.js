@@ -78,6 +78,7 @@ const options = {
       resolveFrom: "cwd",
       assets: [
         { from: ["./schemas/**/*"], to: [`./${distDir}/schemas/`] },
+        { from: ["./examples/*.xml", "./examples/*.csv"], to: [`./${distDir}/examples/`] },
         { from: ["./node_modules/xmllint-wasm/xmllint-browser.mjs"], to: [`./${distDir}/app/xmllint-browser.mjs`] },
         { from: ["./node_modules/xmllint-wasm/xmllint.wasm"], to: [`./${distDir}/app/xmllint.wasm`] },
         { from: ["./LICENSE.md"], to: [`./${distMetaDir}/license.md`] },

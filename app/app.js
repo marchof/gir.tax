@@ -6,6 +6,8 @@ import "./components/UploadButton.js";
 import "./components/CorporateStructureGraph.js";
 import "./components/ValidationStatus.js";
 import "./components/VersionInfo.js";
+import "./components/ExampleList.js";
+import { EXAMPLES } from "./examples.js";
 import { csvToXml, looksLikeCsvFile, toXmlFileName } from "./csvimport.js";
 import { GirStatusMessage } from "./girstatusmessage.js";
 import { validateGirRules } from "./girvalidator.js";
@@ -17,6 +19,11 @@ const tabs = document.getElementById("top-tabs");
 const drop = document.createElement("file-drop");
 drop.id = "drop";
 drop.append("Drop an OECD GIR XML or CSV file here");
+
+const exampleList = document.createElement("example-list");
+exampleList.slot = "examples";
+exampleList.examples = EXAMPLES;
+drop.appendChild(exampleList);
 const importButton = document.createElement("upload-button");
 importButton.label = "Import XML or CSV";
 importButton.accept = ".xml,.csv,text/xml,text/csv";
@@ -203,10 +210,43 @@ async function handleFileImport(file) {
   }
 }
 
+async function handleExampleSelected(example) {
+  if (!example) {
+    return;
+  }
+
+  tabs.setTabVisible("validation", true);
+  tabs.setTabChip("validation", null);
+  tabs.setActiveTab("validation");
+  validationStatus.loading = `Loading example ${example.name}…`;
+
+  let file;
+
+  try {
+    const response = await fetch(example.url);
+    if (!response.ok) {
+      throw new Error(`Could not load example (HTTP ${response.status}).`);
+    }
+    const blob = await response.blob();
+    file = new File([blob], example.name, { type: blob.type });
+  } catch (error) {
+    const statusMessage = createStatusMessage();
+    statusMessage.addFileValidationError(error instanceof Error ? error.message : String(error));
+    showValidation(statusMessage, example.name, { activate: true });
+    return;
+  }
+
+  await handleFileImport(file);
+}
+
 drop.addEventListener("filedropped", async e => {
   await handleFileImport(e.detail.file);
 });
 
 importButton.addEventListener("fileselected", async e => {
   await handleFileImport(e.detail.file);
+});
+
+exampleList.addEventListener("exampleselected", async e => {
+  await handleExampleSelected(e.detail.example);
 });
