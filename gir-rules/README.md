@@ -72,8 +72,6 @@ and by the test runner.
 | `description` | yes | The explanatory/error message text from the OECD wording, copied as-is. |
 | `implementation_notes` | no | Notes about the *implementation only* — never a restatement of the rule. On a `disabled` rule, this instead records why the rule was left unimplemented. |
 | `disabled` | no | `true` marks a rule as **not enforced** — used when its logic cannot be expressed as a local per-element check (it needs state from other messages or earlier filings, external data, or a comparison spanning the whole document). A disabled rule carries no operator and is paired with a user-facing `implementation_notes` giving the reason. |
-| `element` | no | The schema element name the rule is conceptually about. Transitional scaffolding present only while a rule has no operator. |
-| `references` | no | Dotted, schema-relative paths to other elements the rule's logic depends on. Transitional scaffolding present only while a rule has no operator. |
 | `target_does_not_exist_in_test_files` | no | List of fixture file names where none of the `targets` are expected to match, to suppress the "no elements matched" assertion for tests of an absence scenario. |
 
 ## Operators

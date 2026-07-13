@@ -14,7 +14,6 @@ rules:
       used in the message, not just the overall format.
     targets:
       - /globe:GLOBE_OECD/globe:MessageSpec/globe:MessageRefId
-    element: MessageRefId
     rule: >-
       The MessageRefId must be in the correct format: [CountryCode of the
       sending jurisdiction] [ReportingPeriod] [CountryCode of the receiving
@@ -33,7 +32,6 @@ rules:
       validating a single document.
     targets:
       - /globe:GLOBE_OECD/globe:MessageSpec/globe:MessageRefId
-    element: MessageRefId
     rule: >-
       The GIR Message Header has a duplicate MessageRefID value that was
       received on a previous file.
@@ -49,7 +47,6 @@ rules:
       filing.
     targets:
       - /globe:GLOBE_OECD/globe:MessageSpec/globe:ReportingPeriod
-    element: ReportingPeriod
     rule: >-
       The ReportingPeriod YYYY value must be less than or equal to current year
     description: >-
@@ -81,7 +78,6 @@ rules:
       record, which is not part of the current document.
     targets:
       - //stf:DocTypeIndic
-    element: DocTypeIndic
     rule: >-
       When DocTypeIndic is OECD2 or OECD3, the record must concern the same sub
       section (FilingInfo, General section, Summary, JuridictionSection or
@@ -112,7 +108,6 @@ rules:
       document.
     targets:
       - //stf:DocRefId
-    element: DocRefId
     rule: >-
       The DocRefID is already used for another record.
     description: >-
@@ -128,7 +123,6 @@ rules:
       information from previous submissions.
     targets:
       - //stf:CorrDocRefId
-    element: CorrDocRefId
     rule: >-
       The CorrDocRefId refers to an unknown record.
     description: >-
@@ -145,7 +139,6 @@ rules:
       version of a record requires the history of previous submissions.
     targets:
       - //stf:CorrDocRefId
-    element: CorrDocRefId
     rule: >-
       The CorrDocRefID must relate to the latest instance of the DocRefID. The
       CorrDocRefID cannot reference an invalidated or outdated version of the DocRefID
@@ -180,7 +173,6 @@ rules:
       just the overall format.
     targets:
       - //stf:DocRefId
-    element: DocRefId
     rule: >-
       The DocRefId must be in the correct format: [CountryCode of the sending
       jurisdiction] [ReportingYear][UniqueID]
@@ -231,7 +223,6 @@ rules:
       submissions, which is not part of the current document.
     targets:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:FilingInfo/globe:DocSpec/stf:DocRefId
-    element: DocRefId
     rule: >-
       When the DocTypeIndic is OECD0 for the FilingInfo, The DocRefID must be
       the same as the DocRefID that was used for the latest version of the
@@ -527,7 +518,6 @@ rules:
       filing.
     targets:
       - //globe:TIN
-    element: issuedBy
     rule: >-
       Where the TIN has the issuedby value of (local jurisdiction), then the TIN
       should be a valid TIN per the local jurisdiction
@@ -697,7 +687,6 @@ rules:
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:GeneralSection/globe:CorporateStructure/globe:UPE/globe:ExcludedUPE/globe:ID/globe:Rules
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:GeneralSection/globe:CorporateStructure/globe:UPE/globe:OtherUPE/globe:ID/globe:Rules
       - /globe:GLOBE_OECD/globe:GLOBEBody/globe:GeneralSection/globe:CorporateStructure/globe:CE/globe:ID/globe:Rules
-    element: Rules
     rule: >-
       All Entities (i.e. ExcludedUPE, OtherUPE or CEs) with residence in same
       Jurisdiction (same ResCountryCode) must have same Rules, unless the Rules
