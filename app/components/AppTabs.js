@@ -38,6 +38,12 @@ class AppTabs extends HTMLElement {
           white-space: nowrap;
         }
 
+        .tab-logo {
+          height: 24px;
+          width: 24px;
+          flex: none;
+        }
+
         .tab-button {
           appearance: none;
           border: 1px solid transparent;
@@ -108,6 +114,12 @@ class AppTabs extends HTMLElement {
     this._title.className = "tab-title";
     this._title.textContent = "OECD GIR File Viewer";
     this._tabList.appendChild(this._title);
+
+    this._logo = document.createElement("img");
+    this._logo.className = "tab-logo";
+    this._logo.src = "logo.svg";
+    this._logo.alt = "";
+    this._tabList.appendChild(this._logo);
   }
 
   addTab(label, element, options = {}) {

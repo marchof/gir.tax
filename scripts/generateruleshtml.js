@@ -160,6 +160,8 @@ const generateRulesHtml = async () => {
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="../favicon.ico" sizes="any">
+  <link rel="icon" href="../logo.svg" type="image/svg+xml">
   <title>GIR Rules</title>
   <style>
     :root {
@@ -201,6 +203,12 @@ const generateRulesHtml = async () => {
       font: 700 18px/1.2 sans-serif;
       letter-spacing: 0.02em;
       white-space: nowrap;
+    }
+
+    .frame-logo {
+      height: 24px;
+      width: 24px;
+      flex: none;
     }
 
     .back-button {
@@ -457,6 +465,7 @@ const generateRulesHtml = async () => {
       <div class="header-bar">
         <a class="back-button" href="..">&larr; Back to Viewer</a>
         <div class="frame-title">OECD GIR File Viewer</div>
+        <img class="frame-logo" src="../logo.svg" alt="">
       </div>
       <div class="panel">
         <h1>GIR Rules</h1>

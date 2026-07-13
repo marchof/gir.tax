@@ -77,6 +77,7 @@ const options = {
     copy({
       resolveFrom: "cwd",
       assets: [
+        { from: ["./artwork/exports/favicon.ico", "./artwork/exports/logo.svg"], to: [`./${distDir}/`] },
         { from: ["./schemas/**/*"], to: [`./${distDir}/schemas/`] },
         { from: ["./examples/*.xml", "./examples/*.csv"], to: [`./${distDir}/examples/`] },
         { from: ["./node_modules/xmllint-wasm/xmllint-browser.mjs"], to: [`./${distDir}/app/xmllint-browser.mjs`] },
