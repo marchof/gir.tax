@@ -9,10 +9,9 @@ permissions:
 
 jobs:
 
-  deploy:
-    name: "Build and Deploy"
+  rules-test:
+    name: "Test Rules"
     runs-on: ubuntu-latest
-
     steps:
     - name: Checkout
       uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
@@ -20,10 +19,17 @@ jobs:
       uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
       with:
         python-version: '3.12'
-    - name: Install GIR Rule Dependencies
+    - name: Install Python Dependencies
       run: python -m pip install -r gir-rules/requirements.txt
     - name: Test GIR Rules
       run: python gir-rules/test.py
+
+  web-build:
+    name: "Web Build"
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
     - name: Install Dependencies
       run: npm install
     - name: Check Licenses
@@ -39,12 +45,26 @@ jobs:
       with:
         name: dist
         path: dist
+
+  deploy:
+    name: "Deploy"
+    runs-on: ubuntu-latest
+    needs:
+      - rules-test
+      - web-build
+    if: ${{ github.repository == 'marchof/gir.tax' && github.ref == 'refs/heads/main' }}
+    steps:
+    - name: Checkout
+      uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+    - name: Download Distribution
+      uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c #v8.0.1
+      with:
+        name: dist
+        path: dist
     - name: Configure AWS Credentials
       uses: aws-actions/configure-aws-credentials@8df5847569e6427dd6c4fb1cf565c83acfa8afa7 # v6.0.0
       with:
         role-to-assume: arn:aws:iam::830482727482:role/github-workflow-gir.tax
         aws-region: eu-central-1
-      if: ${{ github.repository == 'marchof/gir.tax' && github.ref == 'refs/heads/main' }}
     - name: Deploy
       run: aws/deploy.sh
-      if: ${{ github.repository == 'marchof/gir.tax' && github.ref == 'refs/heads/main' }}
