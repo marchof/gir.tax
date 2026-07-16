@@ -4,6 +4,7 @@ import "./components/AppTabs.js";
 import "./components/DownloadButton.js";
 import "./components/UploadButton.js";
 import "./components/CorporateStructureGraph.js";
+import "./components/JurisdictionSummaryTable.js";
 import "./components/ValidationStatus.js";
 import "./components/VersionInfo.js";
 import "./components/ExampleList.js";
@@ -45,17 +46,21 @@ buttonRow.appendChild(exportXmlButton);
 fileContainer.appendChild(buttonRow);
 
 const viewerContainer = document.createElement("div");
+const jurisdictionSummaryTable = document.createElement("jurisdiction-summary-table");
 const corporateStructureGraph = document.createElement("corporate-structure-graph");
 const validationStatus = document.createElement("validation-status");
 
 const schemaMetadata = await xmlSchema.getSchemaMetadata();
+jurisdictionSummaryTable.schemaMetadata = schemaMetadata;
 
 tabs.addTab("File", fileContainer, { id: "file", activate: true });
 tabs.addTab("XML", viewerContainer, { id: "viewer" });
+tabs.addTab("Jurisdictions", jurisdictionSummaryTable, { id: "jurisdiction" });
 tabs.addTab("Corporate Structure", corporateStructureGraph, { id: "corporate-structure" });
 tabs.addTab("Validation", validationStatus, { id: "validation" });
 
 tabs.setTabVisible("viewer", false);
+tabs.setTabVisible("jurisdiction", false);
 tabs.setTabVisible("corporate-structure", false);
 tabs.setTabVisible("validation", false);
 tabs.setActiveTab("file");
@@ -65,6 +70,7 @@ function showValidation(statusMessage, xmlFileName, options = {}) {
   validationStatus.xmlFileName = xmlFileName;
   tabs.setTabChip("validation", statusMessage.errorCount > 0 ? statusMessage.errorCount : null);
   tabs.setTabVisible("viewer", false);
+  tabs.setTabVisible("jurisdiction", false);
   tabs.setTabVisible("corporate-structure", false);
 
   if (options.activate) {
@@ -167,6 +173,7 @@ async function handleFileImport(file) {
   } catch (error) {
     exportXmlButton.clear();
     corporateStructureGraph.xmlDocument = null;
+    jurisdictionSummaryTable.xmlDocument = null;
     statusMessage.addFileValidationError(error instanceof Error ? error.message : String(error));
     showValidation(statusMessage, "input.xml", { activate: true });
     return;
@@ -178,6 +185,7 @@ async function handleFileImport(file) {
   const result = await xmlSchema.validate(xmlText, xmlFileName);
   if (!result.valid) {
     corporateStructureGraph.xmlDocument = null;
+    jurisdictionSummaryTable.xmlDocument = null;
     statusMessage.addFileValidationError(result.rawOutput);
     showValidation(statusMessage, xmlFileName, { activate: true });
     return;
@@ -188,6 +196,7 @@ async function handleFileImport(file) {
   const { xml, parserErrorText } = parseXmlDocument(xmlText);
   if (parserErrorText) {
     corporateStructureGraph.xmlDocument = null;
+    jurisdictionSummaryTable.xmlDocument = null;
     statusMessage.addFileValidationError(parserErrorText);
     showValidation(statusMessage, xmlFileName, { activate: true });
     return;
@@ -202,6 +211,8 @@ async function handleFileImport(file) {
   showValidation(statusMessage, xmlFileName, { activate: hasValidationErrors });
 
   renderXmlOutline(xml);
+  tabs.setTabVisible("jurisdiction", true);
+  jurisdictionSummaryTable.xmlDocument = xml;
   tabs.setTabVisible("corporate-structure", true);
   corporateStructureGraph.xmlDocument = xml;
 
