@@ -4,19 +4,33 @@ An online viewer and validator for [GloBE Information Return (GIR)](https://www.
 
 The latest version is deployed at [https://gir.tax/](https://gir.tax/).
 
-See folder [`gir-rules/`](gir-rules/) for details about the current implementation approach and status of document validation rules.
-
-In the folder [`examples/`](examples/) you can find example XML GIR documents.
+Documents are checked against the GIR XML schema as well as the [semantic validation rules](https://gir.tax/rules/) defined by the OECD.
 
 ## Usage and Functionality
 
-Open a GIR XML file on the *File* tab by dropping it there or by using the *Import* button. The file is then validated against the GIR XML schema and the GIR rule set. Currently the following views are available:
+Open a document on the *File* tab by dropping it there or by using the *Import* button. Both GIR XML files and a simple CSV representation of the same element tree are accepted; a CSV is converted to GIR XML on import. If you have no document at hand, the *File* tab offers a few example documents — passing and failing ones — that load with a single click.
 
-* **XML:** Shows the XML outline with additional documentation like definitions of the `GIRnnnn` enum constants.
+The document is then validated and the following views become available:
+
+* **XML:** Shows the XML outline with additional documentation like definitions of the `GIRnnnn` enum constants. Elements with validation problems are marked directly in the outline and show the corresponding error messages on hover.
+* **Jurisdictions:** Per-jurisdiction overview of GloBE income, covered taxes, ETR, and top-up tax, expandable to the detailed calculation, collection mechanisms, and entity contributions.
 * **Corporate Structure:** Graphical representation of the corporate structure and ownerships.
 * **Validation:** Detailed validation results, error messages, and an option to export the validation result as a *Status Message XML* document.
 
-You may test some example documents from the [`examples/`](examples/) folder.
+The *File* tab also provides an *Export XML* button to download the imported document, which is useful to obtain the GIR XML generated from a CSV import.
+
+The example documents are also available in the [`examples/`](examples/) folder.
+
+## How It Works
+
+The application is a fully client-side static web app: all parsing, schema validation, rule checking, and rendering happen in the browser, so the data of an opened GIR file never leaves the user's machine. There is no backend, and an imported document is never uploaded anywhere.
+
+This is possible because both validation stages run locally:
+
+* **Schema validation** uses [xmllint-wasm](https://github.com/noppa/xmllint-wasm) against the official OECD schemas in [`schemas/`](schemas/), which are shipped with the application.
+* **Rule validation** is generated from [`gir-rules/rules.yaml`](gir-rules/rules.yaml) into a JavaScript module at build time and evaluated by [`app/ruleeval.js`](app/ruleeval.js), a port of the reference interpreter [`gir-rules/rule_eval.py`](gir-rules/rule_eval.py). Both interpreters read the same rule definitions, so the browser enforces exactly what the Python test suite pins down.
+
+The user interface is built from framework-free custom elements in [`app/components/`](app/components/); the corporate structure graph is the only view that relies on a third-party UI library ([Cytoscape](https://js.cytoscape.org/)).
 
 ## Local Development and Execution
 
@@ -42,11 +56,11 @@ npm install
 npm run dev
 ```
 
-Now you can use the application at http://localhost:8080/
+Now you can use the application at http://localhost:8080/ — it rebuilds and serves the `dist/` folder whenever a source file changes.
 
 ## Self-Hosting
 
-The application is a fully client-side static web app: all parsing, schema validation, rule checking, and rendering happen in the browser, so the data of an opened GIR file never leaves the user's machine. Hosting your own copy of the application keeps that guarantee under your control.
+Hosting your own copy of the application keeps the guarantee described above under your control.
 
 Build the static bundle:
 
@@ -62,9 +76,12 @@ This produces a self-contained `dist/` folder. Serve it with any static web serv
 | File ending | MIME type          |
 | ----------- | ------------------ |
 | `.html`     | `text/html`        |
+| `.ico`      | `image/x-icon`     |
 | `.js`       | `text/javascript`  |
 | `.mjs`      | `text/javascript`  |
+| `.svg`      | `image/svg+xml`    |
 | `.wasm`     | `application/wasm` |
+| `.xml`      | `application/xml`  |
 | `.xsd`      | `application/xml`  |
 
 ## Authors
