@@ -7,7 +7,7 @@
     "build": "node scripts/build.js",
     "build:watch": "node scripts/build.js --watch",
     "dev": "node scripts/build.js --watch --serve",
-    "test": "node scripts/generaterulesjs.js && node --test scripts/testrulesjs.js",
+    "test": "node scripts/generaterulesjs.js && node --test scripts/testrulesjs.js scripts/testxmlexport.js",
     "lint": "eslint --max-warnings=0 .",
     "lint:fix": "eslint . --fix",
     "license-check": "license-checker-evergreen"

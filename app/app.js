@@ -10,6 +10,7 @@ import "./components/VersionInfo.js";
 import "./components/ExampleList.js";
 import { EXAMPLES } from "./examples.js";
 import { csvToXml, looksLikeCsvFile, toXmlFileName } from "./csvimport.js";
+import { toExportXml } from "./xmlexport.js";
 import { GirStatusMessage } from "./girstatusmessage.js";
 import { validateGirRules } from "./girvalidator.js";
 import { XMLSchema } from "./xmlschema.js";
@@ -179,7 +180,7 @@ async function handleFileImport(file) {
     return;
   }
 
-  exportXmlButton.setDownload(new Blob([xmlText], { type: "application/xml" }), xmlFileName);
+  exportXmlButton.setDownload(new Blob([toExportXml(xmlText)], { type: "application/xml" }), xmlFileName);
 
   validationStatus.loading = "Loading validation engine & validating against schema…";
   const result = await xmlSchema.validate(xmlText, xmlFileName);
